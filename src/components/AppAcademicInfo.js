@@ -18,6 +18,19 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
   // const backPage = () => {
   //   setBackPages(true)
   // }
+
+  register('major', { onChange: (e) => onChangeForm(e) });
+  register('minor', { onChange: (e) => onChangeForm(e) });
+  register('expectedGrad', { onChange: (e) => onChangeForm(e) });
+  register('overallGPA', { onChange: (e) => onChangeForm(e) });
+  register('date', { onChange: (e) => onChangeForm(e) });
+  register('scores', { onChange: (e) => onChangeForm(e) });
+  register('examDate', { onChange: (e) => onChangeForm(e) });
+  register('appType', { onChange: (e) => onChangeForm(e) });
+  register('faculty', { onChange: (e) => onChangeForm(e) });
+
+
+  
     return (
       <>
     
@@ -46,8 +59,10 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                               errors.major ? 'border-bred' : formData.major ? 'border-green' : ''
                             }`}
+                            {...register("major", {required: true, maxLength:80})}
                             
                           />
+                          {errors.major && (<span class="inline-flex text-sm text-bred">Please enter your Major.</span>)}
                         </div>
     
                         <div className="col-span-6 sm:col-span-3">
@@ -62,7 +77,9 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                               errors.minor ? 'border-bred' : formData.minor ? 'border-green' : ''
                             }`}
+                            {...register("minor", {required: true, maxLength:80})}
                           />
+                          {errors.minor && (<span class="inline-flex text-sm text-bred">Please enter your Minor.</span>)}
                         </div>
 
                         <div className="col-span-6 sm:col-span-3">
@@ -76,7 +93,9 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                               errors.expectedGrad ? 'border-bred' : formData.expectedGrad ? 'border-green' : ''
                             }`}
+                            {...register("expectedGrad", {required: true, minLength:10, maxLength:10})}
                           />
+                          {errors.expectedGrad && (<span class="inline-flex text-sm text-bred">Please enter your expected Graduation Date [xx-xx-xxxx].</span>)}
                         </div>
 
                         <div className="col-span-6 sm:col-span-3">
@@ -87,10 +106,12 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                             type="text"
                             name="overallGPA"
                             id="overallGPA"
+                            {...register("overallGPA", {required: true, minLength: 5, maxLength:5})}
                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                               errors.overallGPA ? 'border-bred' : formData.overallGPA ? 'border-green' : ''
                             }`}
                           />
+                          {errors.overallGPA && (<span class="inline-flex text-sm text-bred">Please enter your correct overall collegiate GPA [x.xxx].</span>)}
                         </div>
                         
     
@@ -107,7 +128,9 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                               errors.date ? 'border-bred' : formData.date ? 'border-green' : ''
                             }`}
+                            {...register("date", {required: true, maxLength:80})}
                           />
+                          {errors.date && (<span class="inline-flex text-sm text-bred">Please enter your correct date of proposed entrance.</span>)}
                         </div>
 
                         <div className="col-span-6">
@@ -123,7 +146,9 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                               errors.scores ? 'border-bred' : formData.scores ? 'border-green' : ''
                             }`}
+                            {...register("scores", {required: true, maxLength:80})}
                           />
+                          {errors.scores && (<span class="inline-flex text-sm text-bred">Please enter your correct breakdown scores for your most recent professional exam.</span>)}
                         </div>
     
 
@@ -139,7 +164,9 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                               errors.examDate ? 'border-bred' : formData.examDate ? 'border-green' : ''
                             }`}
+                            {...register("examDate", {required: true, maxLength:80})}
                           />
+                          {errors.examDate && (<span class="inline-flex text-sm text-bred">Please enter the correct date of exam.</span>)}
                         </div>
 
                         <div className="col-span-6">
@@ -154,7 +181,9 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                               errors.appType ? 'border-bred' : formData.appType ? 'border-green' : ''
                             }`}
+                            {...register("appType", {required: true, maxLength:80})}
                           />
+                          {errors.appType && (<span class="inline-flex text-sm text-bred">Please enter the correct type of school application that will be sent.</span>)}
                         </div>
 
                         <div className="col-span-6">
@@ -162,8 +191,6 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                             Depending on the type pf application, fill in the appropriate ID numbers. 
                           </label>
                           {/* <div class="grid grid-cols-6 gap-4 ">
-
-
                           <input
                             type="checkbox"
                             id="appIDType"
@@ -203,7 +230,9 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                               errors.faculty ? 'border-bred' : formData.faculty ? 'border-green' : ''
                             }`}
+                            {...register("faculty", {required: true, maxLength:80})}
                           />
+                          {errors.faculty && (<span class="inline-flex text-sm text-bred">Please enter the name of Faculty Recommenders.</span>)}
                         </div>
                       </div>
                     </div>
@@ -233,4 +262,3 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
       </>
     )
   }
-  
