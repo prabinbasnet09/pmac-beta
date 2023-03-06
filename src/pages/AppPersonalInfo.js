@@ -6,22 +6,6 @@ import Table from '../components/Table'
 
 export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
 
-  const { register } = useForm();
-  
-
-
-  register('firstName', { onChange: (e) => onChangeForm(e) });
-  register('lastName', { onChange: (e) => onChangeForm(e) });
-  register('cwid', { onChange: (e) => onChangeForm(e) });
-  register('number', { onChange: (e) => onChangeForm(e) });
-  register('country', { onChange: (e) => onChangeForm(e) });
-  register('address', { onChange: (e) => onChangeForm(e) });
-  register('city', { onChange: (e) => onChangeForm(e) });
-  register('state', { onChange: (e) => onChangeForm(e) });
-  register('zip', { onChange: (e) => onChangeForm(e) });
-  register('ulm', { onChange: (e) => onChangeForm(e) });
-  register('alternate', { onChange: (e) => onChangeForm(e) });
-
   // const [nextPages, setNextPages] = useState(false);
 
   // const nextPage = () => {
@@ -56,9 +40,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                             errors.firstName ? 'border-bred' : ''
                           }`}
-                          {...register("firstName", {required: true, maxLength:80})}
                         />
-                        {errors.firstName && (<span className="inline-flex text-sm text-bred">Please enter your First Name.</span>)}
                       </div>
   
                       <div className="col-span-6 sm:col-span-3">
@@ -74,9 +56,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                             errors.lastName ? 'border-bred' : ''
                           }`}
-                          {...register("lastName", {required: true, maxLength:80})}
                         />
-                        {errors.lastName && (<span className="inline-flex text-sm text-bred">Please enter your Last Name.</span>)}
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
@@ -92,9 +72,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                             errors.cwid ? 'border-bred' : ''
                           }`}
-                          {...register("cwid", {required: true, minLength:8, maxLength:8})}
                         />
-                        {errors.cwid && (<span className="inline-flex text-sm text-bred">Please enter your correct CWID [xxxx-xxxx].</span>)}
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
@@ -106,12 +84,10 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           name="number"
                           id="number"
                           value={formData.number} 
-                          {...register("number", {required: true, minLength: 10, maxLength:10})}
                           className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                             errors.number ? 'border-bred' : ''
                           }`}
                         />
-                        {errors.number && (<span className="inline-flex text-sm text-bred">Please enter your correct Phone number [xxx-xxx-xxxx].</span>)}
                       </div>
                       
   
@@ -145,9 +121,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                             errors.address ? 'border-bred' : ''
                           }`}
-                          {...register("address", {required: true, maxLength:80})}
                         />
-                        {errors.address && (<span className="inline-flex text-sm text-bred">Please enter your correct Address.</span>)}
                       </div>
   
                       <div className="col-span-6 sm:col-span-6 lg:col-span-2">
@@ -163,9 +137,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                             errors.city ? 'border-bred' : ''
                           }`}
-                          {...register("city", {required: true, maxLength:80})}
                         />
-                        {errors.city && (<span className="inline-flex text-sm text-bred">Please enter your correct City.</span>)}
                       </div>
   
                       <div className="col-span-6 sm:col-span-3 lg:col-span-2">
@@ -181,9 +153,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                             errors.state ? 'border-bred' : ''
                           }`}
-                          {...register("state", {required: true, maxLength:80})}
                         />
-                        {errors.state && (<span className="inline-flex text-sm text-bred">Please enter your correct State/Province.</span>)}
                       </div>
   
                       <div className="col-span-6 sm:col-span-3 lg:col-span-2">
@@ -199,9 +169,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                             errors.zip ? 'border-bred' : ''
                           }`}
-                          {...register("zip", {required: true, maxLength:5})}
                         />
-                        {errors.zip && (<span className="inline-flex text-sm text-bred">Please enter your correct Zip/Postal Code [x-xxxxx].</span>)}
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
@@ -217,9 +185,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                             errors.ulm ? 'border-bred' : ''
                           }`}
-                          {...register("ulm", {required: true, pattern:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i})}
                         />
-                        {errors.ulm && (<span className="inline-flex text-sm text-bred">Please enter your correct ULM email address [...@warhawks.ulm.edu].</span>)}
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
@@ -235,9 +201,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
                             errors.alternate ? 'border-bred' : ''
                           }`}
-                          {...register("alternate", {required: true, pattern:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i})}
                         />
-                        {errors.alternate && (<span className="inline-flex text-sm text-bred">Please enter your correct Alternate email address [...@example.com].</span>)}
                       </div>
                     </div>
                   </div>
