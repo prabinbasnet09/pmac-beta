@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Tab } from '@headlessui/react';
-import Forms from '../Forms'
-import Schedular from '../schedular';
-import AppStatus from './AppStatus';
+import Forms from '../pages/Forms'
+import Schedular from '../pages/schedular';
+import AppStatus from '../components/AppStatus';
 
 
 

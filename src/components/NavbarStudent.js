@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image';
-import Logo from './../photos/ulm_academic_maroon_white.png';
+import Logo from '../images/ulm_academic_maroon_white.png';
 
 const user = {
   name: 'Tom Cook',

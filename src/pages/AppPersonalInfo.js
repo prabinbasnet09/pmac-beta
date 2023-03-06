@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {useForm} from 'react-hook-form';
 import AppAcademicInfo from './AppAcademicInfo';
-import Table from '../Table'
+import Table from '../components/Table'
 
 
 export default function AppPersonalInfo({ formData, onChangeForm, errors }) {

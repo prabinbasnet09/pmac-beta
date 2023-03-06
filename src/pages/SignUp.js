@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image';
-import Logo from './photos/ulm_academic_maroon_white.png';
-import backgroundImage from './photos/statue2LG.jpg';
+import Logo from '../images/ulm_academic_maroon_white.png';
+import backgroundImage from '../images/statue2LG.jpg';
 
 function SignUp() {
   return (
