@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import AppAcademicInfo from './AppAcademicInfo'
+import AppAcademicInfo from '../components/AppAcademicInfo'
 import Involvement from './Involvement'
-import AppPersonalInfo from './AppPersonalInfo'
+import AppPersonalInfo from '../components/AppPersonalInfo'
 // import {useForm} from 'react-hook-form';
 
 
@@ -76,7 +76,6 @@ function AppInfo() {
     <div>
         
        <form onSubmit={handleSubmit}>
-
             <AppPersonalInfo formData={formData} onChangeForm={handleFormChange} errors={errors} />
             <AppAcademicInfo formData={formData} onChangeForm={handleFormChange} errors={errors} />
             <Involvement /> 
@@ -85,12 +84,6 @@ function AppInfo() {
                 Submit </button>
             </div>
        </form>
-            
-            
-           
-    
-
-
     </div>
   )
 }

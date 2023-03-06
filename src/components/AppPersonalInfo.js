@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {useForm} from 'react-hook-form';
 import AppAcademicInfo from './AppAcademicInfo';
-import Table from '../components/Table'
+import Table from './Table'
 
 
 export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
@@ -11,7 +11,6 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
   // const nextPage = () => {
   //   setNextPages(true);
   // }
-
     return (
       <>
      {/* { !nextPages &&  */}
