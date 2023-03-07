@@ -4,6 +4,7 @@ import Forms from './Forms'
 import Schedular from '../pages/schedular';
 import AppStatus from './AppStatus';
 import Applicants from './Applicants';
+import Users from './Users';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -69,7 +70,7 @@ export default function Tabs({userGroup}) {
           Dashboard: [
             {
               id: 1,
-              title: <AppStatus />,
+              title: "Sorry! Your dashboard is still under construction",
             },
           ],
           Applicants: [
@@ -90,7 +91,7 @@ export default function Tabs({userGroup}) {
             Dashboard: [
               {
                 id: 1,
-                title: <AppStatus />,
+                title: "Sorry! Your dashboard is still under construction",
               },
             ],
             Admin: [
@@ -104,34 +105,18 @@ export default function Tabs({userGroup}) {
             Dashboard: [
               {
                 id: 1,
-                title: <AppStatus />,
+                title: "Sorry! Your dashboard is still under construction",
                 
               },
              
             ],
-            Forms: [
+            Users: [
               {
                 id: 2,
-                title: <Forms /> ,
-               
+                title: <Users /> ,
               },
-              
-            ],
-            Schedule: [
-              {
-                id: 3,
-                title: <Schedular />,
-                
-              },
-            
-            ],
-            Results: [{
-              id: 4,
-              title: "Results",
-              
-            }],
+            ]
           })
-
   }, []);
 
   

@@ -2,7 +2,7 @@ type User
   @model
   @auth(
     rules: [
-      { allow: groups, groups: ["Admin", "Chair"] }
+      { allow: groups, groups: ["Admin", "ChairCommittee"] }
       { allow: groups, groups: ["Faculty"], operations: [create, read, update] }
       { allow: owner, ownerField: "username", operations: [read, update] }
     ]
@@ -14,7 +14,7 @@ type User
   groups: [String!]!
   verified: Boolean!
   profilePicture: String
-  fileURL: String # 2 Faculty recommendation form, should be in array
+  fileURL: [String!] # 2 Faculty recommendation form, should be in array
   personalStatement: String
   transcript: String
   amcasForm: String
@@ -43,8 +43,14 @@ type Query {
 type Mutation {
   onVerifyUser(input: VerifyUserInput!): User
   changePersonalStatement(input: ChangePersonalStatementInput!): User
+  changeFileURL(input: ChangeFileURLInput!): User
   changeTranscript(input: ChangeTranscriptInput!): User
   changeProfilePicture(input: ChangeProfilePictureInput!): User
+}
+
+input ChangeFileURLInput {
+  id: ID!
+  fileURL: [String!]
 }
 
 input VerifyUserInput {

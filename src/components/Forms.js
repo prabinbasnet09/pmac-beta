@@ -29,8 +29,8 @@ function Forms() {
           <td className="w-1/4 border border-black px-4 py-2 bg-white text-gray italic text-sm ">Incomplete...</td>
         </tr>
         <tr>
-          <td className="w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold">
-            <Link href="/forms/recommendationForm">Faculty Recommendation Form</Link>
+          <td className="w-3/4 border border-black px-4 py-2 bg-white text-black disabled:">
+            Faculty Recommendation Form
           </td>
           <td className="w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm">Incomplete....</td>
         </tr>

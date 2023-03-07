@@ -210,29 +210,29 @@ Application service.</h1>
 <span className='text-bred'> Please
 provide the letter deadline date.</span> </h1>
                       
-  <div class="overflow-x-auto">
-  <table class="table-auto border-collapse border border-gray-400">
+  <div className="overflow-x-auto">
+  <table className="table-auto border-collapse border border-gray-400">
     <thead>
       <tr>
-        <th class="border border-gray-400 px-4 py-2">Name of School</th>
-        <th class="border border-gray-400 px-4 py-2">Letter Deadline Date</th>
-        <th class="border border-gray-400 px-4 py-2">Contact Person</th>
-        <th class="border border-gray-400 px-4 py-2">Address</th>
+        <th className="border border-gray-400 px-4 py-2">Name of School</th>
+        <th className="border border-gray-400 px-4 py-2">Letter Deadline Date</th>
+        <th className="border border-gray-400 px-4 py-2">Contact Person</th>
+        <th className="border border-gray-400 px-4 py-2">Address</th>
       </tr>
     </thead>
     <tbody>
       {rows.map((row, index) => (
         <tr key={index}>
-          <td class="border border-gray-400 px-4 py-2">
+          <td className="border border-gray-400 px-4 py-2">
             <input type="text" value={row.name} onChange={event => handleRowChange(index, 'name', event.target.value)} />
           </td>
-          <td class="border border-gray-400 px-4 py-2">
+          <td className="border border-gray-400 px-4 py-2">
             <input type="date" value={row.date} onChange={event => handleRowChange(index, 'date', event.target.value)} />
           </td>
-          <td class="border border-gray-400 px-4 py-2">
+          <td className="border border-gray-400 px-4 py-2">
             <input type="tel" value={row.phone} onChange={event => handleRowChange(index, 'phone', event.target.value)} />
           </td>
-          <td class="border border-gray-400 px-4 py-2">
+          <td className="border border-gray-400 px-4 py-2">
             <input type="text" value={row.address} onChange={event => handleRowChange(index, 'address', event.target.value)} />
           </td>
         </tr>

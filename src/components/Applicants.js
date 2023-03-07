@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { useState, useEffect, useContext } from "react";
 import { ActiveUser } from "../pages/_app";
 import AppUsers from "./AppUsers";
@@ -38,7 +39,7 @@ export default function Applicants() {
                                     <li className="p-5 hover:bg-violet-300 cursor-pointer" key={user.id} value={user.id} onClick={(e) => {handleUserSelection(e, user)}}>
                                     <div className="p-3 flex items-center space-x-4">
                                         <div className="flex-shrink-0">
-                                            <img className="w-8 h-8 rounded-full" />
+                                            <Image className="w-8 h-8 rounded-full" />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-lg font-medium text-gray-900 truncate dark:text-black">

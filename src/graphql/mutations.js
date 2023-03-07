@@ -39,6 +39,25 @@ export const changePersonalStatement = /* GraphQL */ `
     }
   }
 `;
+export const changeFileURL = /* GraphQL */ `
+  mutation ChangeFileURL($input: ChangeFileURLInput!) {
+    changeFileURL(input: $input) {
+      id
+      username
+      email
+      name
+      groups
+      verified
+      profilePicture
+      fileURL
+      personalStatement
+      transcript
+      amcasForm
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const changeTranscript = /* GraphQL */ `
   mutation ChangeTranscript($input: ChangeTranscriptInput!) {
     changeTranscript(input: $input) {
