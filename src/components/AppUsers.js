@@ -141,8 +141,9 @@ export default function AppUsers(){
                     <tbody>
                     {users.filter(user => 
                         {
+                            console.log(activeUser.group)
                             return(
-                            activeUser.group === "Admin" ?
+                            activeUser.group[0] === "Admin" ?
                             user.groups[0] !== "Admin" :
                             user.groups[0] === "Student")
                         })
