@@ -92,6 +92,16 @@ export default function AppUsers(){
     return (
         <div>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg bg-white">
+                <div className="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
+                    <label for="table-search" className="sr-only">Search</label>
+                    <div className="relative p-5">
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-8 pointer-events-none">
+                            <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <input type="text" id="table-search-users" className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for users" />
+                    </div>
+                </div>
+
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -164,8 +174,8 @@ export default function AppUsers(){
                             <td className="px-6 py-4">
                             {
                                 user.verified ? 
-                                <button className="p-2 bg-[rgb(93,235,100)] text-[rgb(255,255,255) rounded-lg disabled:">Complete</button> :
-                                <button className="p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg" onClick={(e) => handleUserVerification(e, user)}>
+                                <button className="p-2 bg-[rgb(173,245,177)] text-[rgb(255,255,255) rounded-lg disabled:">Verified</button> :
+                                <button className="p-2 bg-[rgb(245,191,148)] text-[rgb(255,255,255) rounded-lg" onClick={(e) => handleUserVerification(e, user)}>
                                     Click to verify
                                 </button> 
                             }
@@ -174,7 +184,12 @@ export default function AppUsers(){
                         <>
                             <td className="px-6 py-4">
                                 
-                                {user.verified ?
+                                {   user.fileURL &&
+                                    user.fileURL.length === 2 &&  
+                                    user.personalStatement &&
+                                    user.transcript &&
+                                    user.profilePicture ?
+
                                     <button className="p-2 bg-[rgb(93,235,100)] text-[rgb(255,255,255) rounded-lg">Complete</button> 
                                     :
                                     <button className="p-2 bg-[rgb(252,132,132)] text-[rgb(255,255,255) rounded-lg">Incomplete</button> 

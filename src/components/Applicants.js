@@ -50,9 +50,9 @@ export default function Applicants() {
                                             </p>
                                         </div>
                                         <div className="inline-flex items-center text-base font-semibold">
-                                            {user.fileURL ? 
-                                                <span className="text-green-600">Complete</span> : 
-                                            <span className="text-red-600">Incomplete</span>
+                                            {user.fileURL && user.fileURL.length === 2 ? 
+                                                <span className="text-green">Complete</span> : 
+                                                <span className="text-red">Incomplete</span>
                                             }
                                         </div>
                                     </div>

@@ -59,7 +59,7 @@ export default function Home({signOut}) {
           (groups.filter(group => group === "ChairCommittee").length > 0) ?
             <Tabs userGroup="ChairCommittee"/> :
           (groups.filter(group => group === "Admin").length > 0) ?
-            <>Welcome Admin</> :
+            <Tabs userGroup="Admin" /> :
           <div>Loading...</div>
         }
       </div>
