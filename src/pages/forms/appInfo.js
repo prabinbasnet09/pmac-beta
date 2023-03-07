@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import AppAcademicInfo from '../components/AppAcademicInfo'
-import Involvement from './Involvement'
-import AppPersonalInfo from '../components/AppPersonalInfo'
+import AppAcademicInfo from '../../components/AppAcademicInfo'
+import Involvement from './involvement'
+import AppPersonalInfo from '../../components/AppPersonalInfo'
 // import {useForm} from 'react-hook-form';
 
 

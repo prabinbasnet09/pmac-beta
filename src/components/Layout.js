@@ -1,10 +1,10 @@
 import React from 'react';
 import Navbar from './NavbarStudent';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, user, signOut}) => {
   return (
     <div>
-      <Navbar />
+      <Navbar user={user} signOut={signOut}/>
       {children}
     </div>
   );

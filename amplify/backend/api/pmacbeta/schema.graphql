@@ -1,0 +1,68 @@
+type User
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["Admin", "Chair"] }
+      { allow: groups, groups: ["Faculty"], operations: [create, read, update] }
+      { allow: owner, ownerField: "username", operations: [read, update] }
+    ]
+  ) { # FOR TESTING ONLY!
+  id: ID!
+  username: String!
+  email: String!
+  name: String!
+  groups: [String!]!
+  verified: Boolean!
+  profilePicture: String
+  fileURL: String # 2 Faculty recommendation form, should be in array
+  personalStatement: String
+  transcript: String
+  amcasForm: String
+}
+
+type ApplicantForm
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "userId", operations: [create, read, update] }
+    ]
+  ) {
+  userId: String! @primaryKey
+  fullName: String!
+  cwid: String!
+  cellPhone: String!
+  email: String!
+  major: [String!]!
+  minor: [String!]
+}
+
+type Query {
+  getStudentDocuments(id: ID!): User
+}
+
+type Mutation {
+  onVerifyUser(input: VerifyUserInput!): User
+  changePersonalStatement(input: ChangePersonalStatementInput!): User
+  changeTranscript(input: ChangeTranscriptInput!): User
+  changeProfilePicture(input: ChangeProfilePictureInput!): User
+}
+
+input VerifyUserInput {
+  id: ID!
+  verified: Boolean!
+}
+
+input ChangePersonalStatementInput {
+  id: ID!
+  personalStatement: String!
+}
+
+input ChangeTranscriptInput {
+  id: ID!
+  transcript: String!
+}
+
+input ChangeProfilePictureInput {
+  id: ID!
+  profilePicture: String!
+}

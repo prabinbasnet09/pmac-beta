@@ -5,7 +5,7 @@ const MyTable = ({ headings }) => {
   const [tableData, setTableData] = useState([]);
 
   const handleAddRow = () => {
-    event.preventDefault();
+    // event.preventDefault();
     setTableData(prevState => [
       ...prevState,
       { id: Date.now(), column1: '', column2: '', column3: '' },

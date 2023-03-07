@@ -6,8 +6,6 @@ import Table from './Table'
 
 export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
   const { register } = useForm();
-  
-
 
   register('firstName', { onChange: (e) => onChangeForm(e) });
   register('lastName', { onChange: (e) => onChangeForm(e) });

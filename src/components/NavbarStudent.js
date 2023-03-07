@@ -1,29 +1,43 @@
 import { Fragment, useState } from 'react'
+import { useRouter } from 'next/router'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image';
 import Logo from '../images/ulm_academic_maroon_white.png';
-
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
-
-const userNavigation = [
-  { name: 'Your Profile', href: 'www.google.com' },
-  { name: 'Sign out', href: '#' },
-]
+import Cookies from 'js-cookie'
  
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function NavbarStudent() {
+export default function NavbarStudent({user, signOut}) {
+  const firstName = user.attributes.name.split(' ')[0];
+  const loggedUser = {
+    name: firstName,
+    email: user.attributes.email,
+    imageUrl:
+      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  }
+  
+  const userNavigation = [
+    { name: 'Your Profile', href: '#' },
+    { name: 'Sign out', href: '#' },
+  ]
+    const router = useRouter();
 
-    
-
+    // handles the signout
+    const handelSignOut = () => {
+      //clearing local storage
+      localStorage.clear();
+      //clearing cookie session
+      Cookies.remove(`CognitoIdentityServiceProvider.v2hlarf0c3dcm13nn2vcbti14.${user.username}.refreshToken`);
+      Cookies.remove(`CognitoIdentityServiceProvider.v2hlarf0c3dcm13nn2vcbti14.${user.username}.accessToken`);
+      Cookies.remove(`CognitoIdentityServiceProvider.v2hlarf0c3dcm13nn2vcbti14.LastAuthUser`);
+      Cookies.remove(`CognitoIdentityServiceProvider.v2hlarf0c3dcm13nn2vcbti14.${user.username}.idToken`);
+  
+      router.push('/');
+    }
+  
   return (
     <>
       {/*
@@ -47,14 +61,14 @@ export default function NavbarStudent() {
                     <div className=" border-2 border-gold rounded-full p-2 ml-4  flex items-center md:ml-6">
 
                         <div>
-                            <span className="font-bold italic h-6 w-6 text-0.5xl text-gold">Welcome back {user.name},</span>
+                            <span className="font-bold italic h-6 w-6 text-0.5xl text-gold">Welcome back {loggedUser.name}</span>
                         </div>
                         {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3 ">
                         <div>
                           <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                             <span className="sr-only">Open user menu</span>
-                            <img className="h-12 w-12 rounded-full" src={user.imageUrl} alt="" />
+                            <img className="h-12 w-12 rounded-full" src={loggedUser.imageUrl} alt="" />
                           </Menu.Button>
                         </div>
                        
@@ -68,7 +82,6 @@ export default function NavbarStudent() {
                                         active ? 'bg-gray' : '',
                                         'block px-4 py-2 text-sm text-gray-700'
                                     )}
-                                    
                                   >
                                     {item.name}
 
@@ -100,11 +113,11 @@ export default function NavbarStudent() {
                 <div className="mt-4 border-t  pt-4 pb-3">
                   <div className="flex items-center px-5">
                     <div className="flex-shrink-0">
-                      <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                      <img className="h-10 w-10 rounded-full" src={loggedUser.imageUrl} alt="" />
                     </div>
                     <div className="ml-3">
-                      <div className="text-base font-medium leading-none text-gold">{user.name}</div>
-                      <div className="text-sm font-medium leading-none text-gold">{user.email}</div>
+                      <div className="text-base font-medium leading-none text-gold">{loggedUser.name}</div>
+                      <div className="text-sm font-medium leading-none text-gold">{loggedUser.email}</div>
                     </div>
                     
                   </div>
@@ -115,6 +128,10 @@ export default function NavbarStudent() {
                         as="a"
                         href={item.href}
                         className="block rounded-md px-3 py-2 text-base font-medium text-gray hover:text-gold"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          (item.name === "Sign Out") ? signOut() : null
+                        }}
                       >
                         {item.name}
                       </Disclosure.Button>

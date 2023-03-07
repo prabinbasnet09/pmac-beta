@@ -1,17 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Tab } from '@headlessui/react';
-import Forms from '../pages/Forms'
+import Forms from './Forms'
 import Schedular from '../pages/schedular';
-import AppStatus from '../components/AppStatus';
-
-
+import AppStatus from './AppStatus';
+// import Applicants from './Applicants';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Tabs() {
-  let [categories] = useState({
+export default function Tabs({userGroup}) {
+  const [categories, setCategories] = useState({
     Dashboard: [
       {
         id: 1,
@@ -40,8 +39,102 @@ export default function Tabs() {
       id: 4,
       title: "Results",
       
-    },],
-  })
+    }],
+  });
+
+  useEffect(() => {
+    (userGroup === "Faculty") ?
+      setCategories({
+        Dashboard: [
+          {
+            id: 1,
+            title: "Sorry! Your dashboard is still under construction",
+          },
+        ],
+        Applicants: [
+          {
+            id: 2,
+            title: "Applicants",
+          },
+        ],
+        Schedule: [
+          {
+            id: 3,
+            title: <Schedular />,
+          },
+        ]
+      }) :
+      (userGroup === "ChairCommittee") ?
+        setCategories({
+          Dashboard: [
+            {
+              id: 1,
+              title: <AppStatus />,
+            },
+          ],
+          Applicants: [
+            {
+              id: 2,
+              title: "Applicants",
+            },
+          ],
+          Schedule: [
+            {
+              id: 3,
+              title: <Schedular />,
+            },
+          ]
+        }) :
+        (userGroup === "Admin") ?
+          setCategories({
+            Dashboard: [
+              {
+                id: 1,
+                title: <AppStatus />,
+              },
+            ],
+            Admin: [
+              {
+                id: 2,
+                title: "Admin",
+              },
+            ],
+          }) :
+          setCategories({
+            Dashboard: [
+              {
+                id: 1,
+                title: <AppStatus />,
+                
+              },
+             
+            ],
+            Forms: [
+              {
+                id: 2,
+                title: <Forms /> ,
+               
+              },
+              
+            ],
+            Schedule: [
+              {
+                id: 3,
+                title: <Schedular />,
+                
+              },
+            
+            ],
+            Results: [{
+              id: 4,
+              title: "Results",
+              
+            }],
+          })
+
+  }, []);
+
+  
 
   return (
     <div className="flex items-center justify-center">
