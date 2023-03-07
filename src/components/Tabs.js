@@ -19,7 +19,7 @@ export default function Tabs({userGroup}) {
       },
      
     ],
-    Forms: [
+    Documents: [
       {
         id: 2,
         title: <Forms /> ,
@@ -109,7 +109,7 @@ export default function Tabs({userGroup}) {
               },
              
             ],
-            Forms: [
+            Documents: [
               {
                 id: 2,
                 title: <Forms /> ,

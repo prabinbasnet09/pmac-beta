@@ -17,7 +17,6 @@ module.exports = {
   },
   theme: {
     extend: {
-
       colors: {
         'red': '#840029',
         'bred': '#ef4444',

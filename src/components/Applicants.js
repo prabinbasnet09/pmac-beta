@@ -23,6 +23,7 @@ export default function Applicants() {
         setSelectedUser(user); 
 
     }
+
     return (
         <div>
             <p className=" mb-10 text-center font-bold text-5xl">Applicants List</p>
@@ -30,16 +31,16 @@ export default function Applicants() {
             users ? 
                 groups.filter(group => group != "Faculty").length > 0 ? 
                     <AppUsers /> :   
-                    <div className="m-10 max-w-lg rounded-lg bg-[rgb(238,231,231)]">
-                        <ul className="max-w-lg divide-y divide-gray-200 dark:divide-gray-700"> 
+                    <div className="m-10 rounded-lg bg-[rgb(255,255,255)] shadow-2xl">
+                        <ul className=" divide-y divide-gray-200 dark:divide-gray-700"> 
                         {
                             users.filter((user) => !user.email.endsWith('@ulm.edu')).map((user) => {
                                 return (
                                     // list of applicants
-                                    <li className="p-5 hover:bg-violet-300 cursor-pointer" key={user.id} value={user.id} onClick={(e) => {handleUserSelection(e, user)}}>
+                                    <li className="p-5 hover:bg-[rgb(238,238,238)] hover:rounded-lg cursor-pointer" key={user.id} value={user.id} onClick={(e) => {handleUserSelection(e, user)}}>
                                     <div className="p-3 flex items-center space-x-4">
                                         <div className="flex-shrink-0">
-                                            <Image className="w-8 h-8 rounded-full" />
+                                            <Image className="w-8 h-8 rounded-full shadow-xl" />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-lg font-medium text-gray-900 truncate dark:text-black">
@@ -55,6 +56,7 @@ export default function Applicants() {
                                                 <span className="text-red">Incomplete</span>
                                             }
                                         </div>
+
                                     </div>
                                     </li>
                                 )
@@ -68,8 +70,9 @@ export default function Applicants() {
 
            
             {toogleSelection && selectedUser ? 
-                <div className="mt-5 ml-5 p-8 bg-slate-300 max-w-[100vh] rounded-lg">
+                <div className="mt-5 ml-5 p-8 bg-slate-300  rounded-lg">
                     <ApplicantInfo user={selectedUser} key={selectedUser.id}/>
+                    
                 </div>
             :
                 <></>

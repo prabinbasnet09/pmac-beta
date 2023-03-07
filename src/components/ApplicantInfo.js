@@ -1,9 +1,11 @@
 import React from 'react';
+import Image from 'next/image';
 import { useState, useContext, useRef} from 'react';
 import { Storage } from '@aws-amplify/storage';
 import { ActiveUser } from '@/pages/_app';
 import { API } from '@aws-amplify/api';
 import { updateUser } from '@/graphql/mutations.js';
+import AppStatus from './AppStatus'; 
 
 export default function ApplicantInfo(props){
     const activeUser = useContext(ActiveUser);
@@ -79,10 +81,10 @@ export default function ApplicantInfo(props){
         <div className='bg-white p-5 rounded-lg'>
             <div className="p-3 flex items-center space-x-4">
                 <div className="flex-shrink-0">
-                    <img className="w-8 h-8 rounded-full" />
+                    <Image className="w-12 h-12 rounded-full shadow-2xl" />
                 </div>
                 <div className="flex-1 min-w-0">
-                    <p className="text-lg font-medium text-gray-900 truncate dark:text-black">
+                    <p className="text-4xl font-medium text-gray-900 truncate dark:text-black">
                     {user.name}
                     </p>
                     <p className="text-sm text-gray-500 truncate dark:text-black-400">
@@ -90,8 +92,10 @@ export default function ApplicantInfo(props){
                     </p>
                 </div>
             </div>
-            
-            {user.fileURL && !changeFile? 
+
+            <div className="mt-2">
+                <AppStatus student={user}/>
+                {user.fileURL && !changeFile? 
                 <>
                     <a href={user.fileURL} target="_blank" rel='noreferrer' className="mt-2 ml-[3.5rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg">Download File</a> 
                     <input type="file" id="myfile" name="myfile" style={{display: 'none'}} ref={handleInvisibleInput} onChange={(e) => handleFileSelect(e)}/> 
@@ -107,6 +111,7 @@ export default function ApplicantInfo(props){
                         <button className=" ml-[3.5rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg" onClick={(e) => handleClick(e)}>Choose File</button>
                     </>
             }
+            </div>
         </div>
     )
 }

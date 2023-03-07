@@ -10,7 +10,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function NavbarStudent({user, signOut}) {
+export default function Navbar({user, signOut}) {
   const [greetings, setGreetings] = useState(true);
   const firstName = user.attributes.name.split(' ')[0];
   const loggedUser = {
