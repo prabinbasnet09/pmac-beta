@@ -44,20 +44,16 @@ const Steps = () => {
 
         <li key={String(step.label)} className = "bg-[rgb(255,255,255)] p-4 hover:bg-[rgb(230,230,230)] shadow-xl">
           <div className="flex justify-between items-center">
-            {
-              student ?
-              <button
-                onClick={() => toggleOpenStep(index)}
-                className="mt-2 flex"
-              >
-                <ChevronDownIcon
-                  className={`w-8 h-8 ${
-                    openStep === index ? "transform rotate-180" : ""
-                  }`}
-                />
-              </button> :
-              <></>
-            }
+            <button
+              onClick={() => toggleOpenStep(index)}
+              className="mt-2 flex"
+            >
+              <ChevronDownIcon
+                className={`w-8 h-8 ${
+                  openStep === index ? "transform rotate-180" : ""
+                }`}
+              />
+            </button> 
           
             <h3 className="justify-left text-lg font-medium">{step.label}</h3>
             {step.state === 1 && (
