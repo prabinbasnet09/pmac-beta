@@ -4,9 +4,9 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { ActiveUser } from "@/pages/_app";
 
-const Steps = ({student}) => {
+const Steps = () => {
 
-  const activeUser = student ? student : useContext(ActiveUser);
+  const activeUser = useContext(ActiveUser);
 
   console.log(activeUser)
 
