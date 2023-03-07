@@ -11,6 +11,7 @@ function classNames(...classes) {
 }
 
 export default function NavbarStudent({user, signOut}) {
+  const [greetings, setGreetings] = useState(true);
   const firstName = user.attributes.name.split(' ')[0];
   const loggedUser = {
     name: firstName,
@@ -24,6 +25,13 @@ export default function NavbarStudent({user, signOut}) {
     { name: 'Sign out', href: '#' },
   ]
     const router = useRouter();
+
+    const handleGreetings = () => {
+      setTimeout(() => {
+        setGreetings(false)},
+      5000);
+    }
+    handleGreetings();
 
     // handles the signout
     const handelSignOut = () => {
@@ -59,12 +67,15 @@ export default function NavbarStudent({user, signOut}) {
 
                   <div className="hidden md:block">
                     <div className=" border-2 border-gold rounded-full p-2 ml-4  flex items-center md:ml-6">
-
                         <div>
-                            <span className="font-bold italic h-6 w-6 text-0.5xl text-gold">Welcome back {loggedUser.name}</span>
+                          { greetings &&
+                            <span className="font-bold italic h-6 w-6 text-0.5xl mr-3 text-gold">
+                              Welcome back, {loggedUser.name} 
+                            </span>
+                          }
                         </div>
                         {/* Profile dropdown */}
-                      <Menu as="div" className="relative ml-3 ">
+                      <Menu as="div" className="relative">
                         <div>
                           <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                             <span className="sr-only">Open user menu</span>

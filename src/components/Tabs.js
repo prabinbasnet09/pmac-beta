@@ -3,7 +3,7 @@ import { Tab } from '@headlessui/react';
 import Forms from './Forms'
 import Schedular from '../pages/schedular';
 import AppStatus from './AppStatus';
-// import Applicants from './Applicants';
+import Applicants from './Applicants';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -54,7 +54,7 @@ export default function Tabs({userGroup}) {
         Applicants: [
           {
             id: 2,
-            title: "Applicants",
+            title: <Applicants />,
           },
         ],
         Schedule: [
@@ -75,7 +75,7 @@ export default function Tabs({userGroup}) {
           Applicants: [
             {
               id: 2,
-              title: "Applicants",
+              title: <Applicants />,
             },
           ],
           Schedule: [
