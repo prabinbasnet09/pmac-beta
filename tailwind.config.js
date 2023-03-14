@@ -26,7 +26,9 @@ module.exports = {
         'bgold': '#EFDBB2',
         'white': '#f8fafc',
         'bogold': '#bd955a',
-        'green': '#22c55e'
+        'green': '#22c55e',
+        'ulmgray': '#65666A',
+        'ulmgold': '#FDB913'
       },
     },
   },

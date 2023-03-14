@@ -77,7 +77,7 @@ export default function NavbarStudent({user, signOut}) {
                 <Image src={Logo} className="w-[5rem] " alt="ULM Logo" />
 
                   <div className="hidden md:block">
-                    <div className=" border-2 border-gold rounded-full p-2 ml-4  flex items-center md:ml-6">
+                    <div className=" border-2 border-bogold rounded-full p-2 ml-4  flex items-center md:ml-6">
                         <div>
                           { greetings &&
                             <span className="font-bold italic h-6 w-6 text-0.5xl mr-3 text-gold">

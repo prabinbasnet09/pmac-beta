@@ -42,7 +42,7 @@ export default function Home({signOut}) {
   
 
   return (
-    <div>
+    <div className='bg-ulmgray'>
       <Head>
         <title>PMAC</title>
         <meta name="description" content="Pre-medical Advisory committee" />
