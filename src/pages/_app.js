@@ -103,6 +103,7 @@ export const ActiveUserProvider = ({children, user}) => {
 
 function App({ Component, pageProps, user, signOut}) {
   const [userGroup, setUserGroup] = useState();
+  const router = useRouter();
 
   const getUserGroup = async () => {
     const userGroup = await API.graphql({
@@ -123,7 +124,7 @@ function App({ Component, pageProps, user, signOut}) {
   getUserGroup();
 
   const withLayout = (Component) => {
-    const router = useRouter();
+    
     const showNav = router.pathname === '/' || router.pathname === '/documents' || router.pathname === '/schedule' || router.pathname === '/results' || router.pathname === '/applicants';
     return function WrappedComponent(props) {
     const tabs = 
