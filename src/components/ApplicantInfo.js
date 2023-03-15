@@ -5,7 +5,7 @@ import { Storage } from '@aws-amplify/storage';
 import { ActiveUser } from '@/pages/_app';
 import { API } from '@aws-amplify/api';
 import { updateUser } from '@/graphql/mutations.js';
-import AppStatus from './AppStatus'; 
+import AppStatus from './Dashboard'; 
 
 export default function ApplicantInfo(props){
     const activeUser = useContext(ActiveUser);

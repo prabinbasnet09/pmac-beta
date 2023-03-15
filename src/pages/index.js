@@ -2,10 +2,10 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useContext} from 'react'
-import Tabs from '../components/Tabs'
-import Login from './Login'
+import Dashboard from '../components/Dashboard'
+import Login from './login'
 import SignUp from './SignUp'
-import AppStatus from '../components/AppStatus'
+import AppStatus from '../components/Dashboard'
 import { ActiveUser } from './_app.js'
 import { Button } from '@aws-amplify/ui-react'
 
@@ -26,23 +26,8 @@ export default function Home({signOut}) {
     setUsers(users);
   }, [activeUser]);
 
-    // handles the signout
-    const handleSignOut = () => {
-      //clearing local storage
-      localStorage.clear();
-      //clearing cookie session
-
-      Cookies.remove(`CognitoIdentityServiceProvider.2k4676qov74l0oovdtcfvpfff0.${activeUser.username}.refreshToken`);
-      Cookies.remove(`CognitoIdentityServiceProvider.2k4676qov74l0oovdtcfvpfff0.${activeUser.username}.accessToken`);
-      Cookies.remove(`CognitoIdentityServiceProvider.2k4676qov74l0oovdtcfvpfff0.LastAuthUser`);
-      Cookies.remove(`CognitoIdentityServiceProvider.2k4676qov74l0oovdtcfvpfff0.${activeUser.username}.idToken`);
-  
-      router.push('/');
-    }
-  
-
   return (
-    <div className='bg-ulmgray'>
+    <div>
       <Head>
         <title>PMAC</title>
         <meta name="description" content="Pre-medical Advisory committee" />
@@ -51,25 +36,8 @@ export default function Home({signOut}) {
       </Head>
 
       <div>
-        {
-          (groups.filter(group => group === "Student").length > 0) ?
-            <Tabs userGroup="Student"/> :
-          (groups.filter(group => group === "Faculty").length > 0) ?
-            <Tabs userGroup="Faculty"/> :
-          (groups.filter(group => group === "ChairCommittee").length > 0) ?
-            <Tabs userGroup="ChairCommittee"/> :
-          (groups.filter(group => group === "Admin").length > 0) ?
-            <Tabs userGroup="Admin" /> :
-          <div>Loading...</div>
-        }
+        <Dashboard />
       </div>
-      
-      <button className=" m-10 p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg" onClick={(e) => {
-        handleSignOut(e);
-        signOut();
-        }}>
-        Sign Out
-      </button>
     </div>
   )
 }

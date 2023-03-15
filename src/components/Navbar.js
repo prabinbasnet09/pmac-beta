@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -26,37 +26,51 @@ export default function NavbarStudent({user, signOut}) {
   ]
     const router = useRouter();
 
-    const handleGreetings = () => {
-      setTimeout(() => {
-        setGreetings(false)},
-      5000);
+    // useEffect(() => {
+    //   setTimeout(() => {
+    //     setGreetings(false);
+    //   }, 5000);
+    // }, []);
+  
+    // // // update greetings based on current route
+    // // useEffect(() => {
+    // //   if (router.pathname === '/') {
+    // //     handleGreetings();
+    // //   } else {
+    // //     setGreetings(false);
+    // //   }
+    // // }, [router.pathname]);
+
+    // const handleGreetings = () => {
+    //   setTimeout(() => {
+    //     setGreetings(false)},
+    //   5000);
+    // }
+
+    const handleSignOut = () => {
+      //clearing local storage
+      localStorage.clear();
+      //clearing cookie session
+
+      Cookies.remove(`CognitoIdentityServiceProvider.2k4676qov74l0oovdtcfvpfff0.${user.username}.refreshToken`);
+      Cookies.remove(`CognitoIdentityServiceProvider.2k4676qov74l0oovdtcfvpfff0.${user.username}.accessToken`);
+      Cookies.remove(`CognitoIdentityServiceProvider.2k4676qov74l0oovdtcfvpfff0.LastAuthUser`);
+      Cookies.remove(`CognitoIdentityServiceProvider.2k4676qov74l0oovdtcfvpfff0.${user.username}.idToken`);
+      
+      signOut();
+      router.push('/');
     }
-    handleGreetings();
 
     const handleUserNavClick = (e) => {
       e.preventDefault();
       if(e.target.textContent === 'Sign out'){
-        handelSignOut();
+        handleSignOut();
       }
       else {
         router.push('/profile');
       }
     }
 
-    // handles the signout
-    const handelSignOut = () => {
-      //clearing local storage
-      localStorage.clear();
-      //clearing cookie session
-      Cookies.remove(`CognitoIdentityServiceProvider.v2hlarf0c3dcm13nn2vcbti14.${user.username}.refreshToken`);
-      Cookies.remove(`CognitoIdentityServiceProvider.v2hlarf0c3dcm13nn2vcbti14.${user.username}.accessToken`);
-      Cookies.remove(`CognitoIdentityServiceProvider.v2hlarf0c3dcm13nn2vcbti14.LastAuthUser`);
-      Cookies.remove(`CognitoIdentityServiceProvider.v2hlarf0c3dcm13nn2vcbti14.${user.username}.idToken`);
-
-      signOut();
-      
-    }
-  
   return (
     <>
       {/*
@@ -81,7 +95,7 @@ export default function NavbarStudent({user, signOut}) {
                         <div>
                           { greetings &&
                             <span className="font-bold italic h-6 w-6 text-0.5xl mr-3 text-gold">
-                              Welcome back, {loggedUser.name} 
+                              Welcome {loggedUser.name} 
                             </span>
                           }
                         </div>
@@ -150,10 +164,6 @@ export default function NavbarStudent({user, signOut}) {
                         as="a"
                         href={item.href}
                         className="block rounded-md px-3 py-2 text-base font-medium text-gray hover:text-gold "
-                        onClick={(e) => {
-                          e.preventDefault();
-                          (item.name === "Sign Out") ? signOut() : null
-                        }}
                       >
                         {item.name}
                       </Disclosure.Button>
