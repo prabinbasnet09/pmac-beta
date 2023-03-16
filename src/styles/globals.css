@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav-link {
+    width: fit-content;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 50px;
+    border-radius: 10px;
+}
+
+.nav-body {
+  position: relative;
+  background-color: gray;
+  padding: 2rem;
+  border-radius: 1rem;
+  line-height: 1.25rem;
+  font-size: 0.875rem/* 14px */;
+  --tw-bg-opacity: 1;
+  background-color: rgb(200 201 199 / var(--tw-bg-opacity));
+}

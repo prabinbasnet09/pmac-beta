@@ -1,0 +1,29 @@
+{
+  "resourceName": "s3e1623622",
+  "policyUUID": "e1623622",
+  "bucketName": "pmacbetafiles",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [],
+  "triggerFunction": "NONE",
+  "groupAccess": {
+    "Student": [
+      "CREATE_AND_UPDATE",
+      "READ"
+    ],
+    "Faculty": [
+      "CREATE_AND_UPDATE",
+      "READ"
+    ],
+    "Admin": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ],
+    "ChairCommittee": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ]
+  }
+}
