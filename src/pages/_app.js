@@ -42,6 +42,7 @@ export const ActiveUserProvider = ({children, user}) => {
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       })
       .then((res) => {
+        console.log(res.data.listUsers.items);
         setLocalStorage('userInfo', res.data.listUsers.items);
         setUsers(res.data.listUsers.items);
       })
@@ -126,8 +127,7 @@ function App({ Component, pageProps, user, signOut}) {
   getUserGroup();
 
   const withLayout = (Component) => {
-    
-    
+
     return function WrappedComponent(props) {
     const tabs = 
     (userGroup === "Student") ?
@@ -204,6 +204,7 @@ function App({ Component, pageProps, user, signOut}) {
       )
     }
   }
+  
   const LayoutComponent = withLayout(Component);
 
   return ( 

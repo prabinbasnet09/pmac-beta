@@ -19,7 +19,7 @@ export default function TabBar({tabList}){
                     {tabs && 
                     tabs.map((tab, index) => (
                         <li key={index}>
-                            <Link href={tab.path}  class={`${"nav-link"} ${
+                            <Link href={tab.path}  className={`${"nav-link"} ${
                 router.pathname === `${tab.path}` ? 'bg-white shadow' : 
                 'text-white hover:bg-white hover:text-gold ;'
               }`} >
