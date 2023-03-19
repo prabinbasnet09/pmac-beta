@@ -169,12 +169,23 @@ export const createApplicantForm = /* GraphQL */ `
   ) {
     createApplicantForm(input: $input, condition: $condition) {
       userId
-      fullName
+      firstName
+      lastName
+      date
       cwid
       cellPhone
+      country
+      streetAddress
+      city
+      state
+      zipCode
       email
+      alternativeEmail
       major
       minor
+      gpa
+      expectedGraduation
+      entranceDate
       createdAt
       updatedAt
     }
@@ -187,12 +198,23 @@ export const updateApplicantForm = /* GraphQL */ `
   ) {
     updateApplicantForm(input: $input, condition: $condition) {
       userId
-      fullName
+      firstName
+      lastName
+      date
       cwid
       cellPhone
+      country
+      streetAddress
+      city
+      state
+      zipCode
       email
+      alternativeEmail
       major
       minor
+      gpa
+      expectedGraduation
+      entranceDate
       createdAt
       updatedAt
     }
@@ -205,12 +227,149 @@ export const deleteApplicantForm = /* GraphQL */ `
   ) {
     deleteApplicantForm(input: $input, condition: $condition) {
       userId
-      fullName
+      firstName
+      lastName
+      date
       cwid
       cellPhone
+      country
+      streetAddress
+      city
+      state
+      zipCode
       email
+      alternativeEmail
       major
       minor
+      gpa
+      expectedGraduation
+      entranceDate
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createApplicantReleaseForm = /* GraphQL */ `
+  mutation CreateApplicantReleaseForm(
+    $input: CreateApplicantReleaseFormInput!
+    $condition: ModelApplicantReleaseFormConditionInput
+  ) {
+    createApplicantReleaseForm(input: $input, condition: $condition) {
+      userId
+      authorizeRelease
+      allowEvaluation
+      allowAdvertising
+      fullName
+      cwid
+      signature
+      date
+      schoolDetails
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateApplicantReleaseForm = /* GraphQL */ `
+  mutation UpdateApplicantReleaseForm(
+    $input: UpdateApplicantReleaseFormInput!
+    $condition: ModelApplicantReleaseFormConditionInput
+  ) {
+    updateApplicantReleaseForm(input: $input, condition: $condition) {
+      userId
+      authorizeRelease
+      allowEvaluation
+      allowAdvertising
+      fullName
+      cwid
+      signature
+      date
+      schoolDetails
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteApplicantReleaseForm = /* GraphQL */ `
+  mutation DeleteApplicantReleaseForm(
+    $input: DeleteApplicantReleaseFormInput!
+    $condition: ModelApplicantReleaseFormConditionInput
+  ) {
+    deleteApplicantReleaseForm(input: $input, condition: $condition) {
+      userId
+      authorizeRelease
+      allowEvaluation
+      allowAdvertising
+      fullName
+      cwid
+      signature
+      date
+      schoolDetails
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createFacultyRecommendationForm = /* GraphQL */ `
+  mutation CreateFacultyRecommendationForm(
+    $input: CreateFacultyRecommendationFormInput!
+    $condition: ModelFacultyRecommendationFormConditionInput
+  ) {
+    createFacultyRecommendationForm(input: $input, condition: $condition) {
+      userId
+      applicantName
+      signature
+      evaluatorName
+      applicantObservation
+      applicantStrength
+      applicantWeakness
+      applicantPotential
+      additionalComments
+      evaluatorSignature
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFacultyRecommendationForm = /* GraphQL */ `
+  mutation UpdateFacultyRecommendationForm(
+    $input: UpdateFacultyRecommendationFormInput!
+    $condition: ModelFacultyRecommendationFormConditionInput
+  ) {
+    updateFacultyRecommendationForm(input: $input, condition: $condition) {
+      userId
+      applicantName
+      signature
+      evaluatorName
+      applicantObservation
+      applicantStrength
+      applicantWeakness
+      applicantPotential
+      additionalComments
+      evaluatorSignature
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFacultyRecommendationForm = /* GraphQL */ `
+  mutation DeleteFacultyRecommendationForm(
+    $input: DeleteFacultyRecommendationFormInput!
+    $condition: ModelFacultyRecommendationFormConditionInput
+  ) {
+    deleteFacultyRecommendationForm(input: $input, condition: $condition) {
+      userId
+      applicantName
+      signature
+      evaluatorName
+      applicantObservation
+      applicantStrength
+      applicantWeakness
+      applicantPotential
+      additionalComments
+      evaluatorSignature
+      date
       createdAt
       updatedAt
     }

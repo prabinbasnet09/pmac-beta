@@ -24,16 +24,77 @@ type ApplicantForm
   @model
   @auth(
     rules: [
+      {
+        allow: groups
+        groups: ["Admin", "ChairCommittee", "Faculty"]
+        operations: [read]
+      }
       { allow: owner, ownerField: "userId", operations: [create, read, update] }
     ]
   ) {
   userId: String! @primaryKey
-  fullName: String!
+  firstName: String!
+  lastName: String!
+  date: String!
   cwid: String!
   cellPhone: String!
+  country: String!
+  streetAddress: String!
+  city: String!
+  state: String!
+  zipCode: String!
   email: String!
+  alternativeEmail: String!
   major: [String!]!
   minor: [String!]
+  gpa: Float!
+  expectedGraduation: String!
+  entranceDate: String!
+}
+
+type ApplicantReleaseForm
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Faculty", "Admin", "ChairCommittee"]
+        operations: [read]
+      }
+      { allow: owner, ownerField: "userId", operations: [create, read, update] }
+    ]
+  ) {
+  userId: String! @primaryKey
+  authorizeRelease: Boolean!
+  allowEvaluation: Boolean!
+  allowAdvertising: Boolean!
+  fullName: String!
+  cwid: String!
+  signature: String!
+  date: String!
+  schoolDetails: [AWSJSON!]
+}
+
+type FacultyRecommendationForm
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["Faculty"], operations: [create, read, update] }
+      { allow: groups, groups: ["ChairCommittee"], operations: [read] }
+      { allow: owner, ownerField: "userId", operations: [read] }
+    ]
+  ) {
+  userId: String! @primaryKey
+  applicantName: String!
+  signature: String!
+  evaluatorName: String!
+  applicantObservation: String!
+  applicantStrength: String!
+  applicantWeakness: String!
+  applicantPotential: String!
+  additionalComments: String!
+  evaluatorSignature: String!
+  date: String!
 }
 
 type Query {

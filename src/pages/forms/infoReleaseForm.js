@@ -1,13 +1,74 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
+import * as queries from '../../graphql/queries';
+import * as mutations from '../../graphql/mutations';
+import { API, graphqlOperation } from 'aws-amplify';
 
+export default function InfoReleaseForm({ user }) {
+  
+  const [rows, setRows] = useState([
+    {
+      schoolName: '',
+      deadlineDate: '',
+      contactPerson: '',
+      address: '',
+    }
+  ])
+  
+  const [authorizeRelease, setAuthorizeRelease] = useState(false)
+  const [allowEvaluation, setAllowEvaluation] = useState(false)
+  const [allowAdvertising, setAllowAdvertising] = useState(false)
 
-export default function InfoReleaseForm() {
-  const [rows, setRows] = useState([{ name: '', date: '', phone: '', address: '' }])
-  const [otherValues, setOtherValues] = useState({ choices: []})
+  const [userInfo, setUserInfo] = useState({
+    fullName: '',
+    cwid: '',
+    signature: '',
+    date: '',
+  })
+
   const [tableError, setTableError] = useState(false)
   const [checkboxError, setCheckboxError] = useState(false)
   
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      await API.graphql({
+        query: queries.listApplicantReleaseForms,
+        variables: { filter: { userId: { eq: user.attributes.sub } } },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      })
+      .then((res) => {
+        const data = res.data.listApplicantReleaseForms.items[0];
+        if (data) {
+          setAuthorizeRelease(data.authorizeRelease);
+          setAllowEvaluation(data.allowEvaluation);
+          setAllowAdvertising(data.allowAdvertising);
+          setUserInfo({
+            fullName: data.fullName,
+            cwid: data.cwid,
+            signature: data.signature,
+            date: data.date,
+          });
+          setRows(JSON.parse(data.schoolDetails));
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        })
+    }
+
+    fetchData();
+  }, [user])
+
+  const handleAuthorizeRelease = (e) => {
+    setAuthorizeRelease(!authorizeRelease);
+  }
+
+  const handleAllowEvaluation = (e) => {
+    setAllowEvaluation(!allowEvaluation);
+  }
+
+  const handleAllowAdvertising = (e) => {
+    setAllowAdvertising(!allowAdvertising);
+  }
 
   const handleRowChange = (index, field, value) => {
     const newRows = [...rows]
@@ -16,60 +77,79 @@ export default function InfoReleaseForm() {
     setRows(newRows)
   } 
 
-  const handleOtherValuesChange = (field, value) => {
-    if (field === 'choices') {
-      const checkedChoices = [...otherValues.choices]
-      if (value.checked) {
-        
-        checkedChoices.push(value.value)
-      } else {
-        const index = checkedChoices.indexOf(value.value)
-        if (index > -1) {
-          checkedChoices.splice(index, 1)
-        }
-      }
-      setCheckboxError(false)
-      setOtherValues(prevValues => ({ ...prevValues, [field]: checkedChoices }))
-    } else {
-      
-      setOtherValues(prevValues => ({ ...prevValues, [field]: value }))
-    }
-  
+  const handleUserInfo = (field, value) => {
+    setUserInfo(prevValues => ({ ...prevValues, [field]: value }))
   }
-
-  
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const data = { rows, ...otherValues }
-    // Check if all rows have values
-  const rowsHaveValues = rows.every((row) => {
-    return row.name && row.date && row.phone && row.address
-  })
+    // const data = { rows, ...otherValues }
+    //   // Check if all rows have values
+    // const rowsHaveValues = rows.every((row) => {
+    //   return row.name && row.date && row.phone && row.address
+    // })
 
-  // Check if choices are selected
-  
-  const checkedChoices = [...otherValues.choices]
-  let checkedOption = 0 
-  checkedChoices.map((choices)=> {{if (choices=='A'||choices=='B'){checkedOption++}}})
-  const choicesSelected = checkedOption == 2
-  console.log(checkedOption)
-  // Check if both conditions are met
-  if (rowsHaveValues && choicesSelected ) {
-    // Submit the form
-    console.log(data);
-   
-    // ...
-  } else {
-    if (!rowsHaveValues){setTableError(true)}
-    if (!choicesSelected) {setCheckboxError(true)
+    // // Check if choices are selected
+    
+    // const checkedChoices = [...otherValues.choices]
+    // let checkedOption = 0 
+    // checkedChoices.map((choices)=> {{if (choices=='A'||choices=='B'){checkedOption++}}})
+    // const choicesSelected = checkedOption == 2
+    // console.log(checkedOption)
+    // // Check if both conditions are met
+    // if (rowsHaveValues && choicesSelected ) {
+    //   // Submit the form
+    //   // console.log(data);
+    
+    //   // ...
+    // } else {
+    //   if (!rowsHaveValues){setTableError(true)}
+    //   if (!choicesSelected) {setCheckboxError(true)
+    //   }
+    
+      
+    // }
+
+    try {
+      const id = user.attributes.sub;
+      const schoolDetails = rows.map((row) => {
+        return {
+          schoolName: row.schoolName,
+          deadlineDate: row.deadlineDate,
+          contactPerson: row.contactPerson,
+          address: row.address,
+        }
+      })
+
+      const inputData = {
+        userId: id,
+        authorizeRelease: authorizeRelease,
+        allowEvaluation: allowEvaluation,
+        allowAdvertising: allowAdvertising,
+        fullName: userInfo.fullName,
+        cwid: userInfo.cwid,
+        signature: userInfo.signature,
+        date: userInfo.date,
+        // schoolDetails: `[{\"authorizeRelease\":true, \"allowEvaluation\":true, \"allowAdvertisement\": true, \"schoolName\": \"ULM\", \"deadlineDate\": \"2023/03/18\", \"contactPerson\": \"Dr. Jose Cordova\", \"address\": \"Concordia, Monroe\"}, \
+        //                 {\"name\": \"name\", \"succeed\": true, \"date\": \"2021-05-05\", \"phone\": \"318-123-4567\", \"address\": \"1234 Main St, Monroe, LA 71203\"}]`
+        schoolDetails: JSON.stringify(schoolDetails),
+        }
+
+      await API.graphql({
+        query: mutations.createApplicantReleaseForm,
+        variables: { input: inputData },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      }
+      )
+    } catch (err) {
+      console.log('error creating InfoRelease Form:', err)
     }
-   
-    
-  }
-    
-    // Send data to API
-    // send form data to API
   };
 
   const handleAddRow = () => {
@@ -110,15 +190,16 @@ export default function InfoReleaseForm() {
         </label>
         <fieldset className='ml-9'>
      
-        
+       
         
      <div className=" leading-relaxed text-justify">
-       <input type="checkbox" name="choice" value="A" onChange={event => handleOtherValuesChange('choices', event.target)}  />
+       {/* <input type="checkbox" name="choice" value="authorizeRelease" onChange={event => handleOtherValuesChange('choices', event.target)} /> */}
+       <input type="checkbox" name="choice" value="authorizeRelease" checked={authorizeRelease} onChange={(e)=> handleAuthorizeRelease(e)} />
        <span className='ml-3'> I hereby authorize the Pre-Medical Advisory Committee of the University of Louisiana at Monroe
 to release the evaluation of the undersigned to the below listed professional schools and/or programs.</span>
      </div >
      <div className=" leading-relaxed text-justify">
-       <input type="checkbox" name="choice" value="B" onChange={event => handleOtherValuesChange('choices', event.target)}  />
+       <input type="checkbox" name="choice" value="allowEvaluation" checked={allowEvaluation} onChange={(e) => handleAllowEvaluation(e)}  />
        <span className='ml-3'>   I will allow the committee members to evaluate my performance based on my academic record,
 submitted materials, and the committee interview. I authorize the committee to prepare an evaluation
 letter for me for the purposes of applying to the professional schools and/or programs listed below. I
@@ -126,7 +207,7 @@ understand that their evaluation and all items considered in making this recomme
 confidential and I waive my right to see such evaluation.</span>
      </div>
      <div className=" leading-relaxed text-justify">
-       <input type="checkbox" name="choice" value="C" onChange={event => handleOtherValuesChange('choices', event.target)}  />
+       <input type="checkbox" name="choice" value="allowAdvertising" checked={allowAdvertising} onChange={(e) => handleAllowAdvertising(e)}  />
       <span className='ml-3'>
       I will allow my name to be released to the University if accepted to a professional school. The
 University may use my name and the name of the professional school/ and or program for statistics and
@@ -153,7 +234,8 @@ my name and school upon acceptance.</h1>
                           type="text"
                           name="fullName"
                           id="fullName"
-                          onChange={event => handleOtherValuesChange('name', event.target.value)}
+                          defaultValue={userInfo.fullName}
+                          onChange={event => handleUserInfo('fullName', event.target.value)}
                           autoComplete="given-name"
                           />
                       </div>
@@ -166,7 +248,8 @@ my name and school upon acceptance.</h1>
                           type="text"
                           name="cwid"
                           id="cwid"
-                          onChange={event => handleOtherValuesChange('cwid', event.target.value)}
+                          defaultValue={userInfo.cwid}
+                          onChange={event => handleUserInfo('cwid', event.target.value)}
                           autoComplete="family-name"
                          />
                       </div>
@@ -182,7 +265,8 @@ my name and school upon acceptance.</h1>
                           type="text"
                           name="signature"
                           id="signature"
-                          onChange={event => handleOtherValuesChange('signature', event.target.value)}
+                          defaultValue={userInfo.signature}
+                          onChange={event => handleUserInfo('signature', event.target.value)}
                           autoComplete="given-name"
                           />
                       </div>
@@ -195,7 +279,10 @@ my name and school upon acceptance.</h1>
                           type="date"
                           name="date"
                           id="date"
-                          onChange={event => handleOtherValuesChange('date', event.target.value)}
+                          defaultValue={userInfo.date}
+                          onChange={event => {
+                            handleUserInfo('date', event.target.value)
+                          }}
                           autoComplete="family-name"
                          />
                       </div>
@@ -224,13 +311,13 @@ provide the letter deadline date.</span> </h1>
       {rows.map((row, index) => (
         <tr key={index}>
           <td className="border border-gray-400 px-4 py-2">
-            <input type="text" value={row.name} onChange={event => handleRowChange(index, 'name', event.target.value)} />
+            <input type="text" value={row.schoolName} onChange={event => handleRowChange(index, 'schoolName', event.target.value)} />
           </td>
           <td className="border border-gray-400 px-4 py-2">
-            <input type="date" value={row.date} onChange={event => handleRowChange(index, 'date', event.target.value)} />
+            <input type="date" value={row.deadlineDate} onChange={event => handleRowChange(index, 'deadlineDate', event.target.value)} />
           </td>
           <td className="border border-gray-400 px-4 py-2">
-            <input type="tel" value={row.phone} onChange={event => handleRowChange(index, 'phone', event.target.value)} />
+            <input type="tel" value={row.contactPerson} onChange={event => handleRowChange(index, 'contactPerson', event.target.value)} />
           </td>
           <td className="border border-gray-400 px-4 py-2">
             <input type="text" value={row.address} onChange={event => handleRowChange(index, 'address', event.target.value)} />

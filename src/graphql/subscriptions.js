@@ -74,12 +74,23 @@ export const onCreateApplicantForm = /* GraphQL */ `
   ) {
     onCreateApplicantForm(filter: $filter, userId: $userId) {
       userId
-      fullName
+      firstName
+      lastName
+      date
       cwid
       cellPhone
+      country
+      streetAddress
+      city
+      state
+      zipCode
       email
+      alternativeEmail
       major
       minor
+      gpa
+      expectedGraduation
+      entranceDate
       createdAt
       updatedAt
     }
@@ -92,12 +103,23 @@ export const onUpdateApplicantForm = /* GraphQL */ `
   ) {
     onUpdateApplicantForm(filter: $filter, userId: $userId) {
       userId
-      fullName
+      firstName
+      lastName
+      date
       cwid
       cellPhone
+      country
+      streetAddress
+      city
+      state
+      zipCode
       email
+      alternativeEmail
       major
       minor
+      gpa
+      expectedGraduation
+      entranceDate
       createdAt
       updatedAt
     }
@@ -110,12 +132,149 @@ export const onDeleteApplicantForm = /* GraphQL */ `
   ) {
     onDeleteApplicantForm(filter: $filter, userId: $userId) {
       userId
-      fullName
+      firstName
+      lastName
+      date
       cwid
       cellPhone
+      country
+      streetAddress
+      city
+      state
+      zipCode
       email
+      alternativeEmail
       major
       minor
+      gpa
+      expectedGraduation
+      entranceDate
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateApplicantReleaseForm = /* GraphQL */ `
+  subscription OnCreateApplicantReleaseForm(
+    $filter: ModelSubscriptionApplicantReleaseFormFilterInput
+    $userId: String
+  ) {
+    onCreateApplicantReleaseForm(filter: $filter, userId: $userId) {
+      userId
+      authorizeRelease
+      allowEvaluation
+      allowAdvertising
+      fullName
+      cwid
+      signature
+      date
+      schoolDetails
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateApplicantReleaseForm = /* GraphQL */ `
+  subscription OnUpdateApplicantReleaseForm(
+    $filter: ModelSubscriptionApplicantReleaseFormFilterInput
+    $userId: String
+  ) {
+    onUpdateApplicantReleaseForm(filter: $filter, userId: $userId) {
+      userId
+      authorizeRelease
+      allowEvaluation
+      allowAdvertising
+      fullName
+      cwid
+      signature
+      date
+      schoolDetails
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteApplicantReleaseForm = /* GraphQL */ `
+  subscription OnDeleteApplicantReleaseForm(
+    $filter: ModelSubscriptionApplicantReleaseFormFilterInput
+    $userId: String
+  ) {
+    onDeleteApplicantReleaseForm(filter: $filter, userId: $userId) {
+      userId
+      authorizeRelease
+      allowEvaluation
+      allowAdvertising
+      fullName
+      cwid
+      signature
+      date
+      schoolDetails
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateFacultyRecommendationForm = /* GraphQL */ `
+  subscription OnCreateFacultyRecommendationForm(
+    $filter: ModelSubscriptionFacultyRecommendationFormFilterInput
+    $userId: String
+  ) {
+    onCreateFacultyRecommendationForm(filter: $filter, userId: $userId) {
+      userId
+      applicantName
+      signature
+      evaluatorName
+      applicantObservation
+      applicantStrength
+      applicantWeakness
+      applicantPotential
+      additionalComments
+      evaluatorSignature
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFacultyRecommendationForm = /* GraphQL */ `
+  subscription OnUpdateFacultyRecommendationForm(
+    $filter: ModelSubscriptionFacultyRecommendationFormFilterInput
+    $userId: String
+  ) {
+    onUpdateFacultyRecommendationForm(filter: $filter, userId: $userId) {
+      userId
+      applicantName
+      signature
+      evaluatorName
+      applicantObservation
+      applicantStrength
+      applicantWeakness
+      applicantPotential
+      additionalComments
+      evaluatorSignature
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFacultyRecommendationForm = /* GraphQL */ `
+  subscription OnDeleteFacultyRecommendationForm(
+    $filter: ModelSubscriptionFacultyRecommendationFormFilterInput
+    $userId: String
+  ) {
+    onDeleteFacultyRecommendationForm(filter: $filter, userId: $userId) {
+      userId
+      applicantName
+      signature
+      evaluatorName
+      applicantObservation
+      applicantStrength
+      applicantWeakness
+      applicantPotential
+      additionalComments
+      evaluatorSignature
+      date
       createdAt
       updatedAt
     }

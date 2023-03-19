@@ -93,10 +93,6 @@ export default function NavbarStudent({user, signOut}) {
                   <Link href="/">
                     <Image src={Logo} className="w-[5rem] " alt="ULM Logo" />
                   </Link>
-
-                  <div className='text-white font-mono font-bold text-4xl hidden  md:block'>
-                    PMAC COMMITTEE
-                  </div>
                 <div className="pr-10 flex items-center">
                   <div className="hidden md:block ">
                     <div className=" border-2 border-bogold rounded-full p-2 ml-4  flex items-center md:ml-6">
