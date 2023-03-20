@@ -51,13 +51,14 @@ function AppInfo() {
         event.preventDefault();
         console.log(formData);
         const newErrors = {};
-  const requiredFields = ['cwid', 'firstName', 'lastName', 'number', 'country', 'address', 'city', 'state', 'zip', 'ulm', 'alternate', 
+        const requiredFields = ['cwid', 'firstName', 'lastName', 'number', 'country', 'address', 'city', 'state', 'zip', 'ulm', 'alternate', 
                             'major', 'minor','expectedGrad', 'overallGPA','date', 'scores', 'examDate','appType', 'faculty']; // add all required fields here
-  requiredFields.forEach((field) => {
-    if (formData[field] === '') {
-      newErrors[field] = `Field ${field} is required`;
-    }
+        requiredFields.forEach((field) => {
+        if (formData[field] === '') {
+          newErrors[field] = `Field ${field} is required`;
+        }
   });
+  
   setErrors(newErrors);
     
 
