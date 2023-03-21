@@ -85,7 +85,7 @@ export default function InfoReleaseForm({ user }) {
     newRows.pop(); // remove the last row
     
     setRows(newRows);
-    // setTableError(false)
+    setTableError(false)
   
   }
 
@@ -131,11 +131,13 @@ export default function InfoReleaseForm({ user }) {
       
     // }
 
+
     const rowsHaveValues = rows.every((row) => {
-      return row.name && row.date && row.phone && row.address
+     
+      return row.schoolName && row.deadlineDate && row.contactPerson && row.address
        })
   
-      //  if (!rowsHaveValues){setTableError(true)}
+      if (!rowsHaveValues){setTableError(true)}
 
     if (!checkboxError && !tableError){
       console.log(tableError)
