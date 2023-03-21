@@ -60,14 +60,17 @@ export default function InfoReleaseForm({ user }) {
 
   const handleAuthorizeRelease = (e) => {
     setAuthorizeRelease(!authorizeRelease);
+    setCheckboxError(false);
   }
 
   const handleAllowEvaluation = (e) => {
     setAllowEvaluation(!allowEvaluation);
+    setCheckboxError(false);
   }
 
   const handleAllowAdvertising = (e) => {
     setAllowAdvertising(!allowAdvertising);
+    setCheckboxError(false);
   }
 
   const handleRowChange = (index, field, value) => {
@@ -77,12 +80,30 @@ export default function InfoReleaseForm({ user }) {
     setRows(newRows)
   } 
 
+  const handleDeleteRow = () => {
+    const newRows = [...rows];
+    newRows.pop(); // remove the last row
+    
+    setRows(newRows);
+    // setTableError(false)
+  
+  }
+
   const handleUserInfo = (field, value) => {
     setUserInfo(prevValues => ({ ...prevValues, [field]: value }))
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+
+    if (!authorizeRelease && !allowEvaluation && !allowAdvertising){
+      setCheckboxError(true);
+      
+  }
+
+ 
+
+
     // const data = { rows, ...otherValues }
     //   // Check if all rows have values
     // const rowsHaveValues = rows.every((row) => {
@@ -110,8 +131,20 @@ export default function InfoReleaseForm({ user }) {
       
     // }
 
-    try {
+    const rowsHaveValues = rows.every((row) => {
+      return row.name && row.date && row.phone && row.address
+       })
+  
+      //  if (!rowsHaveValues){setTableError(true)}
+
+    if (!checkboxError && !tableError){
+      console.log(tableError)
+      console.log(rowsHaveValues)
+      try {
+
+        
       const id = user.attributes.sub;
+      
       const schoolDetails = rows.map((row) => {
         return {
           schoolName: row.schoolName,
@@ -149,6 +182,9 @@ export default function InfoReleaseForm({ user }) {
       )
     } catch (err) {
       console.log('error creating InfoRelease Form:', err)
+    }}
+    else{
+      console.log("don't submit");
     }
   };
 
@@ -156,7 +192,7 @@ export default function InfoReleaseForm({ user }) {
     setRows([...rows, { name: '', date: '', phone: '', address: '' }])
   }
 
-  const errorMessage = ['Error! Please select at-least the first two checkboxes.','Error! Please fill at-least one row with correct information.']
+  const errorMessage = ['Error! Please select all three checkboxes.','Error! Please fill at-least one row with correct information.']
   return (
 
    
@@ -165,8 +201,8 @@ export default function InfoReleaseForm({ user }) {
               <div className="mt-10 w-full md:mt-10">
                   <div className="overflow-hidden shadow sm:rounded-md">
                   
-                    <div className="bg-white px-4 py-5 sm:p-6">
-                    <h1>Information Release Form</h1>
+                  <div className="border-2 border-gold w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 ">
+                  <h1 className='text-center text-4xl font-bold text-gold'>Information Release Form</h1>
 
                     <div className=" p-4 text-black opacity-75 mx-auto">
                         
@@ -184,7 +220,7 @@ export default function InfoReleaseForm({ user }) {
     <form onSubmit={handleSubmit}>
    
      
-      <div className="mb-4">
+      <div >
         <label className="block text-black font-bold mb-2">
           Please check the box for all that you agree to:
         </label>
@@ -218,7 +254,7 @@ Committee and the University of Louisiana at Monroe.
    </fieldset>
    
       </div>
-      {checkboxError && <div className='text-bred mt-0'> {errorMessage[0]} </div> }
+      {checkboxError && <div className='text-bred text-sm mt-0 italic'> {errorMessage[0]} </div> }
   
   <h1 className="mb-5 mt-7 text-1xl font-bold">By signing below, I understand that I am waiving my right to review the evaluation material and agree to the release of
 my name and school upon acceptance.</h1>
@@ -237,6 +273,7 @@ my name and school upon acceptance.</h1>
                           defaultValue={userInfo.fullName}
                           onChange={event => handleUserInfo('fullName', event.target.value)}
                           autoComplete="given-name"
+                          className='w-full'
                           />
                       </div>
   
@@ -251,6 +288,7 @@ my name and school upon acceptance.</h1>
                           defaultValue={userInfo.cwid}
                           onChange={event => handleUserInfo('cwid', event.target.value)}
                           autoComplete="family-name"
+                          className='w-full'
                          />
                       </div>
                       </div>
@@ -268,6 +306,7 @@ my name and school upon acceptance.</h1>
                           defaultValue={userInfo.signature}
                           onChange={event => handleUserInfo('signature', event.target.value)}
                           autoComplete="given-name"
+                          className='w-full'
                           />
                       </div>
   
@@ -284,6 +323,7 @@ my name and school upon acceptance.</h1>
                             handleUserInfo('date', event.target.value)
                           }}
                           autoComplete="family-name"
+                          className='w-full'
                          />
                       </div>
                       </div>
@@ -298,29 +338,29 @@ Application service.</h1>
 provide the letter deadline date.</span> </h1>
                       
   <div className="overflow-x-auto">
-  <table className="table-auto border-collapse border border-gray-400">
+  <table className="table-auto border-collapse border border-black w-full bg-red opacity-75 text-white ">
     <thead>
       <tr>
-        <th className="border border-gray-400 px-4 py-2">Name of School</th>
-        <th className="border border-gray-400 px-4 py-2">Letter Deadline Date</th>
-        <th className="border border-gray-400 px-4 py-2">Contact Person</th>
-        <th className="border border-gray-400 px-4 py-2">Address</th>
+        <th className="border border-black px-4 py-2">Name of School</th>
+        <th className="border border-black px-4 py-2">Letter Deadline Date</th>
+        <th className="border border-black px-4 py-2">Contact Person</th>
+        <th className="border border-black px-4 py-2">Address</th>
       </tr>
     </thead>
     <tbody>
       {rows.map((row, index) => (
         <tr key={index}>
-          <td className="border border-gray-400 px-4 py-2">
-            <input type="text" value={row.schoolName} onChange={event => handleRowChange(index, 'schoolName', event.target.value)} />
+          <td className="border border-black ">
+            <input className="border-none w-full text-black" type="text" value={row.schoolName} onChange={event => handleRowChange(index, 'schoolName', event.target.value)} />
           </td>
-          <td className="border border-gray-400 px-4 py-2">
-            <input type="date" value={row.deadlineDate} onChange={event => handleRowChange(index, 'deadlineDate', event.target.value)} />
+          <td className="border border-black ">
+            <input className="border-none w-full text-black" type="date" value={row.deadlineDate} onChange={event => handleRowChange(index, 'deadlineDate', event.target.value)} />
           </td>
-          <td className="border border-gray-400 px-4 py-2">
-            <input type="tel" value={row.contactPerson} onChange={event => handleRowChange(index, 'contactPerson', event.target.value)} />
+          <td className="border border-black ">
+            <input className="border-none w-full text-black" type="tel" value={row.contactPerson} onChange={event => handleRowChange(index, 'contactPerson', event.target.value)} />
           </td>
-          <td className="border border-gray-400 px-4 py-2">
-            <input type="text" value={row.address} onChange={event => handleRowChange(index, 'address', event.target.value)} />
+          <td className="border border-black ">
+            <input className="border-none w-full text-black" type="text" value={row.address} onChange={event => handleRowChange(index, 'address', event.target.value)} />
           </td>
         </tr>
       ))}
@@ -329,14 +369,26 @@ provide the letter deadline date.</span> </h1>
 
 </div>
 
-{tableError && <div className='text-bred mt-0'> {errorMessage[1]} </div> }
+{tableError && <div className='text-bred text-sm mt-0 italic'> {errorMessage[1]} </div> }
 
-      <button className="bg-green text-white font-bold py-2 px-4 rounded mt-5 " type="button" onClick={handleAddRow}>Add Row</button>
+<button className="inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded" type="button" onClick={handleAddRow}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+</svg>
+
+</button>
+<button onClick={ handleDeleteRow} className="bg-bred text-white font-bold px-1 py-1 rounded mt-5 " type="button">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+</svg>
+
+      </button>
 
       
-        <div className="flex justify-center"><button className="bg-green text-white font-bold py-2 px-4 rounded">
+      <div className="flex justify-center"><button className="bg-green text-white font-bold py-2 px-4 rounded mt-3  w-1/2">
         Submit
-      </button></div>
+      </button>
+      </div>
       
     </form>
 
