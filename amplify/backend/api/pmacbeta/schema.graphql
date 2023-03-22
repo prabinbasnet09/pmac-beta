@@ -14,7 +14,7 @@ type User
   groups: [String!]!
   verified: Boolean!
   profilePicture: String
-  fileURL: [String!] # 2 Faculty recommendation form, should be in array
+  facultyRecommendation: [String!] # 2 Faculty recommendation form, should be in array
   personalStatement: String
   transcript: String
   amcasForm: String
@@ -50,6 +50,15 @@ type ApplicantForm
   gpa: Float!
   expectedGraduation: String!
   entranceDate: String!
+  entryExams: [AWSJSON!]
+  examDate: String!
+  facultyEvaluators: [AWSJSON!]
+  involvement: [AWSJSON!]
+  workExperience: [AWSJSON!]
+  fieldExperience: [AWSJSON!]
+  honors: [AWSJSON!]
+  labResearch: [AWSJSON!]
+  volunteer: [AWSJSON!]
 }
 
 type ApplicantReleaseForm
