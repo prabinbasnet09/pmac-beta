@@ -2,6 +2,7 @@ import {React, useState, useEffect} from 'react';
 import * as queries from '../../graphql/queries';
 import * as mutations from '../../graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
+import { setDate } from 'date-fns';
 
 export default function InfoReleaseForm({ user }) {
   
@@ -27,7 +28,12 @@ export default function InfoReleaseForm({ user }) {
 
   const [tableError, setTableError] = useState(false)
   const [checkboxError, setCheckboxError] = useState(false)
-  
+  const [nameError, setNameError] = useState(false);
+  const [cwidError, setCwidError] = useState(false);
+  const [dateError, setDateError] = useState(false);
+  const [signatureError, setSignatureError] = useState(false);
+
+
   useEffect(() => {
     const fetchData = async () => {
       await API.graphql({
@@ -59,19 +65,33 @@ export default function InfoReleaseForm({ user }) {
   }, [user])
 
   const handleAuthorizeRelease = (e) => {
-    setAuthorizeRelease(!authorizeRelease);
-    setCheckboxError(false);
+    setAuthorizeRelease(e.target.checked);
+    // setCheckboxOne(e.target.checked)
+    console.log(authorizeRelease)
+    setCheckboxError(false)
+    
   }
 
   const handleAllowEvaluation = (e) => {
-    setAllowEvaluation(!allowEvaluation);
-    setCheckboxError(false);
+    setAllowEvaluation(e.target.checked);
+    // if (!allowEvaluation){setCheckboxTwo(false);}
+    // else {setCheckboxTwo(true);}
+    console.log(allowEvaluation)
+    // setCheckboxTwo(e.target.checked)
+    setCheckboxError(false)
   }
 
   const handleAllowAdvertising = (e) => {
-    setAllowAdvertising(!allowAdvertising);
-    setCheckboxError(false);
+    setAllowAdvertising(e.target.checked);
+    // if (!allowAdvertising){setCheckboxThree(false);}
+    // else {console.log(allowAdvertising)
+    //   setCheckboxThree(true)}
+    // setCheckboxThree(e.target.checked)
+    console.log(allowAdvertising)
+    setCheckboxError(false)
   }
+
+  
 
   const handleRowChange = (index, field, value) => {
     const newRows = [...rows]
@@ -90,46 +110,57 @@ export default function InfoReleaseForm({ user }) {
   }
 
   const handleUserInfo = (field, value) => {
+    
+    if (field === 'fullName'){
+     
+      if (value!==''){setNameError(false)}
+  else {setNameError(true)}}
+      
+    if (field === 'cwid'){
+      if (value!==''){setCwidError(false)}
+      else {setCwidError(true)}
+      }
+    
+    if (field === 'date'){
+      if (value!==''){setDateError(false)}else
+      {setDateError(true)}}
+    
+    if (field === 'signature'){setSignatureError(false)}
     setUserInfo(prevValues => ({ ...prevValues, [field]: value }))
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (!authorizeRelease && !allowEvaluation && !allowAdvertising){
-      setCheckboxError(true);
+    if (!authorizeRelease || !allowEvaluation || !allowAdvertising){
+      console.log("Set CheckBox errror")
+      setCheckboxError(!checkboxError);
+      console.log(checkboxError)
       
+    }
+
+  if (userInfo.fullName === '') {
+    console.log(userInfo.fullName + "\n+++++");
+  
+    setNameError(prevState => {
+      !prevState
+      console.log(prevState);
+      return true;
+    });
   }
-
- 
-
-
-    // const data = { rows, ...otherValues }
-    //   // Check if all rows have values
-    // const rowsHaveValues = rows.every((row) => {
-    //   return row.name && row.date && row.phone && row.address
-    // })
-
-    // // Check if choices are selected
-    
-    // const checkedChoices = [...otherValues.choices]
-    // let checkedOption = 0 
-    // checkedChoices.map((choices)=> {{if (choices=='A'||choices=='B'){checkedOption++}}})
-    // const choicesSelected = checkedOption == 2
-    // console.log(checkedOption)
-    // // Check if both conditions are met
-    // if (rowsHaveValues && choicesSelected ) {
-    //   // Submit the form
-    //   // console.log(data);
-    
-    //   // ...
-    // } else {
-    //   if (!rowsHaveValues){setTableError(true)}
-    //   if (!choicesSelected) {setCheckboxError(true)
-    //   }
-    
-      
-    // }
+  
+  if (userInfo.cwid === '') {
+    setCwidError(prevState => !prevState);
+  }
+  
+  if (userInfo.date === '') {
+    setDateError(prevState => !prevState);
+  }
+  
+  if (userInfo.signature === '') {
+    setSignatureError(prevState => !prevState);
+  }
+  
 
 
     const rowsHaveValues = rows.every((row) => {
@@ -138,10 +169,12 @@ export default function InfoReleaseForm({ user }) {
        })
   
       if (!rowsHaveValues){setTableError(true)}
+    if (!checkboxError && !tableError && !nameError && !cwidError && !signatureError && !dateError){
+      
+      console.log(checkboxError)
+      console.log("test")
 
-    if (!checkboxError && !tableError){
-      console.log(tableError)
-      console.log(rowsHaveValues)
+      
       try {
 
         
@@ -176,9 +209,11 @@ export default function InfoReleaseForm({ user }) {
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       })
       .then((res) => {
+        console.log("+++++shit")
         console.log(res)
       })
       .catch((err) => {
+        console.log("error I guess")
         console.log(err)
       }
       )
@@ -232,12 +267,12 @@ export default function InfoReleaseForm({ user }) {
         
      <div className=" leading-relaxed text-justify">
        {/* <input type="checkbox" name="choice" value="authorizeRelease" onChange={event => handleOtherValuesChange('choices', event.target)} /> */}
-       <input type="checkbox" name="choice" value="authorizeRelease" checked={authorizeRelease} onChange={(e)=> handleAuthorizeRelease(e)} />
+       <input type="checkbox" name="choice" value="authorizeRelease" checked={authorizeRelease} onChange={handleAuthorizeRelease} />
        <span className='ml-3'> I hereby authorize the Pre-Medical Advisory Committee of the University of Louisiana at Monroe
 to release the evaluation of the undersigned to the below listed professional schools and/or programs.</span>
      </div >
      <div className=" leading-relaxed text-justify">
-       <input type="checkbox" name="choice" value="allowEvaluation" checked={allowEvaluation} onChange={(e) => handleAllowEvaluation(e)}  />
+       <input type="checkbox" name="choice" value="allowEvaluation" checked={allowEvaluation} onChange={handleAllowEvaluation}  />
        <span className='ml-3'>   I will allow the committee members to evaluate my performance based on my academic record,
 submitted materials, and the committee interview. I authorize the committee to prepare an evaluation
 letter for me for the purposes of applying to the professional schools and/or programs listed below. I
@@ -245,7 +280,7 @@ understand that their evaluation and all items considered in making this recomme
 confidential and I waive my right to see such evaluation.</span>
      </div>
      <div className=" leading-relaxed text-justify">
-       <input type="checkbox" name="choice" value="allowAdvertising" checked={allowAdvertising} onChange={(e) => handleAllowAdvertising(e)}  />
+       <input type="checkbox" name="choice" value="allowAdvertising" checked={allowAdvertising} onChange={ handleAllowAdvertising}  />
       <span className='ml-3'>
       I will allow my name to be released to the University if accepted to a professional school. The
 University may use my name and the name of the professional school/ and or program for statistics and
@@ -277,6 +312,9 @@ my name and school upon acceptance.</h1>
                           autoComplete="given-name"
                           className='w-full'
                           />
+                          {nameError && (
+                           <p className="text-bred text-sm italic">Please enter your full name</p>
+                        )}
                       </div>
   
                       <div className="col-span-6 sm:col-span-3">
@@ -292,6 +330,9 @@ my name and school upon acceptance.</h1>
                           autoComplete="family-name"
                           className='w-full'
                          />
+                         {cwidError && (
+                           <p className="text-bred text-sm italic">Please enter your correct CWID [xxxx-xxxx]</p>
+                        )}
                       </div>
                       </div>
                       <div className=" mt-5  grid grid-cols-6 gap-6">
@@ -310,6 +351,8 @@ my name and school upon acceptance.</h1>
                           autoComplete="given-name"
                           className='w-full'
                           />
+                          {signatureError && (
+                           <p className="text-bred text-sm italic">Please enter your full name.</p>)}
                       </div>
   
                       <div className="col-span-6 sm:col-span-3">
@@ -321,12 +364,13 @@ my name and school upon acceptance.</h1>
                           name="date"
                           id="date"
                           defaultValue={userInfo.date}
-                          onChange={event => {
-                            handleUserInfo('date', event.target.value)
-                          }}
+                          onChange={event => handleUserInfo('date', event.target.value)}
                           autoComplete="family-name"
                           className='w-full'
                          />
+                          {dateError && (
+                           <p className="text-bred text-sm italic">Please select today's date.</p>
+                        )}
                       </div>
                       </div>
 
