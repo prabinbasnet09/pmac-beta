@@ -443,7 +443,7 @@ export default function InfoReleaseForm({ user }) {
                   />
                   {dateErrorCheck && (
                     <p className='text-bred text-sm italic'>
-                      Please select today's date.
+                      Please select today`&apos;`s date.
                     </p>
                   )}
                 </div>
