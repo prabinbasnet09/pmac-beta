@@ -14,10 +14,12 @@ type User
   groups: [String!]!
   verified: Boolean!
   profilePicture: String
-  fileURL: [String!] # 2 Faculty recommendation form, should be in array
+  facultyRecommendation: [String!] # 2 Faculty recommendation form, should be in array
   personalStatement: String
   transcript: String
   amcasForm: String
+  applicantForm: String
+  applicantReleaseForm: String
 }
 
 type ApplicantForm
@@ -50,6 +52,15 @@ type ApplicantForm
   gpa: Float!
   expectedGraduation: String!
   entranceDate: String!
+  entryExams: [AWSJSON!]
+  examDate: String!
+  facultyEvaluators: [AWSJSON!]
+  involvement: [AWSJSON!]
+  workExperience: [AWSJSON!]
+  fieldExperience: [AWSJSON!]
+  honors: [AWSJSON!]
+  labResearch: [AWSJSON!]
+  volunteer: [AWSJSON!]
 }
 
 type ApplicantReleaseForm
@@ -104,14 +115,16 @@ type Query {
 type Mutation {
   onVerifyUser(input: VerifyUserInput!): User
   changePersonalStatement(input: ChangePersonalStatementInput!): User
-  changeFileURL(input: ChangeFileURLInput!): User
+  changeFacultyRecommendationURL(
+    input: ChangeFacultyRecommendationURLInput!
+  ): User
   changeTranscript(input: ChangeTranscriptInput!): User
   changeProfilePicture(input: ChangeProfilePictureInput!): User
 }
 
-input ChangeFileURLInput {
+input ChangeFacultyRecommendationURLInput {
   id: ID!
-  fileURL: [String!]
+  facultyRecommendation: [String!]
 }
 
 input VerifyUserInput {

@@ -11,10 +11,12 @@ export const onVerifyUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -30,18 +32,22 @@ export const changePersonalStatement = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
   }
 `;
-export const changeFileURL = /* GraphQL */ `
-  mutation ChangeFileURL($input: ChangeFileURLInput!) {
-    changeFileURL(input: $input) {
+export const changeFacultyRecommendationURL = /* GraphQL */ `
+  mutation ChangeFacultyRecommendationURL(
+    $input: ChangeFacultyRecommendationURLInput!
+  ) {
+    changeFacultyRecommendationURL(input: $input) {
       id
       username
       email
@@ -49,10 +55,12 @@ export const changeFileURL = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -68,10 +76,12 @@ export const changeTranscript = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -87,10 +97,12 @@ export const changeProfilePicture = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -109,10 +121,12 @@ export const createUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -131,10 +145,12 @@ export const updateUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -153,10 +169,12 @@ export const deleteUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -186,6 +204,15 @@ export const createApplicantForm = /* GraphQL */ `
       gpa
       expectedGraduation
       entranceDate
+      entryExams
+      examDate
+      facultyEvaluators
+      involvement
+      workExperience
+      fieldExperience
+      honors
+      labResearch
+      volunteer
       createdAt
       updatedAt
     }
@@ -215,6 +242,15 @@ export const updateApplicantForm = /* GraphQL */ `
       gpa
       expectedGraduation
       entranceDate
+      entryExams
+      examDate
+      facultyEvaluators
+      involvement
+      workExperience
+      fieldExperience
+      honors
+      labResearch
+      volunteer
       createdAt
       updatedAt
     }
@@ -244,6 +280,15 @@ export const deleteApplicantForm = /* GraphQL */ `
       gpa
       expectedGraduation
       entranceDate
+      entryExams
+      examDate
+      facultyEvaluators
+      involvement
+      workExperience
+      fieldExperience
+      honors
+      labResearch
+      volunteer
       createdAt
       updatedAt
     }

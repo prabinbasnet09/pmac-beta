@@ -14,10 +14,12 @@ export const onCreateUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -36,10 +38,12 @@ export const onUpdateUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -58,10 +62,12 @@ export const onDeleteUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -91,6 +97,15 @@ export const onCreateApplicantForm = /* GraphQL */ `
       gpa
       expectedGraduation
       entranceDate
+      entryExams
+      examDate
+      facultyEvaluators
+      involvement
+      workExperience
+      fieldExperience
+      honors
+      labResearch
+      volunteer
       createdAt
       updatedAt
     }
@@ -120,6 +135,15 @@ export const onUpdateApplicantForm = /* GraphQL */ `
       gpa
       expectedGraduation
       entranceDate
+      entryExams
+      examDate
+      facultyEvaluators
+      involvement
+      workExperience
+      fieldExperience
+      honors
+      labResearch
+      volunteer
       createdAt
       updatedAt
     }
@@ -149,6 +173,15 @@ export const onDeleteApplicantForm = /* GraphQL */ `
       gpa
       expectedGraduation
       entranceDate
+      entryExams
+      examDate
+      facultyEvaluators
+      involvement
+      workExperience
+      fieldExperience
+      honors
+      labResearch
+      volunteer
       createdAt
       updatedAt
     }

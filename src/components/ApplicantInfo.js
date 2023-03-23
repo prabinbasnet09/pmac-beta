@@ -60,7 +60,7 @@ export default function ApplicantInfo(props){
                 variables: {
                     input: {
                         id: user.id,
-                        fileURL: objectURL
+                        facultyRecommendation: objectURL
                     }
                 },
             })
@@ -95,9 +95,9 @@ export default function ApplicantInfo(props){
 
             <div className="mt-2">
                 <AppStatus student={user}/>
-                {user.fileURL && !changeFile? 
+                {user.facultyRecommendation && !changeFile? 
                 <>
-                    <a href={user.fileURL} target="_blank" rel='noreferrer' className="mt-2 ml-[3.5rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg">Download File</a> 
+                    <a href={user.facultyRecommendation} target="_blank" rel='noreferrer' className="mt-2 ml-[3.5rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg">Download File</a> 
                     <input type="file" id="myfile" name="myfile" style={{display: 'none'}} ref={handleInvisibleInput} onChange={(e) => handleFileSelect(e)}/> 
                     <button className="mt-2 ml-[1rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg" onClick={(e) => {e.preventDefault; handleClick(e);}}>Change</button> 
                 </> :

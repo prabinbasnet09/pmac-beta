@@ -11,10 +11,12 @@ export const getStudentDocuments = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -30,10 +32,12 @@ export const getUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-      fileURL
+      facultyRecommendation
       personalStatement
       transcript
       amcasForm
+      applicantForm
+      applicantReleaseForm
       createdAt
       updatedAt
     }
@@ -54,10 +58,12 @@ export const listUsers = /* GraphQL */ `
         groups
         verified
         profilePicture
-        fileURL
+        facultyRecommendation
         personalStatement
         transcript
         amcasForm
+        applicantForm
+        applicantReleaseForm
         createdAt
         updatedAt
       }
@@ -86,6 +92,15 @@ export const getApplicantForm = /* GraphQL */ `
       gpa
       expectedGraduation
       entranceDate
+      entryExams
+      examDate
+      facultyEvaluators
+      involvement
+      workExperience
+      fieldExperience
+      honors
+      labResearch
+      volunteer
       createdAt
       updatedAt
     }
@@ -125,6 +140,15 @@ export const listApplicantForms = /* GraphQL */ `
         gpa
         expectedGraduation
         entranceDate
+        entryExams
+        examDate
+        facultyEvaluators
+        involvement
+        workExperience
+        fieldExperience
+        honors
+        labResearch
+        volunteer
         createdAt
         updatedAt
       }
