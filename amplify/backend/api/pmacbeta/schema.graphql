@@ -18,6 +18,8 @@ type User
   personalStatement: String
   transcript: String
   amcasForm: String
+  applicantForm: String
+  applicantReleaseForm: String
 }
 
 type ApplicantForm
@@ -113,14 +115,16 @@ type Query {
 type Mutation {
   onVerifyUser(input: VerifyUserInput!): User
   changePersonalStatement(input: ChangePersonalStatementInput!): User
-  changeFileURL(input: ChangeFileURLInput!): User
+  changeFacultyRecommendationURL(
+    input: ChangeFacultyRecommendationURLInput!
+  ): User
   changeTranscript(input: ChangeTranscriptInput!): User
   changeProfilePicture(input: ChangeProfilePictureInput!): User
 }
 
-input ChangeFileURLInput {
+input ChangeFacultyRecommendationURLInput {
   id: ID!
-  fileURL: [String!]
+  facultyRecommendation: [String!]
 }
 
 input VerifyUserInput {

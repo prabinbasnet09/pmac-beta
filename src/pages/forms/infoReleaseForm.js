@@ -189,48 +189,46 @@ export default function InfoReleaseForm({ user }) {
       !signatureErrorCheck &&
       !dateErrorCheck
     ) {
-      // try {
-      //   const id = user.attributes.sub;
+      try {
+        const id = user.attributes.sub;
 
-      //   const schoolDetails = rows.map((row) => {
-      //     return {
-      //       schoolName: row.schoolName,
-      //       deadlineDate: row.deadlineDate,
-      //       contactPerson: row.contactPerson,
-      //       address: row.address,
-      //     }
-      //   })
+        const schoolDetails = rows.map(row => {
+          return {
+            schoolName: row.schoolName,
+            deadlineDate: row.deadlineDate,
+            contactPerson: row.contactPerson,
+            address: row.address,
+          };
+        });
 
-      //   const inputData = {
-      //     userId: id,
-      //     authorizeRelease: authorizeRelease,
-      //     allowEvaluation: allowEvaluation,
-      //     allowAdvertising: allowAdvertising,
-      //     fullName: userInfo.fullName,
-      //     cwid: userInfo.cwid,
-      //     signature: userInfo.signature,
-      //     date: userInfo.date,
-      //     // schoolDetails: `[{\"authorizeRelease\":true, \"allowEvaluation\":true, \"allowAdvertisement\": true, \"schoolName\": \"ULM\", \"deadlineDate\": \"2023/03/18\", \"contactPerson\": \"Dr. Jose Cordova\", \"address\": \"Concordia, Monroe\"}, \
-      //     //                 {\"name\": \"name\", \"succeed\": true, \"date\": \"2021-05-05\", \"phone\": \"318-123-4567\", \"address\": \"1234 Main St, Monroe, LA 71203\"}]`
-      //     schoolDetails: JSON.stringify(schoolDetails),
-      //     }
+        const inputData = {
+          userId: id,
+          authorizeRelease: authorizeRelease,
+          allowEvaluation: allowEvaluation,
+          allowAdvertising: allowAdvertising,
+          fullName: userInfo.fullName,
+          cwid: userInfo.cwid,
+          signature: userInfo.signature,
+          date: userInfo.date,
+          // schoolDetails: `[{\"authorizeRelease\":true, \"allowEvaluation\":true, \"allowAdvertisement\": true, \"schoolName\": \"ULM\", \"deadlineDate\": \"2023/03/18\", \"contactPerson\": \"Dr. Jose Cordova\", \"address\": \"Concordia, Monroe\"}, \
+          //                 {\"name\": \"name\", \"succeed\": true, \"date\": \"2021-05-05\", \"phone\": \"318-123-4567\", \"address\": \"1234 Main St, Monroe, LA 71203\"}]`
+          schoolDetails: JSON.stringify(schoolDetails),
+        };
 
-      //   await API.graphql({
-      //     query: mutations.createApplicantReleaseForm,
-      //     variables: { input: inputData },
-      //     authMode: 'AMAZON_COGNITO_USER_POOLS'
-      //   })
-      //   .then((res) => {
-      //     console.log(res)
-      //   })
-      //   .catch((err) => {
-
-      //     console.log(err)
-      //   }
-      //   )
-      // } catch (err) {
-      //   console.log('error creating InfoRelease Form:', err)
-      // }
+        await API.graphql({
+          query: mutations.createApplicantReleaseForm,
+          variables: { input: inputData },
+          authMode: 'AMAZON_COGNITO_USER_POOLS',
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } catch (err) {
+        console.log('error creating InfoRelease Form:', err);
+      }
       console.log('submit');
     } else {
       console.log("don't submit");
