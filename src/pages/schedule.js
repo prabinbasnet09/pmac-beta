@@ -4,7 +4,7 @@ import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -23,21 +23,18 @@ const localizer = dateFnsLocalizer({
 const events = [
   {
     title: "Big Meeting",
-    allDay: true,
-    start: new Date(2023, 2, 0),
-    end: new Date(2023, 2, 0),
+    start: new Date(2023, 2, 20, 11, 30),
+    end: new Date(2023, 2, 21, 1, 0),
   },
   {
     title: "Vacation",
-    allDay: true,
-    start: new Date(2023, 2, 0),
-    end: new Date(2023, 2, 0),
+    start: new Date(2023, 2, 20, 12, 30),
+    end: new Date(2023, 2, 21, 1, 0),
   },
   {
     title: "Conference",
-    allDay: true,
-    start: new Date(2023, 2, 0),
-    end: new Date(2023, 2, 0),
+    start: new Date(2023, 2, 20, 12, 30),
+    end: new Date(2023, 2, 21, 1, 0),
   },
 ];
 
@@ -53,9 +50,11 @@ function Schedular() {
     <div className="flex items-center justify-center">
       <div className="w-3/4 px-2 sm:px-0">
         <div className={`${"nav-body"}`}>
-          <h1>Calendar</h1>
-          <h2>Add New Event</h2>
-          <div>
+          <h1>
+            <strong>Schedular</strong>
+          </h1>
+          <div style={{ position: "relative", zIndex: "999" }}>
+            <h2>Add New Event</h2>
             <input
               type="text"
               placeholder="Add Title"
@@ -68,12 +67,16 @@ function Schedular() {
             <ReactDatePicker
               placeholderText="Start Date"
               style={{ marginRight: "10px" }}
+              showTimeSelect
+              timeFormat="HH:mm"
               selected={newEvent.start}
               onChange={(start) => setNewEvent({ ...newEvent, start })}
             />
             <ReactDatePicker
               placeholderText="End Date"
               selected={newEvent.end}
+              showTimeSelect
+              timeFormat="HH:mm"
               onChange={(end) => setNewEvent({ ...newEvent, end })}
             />
             <button style={{ marginTop: "10px" }} onClick={handleAddEvent}>
@@ -82,7 +85,7 @@ function Schedular() {
           </div>
           <Calendar
             localizer={localizer}
-            events={events}
+            events={allEvents}
             startAccessor="start"
             endAccessor="end"
             defaultView={Views.WEEK}
