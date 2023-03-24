@@ -20,6 +20,7 @@ type User
   amcasForm: String
   applicantForm: String
   applicantReleaseForm: String
+  schedule: String
 }
 
 type ApplicantForm
@@ -115,14 +116,24 @@ type Query {
 type Mutation {
   onVerifyUser(input: VerifyUserInput!): User
   changePersonalStatement(input: ChangePersonalStatementInput!): User
-  changeFacultyRecommendationURL(
-    input: ChangeFacultyRecommendationURLInput!
-  ): User
+  changeFacultyRecommendation(input: ChangeFacultyRecommendationInput!): User
+  changeApplicationForm(input: ChangeApplicantFormInput!): User
+  changeApplicationReleaseForm(input: ChangeApplicantReleaseFormInput!): User
   changeTranscript(input: ChangeTranscriptInput!): User
   changeProfilePicture(input: ChangeProfilePictureInput!): User
 }
 
-input ChangeFacultyRecommendationURLInput {
+input ChangeApplicantFormInput {
+  id: ID!
+  applicantForm: String!
+}
+
+input ChangeApplicantReleaseFormInput {
+  id: ID!
+  applicantReleaseForm: String!
+}
+
+input ChangeFacultyRecommendationInput {
   id: ID!
   facultyRecommendation: [String!]
 }

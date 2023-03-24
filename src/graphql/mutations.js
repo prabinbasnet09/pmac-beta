@@ -17,6 +17,7 @@ export const onVerifyUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      schedule
       createdAt
       updatedAt
     }
@@ -38,16 +39,17 @@ export const changePersonalStatement = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      schedule
       createdAt
       updatedAt
     }
   }
 `;
-export const changeFacultyRecommendationURL = /* GraphQL */ `
-  mutation ChangeFacultyRecommendationURL(
-    $input: ChangeFacultyRecommendationURLInput!
+export const changeFacultyRecommendation = /* GraphQL */ `
+  mutation ChangeFacultyRecommendation(
+    $input: ChangeFacultyRecommendationInput!
   ) {
-    changeFacultyRecommendationURL(input: $input) {
+    changeFacultyRecommendation(input: $input) {
       id
       username
       email
@@ -61,6 +63,53 @@ export const changeFacultyRecommendationURL = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      schedule
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const changeApplicationForm = /* GraphQL */ `
+  mutation ChangeApplicationForm($input: ChangeApplicantFormInput!) {
+    changeApplicationForm(input: $input) {
+      id
+      username
+      email
+      name
+      groups
+      verified
+      profilePicture
+      facultyRecommendation
+      personalStatement
+      transcript
+      amcasForm
+      applicantForm
+      applicantReleaseForm
+      schedule
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const changeApplicationReleaseForm = /* GraphQL */ `
+  mutation ChangeApplicationReleaseForm(
+    $input: ChangeApplicantReleaseFormInput!
+  ) {
+    changeApplicationReleaseForm(input: $input) {
+      id
+      username
+      email
+      name
+      groups
+      verified
+      profilePicture
+      facultyRecommendation
+      personalStatement
+      transcript
+      amcasForm
+      applicantForm
+      applicantReleaseForm
+      schedule
       createdAt
       updatedAt
     }
@@ -82,6 +131,7 @@ export const changeTranscript = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      schedule
       createdAt
       updatedAt
     }
@@ -103,6 +153,7 @@ export const changeProfilePicture = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      schedule
       createdAt
       updatedAt
     }
@@ -127,6 +178,7 @@ export const createUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      schedule
       createdAt
       updatedAt
     }
@@ -151,6 +203,7 @@ export const updateUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      schedule
       createdAt
       updatedAt
     }
@@ -175,6 +228,7 @@ export const deleteUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      schedule
       createdAt
       updatedAt
     }

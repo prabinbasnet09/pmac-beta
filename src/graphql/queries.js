@@ -17,6 +17,7 @@ export const getStudentDocuments = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      schedule
       createdAt
       updatedAt
     }
@@ -38,6 +39,7 @@ export const getUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      schedule
       createdAt
       updatedAt
     }
@@ -64,6 +66,7 @@ export const listUsers = /* GraphQL */ `
         amcasForm
         applicantForm
         applicantReleaseForm
+        schedule
         createdAt
         updatedAt
       }

@@ -1,10 +1,13 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
 import * as queries from '../../graphql/queries';
 import * as mutations from '../../graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
 import { setDate } from 'date-fns';
+import { ActiveUser } from '../_app';
 
-export default function InfoReleaseForm({ user }) {
+export default function InfoReleaseForm() {
+  const activeUser = useContext(ActiveUser);
+
   const [rows, setRows] = useState([
     {
       schoolName: '',
@@ -43,7 +46,7 @@ export default function InfoReleaseForm({ user }) {
     const fetchData = async () => {
       await API.graphql({
         query: queries.listApplicantReleaseForms,
-        variables: { filter: { userId: { eq: user.attributes.sub } } },
+        variables: { filter: { userId: { eq: activeUser.id } } },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       })
         .then(res => {
@@ -67,7 +70,84 @@ export default function InfoReleaseForm({ user }) {
     };
 
     fetchData();
-  }, [user]);
+  }, [activeUser]);
+
+  const handleFormSubmit = async () => {
+    try {
+      const schoolDetails = rows.map(row => {
+        return {
+          schoolName: row.schoolName,
+          deadlineDate: row.deadlineDate,
+          contactPerson: row.contactPerson,
+          address: row.address,
+        };
+      });
+
+      const inputData = {
+        userId: activeUser.id,
+        authorizeRelease: authorizeRelease,
+        allowEvaluation: allowEvaluation,
+        allowAdvertising: allowAdvertising,
+        fullName: userInfo.fullName,
+        cwid: userInfo.cwid,
+        signature: userInfo.signature,
+        date: userInfo.date,
+        // schoolDetails: `[{\"authorizeRelease\":true, \"allowEvaluation\":true, \"allowAdvertisement\": true, \"schoolName\": \"ULM\", \"deadlineDate\": \"2023/03/18\", \"contactPerson\": \"Dr. Jose Cordova\", \"address\": \"Concordia, Monroe\"}, \
+        //                 {\"name\": \"name\", \"succeed\": true, \"date\": \"2021-05-05\", \"phone\": \"318-123-4567\", \"address\": \"1234 Main St, Monroe, LA 71203\"}]`
+        schoolDetails: JSON.stringify(schoolDetails),
+      };
+
+      const createForm = async () => {
+        await API.graphql({
+          query: mutations.createApplicantReleaseForm,
+          variables: { input: inputData },
+          authMode: 'AMAZON_COGNITO_USER_POOLS',
+        })
+          .then(async res => {
+            if (res.data.createApplicantReleaseForm) {
+              await API.graphql({
+                query: mutations.updateUser,
+                variables: {
+                  input: {
+                    id: activeUser.id,
+                    applicantReleaseForm: 'Submitted',
+                  },
+                },
+                authMode: 'AMAZON_COGNITO_USER_POOLS',
+              })
+                .then(res => {
+                  console.log(res);
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            }
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      };
+
+      const updateForm = async () => {
+        await API.graphql({
+          query: mutations.updateApplicantReleaseForm,
+          variables: { input: inputData },
+          authMode: 'AMAZON_COGNITO_USER_POOLS',
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      };
+
+      activeUser.applicationReleaseForm ? updateForm() : createForm();
+    } catch (err) {
+      console.log('error creating InfoRelease Form:', err);
+    }
+  };
 
   const handleAuthorizeRelease = e => {
     setAuthorizeRelease(e.target.checked);
@@ -122,25 +202,25 @@ export default function InfoReleaseForm({ user }) {
       } else {
         cwidErrorCheck = false;
       }
-
-      if (field === 'date') {
-        if (value === '') {
-          dateErrorCheck = true;
-        } else {
-          dateErrorCheck = false;
-        }
-      }
-
-      if (field === 'signature') {
-        if (value === '') {
-          signatureErrorCheck = true;
-        } else {
-          signatureErrorCheck = false;
-        }
-      }
-
-      setUserInfo(prevValues => ({ ...prevValues, [field]: value }));
     }
+
+    if (field === 'date') {
+      if (value === '') {
+        dateErrorCheck = true;
+      } else {
+        dateErrorCheck = false;
+      }
+    }
+
+    if (field === 'signature') {
+      if (value === '') {
+        signatureErrorCheck = true;
+      } else {
+        signatureErrorCheck = false;
+      }
+    }
+
+    setUserInfo(prevValues => ({ ...prevValues, [field]: value }));
   };
 
   const handleSubmit = async event => {
@@ -181,58 +261,7 @@ export default function InfoReleaseForm({ user }) {
       tableErrorCheck = true;
     }
     // if (!checkboxError && !tableError && !nameError && !cwidError && !signatureError && !dateError){
-    if (
-      !checkboxErrorCheck &&
-      !tableErrorCheck &&
-      !nameErrorCheck &&
-      !cwidErrorCheck &&
-      !signatureErrorCheck &&
-      !dateErrorCheck
-    ) {
-      try {
-        const id = user.attributes.sub;
-
-        const schoolDetails = rows.map(row => {
-          return {
-            schoolName: row.schoolName,
-            deadlineDate: row.deadlineDate,
-            contactPerson: row.contactPerson,
-            address: row.address,
-          };
-        });
-
-        const inputData = {
-          userId: id,
-          authorizeRelease: authorizeRelease,
-          allowEvaluation: allowEvaluation,
-          allowAdvertising: allowAdvertising,
-          fullName: userInfo.fullName,
-          cwid: userInfo.cwid,
-          signature: userInfo.signature,
-          date: userInfo.date,
-          // schoolDetails: `[{\"authorizeRelease\":true, \"allowEvaluation\":true, \"allowAdvertisement\": true, \"schoolName\": \"ULM\", \"deadlineDate\": \"2023/03/18\", \"contactPerson\": \"Dr. Jose Cordova\", \"address\": \"Concordia, Monroe\"}, \
-          //                 {\"name\": \"name\", \"succeed\": true, \"date\": \"2021-05-05\", \"phone\": \"318-123-4567\", \"address\": \"1234 Main St, Monroe, LA 71203\"}]`
-          schoolDetails: JSON.stringify(schoolDetails),
-        };
-
-        await API.graphql({
-          query: mutations.createApplicantReleaseForm,
-          variables: { input: inputData },
-          authMode: 'AMAZON_COGNITO_USER_POOLS',
-        })
-          .then(res => {
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      } catch (err) {
-        console.log('error creating InfoRelease Form:', err);
-      }
-      console.log('submit');
-    } else {
-      console.log("don't submit");
-    }
+    handleFormSubmit();
   };
 
   const handleAddRow = () => {
@@ -243,7 +272,7 @@ export default function InfoReleaseForm({ user }) {
     'Error! Please select all three checkboxes.',
     'Error! Please fill at-least one row with correct information.',
   ];
-  return (
+  return activeUser ? (
     <div className='mt-10 sm:mt-0'>
       <div className='mt-10 w-full md:mt-10'>
         <div className='overflow-hidden shadow sm:rounded-md'>
@@ -361,7 +390,6 @@ export default function InfoReleaseForm({ user }) {
                     }
                     autoComplete='given-name'
                     className='w-full'
-                    minLength='1'
                   />
                   {nameErrorCheck ? (
                     <p className='text-bred text-sm italic'>
@@ -486,7 +514,7 @@ export default function InfoReleaseForm({ user }) {
                           <input
                             className='border-none w-full text-black'
                             type='text'
-                            value={row.schoolName}
+                            defaultValue={row.schoolName}
                             onChange={event =>
                               handleRowChange(
                                 index,
@@ -500,7 +528,7 @@ export default function InfoReleaseForm({ user }) {
                           <input
                             className='border-none w-full text-black'
                             type='date'
-                            value={row.deadlineDate}
+                            defaultValue={row.deadlineDate}
                             onChange={event =>
                               handleRowChange(
                                 index,
@@ -514,7 +542,7 @@ export default function InfoReleaseForm({ user }) {
                           <input
                             className='border-none w-full text-black'
                             type='tel'
-                            value={row.contactPerson}
+                            defaultValue={row.contactPerson}
                             onChange={event =>
                               handleRowChange(
                                 index,
@@ -528,7 +556,7 @@ export default function InfoReleaseForm({ user }) {
                           <input
                             className='border-none w-full text-black'
                             type='text'
-                            value={row.address}
+                            defaultValue={row.address}
                             onChange={event =>
                               handleRowChange(
                                 index,
@@ -593,14 +621,33 @@ export default function InfoReleaseForm({ user }) {
               </button>
 
               <div className='flex justify-center'>
-                <button className='bg-green text-white font-bold py-2 px-4 rounded mt-3  w-1/2'>
-                  Submit
-                </button>
+                {activeUser.applicationReleaseForm === 'Submitted' ? (
+                  <button
+                    className='bg-green text-white font-bold py-2 px-4 rounded mt-3  w-1/2'
+                    onClick={e => handleSubmit(e)}
+                  >
+                    Update
+                  </button>
+                ) : (
+                  <div>
+                    <button
+                      className='bg-green text-white font-bold py-2 px-4 rounded mt-3 mr-3 w-2/2'
+                      onClick={e => handleSubmit(e)}
+                    >
+                      Save
+                    </button>
+                    <button className='bg-green text-white font-bold py-2 px-4 rounded mt-3  w-2/2'>
+                      Submit
+                    </button>
+                  </div>
+                )}
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+  ) : (
+    <div>Loading...</div>
   );
 }

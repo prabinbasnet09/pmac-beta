@@ -80,22 +80,36 @@ export const ActiveUserProvider = ({ children, user }) => {
     };
   }, []);
 
-  const loggedUser = {
-    id: user.attributes.sub,
-    username: user.username,
-    name: user.attributes.name,
-    email: user.attributes.email,
-    group: users
-      .filter(userProfile => userProfile.username === user.username)
-      .map(user => user.groups[0]),
-    personalStatement: user.attributes.personalStatement,
-    transcript: user.attributes.transcript,
-    amcasForm: user.attributes.amcasForm,
-    users: users,
-    facultyRecommendation: user.attributes.facultyRecommendation,
-  };
+  let loggedUser;
+  if (users.length === 1 && users[0].groups[0] === 'Student') {
+    loggedUser = {
+      id: user.attributes.sub,
+      username: user.username,
+      name: user.attributes.name,
+      email: user.attributes.email,
+      group: users[0].groups,
+      personalStatement: users[0].personalStatement,
+      transcript: users[0].transcript,
+      amcasForm: users[0].amcasForm,
+      facultyRecommendation: users[0].facultyRecommendation,
+      applicantForm: users[0].applicantForm,
+      applicantReleaseForm: users[0].applicantReleaseForm,
+      schedule: users[0].schedule,
+    };
+  } else {
+    loggedUser = {
+      id: user.attributes.sub,
+      username: user.username,
+      name: user.attributes.name,
+      email: user.attributes.email,
+      group: users
+        .filter(userProfile => userProfile.username === user.username)
+        .map(user => user.groups[0]),
+      users: users,
+    };
+  }
+  console.log(loggedUser);
 
-  console.log(users);
   return (
     <ActiveUser.Provider value={loggedUser}>{children}</ActiveUser.Provider>
   );
