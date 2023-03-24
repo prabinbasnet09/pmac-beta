@@ -34,13 +34,13 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
             <div className=" w-full md:mt-10">
               
                 <div className="overflow-hidden shadow sm:rounded-md">
-                <h1>Personal Information</h1>
-                  <div className="bg-white px-4 py-5 sm:p-6">
+              
+                  <div className="px-4 py-5 sm:p-6">
                     
                     <div className="grid grid-cols-6 gap-6">
                       <div className="col-span-6 sm:col-span-3">
                         <label htmlFor="first-name" 
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-black"
                        >
                           First name  
                         </label>
@@ -59,7 +59,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                       </div>
   
                       <div className="col-span-6 sm:col-span-3">
-                        <label htmlFor="lastname" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="lastname" className="block text-sm font-medium text-black">
                           Last name
                         </label>
                         <input
@@ -77,7 +77,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
-                        <label htmlFor="cwid" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="cwid" className="block text-sm font-medium text-black">
                           ULM CWID #
                         </label>
                         <input
@@ -95,7 +95,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
-                        <label htmlFor="number" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="number" className="block text-sm font-medium text-black">
                           Cell Phone
                         </label>
                         <input
@@ -113,7 +113,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                       
   
                       <div className="col-span-6 sm:col-span-3">
-                        <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="country" className="block text-sm font-medium text-black">
                           Country
                         </label>
                         <select
@@ -130,7 +130,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                       </div>
   
                       <div className="col-span-6">
-                        <label htmlFor="streetaddress" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="streetaddress" className="block text-sm font-medium text-black">
                           Street address
                         </label>
                         <input
@@ -148,7 +148,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                       </div>
   
                       <div className="col-span-6 sm:col-span-6 lg:col-span-2">
-                        <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="city" className="block text-sm font-medium text-black">
                           City
                         </label>
                         <input
@@ -166,7 +166,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                       </div>
   
                       <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                        <label htmlFor="region" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="region" className="block text-sm font-medium text-black">
                           State / Province
                         </label>
                         <input
@@ -184,7 +184,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                       </div>
   
                       <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                        <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="postal-code" className="block text-sm font-medium text-black">
                           ZIP / Postal code
                         </label>
                         <input
@@ -202,7 +202,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
-                        <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="email-address" className="block text-sm font-medium text-black">
                           ULM Email address
                         </label>
                         <input
@@ -220,7 +220,7 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
-                        <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="email-address" className="block text-sm font-medium text-black">
                           Alternative Email address
                         </label>
                         <input
@@ -238,27 +238,12 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-red px-4 py-3 text-right sm:px-6">
-                  <div 
-                      className="inline-flex justify-center rounded-md border border-transparent bg-green py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                      Next
-                    </div>
-                  </div>
                 </div>
              
             </div>
           
           </div>
         
-        </div>
-
-        {/* }{nextPages && <AppA />} */}
-  
-        <div className="hidden sm:block" aria-hidden="true">
-          <div className="py-5">
-            <div className="border-t border-gray-200" />
-          </div>
         </div>
   
       </>

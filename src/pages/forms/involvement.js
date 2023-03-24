@@ -20,7 +20,6 @@ function Involvement() {
               
              
                   <div className="overflow-hidden shadow sm:rounded-md">
-                  <h1>Involvement</h1>
                     <div className="bg-white px-4 py-5 sm:p-6">
                       
                     <div className="mt-10 w-full md:mt-10">
@@ -42,23 +41,9 @@ function Involvement() {
 
                     <h2 className="text-xl font-bold mt-10"> Volunteer Experiences </h2>
                     <Table className="w-full" headings={headingssix}/>
-          
-
-               
               </div>
-
-              
-
                     </div>
-                    
-                    <div className="bg-red w-full px-4 py-3 text-right sm:px-6">
-                    <div
-                      
-                      className="inline-flex justify-center rounded-md border border-transparent bg-green py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                      Save
-                    </div>
-                  </div></div></div></div>
+                    </div></div></div>
 
 
         

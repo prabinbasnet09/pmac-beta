@@ -39,14 +39,14 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
             <div >
               
               <div className="mt-10 w-full md:mt-10">
-                  <div className="overflow-hidden shadow sm:rounded-md">
-                  <h1>Academic Information</h1>
-                    <div className="bg-white px-4 py-5 sm:p-6">
+                  <div className="overflow-hidden ">
+                  
+                    <div className="px-4 py-5 sm:p-6">
                       
                       <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-3">
                           <label htmlFor="major" 
-                          className="block text-sm font-medium text-gray-700"
+                          className="block text-sm font-medium text-black"
                         >
                             Major  
                           </label>
@@ -66,7 +66,7 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                         </div>
     
                         <div className="col-span-6 sm:col-span-3">
-                          <label htmlFor="minor" className="block text-sm font-medium text-gray-700">
+                          <label htmlFor="minor" className="block text-sm font-medium text-black">
                             Minor
                           </label>
                           <input
@@ -83,7 +83,7 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                         </div>
 
                         <div className="col-span-6 sm:col-span-3">
-                          <label htmlFor="expectedGrad" className="block text-sm font-medium text-gray-700">
+                          <label htmlFor="expectedGrad" className="block text-sm font-medium text-black">
                             Expected Graduation Date From ULM
                           </label>
                           <input
@@ -99,7 +99,7 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                         </div>
 
                         <div className="col-span-6 sm:col-span-3">
-                          <label htmlFor="overallGPA" className="block text-sm font-medium text-gray-700">
+                          <label htmlFor="overallGPA" className="block text-sm font-medium text-black">
                             Overall Collegiate GPA
                           </label>
                           <input
@@ -118,7 +118,7 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                       
     
                         <div className="col-span-6">
-                          <label htmlFor="date" className="block text-sm font-medium text-gray-700">
+                          <label htmlFor="date" className="block text-sm font-medium text-black">
                             Date of Proposed Entrance to Professional School 
                           </label>
                           <input
@@ -134,7 +134,7 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                         </div>
 
                         <div className="col-span-6">
-                          <label htmlFor="scores" className="block text-sm font-medium text-gray-700">
+                          <label htmlFor="scores" className="block text-sm font-medium text-black">
                             <span>Scores of your most recent professional entry exam (MCAT, DAT, OAT, GRE). <br/></span>
                             <span>Please include your breakdown scores.</span> 
                           </label>
@@ -154,7 +154,7 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
 
 
                         <div className="col-span-6">
-                          <label htmlFor="examDate" className="block text-sm font-medium text-gray-700">
+                          <label htmlFor="examDate" className="block text-sm font-medium text-black">
                             Date of exam taken or expected date of exam 
                           </label>
                           <input
@@ -170,7 +170,7 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                         </div>
 
                         <div className="col-span-6">
-                          <label htmlFor="appType" className="block text-sm font-medium text-gray-700">
+                          <label htmlFor="appType" className="block text-sm font-medium text-black">
                             Type of School Application will be sent 
                           </label>
                           <input
@@ -187,7 +187,7 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                         </div>
 
                         <div className="col-span-6">
-                          <label htmlFor="appIDType" className="block text-sm font-medium text-gray-700">
+                          <label htmlFor="appIDType" className="block text-sm font-medium text-black">
                             Depending on the type pf application, fill in the appropriate ID numbers. 
                           </label>
                           {/* <div class="grid grid-cols-6 gap-4 ">
@@ -218,7 +218,7 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                         </div>
 
                         <div className="col-span-6">
-                          <label htmlFor="faculty" className="block text-sm font-medium text-gray-700">
+                          <label htmlFor="faculty" className="block text-sm font-medium text-black">
                             Faculty Members Submitting Evaluation on your Behalf: <br />
                             Name/Title/Department 
                           </label>
@@ -236,28 +236,10 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
                         </div>
                       </div>
                     </div>
-                    <div className="bg-red px-4 py-3 text-right sm:px-6">
-                      <div 
-                        className="inline-flex justify-center rounded-md border border-transparent bg-green py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      >
-                        Next
-                      </div>
-                    
-                    </div>
                   </div>
               </div>
             </div>
           </div>
-          {/* } */}
-
-       
-       
-  
-        <div className="hidden sm:block" aria-hidden="true">
-          <div className="py-5">
-            <div className="border-t border-gray-200" />
-          </div>
-        </div>
   
       </>
     )

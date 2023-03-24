@@ -30,6 +30,7 @@ export default function Home({signOut}) {
 
       <div>
         <Dashboard />
+       
       </div>
     </div>
   )

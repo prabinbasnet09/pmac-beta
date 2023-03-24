@@ -74,8 +74,10 @@ function AppInfo() {
       };
  
   return (
-    <div>
-        
+    <div className='mt-9 rounded border-2 border-gold w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 '>
+         <h1 className='text-center text-4xl font-bold text-gold'>
+              Applicant Information Form 
+            </h1>
        <form onSubmit={handleSubmit}>
             <AppPersonalInfo formData={formData} onChangeForm={handleFormChange} errors={errors} />
             <AppAcademicInfo formData={formData} onChangeForm={handleFormChange} errors={errors} />
@@ -87,6 +89,6 @@ function AppInfo() {
        </form>
     </div>
   )
-}
+  }
 
 export default AppInfo
