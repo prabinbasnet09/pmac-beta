@@ -23,7 +23,7 @@ export const ActiveUserProvider = ({ children, user }) => {
       localStorage.setItem(key, JSON.stringify({ value, expiresAt }));
     };
 
-    const getLocalStorage = key => {
+    const getLocalStorage = (key) => {
       const item = JSON.parse(localStorage.getItem(key));
       if (!item) return null;
 
@@ -39,11 +39,11 @@ export const ActiveUserProvider = ({ children, user }) => {
         query: queries.listUsers,
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       })
-        .then(res => {
+        .then((res) => {
           setLocalStorage('userInfo', res.data.listUsers.items);
           setUsers(res.data.listUsers.items);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           return null;
         });
@@ -55,20 +55,20 @@ export const ActiveUserProvider = ({ children, user }) => {
       query: onUpdateUser,
       authMode: 'AMAZON_COGNITO_USER_POOLS',
     }).subscribe({
-      next: userData => {
+      next: (userData) => {
         API.graphql({
           query: queries.listUsers,
           authMode: 'AMAZON_COGNITO_USER_POOLS',
         })
-          .then(res => {
+          .then((res) => {
             setLocalStorage('userInfo', res.data.listUsers.items);
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
             return null;
           });
       },
-      error: error => {
+      error: (error) => {
         console.log(error);
       },
     });
@@ -101,8 +101,8 @@ export const ActiveUserProvider = ({ children, user }) => {
       name: user.attributes.name,
       email: user.attributes.email,
       group: users
-        .filter(userProfile => userProfile.username === user.username)
-        .map(user => user.groups[0]),
+        .filter((userProfile) => userProfile.username === user.username)
+        .map((user) => user.groups[0]),
       users: users,
     };
   }
@@ -113,12 +113,14 @@ export const ActiveUserProvider = ({ children, user }) => {
   );
 };
 
-function App({ Component, pageProps, user, signOut }) {
+function App(props) {
+  const { Component, pageProps, user, signOut, router: route } = props;
+  console.log({ route });
   const [userGroup, setUserGroup] = useState();
   const router = useRouter();
 
   const showNav =
-    router.pathname === '/' ||
+    router.pathname === '/dashboard' ||
     router.pathname === '/documents' ||
     router.pathname === '/schedule' ||
     router.pathname === '/results' ||
@@ -130,10 +132,10 @@ function App({ Component, pageProps, user, signOut }) {
       variables: { id: user.attributes.sub },
       authMode: 'AMAZON_COGNITO_USER_POOLS',
     })
-      .then(res => {
+      .then((res) => {
         return res.data.getUser.groups[0];
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         return null;
       });
@@ -142,14 +144,14 @@ function App({ Component, pageProps, user, signOut }) {
 
   getUserGroup();
 
-  const withLayout = Component => {
+  const withLayout = (Component) => {
     return function WrappedComponent(props) {
       const tabs =
         userGroup === 'Student'
           ? [
               {
                 name: 'Dashboard',
-                path: '/',
+                path: '/dashboard',
               },
               {
                 name: 'Documents',
@@ -168,7 +170,7 @@ function App({ Component, pageProps, user, signOut }) {
           ? [
               {
                 name: 'Dashboard',
-                path: '/',
+                path: '/dashboard',
               },
               {
                 name: 'Applicants',
@@ -187,7 +189,7 @@ function App({ Component, pageProps, user, signOut }) {
           ? [
               {
                 name: 'Dashboard',
-                path: '/',
+                path: '/dashboard',
               },
               {
                 name: 'Applicants',
@@ -206,7 +208,7 @@ function App({ Component, pageProps, user, signOut }) {
           ? [
               {
                 name: 'Dashboard',
-                path: '/',
+                path: '/dashboard',
               },
               {
                 name: 'Admin',
@@ -215,7 +217,7 @@ function App({ Component, pageProps, user, signOut }) {
             ]
           : null;
       return (
-        <Layout user={user} signOut={signOut}>
+        <Layout user={user} signOut={signOut} route={route.state.route}>
           {userGroup && showNav ? <TabBar tabList={tabs} /> : null}
           <Component {...props} user={user} signOut={signOut} />
         </Layout>

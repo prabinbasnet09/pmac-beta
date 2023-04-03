@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState, useEffect, useContext} from 'react'
-import Dashboard from '../components/Dashboard'
+// import Dashboard from '../components/Dashboard'
+import Landing from './Landing'
 import { ActiveUser } from './_app.js'
 
 
@@ -29,8 +30,8 @@ export default function Home({signOut}) {
       </Head>
 
       <div>
-        <Dashboard />
-       
+        
+        <Landing />
       </div>
     </div>
   )
