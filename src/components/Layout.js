@@ -1,10 +1,12 @@
 import React from 'react';
 import Navbar from './Navbar';
 
-const Layout = ({ children, user, signOut}) => {
+const Layout = (props) => {
+  const { children, user, signOut, route } = props;
+  console.log({ route });
   return (
     <div>
-      <Navbar user={user} signOut={signOut}/>
+      {route !== '/' && <Navbar user={user} signOut={signOut} />}
       {children}
     </div>
   );
