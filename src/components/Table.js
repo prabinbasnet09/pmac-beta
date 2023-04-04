@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // import axios from 'axios';
 
 const MyTable = ({ headings }) => {
@@ -6,16 +6,16 @@ const MyTable = ({ headings }) => {
 
   const handleAddRow = () => {
     // event.preventDefault();
-    setTableData(prevState => [
+    setTableData((prevState) => [
       ...prevState,
-      { id: Date.now(), column1: '', column2: '', column3: '' },
+      { id: Date.now(), column1: "", column2: "", column3: "" },
     ]);
   };
 
   const handleCellChange = (e, rowId, column) => {
     const newValue = e.target.value;
-    setTableData(prevState => {
-      const updatedRow = prevState.find(row => row.id === rowId);
+    setTableData((prevState) => {
+      const updatedRow = prevState.find((row) => row.id === rowId);
       updatedRow[column] = newValue;
       return [...prevState];
     });
@@ -23,8 +23,7 @@ const MyTable = ({ headings }) => {
 
   const handleSaveTableData = async () => {
     event.preventDefault();
-      console.log(tableData);
-   
+    console.log(tableData);
   };
 
   return (
@@ -32,7 +31,7 @@ const MyTable = ({ headings }) => {
       <table className="border-collapse border border-gray-600">
         <thead>
           <tr>
-            {headings.map(heading => (
+            {headings.map((heading) => (
               <th
                 key={heading}
                 className="border border-gray-600 px-4 py-2 font-semibold"
@@ -43,14 +42,14 @@ const MyTable = ({ headings }) => {
           </tr>
         </thead>
         <tbody>
-          {tableData.map(row => (
+          {tableData.map((row) => (
             <tr key={row.id}>
               <td className="border border-gray-600 px-4 py-2">
                 <input
                   type="text"
                   value={row.column1}
                   className="w-full border-0 focus:outline-none"
-                  onChange={e => handleCellChange(e, row.id, 'column1')}
+                  onChange={(e) => handleCellChange(e, row.id, "column1")}
                 />
               </td>
               <td className="border border-gray-600 px-4 py-2">
@@ -58,7 +57,7 @@ const MyTable = ({ headings }) => {
                   type="text"
                   value={row.column2}
                   className="w-full border-0 focus:outline-none"
-                  onChange={e => handleCellChange(e, row.id, 'column2')}
+                  onChange={(e) => handleCellChange(e, row.id, "column2")}
                 />
               </td>
               <td className="border border-gray-600 px-4 py-2">
@@ -66,7 +65,7 @@ const MyTable = ({ headings }) => {
                   type="text"
                   value={row.column3}
                   className="w-full border-0 focus:outline-none"
-                  onChange={e => handleCellChange(e, row.id, 'column3')}
+                  onChange={(e) => handleCellChange(e, row.id, "column3")}
                 />
               </td>
             </tr>

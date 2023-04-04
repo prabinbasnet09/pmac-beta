@@ -1,14 +1,14 @@
-import { createContext, useState, useEffect } from 'react';
-import '../styles/globals.css';
-import Layout from '@/components/Layout';
-import TabBar from '@/components/TabBar';
-import { Amplify, API } from 'aws-amplify';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css';
-import * as queries from '../graphql/queries';
-import { onUpdateUser } from '@/graphql/subscriptions.js';
-import awsExports from '../aws-exports';
-import { useRouter } from 'next/router';
+import { createContext, useState, useEffect } from "react";
+import "../styles/globals.css";
+import Layout from "@/components/Layout";
+import TabBar from "@/components/TabBar";
+import { Amplify, API } from "aws-amplify";
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
+import * as queries from "../graphql/queries";
+import { onUpdateUser } from "@/graphql/subscriptions.js";
+import awsExports from "../aws-exports";
+import { useRouter } from "next/router";
 
 Amplify.configure({ ...awsExports, ssr: true });
 
@@ -34,13 +34,13 @@ export const ActiveUserProvider = ({ children, user }) => {
       return item;
     };
 
-    if (!getLocalStorage('userInfo')) {
+    if (!getLocalStorage("userInfo")) {
       API.graphql({
         query: queries.listUsers,
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        authMode: "AMAZON_COGNITO_USER_POOLS",
       })
         .then((res) => {
-          setLocalStorage('userInfo', res.data.listUsers.items);
+          setLocalStorage("userInfo", res.data.listUsers.items);
           setUsers(res.data.listUsers.items);
         })
         .catch((err) => {
@@ -48,20 +48,20 @@ export const ActiveUserProvider = ({ children, user }) => {
           return null;
         });
     } else {
-      setUsers(getLocalStorage('userInfo').value);
+      setUsers(getLocalStorage("userInfo").value);
     }
 
     const updateUser = API.graphql({
       query: onUpdateUser,
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      authMode: "AMAZON_COGNITO_USER_POOLS",
     }).subscribe({
       next: (userData) => {
         API.graphql({
           query: queries.listUsers,
-          authMode: 'AMAZON_COGNITO_USER_POOLS',
+          authMode: "AMAZON_COGNITO_USER_POOLS",
         })
           .then((res) => {
-            setLocalStorage('userInfo', res.data.listUsers.items);
+            setLocalStorage("userInfo", res.data.listUsers.items);
           })
           .catch((err) => {
             console.log(err);
@@ -79,7 +79,7 @@ export const ActiveUserProvider = ({ children, user }) => {
   }, []);
 
   let loggedUser;
-  if (users.length === 1 && users[0].groups[0] === 'Student') {
+  if (users.length === 1 && users[0].groups[0] === "Student") {
     loggedUser = {
       id: user.attributes.sub,
       username: user.username,
@@ -120,17 +120,17 @@ function App(props) {
   const router = useRouter();
 
   const showNav =
-    router.pathname === '/dashboard' ||
-    router.pathname === '/documents' ||
-    router.pathname === '/schedule' ||
-    router.pathname === '/results' ||
-    router.pathname === '/applicants';
+    router.pathname === "/dashboard" ||
+    router.pathname === "/documents" ||
+    router.pathname === "/schedule" ||
+    router.pathname === "/results" ||
+    router.pathname === "/applicants";
 
   const getUserGroup = async () => {
     const userGroup = await API.graphql({
       query: queries.getUser,
       variables: { id: user.attributes.sub },
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      authMode: "AMAZON_COGNITO_USER_POOLS",
     })
       .then((res) => {
         return res.data.getUser.groups[0];
@@ -147,72 +147,72 @@ function App(props) {
   const withLayout = (Component) => {
     return function WrappedComponent(props) {
       const tabs =
-        userGroup === 'Student'
+        userGroup === "Student"
           ? [
               {
-                name: 'Dashboard',
-                path: '/dashboard',
+                name: "Dashboard",
+                path: "/dashboard",
               },
               {
-                name: 'Documents',
-                path: '/documents',
+                name: "Documents",
+                path: "/documents",
               },
               {
-                name: 'Schedule',
-                path: '/schedule',
+                name: "Schedule",
+                path: "/schedule",
               },
               {
-                name: 'Results',
-                path: '/results',
+                name: "Results",
+                path: "/results",
               },
             ]
-          : userGroup === 'Faculty'
+          : userGroup === "Faculty"
           ? [
               {
-                name: 'Dashboard',
-                path: '/dashboard',
+                name: "Dashboard",
+                path: "/dashboard",
               },
               {
-                name: 'Applicants',
-                path: '/applicants',
+                name: "Applicants",
+                path: "/applicants",
               },
               {
-                name: 'Schedule',
-                path: '/schedule',
+                name: "Schedule",
+                path: "/schedule",
               },
               {
-                name: 'Results',
-                path: '/results',
+                name: "Results",
+                path: "/results",
               },
             ]
-          : userGroup === 'ChairCommittee'
+          : userGroup === "ChairCommittee"
           ? [
               {
-                name: 'Dashboard',
-                path: '/dashboard',
+                name: "Dashboard",
+                path: "/dashboard",
               },
               {
-                name: 'Applicants',
-                path: '/applicants',
+                name: "Applicants",
+                path: "/applicants",
               },
               {
-                name: 'Schedule',
-                path: '/schedule',
+                name: "Schedule",
+                path: "/schedule",
               },
               {
-                name: 'Results',
-                path: '/results',
+                name: "Results",
+                path: "/results",
               },
             ]
-          : userGroup === 'Admin'
+          : userGroup === "Admin"
           ? [
               {
-                name: 'Dashboard',
-                path: '/dashboard',
+                name: "Dashboard",
+                path: "/dashboard",
               },
               {
-                name: 'Admin',
-                path: '/applicants',
+                name: "Admin",
+                path: "/applicants",
               },
             ]
           : null;

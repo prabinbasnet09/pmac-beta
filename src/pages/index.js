@@ -1,20 +1,18 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import { useState, useEffect, useContext} from 'react'
+import Head from "next/head";
+import Link from "next/link";
+import { useState, useEffect, useContext } from "react";
 // import Dashboard from '../components/Dashboard'
-import Landing from './Landing'
-import { ActiveUser } from './_app.js'
+import Landing from "./Landing";
+import { ActiveUser } from "./_app.js";
 
-
-export default function Home({signOut}) {
+export default function Home({ signOut }) {
   const activeUser = useContext(ActiveUser);
   const [groups, setGroups] = useState([]);
   const [users, setUsers] = useState(null);
 
-
   useEffect(() => {
-    const { group, users} = activeUser;
-   
+    const { group, users } = activeUser;
+
     setGroups(group);
 
     setUsers(users);
@@ -30,9 +28,8 @@ export default function Home({signOut}) {
       </Head>
 
       <div>
-        
         <Landing />
       </div>
     </div>
-  )
+  );
 }

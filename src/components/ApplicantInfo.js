@@ -1,11 +1,11 @@
-import React from 'react';
-import Image from 'next/image';
-import { useState, useContext, useRef } from 'react';
-import { Storage } from '@aws-amplify/storage';
-import { ActiveUser } from '@/pages/_app';
-import { API } from '@aws-amplify/api';
-import { updateUser } from '@/graphql/mutations.js';
-import Checklist from './Checklist';
+import React from "react";
+import Image from "next/image";
+import { useState, useContext, useRef } from "react";
+import { Storage } from "@aws-amplify/storage";
+import { ActiveUser } from "@/pages/_app";
+import { API } from "@aws-amplify/api";
+import { updateUser } from "@/graphql/mutations.js";
+import Checklist from "./Checklist";
 
 export default function ApplicantInfo(props) {
   const activeUser = useContext(ActiveUser);
@@ -15,27 +15,27 @@ export default function ApplicantInfo(props) {
 
   const handleInvisibleInput = useRef(null);
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     e.preventDefault();
     handleInvisibleInput.current.click();
   };
 
-  const handleFileSelect = async e => {
+  const handleFileSelect = async (e) => {
     e.preventDefault();
     const file = e.target.files[0];
     setSelectedFile(file);
     setChangeFile(true);
   };
 
-  const handleFileRemove = async e => {
+  const handleFileRemove = async (e) => {
     e.preventDefault();
     setSelectedFile(null);
     setChangeFile(false);
   };
 
-  const handleFileUpload = async e => {
+  const handleFileUpload = async (e) => {
     e.preventDefault();
-    const bucketName = 'pmacbetafiles135904-dev';
+    const bucketName = "pmacbetafiles135904-dev";
     const path = `public/${selectedFile.name}`;
 
     const objectURL = `https://s3.amazonaws.com/${bucketName}/${path}`;
@@ -63,10 +63,10 @@ export default function ApplicantInfo(props) {
           },
         },
       })
-        .then(res => {
+        .then((res) => {
           console.log(res);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     } catch (err) {
@@ -74,44 +74,44 @@ export default function ApplicantInfo(props) {
     }
   };
   return (
-    <div className='bg-white p-5 rounded-lg'>
-      <div className='p-3 flex items-center space-x-4'>
-        <div className='flex-shrink-0'>
-          <Image className='w-12 h-12 rounded-full shadow-2xl' />
+    <div className="bg-white p-5 rounded-lg">
+      <div className="p-3 flex items-center space-x-4">
+        <div className="flex-shrink-0">
+          <Image className="w-12 h-12 rounded-full shadow-2xl" />
         </div>
-        <div className='flex-1 min-w-0'>
-          <p className='text-4xl font-medium text-gray-900 truncate dark:text-black'>
+        <div className="flex-1 min-w-0">
+          <p className="text-4xl font-medium text-gray-900 truncate dark:text-black">
             {user.name}
           </p>
-          <p className='text-sm text-gray-500 truncate dark:text-black-400'>
+          <p className="text-sm text-gray-500 truncate dark:text-black-400">
             {user.email}
           </p>
         </div>
       </div>
 
-      <div className='mt-2'>
+      <div className="mt-2">
         <Checklist activeUser={user} />
         {user.facultyRecommendation && !changeFile ? (
           <>
             <a
               href={user.facultyRecommendation}
-              target='_blank'
-              rel='noreferrer'
-              className='mt-2 ml-[3.5rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg'
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 ml-[3.5rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg"
             >
               Download File
             </a>
             <input
-              type='file'
-              id='myfile'
-              name='myfile'
-              style={{ display: 'none' }}
+              type="file"
+              id="myfile"
+              name="myfile"
+              style={{ display: "none" }}
               ref={handleInvisibleInput}
-              onChange={e => handleFileSelect(e)}
+              onChange={(e) => handleFileSelect(e)}
             />
             <button
-              className='mt-2 ml-[1rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg'
-              onClick={e => {
+              className="mt-2 ml-[1rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg"
+              onClick={(e) => {
                 e.preventDefault;
                 handleClick(e);
               }}
@@ -122,14 +122,14 @@ export default function ApplicantInfo(props) {
         ) : selectedFile ? (
           <>
             <button
-              className='mt-2 ml-[3.5rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg'
-              onClick={e => handleFileUpload(e)}
+              className="mt-2 ml-[3.5rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg"
+              onClick={(e) => handleFileUpload(e)}
             >
-              Upload {selectedFile.name.substring(0, 10) + '...'}
+              Upload {selectedFile.name.substring(0, 10) + "..."}
             </button>
             <button
-              className='mt-2 ml-[1rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg'
-              onClick={e => handleFileRemove(e)}
+              className="mt-2 ml-[1rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg"
+              onClick={(e) => handleFileRemove(e)}
             >
               Remove
             </button>
@@ -137,16 +137,16 @@ export default function ApplicantInfo(props) {
         ) : (
           <>
             <input
-              type='file'
-              id='myfile'
-              name='myfile'
-              style={{ display: 'none' }}
+              type="file"
+              id="myfile"
+              name="myfile"
+              style={{ display: "none" }}
               ref={handleInvisibleInput}
-              onChange={e => handleFileSelect(e)}
+              onChange={(e) => handleFileSelect(e)}
             />
             <button
-              className=' ml-[3.5rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg'
-              onClick={e => handleClick(e)}
+              className=" ml-[3.5rem] p-2 bg-[rgb(245,142,58)] text-[rgb(255,255,255) rounded-lg"
+              onClick={(e) => handleClick(e)}
             >
               Choose File
             </button>
