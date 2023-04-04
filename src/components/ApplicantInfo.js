@@ -5,7 +5,7 @@ import { Storage } from "@aws-amplify/storage";
 import { ActiveUser } from "@/pages/_app";
 import { API } from "@aws-amplify/api";
 import { updateUser } from "@/api/gql/mutations.js";
-import Checklist from "./Checklist";
+import Checklist from "./widgets/Checklist";
 
 export default function ApplicantInfo(props) {
   const activeUser = useContext(ActiveUser);

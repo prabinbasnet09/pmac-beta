@@ -3,7 +3,7 @@ import * as queries from "../../api/gql/queries";
 import * as mutations from "../../api/gql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import { setDate } from "date-fns";
-import { ActiveUser } from "../_app";
+import { ActiveUser } from "../../components/pages/_app";
 
 export default function InfoReleaseForm() {
   const activeUser = useContext(ActiveUser);

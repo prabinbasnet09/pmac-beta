@@ -8,7 +8,7 @@ import {
 } from "@/api/gql/mutations.js";
 import { getUser } from "@/api/gql/queries.js";
 
-import { ActiveUser } from "../_app.js";
+import { ActiveUser } from "../../components/pages/_app.js";
 
 export default function StatementTranscript() {
   const activeUser = useContext(ActiveUser);

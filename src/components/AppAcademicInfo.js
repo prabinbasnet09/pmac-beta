@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Table from "./Table";
+import Table from "./widgets/Table";
 import AppPersonalInfo from "./AppPersonalInfo";
 
 export default function AppAcademicInfo({ formData, onChangeForm, errors }) {

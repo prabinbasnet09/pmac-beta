@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import Checklist from "@/components/Checklist";
+import Checklist from "@/components/widgets/Checklist";
 import { ActiveUser } from "@/pages/_app";
 
 export default function Dashboard() {

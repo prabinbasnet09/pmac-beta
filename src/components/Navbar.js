@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import Logo from "../images/ulm_academic_maroon_white.png";
+import Logo from "../../public/ulm_academic_maroon_white.png";
 import Cookies from "js-cookie";
 import Link from "next/link";
 

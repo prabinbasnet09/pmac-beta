@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import "../styles/globals.css";
 import Layout from "@/components/Layout";
-import TabBar from "@/components/TabBar";
+import TabBar from "@/components/widgets/TabBar";
 import { Amplify, API } from "aws-amplify";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
