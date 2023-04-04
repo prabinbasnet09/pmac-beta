@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Table from "./widgets/Table";
+
 import AppPersonalInfo from "./AppPersonalInfo";
 
 export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
   const { register } = useForm();
+
 
   register("major", { onChange: (e) => onChangeForm(e) });
   register("minor", { onChange: (e) => onChangeForm(e) });
