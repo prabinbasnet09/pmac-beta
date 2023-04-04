@@ -27,27 +27,6 @@ export default function NavbarStudent({user, signOut}) {
   ]
     const router = useRouter();
 
-    // useEffect(() => {
-    //   setTimeout(() => {
-    //     setGreetings(false);
-    //   }, 5000);
-    // }, []);
-  
-    // // // update greetings based on current route
-    // // useEffect(() => {
-    // //   if (router.pathname === '/') {
-    // //     handleGreetings();
-    // //   } else {
-    // //     setGreetings(false);
-    // //   }
-    // // }, [router.pathname]);
-
-    // const handleGreetings = () => {
-    //   setTimeout(() => {
-    //     setGreetings(false)},
-    //   5000);
-    // }
-
     const handleSignOut = () => {
       //clearing local storage
       localStorage.clear();
@@ -74,15 +53,6 @@ export default function NavbarStudent({user, signOut}) {
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
-
       <div className="min-h-full p-3 bg-red">
         <Disclosure as="nav" >
           {({ open }) => (

@@ -36,7 +36,7 @@ const Hero = () => {
             Prepare for success and nail your application with our guidance.
             </p>
                 <a href="https://pmac-beta-opnaptos3-prabinbasnet09.vercel.app/">
-                <button className='bg-[#9c9c9c] w-[200px] rounded-md text-lg my-6 mx-auto font-bold px-2 text-ulm_red'>
+                <button className='bg-ulm_red w-[200px] rounded-md text-lg my-6 mx-auto font-bold px-2 text-white shadow-lg'>
                 Get Started
                 </button>
                 </a>
