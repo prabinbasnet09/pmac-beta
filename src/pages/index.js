@@ -1,8 +1,6 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
-// import Dashboard from '../components/Dashboard'
-import Landing from "./Landing";
+import Landing from "./landing";
 import { ActiveUser } from "./_app.js";
 
 export default function Home({ signOut }) {

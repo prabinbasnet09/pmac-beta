@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
-import * as queries from "../../graphql/queries";
-import * as mutations from "../../graphql/mutations";
+import * as queries from "../../api/gql/queries";
+import * as mutations from "../../api/gql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import { setDate } from "date-fns";
 import { ActiveUser } from "../_app";

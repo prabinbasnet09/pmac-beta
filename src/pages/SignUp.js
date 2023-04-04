@@ -33,7 +33,7 @@ function SignUp() {
                     type="email"
                     name="email"
                     id="email"
-                    className="bg-white border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5  "
+                    className="bg-ulm_maroon border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5  "
                     placeholder="name@company.com"
                     required=""
                   />

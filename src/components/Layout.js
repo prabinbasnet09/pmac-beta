@@ -1,12 +1,14 @@
-import React from "react";
-import Navbar from "./Navbar";
+import React from 'react';
+import Navbar from './Navbar';
 
 const Layout = (props) => {
   const { children, user, signOut, route } = props;
-  console.log({ route });
+  
+  const showNav = route !== '/' && route !== '/about';
+
   return (
     <div>
-      {route !== "/" && <Navbar user={user} signOut={signOut} />}
+      {showNav && <Navbar user={user} signOut={signOut} />}
       {children}
     </div>
   );

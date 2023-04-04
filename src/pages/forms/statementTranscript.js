@@ -5,8 +5,8 @@ import { API } from "@aws-amplify/api";
 import {
   changePersonalStatement,
   changeTranscript,
-} from "@/graphql/mutations.js";
-import { getUser } from "@/graphql/queries.js";
+} from "@/api/gql/mutations.js";
+import { getUser } from "@/api/gql/queries.js";
 
 import { ActiveUser } from "../_app.js";
 

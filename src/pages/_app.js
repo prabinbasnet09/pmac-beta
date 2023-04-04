@@ -5,8 +5,8 @@ import TabBar from "@/components/TabBar";
 import { Amplify, API } from "aws-amplify";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
-import * as queries from "../graphql/queries";
-import { onUpdateUser } from "@/graphql/subscriptions.js";
+import * as queries from "../api/gql/queries";
+import { onUpdateUser } from "@/api/gql/subscriptions.js";
 import awsExports from "../aws-exports";
 import { useRouter } from "next/router";
 
@@ -115,7 +115,6 @@ export const ActiveUserProvider = ({ children, user }) => {
 
 function App(props) {
   const { Component, pageProps, user, signOut, router: route } = props;
-  console.log({ route });
   const [userGroup, setUserGroup] = useState();
   const router = useRouter();
 
