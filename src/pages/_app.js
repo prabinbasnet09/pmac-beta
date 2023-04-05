@@ -6,6 +6,7 @@ import TabBar from '@/components/TabBar';
 import { Amplify, API } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
+import { Auth } from 'aws-amplify';
 
 import * as queries from '../graphql/queries';
 import { onUpdateUser } from '@/graphql/subscriptions.js';
@@ -108,7 +109,6 @@ export const ActiveUserProvider = ({ children, user }) => {
       users: users,
     };
   }
-  console.log(loggedUser);
 
   return (
     <ActiveUser.Provider value={loggedUser}>{children}</ActiveUser.Provider>
@@ -235,3 +235,4 @@ function App({ Component, pageProps, user, signOut }) {
 }
 
 export default withAuthenticator(App);
+// export default App;
