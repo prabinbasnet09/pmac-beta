@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Table from "./Table";
 import AppPersonalInfo from "./AppPersonalInfo";
 
 export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
@@ -16,6 +15,7 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
   // const backPage = () => {
   //   setBackPages(true)
   // }
+
 
   register("major", { onChange: (e) => onChangeForm(e) });
   register("minor", { onChange: (e) => onChangeForm(e) });

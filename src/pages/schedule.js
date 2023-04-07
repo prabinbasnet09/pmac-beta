@@ -1,49 +1,70 @@
-import { Calendar, dateFnsLocalizer, Views } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, { useState, useMemo, useCallback } from "react";
 import ReactDatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import FullCalendar from "@fullcalendar/react";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import dayGridPlugin from "@fullcalendar/daygrid";
 
-const locales = {
-  "en-US": require("date-fns/locale/en-US"),
-};
-
-const localizer = dateFnsLocalizer({
-  format,
-  parse,
-  startOfWeek,
-  getDay,
-  locales,
-});
-
-const events = [
+const events_sources = [
   {
-    title: "Big Meeting",
-    start: new Date(2023, 2, 20, 11, 30),
-    end: new Date(2023, 2, 21, 1, 0),
+    events: [
+      {
+        title: "My Birthday",
+        start: "2023-05-28",
+        end: "2023-05-29",
+      },
+      {
+        title: "Graduation Day",
+        start: "2023-05-17",
+        end: "2023-05-17",
+      },
+      {
+        title: "Final Project Due",
+        start: "2023-05-07T12:30:00",
+        allDay: false,
+      },
+    ],
   },
   {
-    title: "Vacation",
-    start: new Date(2023, 2, 20, 12, 30),
-    end: new Date(2023, 2, 21, 1, 0),
-  },
-  {
-    title: "Conference",
-    start: new Date(2023, 2, 20, 12, 30),
-    end: new Date(2023, 2, 21, 1, 0),
+    events: [
+      {
+        title: "Pelican Cup Presentation",
+        start: "2023-04-04",
+        end: "2023-04-05",
+      },
+      {
+        title: "Spring Break",
+        start: "2023-04-07",
+        end: "2023-04-14",
+      },
+      {
+        title: "Operating System Exam",
+        start: "2023-04-06",
+        end: "2023-04-07",
+      },
+    ],
   },
 ];
 
 function Schedular() {
   const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
-  const [allEvents, setAllEvents] = useState(events);
+  const [allEvents, setAllEvents] = useState(events_sources[0]);
 
   function handleAddEvent() {
     setAllEvents([...allEvents, newEvent]);
+  }
+
+  function handleEventClick(clickInfo) {
+    if (
+      window.confirm(
+        "Are you sure you want to delete the event ${clickInfo.event.title}?"
+      )
+    ) {
+      clickInfo.event.remove();
+    }
   }
 
   return (
@@ -54,43 +75,23 @@ function Schedular() {
             <strong>Schedular</strong>
           </h1>
           <div style={{ position: "relative", zIndex: "999" }}>
-            <h2>Add New Event</h2>
-            <input
-              type="text"
-              placeholder="Add Title"
-              style={{ width: "20%", marginRight: "10px" }}
-              value={newEvent.title}
-              onChange={(e) =>
-                setNewEvent({ ...newEvent, title: e.target.value })
-              }
+            <FullCalendar
+              plugins={[timeGridPlugin, dayGridPlugin]}
+              headerToolbar={{
+                left: "prev,next, today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay",
+              }}
+              initialView="timeGridWeek"
+              editable={true}
+              selectable={true}
+              weekends={false}
+              eventSources={events_sources}
+              eventClick={handleEventClick}
+              eventColor="black"
+              //   eventContent={renderEventContent}
             />
-            <ReactDatePicker
-              placeholderText="Start Date"
-              style={{ marginRight: "10px" }}
-              showTimeSelect
-              timeFormat="HH:mm"
-              selected={newEvent.start}
-              onChange={(start) => setNewEvent({ ...newEvent, start })}
-            />
-            <ReactDatePicker
-              placeholderText="End Date"
-              selected={newEvent.end}
-              showTimeSelect
-              timeFormat="HH:mm"
-              onChange={(end) => setNewEvent({ ...newEvent, end })}
-            />
-            <button style={{ marginTop: "10px" }} onClick={handleAddEvent}>
-              Add Event
-            </button>
           </div>
-          <Calendar
-            localizer={localizer}
-            events={allEvents}
-            startAccessor="start"
-            endAccessor="end"
-            defaultView={Views.WEEK}
-            style={{ height: 500, margin: "50px" }}
-          />
         </div>
       </div>
     </div>
