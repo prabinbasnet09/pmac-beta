@@ -10,7 +10,6 @@ import { onUpdateUser } from "@/api/gql/subscriptions.js";
 import awsExports from "../aws-exports";
 import { useRouter } from "next/router";
 
-
 Amplify.configure({ ...awsExports, ssr: true });
 
 export const ActiveUser = createContext();
@@ -19,7 +18,7 @@ export const ActiveUserProvider = ({ children, user }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-      const setLocalStorage = (key, value, ttl = 5 * 60 * 1000) => {
+    const setLocalStorage = (key, value, ttl = 5 * 60 * 1000) => {
       const expiresAt = new Date(Date.now() + ttl);
       localStorage.setItem(key, JSON.stringify({ value, expiresAt }));
     };
@@ -51,7 +50,6 @@ export const ActiveUserProvider = ({ children, user }) => {
     } else {
       setUsers(getLocalStorage("userInfo").value);
     }
-
 
     const updateUser = API.graphql({
       query: onUpdateUser,
@@ -115,7 +113,6 @@ export const ActiveUserProvider = ({ children, user }) => {
   );
 };
 
-
 function App(props) {
   const { Component, pageProps, user, signOut, router: route } = props;
   const [userGroup, setUserGroup] = useState();
@@ -127,7 +124,6 @@ function App(props) {
     router.pathname === "/schedule" ||
     router.pathname === "/results" ||
     router.pathname === "/applicants";
-    
 
   const getUserGroup = async () => {
     const userGroup = await API.graphql({

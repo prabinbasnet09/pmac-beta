@@ -10,7 +10,10 @@ const Layout = (props) => {
                   route !== '/' &&
                   route !== '/faculty' &&
                   route !== '/contact' &&
-                  route !== '/SignUp';
+                  route !== '/SignUp' &&
+                  route !== '/dashboard' &&
+                  route !== '/documents' &&
+                  route !== '/results';
         
 
   return (

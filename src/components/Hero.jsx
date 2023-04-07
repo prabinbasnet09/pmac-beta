@@ -6,15 +6,16 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="">
+    <div>
       <Image
-        className="w-[180px] mx-auto my-12"
-        src="/ulm_logo.png"
+        className="w-full mx-auto"
+        src="/ulm_banner.jpg"
         alt=""
-        width={180}
-        height={180}
+        width={1980}
+        height={1024}
+        
       />
-      <div className="text-[#3B0000]">
+      <div className="text-[#3B0000] border-t-2">
         <div className="max-w-[800px] mt-[70px] md:text-6xl w-full h-auto mx-auto flex text-center flex-col justify-center">
           <p className="text-[#812633] font-bold p-2">Welcome to</p>
           <h1 className="md:text-7xl sm:text-6xl text=4xl font-bold md:py-6">
