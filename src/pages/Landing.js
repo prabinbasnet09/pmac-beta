@@ -5,16 +5,24 @@ import Apply from "@/components/Apply";
 import Player from "@/components/widgets/Player";
 import Header from "@/components/Header";
 
-
 const Landing = () => {
   return (
-    <div>
-      <Header />
-      <Hero />
-      <Purpose />
-      <Apply />
-      <Player />
-    </div>
+    <>
+      <body>
+        <div>
+          <Header />
+          <Hero />
+          <Purpose />
+          <Apply />
+          <Player />
+        </div>
+      </body>
+      <footer>
+        <div className="w-full bg-[#bcbcbc] py-5 px-4">
+          <p className="text-center">© 2023 University of Louisiana Monroe</p>
+        </div>
+      </footer>
+    </>
   );
 };
 

@@ -10,6 +10,7 @@ const Hero = () => {
       <Image
         className="w-[180px] mx-auto my-12"
         src="/ulm_logo.png"
+        alt=""
         width={180}
         height={180}
       />

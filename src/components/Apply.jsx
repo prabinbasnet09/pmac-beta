@@ -3,9 +3,9 @@ import { Player } from "@lottiefiles/react-lottie-player";
 
 const Apply = () => {
   return (
-    <div className="w-full py-16 grid ml-14 ">
+    <div className="w-full py-4 grid ml-14 ">
       <div className=" max-w-[1240px] mx-auto grid grid-cols-2">
-        <div className="">
+        <div className="mt-16">
           <h1 className=" text-ulm_maroon md:text-4xl sm:text-3xl text-2xl font-bold py-2">
             How to apply?
           </h1>
@@ -15,7 +15,7 @@ const Apply = () => {
           be in touch to schedule a time that works for you.
         </div>
 
-        <div className="w-[350px] mx-auto">
+        <div className="w-[300px] mx-auto">
           {/*Animated Chart*/}
           <Player
             src="https://assets3.lottiefiles.com/packages/lf20_chdxojyo.json"

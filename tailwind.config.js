@@ -25,14 +25,21 @@ module.exports = {
         ulm_logo_red: "#6F0129",
         orange: "#FF8D1E",
       },
-    spacing: {
-        '64':  '16rem',
-        '128': '32rem',
-        '256': '64rem',
-        '512': '128rem',
-        '1024':'256rem'
+      extend: {
+        spacing: {
+          64: "16rem",
+          128: "32rem",
+          256: "64rem",
+          512: "128rem",
+          1024: "256rem",
+        },
+        extend: {
+          backgroundImage: {
+            "ulm-library": "url('/public/ulm_library.jpg')",
+          },
+        },
       },
     },
   },
-plugins: [require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/forms")],
 };
