@@ -1,22 +1,23 @@
 import React from "react";
 import Image from "next/image";
-import Logo from "../images/ulm_academic_maroon_white.png";
-import backgroundImage from "../images/statue2LG.jpg";
+import Logo from "../../public/ulm_academic_maroon_white.png";
+import Header from "@/components/Header";
 
 function SignUp() {
   return (
     <div>
+      <Header />
       {/* Need to imoprt background image here, just couldn't figure out how :'( */}
-      <section className="bg-gray h-screen">
+      <section className="bg-white h-screen">
         {/* Test */}
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <a
             href="#"
             className="flex items-center mb-6 text-2xl font-semibold text-gray "
           >
-            <Image className="w-14 mr-2" src={Logo} alt="logo" />
+            <Image className="w-48 mr-2" src={Logo} alt="logo" />
           </a>
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
+          <div className="w-full bg-[#D4D4D4] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-red md:text-2xl">
                 Sign in to your account

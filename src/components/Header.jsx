@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import Link from "next/link";
 
-const Header = () => {
+const Header = (props) => {
   const [nav, setNav] = useState(false);
 
   const handleNav = () => {
@@ -12,16 +13,24 @@ const Header = () => {
     <div className="flex justify-between items-center h-10 max-w-[1240px] mx-auto px-4 text-[#3B0000]">
       <h1 className="w-full text-3xl font-bold text-ulm_red">ULM</h1>
       <ul className="hidden md:flex">
-        <li className="p-4">Home</li>
-        <li className="p-4">Faculty</li>
-        <li className="p-4">Contact</li>
-        <li className="p-4">About</li>
+        <li className="p-4">
+          <Link href="/landing">Home</Link>
+        </li>
+        <li className="p-4">
+          <Link href="/faculty">Faculty</Link>
+        </li>
+        <li className="p-4">
+          <Link href="/contact">Contact</Link>
+        </li>
+        <li className="p-4">
+          <Link href="/about">About</Link>
+        </li>
       </ul>
 
       {/*Login Button*/}
       <a href="https://pmac-beta-opnaptos3-prabinbasnet09.vercel.app/">
         <button className="bg-ulm_red w-[100px] rounded-md text-lg my-6 mx-auto font-bold px-2 text-white">
-          Login
+          <Link href="/SignUp">Login</Link>
         </button>
       </a>
 
@@ -41,7 +50,11 @@ const Header = () => {
           <li className="p-4 border-b border-stone-900">Home</li>
           <li className="p-4 border-b border-stone-900">Faculty</li>
           <li className="p-4 border-b border-stone-900">Contact</li>
-          <li className="p-4">About</li>
+          <li className="p-4">
+            <Link href="/about">
+              <p>About</p>
+            </Link>
+          </li>
         </ul>
       </div>
     </div>

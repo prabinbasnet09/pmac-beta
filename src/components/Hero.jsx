@@ -2,6 +2,7 @@ import React from "react";
 // import ulm from '../../public/ulm_logo.png';
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -31,11 +32,12 @@ const Hero = () => {
           <p className="md:text-2xl text-xl font-bold text-black]">
             Prepare for success and nail your application with our guidance.
           </p>
-          <a href="https://pmac-beta-opnaptos3-prabinbasnet09.vercel.app/">
+          <p>
+            
             <button className="bg-ulm_red w-[200px] rounded-md text-lg my-6 mx-auto font-bold px-2 text-white shadow-lg">
-              Get Started
+            <Link href="/dashboard">Get Started</Link>
             </button>
-          </a>
+          </p>
         </div>
       </div>
     </div>

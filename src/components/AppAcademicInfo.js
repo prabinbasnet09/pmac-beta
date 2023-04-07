@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Table from "./widgets/Table";
+import Table from "./Table";
 import AppPersonalInfo from "./AppPersonalInfo";
 
 export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
   const { register } = useForm();
+  // const [nextPages, setNextPages] = useState(false);
+  // const [backPages, setBackPages] = useState(false);
+  // const headingsone = ['Haha', 'Column 2', 'Column 3'];
+
+  // const nextPage = () => {
+  //   setNextPages(true);
+  // }
+
+  // const backPage = () => {
+  //   setBackPages(true)
+  // }
 
   register("major", { onChange: (e) => onChangeForm(e) });
   register("minor", { onChange: (e) => onChangeForm(e) });

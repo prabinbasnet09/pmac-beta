@@ -4,7 +4,14 @@ import Navbar from './Navbar';
 const Layout = (props) => {
   const { children, user, signOut, route } = props;
   
-  const showNav = route !== '/' && route !== '/about';
+  {/*Boolean to hide original navbar*/}
+  const showNav = route !== '/landing' && 
+                  route !== '/about' && 
+                  route !== '/' &&
+                  route !== '/faculty' &&
+                  route !== '/contact' &&
+                  route !== '/SignUp';
+        
 
   return (
     <div>

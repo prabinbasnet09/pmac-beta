@@ -20,7 +20,7 @@ function purpose() {
             Empowering pre-med students
           </h1>
           <p className="">
-            Join forces with ULM's Pre-Medical Advisory purpose, a dedicated
+            Join forces with ULM&apos;s Pre-Medical Advisory purpose, a dedicated
             group of faculty members from across campus. Our faculty provide
             personalized guidance and support to pre-medical students during
             their junior and senior year, helping them prepare for a successful
