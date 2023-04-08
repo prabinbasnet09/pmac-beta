@@ -1,5 +1,6 @@
 import React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
+import Link from "next/link";
 
 const Apply = () => {
   return (
@@ -13,6 +14,12 @@ const Apply = () => {
           prospective students as part of their application process. To arrange
           an interview, simply submit the required forms and the committee will
           be in touch to schedule a time that works for you.
+          <p>
+            
+            <button className="bg-ulm_red w-[130px] rounded-md text-lg my-6 mx-auto font-bold px-2 text-white">
+            <Link href="/dashboard">Get Started</Link>
+            </button>
+          </p>
         </div>
 
         <div className="w-[300px] mx-auto">

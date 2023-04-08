@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 export default function Dashboard() {
   const activeUser = useContext(ActiveUser);
   return (
+      
       <div className="flex items-center justify-center">
         <div className="w-3/4 px-2 sm:px-0">
           <div className={`${"nav-body"}`}>

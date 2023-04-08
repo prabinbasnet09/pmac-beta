@@ -3,14 +3,13 @@ import Hero from "@/components/Hero";
 import Purpose from "@/components/Purpose";
 import Apply from "@/components/Apply";
 import Player from "@/components/widgets/Player";
-import Header from "@/components/Header";
+
 
 const Landing = () => {
   return (
     <>
       <body>
         <div>
-          <Header />
           <Hero />
           <Purpose />
           <Apply />

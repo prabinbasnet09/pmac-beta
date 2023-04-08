@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState, useEffect, useContext } from "react";
 import { ActiveUser } from "./_app";
 import AppUsers from "../components/AppUsers";
-import ApplicantInfo from "../components/ApplicantInfo";
+import ApplicantInfo from "./forms/ApplicantInfo";
 
 export default function Applicants() {
   const activeUser = useContext(ActiveUser);

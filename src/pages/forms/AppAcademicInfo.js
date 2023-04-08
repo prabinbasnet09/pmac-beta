@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import AppPersonalInfo from "./AppPersonalInfo";
+import AppPersonalInfo from "@/pages/forms/AppPersonalInfo";
 
 export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
   const { register } = useForm();

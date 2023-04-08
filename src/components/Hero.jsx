@@ -1,8 +1,8 @@
 import React from "react";
-// import ulm from '../../public/ulm_logo.png';
+import ulm from '../../public/ulm_logo.png';
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
-import Link from "next/link";
+
 
 const Hero = () => {
   return (
@@ -16,7 +16,17 @@ const Hero = () => {
         
       />
       <div className="text-[#3B0000] border-t-2">
-        <div className="max-w-[800px] mt-[70px] md:text-6xl w-full h-auto mx-auto flex text-center flex-col justify-center">
+
+      <div>
+      <Image
+        className="mx-auto mt-10"
+        src={ulm}
+        alt=""
+        width={100}
+        height={100}
+        
+      />
+        <div className="max-w-[800px] mt-[10px] md:text-6xl w-full h-auto mx-auto flex text-center flex-col justify-center">
           <p className="text-[#812633] font-bold p-2">Welcome to</p>
           <h1 className="md:text-7xl sm:text-6xl text=4xl font-bold md:py-6">
             The Pre-Medical Advisory Committee
@@ -34,14 +44,10 @@ const Hero = () => {
           <p className="md:text-2xl text-xl font-bold text-black]">
             Prepare for success and nail your application with our guidance.
           </p>
-          <p>
-            
-            <button className="bg-ulm_red w-[200px] rounded-md text-lg my-6 mx-auto font-bold px-2 text-white shadow-lg">
-            <Link href="/dashboard">Get Started</Link>
-            </button>
-          </p>
+          
         </div>
       </div>
+    </div>
     </div>
   );
 };

@@ -21,7 +21,7 @@ function Documents() {
             <tbody>
               <tr>
                 <td className="w-3/4 border border-black px-4 py-2 bg-white text-black  hover:text-red hover:font-bold">
-                  <Link href="/forms/appInfo">Applicant Information Form</Link>
+                  <Link href="/forms/ApplicantInfo">Applicant Information Form</Link>
                 </td>
                 <td className="w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm">
                   {activeUser.applicantForm ? (

@@ -6,8 +6,6 @@ import Header from "@/components/Header";
 function SignUp() {
   return (
     <div>
-      <Header />
-
       <section className="bg-ulm_library">
         {/* ULM Logo */}
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
