@@ -1,9 +1,11 @@
 import React from 'react';
 import Navbar from './Navbar';
+import Header from './Header'
 
 const Layout = (props) => {
   const { children, user, signOut, route } = props;
   
+
   {/*Boolean to hide original navbar*/}
   const showNav = route !== '/landing' && 
                   route !== '/about' && 
@@ -13,11 +15,17 @@ const Layout = (props) => {
                   route !== '/SignUp' &&
                   route !== '/dashboard' &&
                   route !== '/documents' &&
-                  route !== '/results';
+                  route !== '/results' &&
+                  route !== '/schedule' &&
+                  route !== '/forms/statementTranscript' &&
+                  route !== '/forms/AppAcademicInfo' &&
+                  route !== '/forms/ApplicantInfo' &&
+                  route !== '/forms/infoReleaseForm';
         
 
   return (
     <div>
+      <Header />
       {showNav && <Navbar user={user} signOut={signOut} />}
       {children}
     </div>
