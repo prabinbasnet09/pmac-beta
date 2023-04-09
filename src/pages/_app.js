@@ -1,14 +1,15 @@
-import { createContext, useState, useEffect } from "react";
-import "../styles/globals.css";
-import Layout from "@/components/Layout";
-import TabBar from "@/components/widgets/TabBar";
-import { Amplify, API } from "aws-amplify";
-import { withAuthenticator } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
-import * as queries from "../api/gql/queries";
-import { onUpdateUser } from "@/api/gql/subscriptions.js";
-import awsExports from "../aws-exports";
-import { useRouter } from "next/router";
+import { createContext, useState, useEffect } from 'react';
+import '../styles/globals.css';
+import Layout from '@/components/Layout';
+import TabBar from '@/components/TabBar';
+
+import { Amplify, API } from 'aws-amplify';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import { Auth } from 'aws-amplify';
+
+import * as queries from '../graphql/queries';
+import { onUpdateUser } from '@/graphql/subscriptions.js';
 
 Amplify.configure({ ...awsExports, ssr: true });
 
@@ -106,7 +107,6 @@ export const ActiveUserProvider = ({ children, user }) => {
       users: users,
     };
   }
-  console.log(loggedUser);
 
   return (
     <ActiveUser.Provider value={loggedUser}>{children}</ActiveUser.Provider>
@@ -234,3 +234,4 @@ function App(props) {
 }
 
 export default withAuthenticator(App);
+// export default App;

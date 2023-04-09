@@ -1,9 +1,13 @@
-import { React, useState, useEffect, useContext } from "react";
-import * as queries from "../../api/gql/queries";
-import * as mutations from "../../api/gql/mutations";
-import { API, graphqlOperation } from "aws-amplify";
-import { setDate } from "date-fns";
-import { ActiveUser } from "../../pages/forms/infoReleaseForm";
+import { React, useState, useEffect, useContext } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import * as Yup from 'yup';
+import * as queries from '../../graphql/queries';
+import * as mutations from '../../graphql/mutations';
+import { API, graphqlOperation } from 'aws-amplify';
+import { setDate } from 'date-fns';
+import { ActiveUser } from '../_app';
 
 export default function InfoReleaseForm() {
   const activeUser = useContext(ActiveUser);
@@ -17,9 +21,41 @@ export default function InfoReleaseForm() {
     },
   ]);
 
+  const validationSchema = Yup.object().shape({
+    
+    fullName: Yup.string()
+        .required('Full Name is required'),
+    cwid: Yup.string()
+        .required('CWID is required')
+        .matches(/^[0-9]{8}$/, 'CWID must be a valid date in the format xxxx-xxxx')
+        ,
+    signature: Yup.string()
+        .required('Signature is required'),
+    date: Yup.string()
+        .required('Date is Required'),
+    
+});
+
+const rowSchema = Yup.object().shape({
+  schoolName: Yup.string().required("Full Name is required!"),
+  deadlineDate: Yup.string().required("Valid Date is required"),
+  contactPerson: Yup.string().required('Contact person\'s is required!'),
+  address: Yup.string().required('Address is required!'),
+});
+
+
+
+const formOptions = { resolver: yupResolver(validationSchema) };
+
+  // get functions to build form with useForm() hook
+  const { register, handleSubmit, reset, formState } = useForm(formOptions);
+  const { errors } = formState;
+
   const [authorizeRelease, setAuthorizeRelease] = useState(false);
   const [allowEvaluation, setAllowEvaluation] = useState(false);
   const [allowAdvertising, setAllowAdvertising] = useState(false);
+
+  
 
   const [userInfo, setUserInfo] = useState({
     fullName: "",
@@ -27,20 +63,6 @@ export default function InfoReleaseForm() {
     signature: "",
     date: "",
   });
-
-  const [tableError, setTableError] = useState(false);
-  const [checkboxError, setCheckboxError] = useState(false);
-  const [nameError, setNameError] = useState(false);
-  const [cwidError, setCwidError] = useState(false);
-  const [dateError, setDateError] = useState(false);
-  const [signatureError, setSignatureError] = useState(false);
-
-  let tableErrorCheck = false;
-  let checkboxErrorCheck = false;
-  let nameErrorCheck = false;
-  let cwidErrorCheck = false;
-  let dateErrorCheck = false;
-  let signatureErrorCheck = false;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,6 +93,9 @@ export default function InfoReleaseForm() {
 
     fetchData();
   }, [activeUser]);
+
+  
+
 
   const handleFormSubmit = async () => {
     try {
@@ -151,31 +176,20 @@ export default function InfoReleaseForm() {
 
   const handleAuthorizeRelease = (e) => {
     setAuthorizeRelease(e.target.checked);
-    // setCheckboxOne(e.target.checked)
-    // setCheckboxError(false)
   };
 
   const handleAllowEvaluation = (e) => {
     setAllowEvaluation(e.target.checked);
-    // if (!allowEvaluation){setCheckboxTwo(false);}
-    // else {setCheckboxTwo(true);}
-    // setCheckboxTwo(e.target.checked)
-    // setCheckboxError(false)
   };
 
   const handleAllowAdvertising = (e) => {
     setAllowAdvertising(e.target.checked);
-    // if (!allowAdvertising){setCheckboxThree(false);}
-    // else {console.log(allowAdvertising)
-    //   setCheckboxThree(true)}
-    // setCheckboxThree(e.target.checked)
-    // setCheckboxError(false)
   };
 
   const handleRowChange = (index, field, value) => {
     const newRows = [...rows];
     newRows[index][field] = value;
-    setTableError(false);
+   
     setRows(newRows);
   };
 
@@ -184,94 +198,20 @@ export default function InfoReleaseForm() {
     newRows.pop(); // remove the last row
 
     setRows(newRows);
-    setTableError(false);
+  
   };
 
   const handleUserInfo = (field, value) => {
-    if (field === "fullName") {
-      if (value === "") {
-        nameErrorCheck = true;
-      } else {
-        nameErrorCheck = false;
-      }
-    }
-
-    if (field === "cwid") {
-      if (value === "") {
-        cwidErrorCheck = true;
-      } else {
-        cwidErrorCheck = false;
-      }
-    }
-
-    if (field === "date") {
-      if (value === "") {
-        dateErrorCheck = true;
-      } else {
-        dateErrorCheck = false;
-      }
-    }
-
-    if (field === "signature") {
-      if (value === "") {
-        signatureErrorCheck = true;
-      } else {
-        signatureErrorCheck = false;
-      }
-    }
-
-    setUserInfo((prevValues) => ({ ...prevValues, [field]: value }));
+    setUserInfo(prevValues => ({ ...prevValues, [field]: value }));
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    // const data = { rows, ...otherValues }
-    //   // Check if all rows have values
-    // const rowsHaveValues = rows.every((row) => {
-    //   return row.name && row.date && row.phone && row.address
-    // })
-
-    if (!authorizeRelease || !allowEvaluation || !allowAdvertising) {
-      checkboxErrorCheck = true;
-    }
-
-    if (userInfo.fullName === "") {
-      nameErrorCheck = true;
-    }
-
-    if (userInfo.cwid === "") {
-      cwidErrorCheck = true;
-    }
-
-    if (userInfo.date === "") {
-      dateErrorCheck = true;
-    }
-
-    if (userInfo.signature === "") {
-      signatureErrorCheck = true;
-    }
-
-    const rowsHaveValues = rows.every((row) => {
-      return (
-        row.schoolName && row.deadlineDate && row.contactPerson && row.address
-      );
-    });
-
-    if (!rowsHaveValues) {
-      tableErrorCheck = true;
-    }
-    // if (!checkboxError && !tableError && !nameError && !cwidError && !signatureError && !dateError){
-    handleFormSubmit();
-  };
+ 
 
   const handleAddRow = () => {
     setRows([...rows, { name: "", date: "", phone: "", address: "" }]);
   };
 
-  const errorMessage = [
-    "Error! Please select all three checkboxes.",
-    "Error! Please fill at-least one row with correct information.",
-  ];
+  
   return activeUser ? (
     <div className="mt-10 sm:mt-0">
       <div className="mt-10 w-full md:mt-10">
@@ -296,7 +236,7 @@ export default function InfoReleaseForm() {
               </p>
             </div>
 
-            <form onSubmit={(e) => handleSubmit(e)}>
+            <form onSubmit={handleSubmit(handleFormSubmit)}>
               <div>
                 <label className="block text-black font-bold mb-2">
                   Please check the box for all that you agree to:
@@ -309,15 +249,18 @@ export default function InfoReleaseForm() {
                       name="choice"
                       value="authorizeRelease"
                       checked={authorizeRelease}
-                      onChange={(e) => handleAuthorizeRelease(e)}
+                      onChange={e => handleAuthorizeRelease(e)}
+                      id="authorizeRelease"
                     />
-                    <span className="ml-3">
-                      {" "}
+                    
+                    <span className='ml-3'>
+                      {' '}
                       I hereby authorize the Pre-Medical Advisory Committee of
                       the University of Louisiana at Monroe to release the
                       evaluation of the undersigned to the below listed
                       professional schools and/or programs.
                     </span>
+                    <div className="text-bred italic ">{errors.authorizeRelease?.message}</div>
                   </div>
                   <div className=" leading-relaxed text-justify">
                     <input
@@ -325,10 +268,12 @@ export default function InfoReleaseForm() {
                       name="choice"
                       value="allowEvaluation"
                       checked={allowEvaluation}
-                      onChange={(e) => handleAllowEvaluation(e)}
+                      onChange={e => handleAllowEvaluation(e)}
+                      
                     />
-                    <span className="ml-3">
-                      {" "}
+                    
+                    <span className='ml-3'>
+                      {' '}
                       I will allow the committee members to evaluate my
                       performance based on my academic record, submitted
                       materials, and the committee interview. I authorize the
@@ -338,6 +283,7 @@ export default function InfoReleaseForm() {
                       and all items considered in making this recommendation are
                       confidential and I waive my right to see such evaluation.
                     </span>
+                  
                   </div>
                   <div className=" leading-relaxed text-justify">
                     <input
@@ -345,9 +291,11 @@ export default function InfoReleaseForm() {
                       name="choice"
                       value="allowAdvertising"
                       checked={allowAdvertising}
-                      onChange={(e) => handleAllowAdvertising(e)}
+                      onChange={e => handleAllowAdvertising(e)}
+                      
                     />
-                    <span className="ml-3">
+                    
+                    <span className='ml-3'>
                       I will allow my name to be released to the University if
                       accepted to a professional school. The University may use
                       my name and the name of the professional school/ and or
@@ -356,15 +304,11 @@ export default function InfoReleaseForm() {
                       Pre-Medical Interview Committee and the University of
                       Louisiana at Monroe.
                     </span>
+                    
                   </div>
                 </fieldset>
+                
               </div>
-              {checkboxErrorCheck ? (
-                <div className="text-bred text-sm mt-0 italic">
-                  {" "}
-                  {errorMessage[0]}{" "}
-                </div>
-              ) : null}
 
               <h1 className="mb-5 mt-7 text-1xl font-bold">
                 By signing below, I understand that I am waiving my right to
@@ -375,27 +319,25 @@ export default function InfoReleaseForm() {
               <div className="grid grid-cols-6 gap-6 w-full">
                 <div className="col-span-6 sm:col-span-3">
                   <label
-                    htmlFor="first-name"
-                    className="block text-sm font-medium text-gray-700"
+                    htmlFor='fullName'
+                    className='block text-sm font-medium text-gray-700'
                   >
                     Name (Print Clearly)
                   </label>
                   <input
-                    type="text"
-                    name="fullName"
-                    id="fullName"
+                    type='text'
+                    name='fullName'
+                    id='fullName'
+                    
                     defaultValue={userInfo.fullName}
                     onChange={(event) =>
                       handleUserInfo("fullName", event.target.value)
                     }
-                    autoComplete="given-name"
-                    className="w-full"
+                    autoComplete='given-name'
+                    {...register('fullName')} 
+                    className={`form-control w-full ${errors.fullName ? 'is-invalid' : ''}`}
                   />
-                  {nameErrorCheck ? (
-                    <p className="text-bred text-sm italic">
-                      Please enter your full name
-                    </p>
-                  ) : null}
+                  <div className="text-bred italic ">{errors.fullName?.message}</div>
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
@@ -413,14 +355,11 @@ export default function InfoReleaseForm() {
                     onChange={(event) =>
                       handleUserInfo("cwid", event.target.value)
                     }
-                    autoComplete="family-name"
-                    className="w-full"
+                    autoComplete='family-name'
+                    {...register('cwid')} 
+                    className={`form-control w-full ${errors.cwid ? 'is-invalid' : ''}`}
                   />
-                  {cwidErrorCheck && (
-                    <p className="text-bred text-sm italic">
-                      Please enter your correct CWID [xxxx-xxxx]
-                    </p>
-                  )}
+                  <div className="text-bred italic ">{errors.cwid?.message}</div>
                 </div>
               </div>
               <div className=" mt-5  grid grid-cols-6 gap-6">
@@ -439,14 +378,11 @@ export default function InfoReleaseForm() {
                     onChange={(event) =>
                       handleUserInfo("signature", event.target.value)
                     }
-                    autoComplete="given-name"
-                    className="w-full"
+                    autoComplete='given-name'
+                    {...register('signature')} 
+                    className={`form-control w-full ${errors.signature ? 'is-invalid' : ''}`}
                   />
-                  {signatureErrorCheck && (
-                    <p className="text-bred text-sm italic">
-                      Please enter your full name.
-                    </p>
-                  )}
+                  <div className="text-bred italic ">{errors.signature?.message}</div>
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
@@ -464,14 +400,11 @@ export default function InfoReleaseForm() {
                     onChange={(event) =>
                       handleUserInfo("date", event.target.value)
                     }
-                    autoComplete="family-name"
-                    className="w-full"
+                    autoComplete='family-name'
+                    {...register('date')} 
+                    className={`form-control w-full ${errors.date ? 'is-invalid' : ''}`}
                   />
-                  {dateErrorCheck && (
-                    <p className="text-bred text-sm italic">
-                      Please select today`&apos;`s date.
-                    </p>
-                  )}
+                  <div className="text-bred italic ">{errors.date?.message}</div>
                 </div>
               </div>
 
@@ -572,13 +505,6 @@ export default function InfoReleaseForm() {
                 </table>
               </div>
 
-              {tableErrorCheck && (
-                <div className="text-bred text-sm mt-0 italic">
-                  {" "}
-                  {errorMessage[1]}{" "}
-                </div>
-              )}
-
               <button
                 className="inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded"
                 type="button"
@@ -623,16 +549,16 @@ export default function InfoReleaseForm() {
               <div className="flex justify-center">
                 {activeUser.applicationReleaseForm === "Submitted" ? (
                   <button
-                    className="bg-green text-white font-bold py-2 px-4 rounded mt-3  w-1/2"
-                    onClick={(e) => handleSubmit(e)}
+                    className='bg-green text-white font-bold py-2 px-4 rounded mt-3  w-1/2'
+                    onClick={e => handleFormSubmit(e)}
                   >
                     Update
                   </button>
                 ) : (
                   <div>
                     <button
-                      className="bg-green text-white font-bold py-2 px-4 rounded mt-3 mr-3 w-2/2"
-                      onClick={(e) => handleSubmit(e)}
+                      className='bg-green text-white font-bold py-2 px-4 rounded mt-3 mr-3 w-2/2'
+                      onClick={e => handleFormSubmit(e)}
                     >
                       Save
                     </button>
