@@ -10,7 +10,7 @@ const Header = (props) => {
   };
 
   return (
-    <div className="flex justify-between items-center h-10 max-w-full mx-auto px-4 text-[#3B0000]  border-b-2">
+    <div className="flex justify-between items-center h-10 max-w-full mx-auto px-4 text-[#3B0000]">
       {/*Exchange ULM for ULM Logo*/}
 
       <h1 className="w-full text-3xl font-bold text-ulm_red">ULM</h1>

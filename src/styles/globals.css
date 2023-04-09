@@ -21,3 +21,8 @@
   background-color: rgb(200 201 199 / var(--tw-bg-opacity));
 }
 
+.email{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

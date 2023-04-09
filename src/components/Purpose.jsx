@@ -3,7 +3,7 @@ import { Player } from "@lottiefiles/react-lottie-player";
 
 function purpose() {
   return (
-    <div className="w-full bg-[#bcbcbc] py-16 px-4 mt-[140px]">
+    <div className="w-full bg-[#bcbcbc] py-16 px-4 mt-[140px] border-ulm_maroon border-t-2 border-b-2">
       <div className="max-w-[1240px] mx-auto grid md:grid-cols-2">
         <div className="container w-[350px] mx-auto">
           {/*Animated Student*/}

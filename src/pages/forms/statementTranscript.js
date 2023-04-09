@@ -9,6 +9,13 @@ import {
 import { getUser } from "@/api/gql/queries.js";
 import { ActiveUser } from "../../pages/_app";
 import Image from "next/image";
+import FileUpload from "@/components/widgets/FileUpload";
+import upload from "../../../public/upload.png";
+import uploadOrange from "../../../public/upload_orange.png";
+import uploadGreen from "../../../public/upload_green.png";
+import Link from "next/link";
+import { TypeAnimation } from "react-type-animation";
+
 export default function StatementTranscript() {
   const activeUser = useContext(ActiveUser);
   const [student, setStudent] = useState(activeUser);
@@ -120,6 +127,7 @@ export default function StatementTranscript() {
 
   return (
     <>
+    <body>
       <div className="border-b-2 text-[#3B0000]">
         <Image
           className="w-full mx-auto"
@@ -130,265 +138,98 @@ export default function StatementTranscript() {
         />
       </div>
       <div className="text-[#812633] max-w-[800px] mt-[70px] md:text-4xl w-full h-auto mx-auto flex text-center flex-col justify-center font-bold p-2">
-        Other Required Documents
+        Required Digital Documents
       </div>
-      <p className=" font-bold p-2 mx-16 mt-10 md:text-xl text-center">
-        Prepare a type-written personal statement. This statement should be
-        approximately one page in length, single spaced. The personal statement
+      <div className="flex justify-center items-center">
+            <span className="md:text-3xl text-ulm_logo_red sm:text-2xl text-xl font-bold py-4">
+              <span></span>{" "}
+              <TypeAnimation
+                sequence={["Personal Statement", 2000, "Unofficial Transcript", 2000, "Headshot", 2000]}
+                repeat={Infinity}
+                speed={20}
+              />
+            </span>
+          </div>
+      <p className='text-2xl font-bold text-ulm_maroon text-center mt-14'>Prepare a type-written personal statement.</p>
+      <p className=" font-bold p-2 mx-16 mt-5 md:text-xl justify-center ">
+        This statement should be approximately one page in length, single spaced. The personal statement
         you included in your AMCAS/AADSAS application is preferred. Please note
         that this is an important document and should be carefully and
         thoughtfully prepared. If you have questions about how to prepare a
-        personal statement, please contact Dr. Allison Wiedemeier or Dr. Matt
-        Overturf.
+        personal statement, please contact 
+        <a className=' text-ulm_red hover:text-sky-700'><Link href='https://webservices.ulm.edu/facultyactivities/profile/awiedemeier'> Dr. Allison Wiedemeier</Link></a> or 
+        <a className='text-ulm_red hover:text-sky-700'><Link href='https://webservices.ulm.edu/facultyactivities/profile/overturf'> Dr. Matt Overturf</Link>.</a>
+        
       </p>
-      <div>
-        <h1 className="p-5 font-bold text-ulm_maroon md:text-xl text-center">
-          Upload Personal Statement
-        </h1>
-        {student.personalStatement && !updatePersonalStatement ? (
-          <>
-            <a
-              href={student.personalStatement}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-2 ml-[3.5rem] p-2 bg-ulm_logo_red rounded-lg text-white font-bold"
-            >
-              View
-            </a>
-            <input
-              type="file"
-              id="myfile"
-              name="myfile"
-              style={{ display: "none" }}
-              ref={handleInvisiblePersonalStatement}
-              onChange={(e) => {
-                handleFileSelect(e, "personalStatement");
-              }}
+      {/*Upload Cards*/}
+      <div className="mx-auto flex justify-center column-3 max-w-[1240px]">
+      <div class="flex w-full justify-center mt-20">
+        <div className="bg-ulm_maroon items-center grid grid-rows-3 px-4 border border-black rounded-xl font-semibold text-sm text-white hover:text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
+          <div className="text-center p-1 text-2xl font-bold">
+            Personal Statement
+          </div>
+          <div>
+            <Image
+              className="mx-auto mt-10"
+              src={upload}
+              alt=""
+              width={100}
+              height={100}
             />
-            <button
-              className="mt-2 ml-[1rem] p-2 bg-ulm_logo_red text-white font-bold rounded-lg"
-              onClick={(e) => {
-                handleClick(e, "personalStatement");
-              }}
-            >
-              Change
-            </button>
-          </>
-        ) : selectedPersonalStatement ? (
-          <>
-            <center>
-              <button
-                className="mt-2 p-2 bg-ulm_logo_red rounded-lg text-white font-bold"
-                onClick={(e) => {
-                  handleFileUpload(e, "personalStatement");
-                }}
-              >
-                Upload {selectedPersonalStatement.name.substring(0, 10) + "..."}
-              </button>
-              <button
-                className="mt-2 ml-[1rem] p-2 bg-ulm_logo_red rounded-lg text-white font-bold"
-                onClick={(e) => {
-                  handleFileRemove(e, "personalStatement");
-                }}
-              >
-                Remove
-              </button>
-            </center>
-          </>
-        ) : (
-          <>
-            <input
-              type="file"
-              id="myfile"
-              name="myfile"
-              style={{ display: "none" }}
-              ref={handleInvisiblePersonalStatement}
-              onChange={(e) => {
-                handleFileSelect(e, "personalStatement");
-              }}
-            />
-            <center>
-              <button
-                className="p-2 bg-ulm_logo_red rounded-lg text-white font-bold w-[200px] "
-                onClick={(e) => {
-                  handleClick(e, "personalStatement");
-                }}
-              >
-                <p className="font-bold text-white">Choose File</p>
-              </button>
-            </center>
-          </>
-        )}
+          </div>
+          <p className='text-black'>
+            <FileUpload />
+          </p>
+        </div>
       </div>
-      <p className=" font-bold p-2 mx-16 md:text-xl text-center mt-16">
-        Supply the committee with an up-to-date unofficial transcript.
-      </p>
-      <div className="p-5 text-ulm_maroon max-w-[800px] md:text-xl w-full h-auto mx-auto flex text-center flex-col justify-center font-bold p-2">
-        Upload Latest Transcript
-      </div>
-     
-      <div>
-        {student.transcript && !updateTranscript ? (
-          <>
-            <a
-              href={student.transcript}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-2 ml-[3.5rem] p-2 bg-ulm_logo_red rounded-lg text-white font-bold"
-            >
-              View
-            </a>
-            <input
-              type="file"
-              id="myfile"
-              name="myfile"
-              style={{ display: "none" }}
-              ref={handleInvisibleTranscript}
-              onChange={(e) => {
-                handleFileSelect(e, "transcript");
-              }}
+
+      <div class="flex w-full justify-center mt-20">
+        <div className="bg-ulm_maroon items-center grid grid-rows-3 px-4 border border-black rounded-xl font-semibold text-sm text-white hover:text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
+          <div className="text-center p-1 text-2xl font-bold">
+            Unofficial Transcript
+          </div>
+          <div>
+            <Image
+              className="mx-auto mt-10"
+              src={uploadOrange}
+              alt=""
+              width={100}
+              height={100}
             />
-            <button
-              className="mt-2 ml-[1rem] p-2 bg-ulm_logo_red rounded-lg text-white font-bold"
-              onClick={(e) => {
-                handleClick(e, "transcript");
-              }}
-            >
-              Change
-            </button>
-          </>
-        ) : selectedTranscript ? (
-          <>
-            <center>
-              <button
-                className="mt-2 p-2 bg-ulm_logo_red rounded-lg text-white font-bold"
-                onClick={(e) => {
-                  handleFileUpload(e, "transcript");
-                }}
-              >
-                Upload {selectedTranscript.name.substring(0, 10) + "..."}
-              </button>
-              <button
-                className="mt-2 ml-[1rem] p-2 bg-ulm_logo_red rounded-lg text-white font-bold"
-                onClick={(e) => {
-                  handleFileRemove(e, "transcript");
-                }}
-              >
-                Remove
-              </button>
-            </center>
-          </>
-        ) : (
-          <>
-            <input
-              type="file"
-              id="myfile"
-              name="myfile"
-              style={{ display: "none" }}
-              ref={handleInvisibleTranscript}
-              onChange={(e) => {
-                handleFileSelect(e, "transcript");
-              }}
-            />
-            <center>
-              <button
-                className="p-2  bg-ulm_logo_red rounded-lg text-white font-bold w-[200px]"
-                onClick={(e) => {
-                  handleClick(e, "transcript");
-                }}
-              >
-                <p className="font-bold text-white">Choose File</p>
-              </button>
-            </center>
-            
-          </>
-        )}
+          </div>
+          <p className='text-black'>
+            <FileUpload />
+          </p>
+        </div>
       </div>
-      <p className=" font-bold p-2 mx-16 mt-16 md:text-xl text-center">
-      Include a headshot of yourself, preferably the headshot required by your application.
-      </p>
-      <div className="p-5 text-ulm_maroon max-w-[800px] md:text-xl w-full h-auto mx-auto flex text-center flex-col justify-center font-bold p-2">
-        Upload Photo
-      </div>
-      
-      <div>
-        {student.transcript && !updateTranscript ? (
-          <>
-            <a
-              href={student.transcript}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-2 ml-[3.5rem] p-2 bg-ulm_logo_red rounded-lg text-white font-bold"
-            >
-              View
-            </a>
-            <input
-              type="file"
-              id="myfile"
-              name="myfile"
-              style={{ display: "none" }}
-              ref={handleInvisibleTranscript}
-              onChange={(e) => {
-                handleFileSelect(e, "transcript");
-              }}
+
+      <div class="flex w-full justify-center mt-20">
+        <div className="bg-ulm_maroon items-center grid grid-rows-3 px-4 border border-black rounded-xl font-semibold text-sm text-white hover:text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
+          <div className="text-center p-1 text-2xl font-bold">
+            Headshot
+          </div>
+          <div>
+            <Image
+              className="mx-auto mt-10"
+              src={uploadGreen}
+              alt=""
+              width={100}
+              height={100}
             />
-            <button
-              className="mt-2 ml-[1rem] p-2 bg-ulm_logo_red rounded-lg text-white font-bold"
-              onClick={(e) => {
-                handleClick(e, "transcript");
-              }}
-            >
-              Change
-            </button>
-          </>
-        ) : selectedTranscript ? (
-          <>
-            <center>
-              <button
-                className="mt-2 p-2 bg-ulm_logo_red rounded-lg text-white font-bold"
-                onClick={(e) => {
-                  handleFileUpload(e, "transcript");
-                }}
-              >
-                Upload {selectedTranscript.name.substring(0, 10) + "..."}
-              </button>
-              <button
-                className="mt-2 ml-[1rem] p-2 bg-ulm_logo_red rounded-lg text-white font-bold"
-                onClick={(e) => {
-                  handleFileRemove(e, "transcript");
-                }}
-              >
-                Remove
-              </button>
-            </center>
-          </>
-        ) : (
-          <>
-            <input
-              type="file"
-              id="myfile"
-              name="myfile"
-              style={{ display: "none" }}
-              ref={handleInvisibleTranscript}
-              onChange={(e) => {
-                handleFileSelect(e, "transcript");
-              }}
-            />
-            <center>
-              <button
-                className="p-2  bg-ulm_logo_red rounded-lg text-white font-bold w-[200px]"
-                onClick={(e) => {
-                  handleClick(e, "transcript");
-                }}
-              >
-                <p className="font-bold text-white">Choose File</p>
-              </button>
-            </center>
-            
-          </>
-        )}
+          </div>
+          <p className='text-black'>
+            <FileUpload />
+          </p>
+        </div>
       </div>
-      
+    </div>
+    </body>
+    <footer>
+        <div className="w-full bg-[#bcbcbc] py-1 px-4 border-ulm_maroon border-t-2">
+          <p className="text-center">© 2023 University of Louisiana Monroe</p>
+        </div>
+      </footer>
     </>
+    
   );
 }

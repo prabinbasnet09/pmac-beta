@@ -6,7 +6,7 @@ import { TypeAnimation } from "react-type-animation";
 
 const Hero = () => {
   return (
-    <div>
+    <div className='text-[#3B0000] border-t-2'>
       <Image
         className="w-full mx-auto"
         src="/ulm_banner.jpg"

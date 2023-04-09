@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^4.3.9",
+    "@emailjs/browser": "^3.11.0",
     "@fullcalendar/daygrid": "^6.1.5",
     "@fullcalendar/interaction": "^6.1.5",
     "@fullcalendar/react": "^6.1.5",
@@ -23,6 +24,7 @@
     "date-fns": "^2.29.3",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
+    "flowbite": "^1.6.4",
     "js-cookie": "^3.0.1",
     "lottie-web": "^5.10.2",
     "next": "^13.2.4",
