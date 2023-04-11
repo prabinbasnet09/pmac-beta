@@ -32,9 +32,6 @@ const Contact = () => {
         <form ref={form} onSubmit={sendEmail}>
           <center>
             <div>
-              <p className="mt-10 text-4xl font-bold text-ulm_maroon">
-                Have questions? Get in touch with us!
-              </p>
               <label
                 for="first_name"
                 class="block mb-2 text-sm font-bold mt-16 text-gray-900 dark:text-black"
