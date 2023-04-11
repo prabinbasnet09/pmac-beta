@@ -6,9 +6,18 @@ import Header from "@/components/Header";
 function SignUp() {
   return (
     <div>
-      <section className="bg-ulm_library">
+      <div className="border-b-2 text-[#3B0000]">
+        <Image
+          className="w-full mx-auto"
+          src="/ulm_banner.jpg"
+          alt=""
+          width={1980}
+          height={1024}
+        />
+      </div>
+      <section>
         {/* ULM Logo */}
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div className="flex flex-col items-center justify-center px-6 mx-auto mt-16 lg:py-0">
           <a
             href="#"
             className="flex items-center mb-6 text-2xl font-semibold text-gray "
@@ -17,7 +26,7 @@ function SignUp() {
           </a>
 
           {/*Sign in box*/}
-          <div className="w-full bg-[#D4D4D4] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
+          <div className="w-full bg-[#D4D4D4] rounded-lg shadow-xl shadow-[#6e6e6e] dark:border md:mt-0 sm:max-w-md xl:p-0 ">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-red md:text-2xl">
                 Sign in to your account
@@ -34,8 +43,8 @@ function SignUp() {
                     type="email"
                     name="email"
                     id="email"
-                    className="bg-ulm_maroon border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5  "
-                    placeholder="name@company.com"
+                    className="bg-white border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5  "
+                    placeholder="name@warhawks.ulm.edu"
                     required=""
                   />
                 </div>
@@ -51,7 +60,8 @@ function SignUp() {
                     name="password"
                     id="password"
                     placeholder="••••••••"
-                    className="bg-white border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5"
+                    className="bg-white border border-black text-black sm:text-sm rounded-lg 
+                               focus:ring-green focus:border-green block w-full p-2.5"
                     required=""
                   />
                 </div>
@@ -86,7 +96,7 @@ function SignUp() {
                   Sign in
                 </button>
                 <p className="text-sm font-light text-gray-500 ">
-                  Don’t have an account yet?{" "}
+                  Don&apos;t have an account yet?{" "}
                   <a
                     href="#"
                     className="font-medium text-primary-600 hover:underline"

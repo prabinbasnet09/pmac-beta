@@ -1,13 +1,13 @@
-import { React, useState, useEffect, useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { React, useState, useEffect, useContext } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import * as Yup from 'yup';
-import * as queries from '../../graphql/queries';
-import * as mutations from '../../graphql/mutations';
-import { API, graphqlOperation } from 'aws-amplify';
-import { setDate } from 'date-fns';
-import { ActiveUser } from '../_app';
+import * as Yup from "yup";
+import * as queries from "../../api/gql/queries";
+import * as mutations from "../../api/gql/mutations";
+import { API, graphqlOperation } from "aws-amplify";
+import { setDate } from "date-fns";
+import { ActiveUser } from "../_app";
 
 export default function InfoReleaseForm() {
   const activeUser = useContext(ActiveUser);
@@ -22,30 +22,25 @@ export default function InfoReleaseForm() {
   ]);
 
   const validationSchema = Yup.object().shape({
-    
-    fullName: Yup.string()
-        .required('Full Name is required'),
+    fullName: Yup.string().required("Full Name is required"),
     cwid: Yup.string()
-        .required('CWID is required')
-        .matches(/^[0-9]{8}$/, 'CWID must be a valid date in the format xxxx-xxxx')
-        ,
-    signature: Yup.string()
-        .required('Signature is required'),
-    date: Yup.string()
-        .required('Date is Required'),
-    
-});
+      .required("CWID is required")
+      .matches(
+        /^[0-9]{8}$/,
+        "CWID must be a valid date in the format xxxx-xxxx"
+      ),
+    signature: Yup.string().required("Signature is required"),
+    date: Yup.string().required("Date is Required"),
+  });
 
-const rowSchema = Yup.object().shape({
-  schoolName: Yup.string().required("Full Name is required!"),
-  deadlineDate: Yup.string().required("Valid Date is required"),
-  contactPerson: Yup.string().required('Contact person\'s is required!'),
-  address: Yup.string().required('Address is required!'),
-});
+  const rowSchema = Yup.object().shape({
+    schoolName: Yup.string().required("Full Name is required!"),
+    deadlineDate: Yup.string().required("Valid Date is required"),
+    contactPerson: Yup.string().required("Contact person's is required!"),
+    address: Yup.string().required("Address is required!"),
+  });
 
-
-
-const formOptions = { resolver: yupResolver(validationSchema) };
+  const formOptions = { resolver: yupResolver(validationSchema) };
 
   // get functions to build form with useForm() hook
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
@@ -54,8 +49,6 @@ const formOptions = { resolver: yupResolver(validationSchema) };
   const [authorizeRelease, setAuthorizeRelease] = useState(false);
   const [allowEvaluation, setAllowEvaluation] = useState(false);
   const [allowAdvertising, setAllowAdvertising] = useState(false);
-
-  
 
   const [userInfo, setUserInfo] = useState({
     fullName: "",
@@ -93,9 +86,6 @@ const formOptions = { resolver: yupResolver(validationSchema) };
 
     fetchData();
   }, [activeUser]);
-
-  
-
 
   const handleFormSubmit = async () => {
     try {
@@ -189,7 +179,7 @@ const formOptions = { resolver: yupResolver(validationSchema) };
   const handleRowChange = (index, field, value) => {
     const newRows = [...rows];
     newRows[index][field] = value;
-   
+
     setRows(newRows);
   };
 
@@ -198,26 +188,22 @@ const formOptions = { resolver: yupResolver(validationSchema) };
     newRows.pop(); // remove the last row
 
     setRows(newRows);
-  
   };
 
   const handleUserInfo = (field, value) => {
-    setUserInfo(prevValues => ({ ...prevValues, [field]: value }));
+    setUserInfo((prevValues) => ({ ...prevValues, [field]: value }));
   };
-
- 
 
   const handleAddRow = () => {
     setRows([...rows, { name: "", date: "", phone: "", address: "" }]);
   };
 
-  
   return activeUser ? (
     <div className="mt-10 sm:mt-0">
       <div className="mt-10 w-full md:mt-10">
         <div className="overflow-hidden shadow sm:rounded-md">
-          <div className="border-2 border-gold w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 ">
-            <h1 className="text-center text-4xl font-bold text-gold">
+          <div className="border-2 border-[#7e7e7e] rounded-xl shadow-xl shadow-[#7092BE] shadow:opacity-20 w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 ">
+            <h1 className="text-center text-4xl font-bold text-ulm_maroon">
               Information Release Form
             </h1>
 
@@ -249,18 +235,20 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                       name="choice"
                       value="authorizeRelease"
                       checked={authorizeRelease}
-                      onChange={e => handleAuthorizeRelease(e)}
+                      onChange={(e) => handleAuthorizeRelease(e)}
                       id="authorizeRelease"
                     />
-                    
-                    <span className='ml-3'>
-                      {' '}
+
+                    <span className="ml-3">
+                      {" "}
                       I hereby authorize the Pre-Medical Advisory Committee of
                       the University of Louisiana at Monroe to release the
                       evaluation of the undersigned to the below listed
                       professional schools and/or programs.
                     </span>
-                    <div className="text-bred italic ">{errors.authorizeRelease?.message}</div>
+                    <div className="text-bred italic ">
+                      {errors.authorizeRelease?.message}
+                    </div>
                   </div>
                   <div className=" leading-relaxed text-justify">
                     <input
@@ -268,12 +256,11 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                       name="choice"
                       value="allowEvaluation"
                       checked={allowEvaluation}
-                      onChange={e => handleAllowEvaluation(e)}
-                      
+                      onChange={(e) => handleAllowEvaluation(e)}
                     />
-                    
-                    <span className='ml-3'>
-                      {' '}
+
+                    <span className="ml-3">
+                      {" "}
                       I will allow the committee members to evaluate my
                       performance based on my academic record, submitted
                       materials, and the committee interview. I authorize the
@@ -283,7 +270,6 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                       and all items considered in making this recommendation are
                       confidential and I waive my right to see such evaluation.
                     </span>
-                  
                   </div>
                   <div className=" leading-relaxed text-justify">
                     <input
@@ -291,11 +277,10 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                       name="choice"
                       value="allowAdvertising"
                       checked={allowAdvertising}
-                      onChange={e => handleAllowAdvertising(e)}
-                      
+                      onChange={(e) => handleAllowAdvertising(e)}
                     />
-                    
-                    <span className='ml-3'>
+
+                    <span className="ml-3">
                       I will allow my name to be released to the University if
                       accepted to a professional school. The University may use
                       my name and the name of the professional school/ and or
@@ -304,10 +289,8 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                       Pre-Medical Interview Committee and the University of
                       Louisiana at Monroe.
                     </span>
-                    
                   </div>
                 </fieldset>
-                
               </div>
 
               <h1 className="mb-5 mt-7 text-1xl font-bold">
@@ -319,25 +302,28 @@ const formOptions = { resolver: yupResolver(validationSchema) };
               <div className="grid grid-cols-6 gap-6 w-full">
                 <div className="col-span-6 sm:col-span-3">
                   <label
-                    htmlFor='fullName'
-                    className='block text-sm font-medium text-gray-700'
+                    htmlFor="fullName"
+                    className="block text-sm font-medium text-gray-700"
                   >
                     Name (Print Clearly)
                   </label>
                   <input
-                    type='text'
-                    name='fullName'
-                    id='fullName'
-                    
+                    type="text"
+                    name="fullName"
+                    id="fullName"
                     defaultValue={userInfo.fullName}
                     onChange={(event) =>
                       handleUserInfo("fullName", event.target.value)
                     }
-                    autoComplete='given-name'
-                    {...register('fullName')} 
-                    className={`form-control w-full ${errors.fullName ? 'is-invalid' : ''}`}
+                    autoComplete="given-name"
+                    {...register("fullName")}
+                    className={`form-control w-full ${
+                      errors.fullName ? "is-invalid" : ""
+                    }`}
                   />
-                  <div className="text-bred italic ">{errors.fullName?.message}</div>
+                  <div className="text-bred italic ">
+                    {errors.fullName?.message}
+                  </div>
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
@@ -355,11 +341,15 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                     onChange={(event) =>
                       handleUserInfo("cwid", event.target.value)
                     }
-                    autoComplete='family-name'
-                    {...register('cwid')} 
-                    className={`form-control w-full ${errors.cwid ? 'is-invalid' : ''}`}
+                    autoComplete="family-name"
+                    {...register("cwid")}
+                    className={`form-control w-full ${
+                      errors.cwid ? "is-invalid" : ""
+                    }`}
                   />
-                  <div className="text-bred italic ">{errors.cwid?.message}</div>
+                  <div className="text-bred italic ">
+                    {errors.cwid?.message}
+                  </div>
                 </div>
               </div>
               <div className=" mt-5  grid grid-cols-6 gap-6">
@@ -378,11 +368,15 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                     onChange={(event) =>
                       handleUserInfo("signature", event.target.value)
                     }
-                    autoComplete='given-name'
-                    {...register('signature')} 
-                    className={`form-control w-full ${errors.signature ? 'is-invalid' : ''}`}
+                    autoComplete="given-name"
+                    {...register("signature")}
+                    className={`form-control w-full ${
+                      errors.signature ? "is-invalid" : ""
+                    }`}
                   />
-                  <div className="text-bred italic ">{errors.signature?.message}</div>
+                  <div className="text-bred italic ">
+                    {errors.signature?.message}
+                  </div>
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
@@ -400,11 +394,15 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                     onChange={(event) =>
                       handleUserInfo("date", event.target.value)
                     }
-                    autoComplete='family-name'
-                    {...register('date')} 
-                    className={`form-control w-full ${errors.date ? 'is-invalid' : ''}`}
+                    autoComplete="family-name"
+                    {...register("date")}
+                    className={`form-control w-full ${
+                      errors.date ? "is-invalid" : ""
+                    }`}
                   />
-                  <div className="text-bred italic ">{errors.date?.message}</div>
+                  <div className="text-bred italic ">
+                    {errors.date?.message}
+                  </div>
                 </div>
               </div>
 
@@ -425,7 +423,7 @@ const formOptions = { resolver: yupResolver(validationSchema) };
               </h1>
 
               <div className="overflow-x-auto">
-                <table className="table-auto border-collapse border border-black w-full bg-red opacity-75 text-white ">
+                <table className="table-auto roundedborder-collapse border border-black w-full bg-ulm_logo_red text-white ">
                   <thead>
                     <tr>
                       <th className="border border-black px-4 py-2">
@@ -527,7 +525,7 @@ const formOptions = { resolver: yupResolver(validationSchema) };
               </button>
               <button
                 onClick={handleDeleteRow}
-                className="bg-bred text-white font-bold px-1 py-1 rounded mt-5 "
+                className="bg-ulm_red text-white font-bold px-1 py-1 rounded mt-5 "
                 type="button"
               >
                 <svg
@@ -549,20 +547,20 @@ const formOptions = { resolver: yupResolver(validationSchema) };
               <div className="flex justify-center">
                 {activeUser.applicationReleaseForm === "Submitted" ? (
                   <button
-                    className='bg-green text-white font-bold py-2 px-4 rounded mt-3  w-1/2'
-                    onClick={e => handleFormSubmit(e)}
+                    className="bg-green text-white font-bold py-2 px-4 rounded mt-3  w-1/2"
+                    onClick={(e) => handleFormSubmit(e)}
                   >
                     Update
                   </button>
                 ) : (
                   <div>
                     <button
-                      className='bg-green text-white font-bold py-2 px-4 rounded mt-3 mr-3 w-2/2'
-                      onClick={e => handleFormSubmit(e)}
+                      className="bg-ulm_red text-white font-bold py-2 px-4 rounded mt-3 mr-3 w-2/2"
+                      onClick={(e) => handleFormSubmit(e)}
                     >
                       Save
                     </button>
-                    <button className="bg-green text-white font-bold py-2 px-4 rounded mt-3  w-2/2">
+                    <button className="bg-ulm_red text-white font-bold py-2 px-4 rounded mt-3  w-2/2">
                       Submit
                     </button>
                   </div>

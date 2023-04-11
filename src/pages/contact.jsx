@@ -17,11 +17,11 @@ const Contact = () => {
             alt=""
             width={1980}
             height={1024}
-          /></div>
+          />
+        </div>
         <div className="Email">
           <Email />
         </div>
-
       </body>
     </>
   );

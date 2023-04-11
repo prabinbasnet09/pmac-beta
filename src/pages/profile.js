@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useContext } from "react";
 import { ActiveUser } from "./_app";
 import { Auth } from "aws-amplify";
-import Logo from "../images/ulm_academic_maroon_white.png";
+import Logo from "../../public/ulm_academic_maroon_white.png";
 
 export default function Profile() {
   const activeUser = useContext(ActiveUser);

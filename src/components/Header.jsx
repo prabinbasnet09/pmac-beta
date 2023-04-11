@@ -19,9 +19,6 @@ const Header = (props) => {
           <Link href="/">Home</Link>
         </li>
         <li className="p-4">
-          <Link href="/faculty">Faculty</Link>
-        </li>
-        <li className="p-4">
           <Link href="/contact">Contact</Link>
         </li>
         <li className="p-4">
@@ -31,7 +28,7 @@ const Header = (props) => {
 
       {/*Login Button*/}
       <a href="https://pmac-beta-opnaptos3-prabinbasnet09.vercel.app/">
-        <button className="bg-ulm_red w-[100px] rounded-md text-lg my-6 mx-auto font-bold px-2 text-white">
+        <button className="bg-ulm_red w-[100px] rounded-md text-lg my-6 hover:shadow-black shadow-sm mx-auto font-bold px-2 text-white">
           <Link href="/SignUp">Login</Link>
         </button>
       </a>
@@ -50,7 +47,6 @@ const Header = (props) => {
         <h1 className="w-full text-3xl font-bold m-4">ULM</h1>
         <ul className="uppercase p-4 border-b border-stone-900">
           <li className="p-4 border-b border-stone-900">Home</li>
-          <li className="p-4 border-b border-stone-900">Faculty</li>
           <li className="p-4 border-b border-stone-900">Contact</li>
           <li className="p-4">
             <Link href="/about">

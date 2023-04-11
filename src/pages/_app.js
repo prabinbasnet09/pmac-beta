@@ -1,16 +1,17 @@
-import { createContext, useState, useEffect } from 'react';
-import '../styles/globals.css';
-import Layout from '@/components/Layout';
-import TabBar from '@/components/TabBar';
+import { createContext, useState, useEffect } from "react";
+import "../styles/globals.css";
+import Layout from "@/components/Layout";
+import TabBar from "@/components/widgets/TabBar";
 
-import { Amplify, API } from 'aws-amplify';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css';
-import { Auth } from 'aws-amplify';
+import { Amplify, API } from "aws-amplify";
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
+import { Auth } from "aws-amplify";
 
-import * as queries from '../graphql/queries';
-import { onUpdateUser } from '@/graphql/subscriptions.js';
-
+import awsExports from "../aws-exports";
+import * as queries from "../api/gql/queries";
+import { onUpdateUser } from "../api/gql/subscriptions";
+import { useRouter } from "next/router";
 Amplify.configure({ ...awsExports, ssr: true });
 
 export const ActiveUser = createContext();

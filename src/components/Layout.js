@@ -20,7 +20,9 @@ const Layout = (props) => {
                   route !== '/forms/statementTranscript' &&
                   route !== '/forms/AppAcademicInfo' &&
                   route !== '/forms/ApplicantInfo' &&
-                  route !== '/forms/infoReleaseForm';
+                  route !== '/forms/infoReleaseForm' &&
+                  route !== '/profile' &&
+                  route !== '/forms/involvement';
         
 
   return (

@@ -4,7 +4,6 @@ import Purpose from "@/components/Purpose";
 import Apply from "@/components/Apply";
 import Player from "@/components/widgets/Player";
 
-
 const Landing = () => {
   return (
     <>

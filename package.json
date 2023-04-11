@@ -18,9 +18,11 @@
     "@headlessui/react": "^1.7.11",
     "@heroicons/react": "^2.0.16",
     "@hookform/resolvers": "^3.0.1",
+    "@lottiefiles/react-lottie-player": "^3.5.3",
     "@next/font": "13.1.6",
     "@tailwindcss/forms": "^0.5.3",
     "aws-amplify": "^5.0.17",
+    "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
@@ -33,6 +35,9 @@
     "react-datepicker": "^4.10.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.1",
+    "react-hot-toast": "^2.4.0",
+    "react-icons": "^4.8.0",
+    "react-type-animation": "^3.0.1",
     "yup": "^1.0.2"
   },
   "devDependencies": {

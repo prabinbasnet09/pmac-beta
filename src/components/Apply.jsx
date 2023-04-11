@@ -15,9 +15,8 @@ const Apply = () => {
           an interview, simply submit the required forms and the committee will
           be in touch to schedule a time that works for you.
           <p>
-            
-            <button className="bg-ulm_red w-[130px] rounded-md text-lg my-6 mx-auto font-bold px-2 text-white">
-            <Link href="/dashboard">Get Started</Link>
+            <button className="bg-ulm_red w-[130px] hover:shadow-black shadow-sm rounded-md text-lg my-6 mx-auto font-bold px-2 text-white">
+              <Link href="/dashboard">Get Started</Link>
             </button>
           </p>
         </div>
