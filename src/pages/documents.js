@@ -10,7 +10,7 @@ function Documents() {
     <div className="flex items-center justify-center">
       <div className="w-3/4 px-2 sm:px-0">
         <div className={`${"nav-body"}`}>
-          <table className="w-full table-auto border  border-black  px-4 py-2 bg-red text-white ">
+          <table className="w-full table-auto border border-black px-4 py-2 bg-red text-white ">
             <thead>
               <tr>
                 <th className="w-2/4 border border-black px-4 py-2">Forms</th>
@@ -21,7 +21,9 @@ function Documents() {
             <tbody>
               <tr>
                 <td className="w-3/4 border border-black px-4 py-2 bg-white text-black  hover:text-red hover:font-bold">
-                  <Link href="/forms/ApplicantInfo">Applicant Information Form</Link>
+                  <Link href="/forms/ApplicantInfo">
+                    Applicant Information Form
+                  </Link>
                 </td>
                 <td className="w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm">
                   {activeUser.applicantForm ? (
@@ -54,13 +56,6 @@ function Documents() {
                 <td className="w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold">
                   03/25/2023
                 </td>
-              </tr>
-              <tr>
-                <td className="w-3/4   px-4 py-2 bg-white text-red font-bold disabled:">
-                  Faculty Recommendation Form
-                </td>
-                <td className="w-1/4  px-4 py-2 bg-white "></td>
-                <td className="w-1/4  px-4 py-2 bg-white "></td>
               </tr>
 
               {activeUser.facultyRecommendation ? (

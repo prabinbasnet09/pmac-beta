@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from './Navbar';
 import Header from './Header'
 
 const Layout = (props) => {
@@ -22,13 +21,14 @@ const Layout = (props) => {
                   route !== '/forms/ApplicantInfo' &&
                   route !== '/forms/infoReleaseForm' &&
                   route !== '/profile' &&
-                  route !== '/forms/involvement';
+                  route !== '/forms/involvement' &&
+                  route !== '/404';
         
 
   return (
     <div>
       <Header />
-      {showNav && <Navbar user={user} signOut={signOut} />}
+      {showNav && <Header user={user} signOut={signOut} />}
       {children}
     </div>
   );

@@ -16,7 +16,6 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
   //   setBackPages(true)
   // }
 
-
   register("major", { onChange: (e) => onChangeForm(e) });
   register("minor", { onChange: (e) => onChangeForm(e) });
   register("expectedGrad", { onChange: (e) => onChangeForm(e) });

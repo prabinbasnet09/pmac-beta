@@ -12,6 +12,8 @@ import awsExports from "../aws-exports";
 import * as queries from "../api/gql/queries";
 import { onUpdateUser } from "../api/gql/subscriptions";
 import { useRouter } from "next/router";
+
+
 Amplify.configure({ ...awsExports, ssr: true });
 
 export const ActiveUser = createContext();
@@ -144,6 +146,8 @@ function App(props) {
 
   getUserGroup();
 
+
+
   const withLayout = (Component) => {
     return function WrappedComponent(props) {
       const tabs =
@@ -236,3 +240,4 @@ function App(props) {
 
 export default withAuthenticator(App);
 // export default App;
+
