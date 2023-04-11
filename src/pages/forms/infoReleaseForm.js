@@ -305,7 +305,7 @@ export default function InfoReleaseForm() {
                     htmlFor="fullName"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Name (Print Clearly)
+                    Name
                   </label>
                   <input
                     type="text"
@@ -358,7 +358,7 @@ export default function InfoReleaseForm() {
                     htmlFor="signature"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Signature
+                    E-Signature {/*Need a way to capture signatures*/}
                   </label>
                   <input
                     type="text"
@@ -423,7 +423,7 @@ export default function InfoReleaseForm() {
               </h1>
 
               <div className="overflow-x-auto">
-                <table className="table-auto roundedborder-collapse border border-black w-full bg-ulm_logo_red text-white ">
+                <table className="table-auto roundedborder-collapse border border-black w-full bg-ulm_maroon text-white ">
                   <thead>
                     <tr>
                       <th className="border border-black px-4 py-2">
@@ -525,7 +525,7 @@ export default function InfoReleaseForm() {
               </button>
               <button
                 onClick={handleDeleteRow}
-                className="bg-ulm_red text-white font-bold px-1 py-1 rounded mt-5 "
+                className="bg-ulm_maroon text-white font-bold px-1 py-1 rounded mt-5 "
                 type="button"
               >
                 <svg
@@ -555,12 +555,12 @@ export default function InfoReleaseForm() {
                 ) : (
                   <div>
                     <button
-                      className="bg-ulm_red text-white font-bold py-2 px-4 rounded mt-3 mr-3 w-2/2"
+                      className="bg-ulm_maroon text-white font-bold py-2 px-4 rounded mt-3 mr-3 w-2/2"
                       onClick={(e) => handleFormSubmit(e)}
                     >
                       Save
                     </button>
-                    <button className="bg-ulm_red text-white font-bold py-2 px-4 rounded mt-3  w-2/2">
+                    <button className="bg-ulm_maroon text-white font-bold py-2 px-4 rounded mt-3  w-2/2">
                       Submit
                     </button>
                   </div>

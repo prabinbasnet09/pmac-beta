@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import Checklist from "@/components/widgets/Checklist";
 import { ActiveUser } from "@/pages/_app";
-import Header from "@/components/Header";
+
 
 export default function Dashboard() {
   const activeUser = useContext(ActiveUser);

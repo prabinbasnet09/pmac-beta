@@ -61,7 +61,7 @@ function Documents() {
               {activeUser.facultyRecommendation ? (
                 activeUser.facultyRecommendation[0] && (
                   <tr>
-                    <td className="w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold">
+                    <td className="w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-black hover:font-bold">
                       <Link href="/forms/statementTranscript">
                         Faculty Recommendation Form 1
                       </Link>
@@ -76,7 +76,7 @@ function Documents() {
                 )
               ) : (
                 <tr>
-                  <td className="w-3/4 border border-black px-20 py-2 bg-white text-black disabled:">
+                  <td className="w-3/4 border border-black px-4 py-2 bg-white text-black hover:font-bold hover:text-red">
                     Faculty Recommendation Form 1
                   </td>
                   <td className="w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm">
@@ -106,7 +106,7 @@ function Documents() {
                 )
               ) : (
                 <tr>
-                  <td className="w-3/4 border border-black px-20 py-2 bg-white text-black disabled:">
+                  <td className="w-3/4 border border-black px-4 py-2 bg-white text-black hover:font-bold hover:text-red">
                     Faculty Recommendation Form 2
                   </td>
                   <td className="w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm">
