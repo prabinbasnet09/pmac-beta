@@ -140,33 +140,17 @@ export default function StatementTranscript() {
         <div className="text-[#812633] max-w-[800px] mt-[70px] md:text-4xl w-full h-auto mx-auto flex text-center flex-col justify-center font-bold p-2">
           Required Digital Documents
         </div>
-        <div className="flex justify-center items-center">
-          <span className="md:text-3xl text-ulm_logo_red sm:text-2xl text-xl font-bold py-4">
-            <span></span>{" "}
-            <TypeAnimation
-              sequence={[
-                "Personal Statement",
-                2000,
-                "Unofficial Transcript",
-                2000,
-                "Headshot",
-                2000,
-              ]}
-              repeat={Infinity}
-              speed={20}
-            />
-          </span>
-        </div>
+
         <p className="text-2xl font-bold text-ulm_maroon text-center mt-14">
-          Prepare a type-written personal statement.
+          Personal Statement, Unofficial Transcript, & Headshot
         </p>
         <p className=" font-bold p-2 mx-16 mt-5 md:text-xl justify-center ">
-          This statement should be approximately one page in length, single
-          spaced. The personal statement you included in your AMCAS/AADSAS
-          application is preferred. Please note that this is an important
-          document and should be carefully and thoughtfully prepared. If you
-          have questions about how to prepare a personal statement, please
-          contact
+          The personal statement should be approximately one page in length,
+          single spaced. The personal statement you included in your
+          AMCAS/AADSAS application is preferred. Please note that this is an
+          important document and should be carefully and thoughtfully prepared.
+          If you have questions about how to prepare a personal statement,
+          please contact
           <a className=" text-ulm_red hover:text-sky-700">
             <Link href="https://webservices.ulm.edu/facultyactivities/profile/awiedemeier">
               {" "}
