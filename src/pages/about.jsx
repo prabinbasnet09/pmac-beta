@@ -4,7 +4,7 @@ import Image from "next/image";
 const About = () => {
   return (
     <>
-      <div className="border-b-2 text-[#3B0000] border-b-2">
+      <div className="border-b-2 text-[#3B0000]">
         <Image
           className="w-full mx-auto"
           src="/ulm_banner.jpg"

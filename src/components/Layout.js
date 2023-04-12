@@ -22,7 +22,8 @@ const Layout = (props) => {
                   route !== '/forms/infoReleaseForm' &&
                   route !== '/profile' &&
                   route !== '/forms/involvement' &&
-                  route !== '/404';
+                  route !== '/404' &&
+                  route !== '/forms/facultyRecForm';
         
 
   return (
