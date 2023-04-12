@@ -90,7 +90,7 @@ export default function ApplicantInfo(props) {
       </div>
 
       <div className="mt-2">
-        <Checklist activeUser={user} />
+        {/*<Checklist activeUser={user} />*/}
         {user.facultyRecommendation && !changeFile ? (
           <>
             <a

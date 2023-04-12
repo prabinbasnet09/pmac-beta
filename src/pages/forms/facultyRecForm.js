@@ -9,7 +9,6 @@ import { API, graphqlOperation } from "aws-amplify";
 import { setDate } from "date-fns";
 import { ActiveUser } from "../_app";
 
-
 export default function InfoReleaseForm() {
   const activeUser = useContext(ActiveUser);
 
@@ -212,8 +211,6 @@ export default function InfoReleaseForm() {
     );
   };
 
-
-
   return activeUser ? (
     <div className="mt-10 sm:mt-0">
       <div className="mt-10 w-full md:mt-10">
@@ -300,7 +297,6 @@ export default function InfoReleaseForm() {
                   process.
                 </p>
               </div>
-              
 
               {/*Table Start*/}
               <div>
@@ -488,12 +484,136 @@ export default function InfoReleaseForm() {
                     </tr>
                   </tbody>
                 </table>
+                <div className="font-bold mt-10 mb-3">
+                  How long and in what capacity have you known or observed this
+                  student?
+                </div>
+                <textarea
+                  id="message"
+                  rows="4"
+                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
+                  placeholder="Write your thoughts here..."
+                ></textarea>
+                <div className="font-bold mt-10 mb-3">
+                  What do you consider to be the applicant&apos;s major
+                  strength(s)?
+                </div>
+                <textarea
+                  id="message"
+                  rows="4"
+                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500"
+                  placeholder="Write your thoughts here..."
+                ></textarea>
+              </div>
+
+              <div className="font-bold mt-10 mb-3">
+                What do you consider to be the applicant&apos;s major
+                weakness(es)?
+              </div>
+              <textarea
+                id="message"
+                rows="4"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500"
+                placeholder="Write your thoughts here..."
+              ></textarea>
+            </div>
+            <div className="mt-10">
+              <p className="mb-4 font-bold">
+                Please indicate the applicant&apos;s overall potential for
+                success.
+              </p>
+              <table class="border border-seperate border-slate-700 w-full text-center">
+                <tbody>
+                  <tr>
+                    <td className="border border-slate-600 hover:border-teal-500">
+                      Below Average
+                    </td>
+                    <td className="border border-slate-600 hover:border-teal-500">
+                      Average
+                    </td>
+                    <td className="border border-slate-600 hover:border-teal-500">
+                      Above Average
+                    </td>
+                    <td className="border border-slate-600 hover:border-teal-500">
+                      Well Above Average
+                    </td>
+                    <td className="border border-slate-600 hover:border-teal-500">
+                      Truly Outstanding
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p className="mt-5 mb-3 font-bold">Additional Comments:</p>
+              <textarea
+                id="message"
+                rows="4"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500"
+                placeholder="Write your thoughts here..."
+              ></textarea>
+
+              <div>
+                <p className="font-bold mt-14">
+                  Thank you for helping us to evaluate this applicant. Please
+                  sign below and return this form to Dr. Allison Wiedemeier (326
+                  CNSB).
+                </p>
+                <div className="w-[500px] grid grid-col-2">
+                  <div>
+                    <label
+                      htmlFor="evalSignature"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      <p className='mt-5 mb-3'>Signature of Evaluator</p>
+                    </label>
+                    <input
+                      type="text"
+                      name="evalSignature"
+                      id="evalSignature"
+                      defaultValue={userInfo.evalSignature}
+                      onChange={(event) =>
+                        handleUserInfo("signature", event.target.value)
+                      }
+                      autoComplete="given-name"
+                      {...register("signature")}
+                      className={`form-control w-full ${
+                        errors.evalSignature ? "is-invalid" : ""
+                      }`}
+                    />
+                    <div className="text-bred italic ">
+                      {errors.evalSignature?.message}
+                    </div>
+                  </div>
+                  <div className="w-[300px]">
+                    <label for="start">
+                    <p className='mt-5 mb-3'>Date</p>
+                    </label>
+                      <input
+                        type="date"
+                        id="date"
+                        name="trip-start"
+                        value="01/01/2023"
+                        min="4/12/23"
+                        max="2040-12-31"
+                        onChange={(event) =>
+                          handleUserInfo("signature", event.target.value)
+                        }
+                        autoComplete="date"
+                        {...register("date")}
+                        className={`form-control w-full ${
+                          errors.date ? "is-invalid" : ""
+                        }`}
+                      />
+                      <div className="text-bred italic ">
+                        {errors.date?.message}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   ) : (
     <div>Loading...</div>
   );
