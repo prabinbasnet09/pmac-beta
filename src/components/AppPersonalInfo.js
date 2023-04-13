@@ -1,39 +1,113 @@
 import React, { useState } from 'react';
-import {useForm} from 'react-hook-form';
-import AppAcademicInfo from './AppAcademicInfo';
-import Table from './Table'
+import CountrySelect from './CountrySelect';
+import axios from 'axios';
+import Select from 'react-select';
 
+const majors = [
+  { value: "bio", label: "Biology" },
+  { value: "chem", label: "Chemistry" },
+  { value: "phy", label: "Physics" },
+  { value: "psych", label: "Psychology" },
+  { value: "biochem", label: "Biochemistry" },
+  { value: "math", label: "Mathematics" },
+  { value: "cs", label: "Computer Science" },
+  { value: "me", label: "Mechanical Engineering" },
+  { value: "ee", label: "Electrical Engineering" },
+  { value: "ce", label: "Civil Engineering" },
+];
 
-export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
-  const { register } = useForm();
+const minors = [
+  { value: "bio", label: "Biology" },
+  { value: "chem", label: "Chemistry" },
+  { value: "phy", label: "Physics" },
+  { value: "psych", label: "Psychology" },
+  { value: "biochem", label: "Biochemistry" },
+  { value: "math", label: "Mathematics" },
+  { value: "phil", label: "Philosophy" },
+  { value: "lang", label: "Foreign Language" },
+  
+];
 
-  register('firstName', { onChange: (e) => onChangeForm(e) });
-  register('lastName', { onChange: (e) => onChangeForm(e) });
-  register('cwid', { onChange: (e) => onChangeForm(e) });
-  register('number', { onChange: (e) => onChangeForm(e) });
-  register('country', { onChange: (e) => onChangeForm(e) });
-  register('address', { onChange: (e) => onChangeForm(e) });
-  register('city', { onChange: (e) => onChangeForm(e) });
-  register('state', { onChange: (e) => onChangeForm(e) });
-  register('zip', { onChange: (e) => onChangeForm(e) });
-  register('ulm', { onChange: (e) => onChangeForm(e) });
-  register('alternate', { onChange: (e) => onChangeForm(e) });
+export default function AppPersonalInfo() {
 
-  // const [nextPages, setNextPages] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState('');
 
-  // const nextPage = () => {
-  //   setNextPages(true);
-  // }
+  const [selectedMajors, setSelectedMajors] = useState([]);
+  const [selectedMinors, setSelectedMinors] = useState([]);
+
+  const [tableValues, setTableValues] = useState({
+    amcasLetterId: '',
+    aacomasCasNumber: '',
+    caspaCasNumber: '',
+    aadsasIdNumber: '',
+    aamcId: ''
+  });
+
+  const [personalInfo, setPersonalInfo] = useState({
+    firstName: '',
+    lastName: '',
+    cwid: '',
+    number: '',
+    country: '',
+    address: '',
+    city:'',
+    state:'',
+    zip: '',
+    ulm: '',
+    alternate: '',
+    expectedGrad:'',
+    overallGPA: '',
+    date: '',
+    scores: '',
+    examDate: '',
+    appType: '',
+    faculty: '',
+});
+
+const [recommenderData, setrecommenderData] = useState([    ["", "", ""],
+    ["", "", ""],
+  ]);
+
+  const handleRecommenderChange = (e, row, col) => {
+    const newData = [...recommenderData];
+    newData[row][col] = e.target.value;
+    setrecommenderData(newData);
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setTableValues({ ...tableValues, [name]: value });
+  }
+
+  const handleMajorChange = (selectedOptions) => {
+    setSelectedMajors(selectedOptions);
+  };
+
+  const handleMinorChange = (selectedOptions) => {
+    setSelectedMinors(selectedOptions);
+  };
+  
+
+  
+  function handleCountryChange(countryCode) {
+    setSelectedCountry(countryCode);
+  }
+
+    const handlePersonalInfo = (field, value) => {
+      setPersonalInfo(prevValues => ({ ...prevValues, [field]: value }));
+      
+    };
+
 
     return (
       <>
-     {/* { !nextPages &&  */}
+    
       <div className=" sm:mt-0">
           <div >
           
             <div className=" w-full md:mt-10">
               
-                <div className="overflow-hidden shadow sm:rounded-md">
+                <div className="overflow-hidden">
               
                   <div className="px-4 py-5 sm:p-6">
                     
@@ -48,14 +122,14 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           type="text"
                           name="firstName"
                           id="firstName"
-                          defaultValue={formData.firstName}
+                          
                           autoComplete="given-name"
-                          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
-                            errors.firstName ? 'border-bred' : ''
-                          }`}
-                          {...register("firstName", {required: true, maxLength:80})}
+                          className='w-full rounded-md  '
+                          defaultValue={personalInfo.firstName}
+                          onChange={event =>
+                            handlePersonalInfo('firstName', event.target.value)}  
+                                                
                         />
-                        {errors.firstName && (<span className="inline-flex text-sm text-bred">Please enter your First Name.</span>)}
                       </div>
   
                       <div className="col-span-6 sm:col-span-3">
@@ -66,14 +140,13 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           type="text"
                           name="lastName"
                           id="lastName"
-                          value={formData.lastName} 
                           autoComplete="family-name"
-                          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
-                            errors.lastName ? 'border-bred' : ''
-                          }`}
-                          {...register("lastName", {required: true, maxLength:80})}
+                          className='w-full rounded-md  '
+                          defaultValue={personalInfo.lastName}
+                          onChange={event =>
+                            handlePersonalInfo('lastName', event.target.value)}  
                         />
-                        {errors.lastName && (<span className="inline-flex text-sm text-bred">Please enter your Last Name.</span>)}
+                       
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
@@ -84,14 +157,11 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           type="text"
                           name="cwid"
                           id="cwid"
-                          value={formData.cwid} 
-           
-                          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
-                            errors.cwid ? 'border-bred' : ''
-                          }`}
-                          {...register("cwid", {required: true, minLength:8, maxLength:8})}
+                          className='w-full rounded-md  '
+                          defaultValue={personalInfo.cwid}
+                          onChange={event =>
+                            handlePersonalInfo('cwid', event.target.value)}  
                         />
-                        {errors.cwid && (<span className="inline-flex text-sm text-bred">Please enter your correct CWID [xxxx-xxxx].</span>)}
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
@@ -102,13 +172,12 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           type="text"
                           name="number"
                           id="number"
-                          value={formData.number} 
-                          {...register("number", {required: true, minLength: 10, maxLength:10})}
-                          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
-                            errors.number ? 'border-bred' : ''
-                          }`}
+                          className='w-full rounded-md  '
+                          defaultValue={personalInfo.number}
+                          onChange={event =>
+                            handlePersonalInfo('number', event.target.value)}  
                         />
-                        {errors.number && (<span className="inline-flex text-sm text-bred">Please enter your correct Phone number [xxx-xxx-xxxx].</span>)}
+                       
                       </div>
                       
   
@@ -116,18 +185,9 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                         <label htmlFor="country" className="block text-sm font-medium text-black">
                           Country
                         </label>
-                        <select
-                          id="country"
-                          name="country"
-                          defaultValue={formData.country}
-                          autoComplete="country-name"
-                          className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-green focus:outline-none focus:ring-green sm:text-sm"
-                        >
-                          <option>United States</option>
-                          <option>Canada</option>
-                          <option>Mexico</option>
-                        </select>
-                      </div>
+                        <CountrySelect selectedCountry={selectedCountry} onCountryChange={handleCountryChange} />
+                        {/* <p>Selected country: {selectedCountry}</p> */}
+                                        </div>
   
                       <div className="col-span-6">
                         <label htmlFor="streetaddress" className="block text-sm font-medium text-black">
@@ -137,14 +197,12 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           type="text"
                           name="address"
                           id="address"
-                          value={formData.address} 
+                          className='w-full rounded-md  '
+                          defaultValue={personalInfo.address}
+                          onChange={event =>
+                            handlePersonalInfo('address', event.target.value)}  
                           autoComplete="street-address"
-                          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
-                            errors.address ? 'border-bred' : ''
-                          }`}
-                          {...register("address", {required: true, maxLength:80})}
                         />
-                        {errors.address && (<span className="inline-flex text-sm text-bred">Please enter your correct Address.</span>)}
                       </div>
   
                       <div className="col-span-6 sm:col-span-6 lg:col-span-2">
@@ -155,14 +213,12 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           type="text"
                           name="city"
                           id="city"
-                          value={formData.city} 
                           autoComplete="address-level2"
-                          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
-                            errors.city ? 'border-bred' : ''
-                          }`}
-                          {...register("city", {required: true, maxLength:80})}
+                          className='w-full rounded-md  '
+                          defaultValue={personalInfo.city}
+                          onChange={event =>
+                            handlePersonalInfo('city', event.target.value)}  
                         />
-                        {errors.city && (<span className="inline-flex text-sm text-bred">Please enter your correct City.</span>)}
                       </div>
   
                       <div className="col-span-6 sm:col-span-3 lg:col-span-2">
@@ -173,14 +229,12 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           type="text"
                           name="state"
                           id="state"
-                          value={formData.state} 
                           autoComplete="address-level1"
-                          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
-                            errors.state ? 'border-bred' : ''
-                          }`}
-                          {...register("state", {required: true, maxLength:80})}
+                          className='w-full rounded-md  '
+                          defaultValue={personalInfo.state}
+                          onChange={event =>
+                            handlePersonalInfo('state', event.target.value)}  
                         />
-                        {errors.state && (<span className="inline-flex text-sm text-bred">Please enter your correct State/Province.</span>)}
                       </div>
   
                       <div className="col-span-6 sm:col-span-3 lg:col-span-2">
@@ -191,14 +245,13 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           type="text"
                           name="zip"
                           id="zip"
-                          value={formData.zip} 
                           autoComplete="postal-code"
-                          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
-                            errors.zip ? 'border-bred' : ''
-                          }`}
-                          {...register("zip", {required: true, maxLength:5})}
+                          className='w-full rounded-md  '
+                          defaultValue={personalInfo.zip}
+                          onChange={event =>
+                            handlePersonalInfo('zip', event.target.value)}  
                         />
-                        {errors.zip && (<span className="inline-flex text-sm text-bred">Please enter your correct Zip/Postal Code [x-xxxxx].</span>)}
+                       
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
@@ -209,14 +262,13 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           type="text"
                           name="ulm"
                           id="ulm"
-                          value={formData.ulm} 
                           autoComplete="email"
-                          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
-                            errors.ulm ? 'border-bred' : ''
-                          }`}
-                          {...register("ulm", {required: true, pattern:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i})}
+                          className='w-full rounded-md  '
+                          defaultValue={personalInfo.ulm}
+                          onChange={event =>
+                            handlePersonalInfo('ulm', event.target.value)}  
                         />
-                        {errors.ulm && (<span className="inline-flex text-sm text-bred">Please enter your correct ULM email address [...@warhawks.ulm.edu].</span>)}
+                       
                       </div>
 
                       <div className="col-span-6 sm:col-span-3">
@@ -227,15 +279,213 @@ export default function AppPersonalInfo({ formData, onChangeForm, errors }) {
                           type="text"
                           name="alternate"
                           id="alternate"
-                          value={formData.alternate}
                           autoComplete="email"
-                          className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
-                            errors.alternate ? 'border-bred' : ''
-                          }`}
-                          {...register("alternate", {required: true, pattern:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i})}
+                          className='w-full rounded-md  '
+                          defaultValue={personalInfo.alternate}
+                          onChange={event =>
+                            handlePersonalInfo('alternate', event.target.value)}  
                         />
-                        {errors.alternate && (<span className="inline-flex text-sm text-bred">Please enter your correct Alternate email address [...@example.com].</span>)}
+                     
                       </div>
+
+                      <div className="col-span-6 sm:col-span-3">
+                    <label
+                      htmlFor="major"
+                      className="block text-sm font-medium text-black"
+                    >
+                      Major
+                    </label>
+                    <Select
+          id="majors"
+          name="majors"
+          options={majors}
+          isMulti
+          value={selectedMajors}
+          onChange={handleMajorChange}
+          creatable
+        />
+                  </div>
+
+                  <div className="col-span-6 sm:col-span-3">
+                    <label
+                      htmlFor="minor"
+                      className="block text-sm font-medium text-black"
+                    >
+                      Minor
+                    </label>
+                    <Select
+                      id="minors"
+                      name="minors"
+                      options={minors}
+                      isMulti
+                      value={selectedMinors}
+                      onChange={handleMinorChange}
+                      creatable
+        />
+                  </div>
+
+                  <div className="col-span-6 sm:col-span-3">
+                    <label
+                      htmlFor="expectedGrad"
+                      className="block text-sm font-medium text-black"
+                    >
+                      Expected Graduation Date From ULM
+                    </label>
+                    <input
+                      type="date"
+                      name="expectedGrad"
+                      id="expectedGrad"
+                      className='w-full rounded-md  '
+                      defaultValue={personalInfo.expectedGrad}
+                      onChange={event =>
+                        handlePersonalInfo('expectedGrad', event.target.value)}  
+              
+                    />
+                   
+                  </div>
+
+                  <div className="col-span-6 sm:col-span-3">
+                    <label
+                      htmlFor="overallGPA"
+                      className="block text-sm font-medium text-black"
+                    >
+                      Overall Collegiate GPA
+                    </label>
+                    <input
+                      type="text"
+                      name="overallGPA"
+                      id="overallGPA"
+                      className='w-full rounded-md  '
+                      defaultValue={personalInfo.overallGPA}
+                      onChange={event =>
+                        handlePersonalInfo('overallGPA', event.target.value)}  
+                    />
+                   
+                  </div>
+                  <div className="col-span-6 ">
+                    <label
+                      htmlFor="date"
+                      className="block text-sm font-medium text-black"
+                    >
+                      Date of Proposed Entrance to Professional School
+                    </label>
+                    <input
+                      type="date"
+                      id="date"
+                      name="date"
+                      className='w-full rounded-md'
+                      defaultValue={personalInfo.date}
+                      onChange={event =>
+                        handlePersonalInfo('date', event.target.value)}  
+                    />
+                  </div>
+                  <div className="col-span-6">
+                    <label
+                      htmlFor="scores"
+                      className="block text-sm font-medium text-black"
+                    >
+                      <span>
+                        Scores of your most recent professional entry exam
+                        (MCAT, DAT, OAT, GRE). <br />
+                      </span>
+                      <span>Please include your breakdown scores.</span>
+                    </label>
+                    <div className='overflow-x-auto'>
+      
+    </div>
+
+    <div className="col-span-6 mb-5">
+                    <label
+                      htmlFor="appType"
+                      className="block text-sm font-medium text-black"
+                    >
+                      Type of School Application will be sent
+                    </label>
+                    <input
+                      type="text"
+                      id="appType"
+                      name="appType"
+                      className='w-full rounded-md'
+                     
+                    />
+                   
+                  </div>
+
+                  <div className="col-span-6 mb-5">
+                    <label
+                      htmlFor="appIDType"
+                      className="block text-sm font-medium text-black"
+                    >
+                      Depending on the type pf application, fill in the
+                      appropriate ID numbers.
+                    </label>
+                    <div className='overflow-x-auto'>
+                    <table className="border-collapse border border-black">
+  <thead className="bg-red text-white">
+    <tr>
+      <th className="border border-black ">AMCAS Letter ID</th>
+      <th className="border border-black">AACOMAS CAS #</th>
+      <th className="border border-black">CASPA CAS #</th>
+      <th className="border border-black">AADSAS ID #</th>
+      <th className="border border-black">AAMC ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td ><input type="text" name="amcasLetterId" value={tableValues.amcasLetterId} onChange={handleInputChange} /></td>
+          <td><input type="text" name="aacomasCasNumber" value={tableValues.aacomasCasNumber} onChange={handleInputChange} /></td>
+          <td><input type="text" name="caspaCasNumber" value={tableValues.caspaCasNumber} onChange={handleInputChange} /></td>
+          <td><input type="text" name="aadsasIdNumber" value={tableValues.aadsasIdNumber} onChange={handleInputChange} /></td>
+          <td><input type="text" name="aamcId" value={tableValues.aamcId} onChange={handleInputChange} /></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+                    
+                  </div>
+
+                  <div className="col-span-6">
+                    <label
+                      htmlFor="faculty"
+                      className="block text-sm font-medium text-black"
+                    >
+                      Faculty Members Submitting Evaluation on your Behalf:
+                    </label>
+                    
+                  </div>
+                  <table className="border-collapse border border-black w-full">
+      <thead className="bg-red text-white">
+        <tr>
+          <th className="border border-black">Name</th>
+          <th className="border border-black">Title</th>
+          <th className="border border-black">Department</th>
+        </tr>
+      </thead>
+      <tbody>
+        {recommenderData.map((row, i) => (
+          <tr key={i}>
+            {row.map((cell, j) => (
+              <td key={j}>
+                <input
+                  className='w-full'
+                  type="text"
+                  value={cell}
+                  onChange={(e) => handleRecommenderChange(e, i, j)}
+                />
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+
+                    
+                  </div>
+
+
                     </div>
                   </div>
                 </div>
