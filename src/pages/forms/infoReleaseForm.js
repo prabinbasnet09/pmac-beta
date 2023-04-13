@@ -1,7 +1,5 @@
 import { React, useState, useEffect, useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-
+import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import * as Yup from 'yup';
 import * as queries from '../../graphql/queries';
 import * as mutations from '../../graphql/mutations';
@@ -33,6 +31,7 @@ export default function InfoReleaseForm() {
         .required('Signature is required'),
     date: Yup.string()
         .required('Date is Required'),
+    choice: Yup.array().of(Yup.string()).min(3, 'Please select all 3 checkboxes!'),
     
 });
 
@@ -45,11 +44,7 @@ const rowSchema = Yup.object().shape({
 
 
 
-const formOptions = { resolver: yupResolver(validationSchema) };
 
-  // get functions to build form with useForm() hook
-  const { register, handleSubmit, reset, formState } = useForm(formOptions);
-  const { errors } = formState;
 
   const [authorizeRelease, setAuthorizeRelease] = useState(false);
   const [allowEvaluation, setAllowEvaluation] = useState(false);
@@ -97,7 +92,7 @@ const formOptions = { resolver: yupResolver(validationSchema) };
   
 
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = async (values, {setSubmitting}) => {
     try {
       const schoolDetails = rows.map(row => {
         return {
@@ -154,7 +149,7 @@ const formOptions = { resolver: yupResolver(validationSchema) };
           });
       };
 
-      const updateForm = async () => {
+      const updateForm = async (values, {setSubmitting}) => {
         await API.graphql({
           query: mutations.updateApplicantReleaseForm,
           variables: { input: inputData },
@@ -172,6 +167,9 @@ const formOptions = { resolver: yupResolver(validationSchema) };
     } catch (err) {
       console.log('error creating InfoRelease Form:', err);
     }
+
+    console.log(values);
+    setSubmitting(false);
   };
 
   const handleAuthorizeRelease = e => {
@@ -201,8 +199,9 @@ const formOptions = { resolver: yupResolver(validationSchema) };
   
   };
 
-  const handleUserInfo = (field, value) => {
+  const handleUserInfo = (field, value, setFieldValue) => {
     setUserInfo(prevValues => ({ ...prevValues, [field]: value }));
+    setFieldValue(prevValues => ({ ...prevValues, [field]: value }));
   };
 
  
@@ -211,9 +210,15 @@ const formOptions = { resolver: yupResolver(validationSchema) };
     setRows([...rows, { name: '', date: '', phone: '', address: '' }]);
   };
 
+  const initialValues = {fullName: userInfo.fullName || '', cwid: '', signature:'', date: '',
+choice: []}
   
   return activeUser ? (
+
+   
+    
     <div className='mt-10 sm:mt-0'>
+      
       <div className='mt-10 w-full md:mt-10'>
         <div className='overflow-hidden shadow sm:rounded-md'>
           <div className='border-2 border-gold w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 '>
@@ -236,21 +241,27 @@ const formOptions = { resolver: yupResolver(validationSchema) };
               </p>
             </div>
 
-            <form onSubmit={handleSubmit(handleFormSubmit)}>
+            <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleFormSubmit}
+    >
+      {({ values, setFieldValue, handleFormSubmit, isSubmitting }) => (<Form >
               <div>
                 <label className='block text-black font-bold mb-2'>
                   Please check the box for all that you agree to:
                 </label>
                 <fieldset className='ml-9'>
                   <div className=' leading-relaxed text-justify'>
-                    {/* <input type="checkbox" name="choice" value="authorizeRelease" onChange={event => handleOtherValuesChange('choices', event.target)} /> */}
+                  
                     <input
                       type='checkbox'
                       name='choice'
                       value='authorizeRelease'
-                      checked={authorizeRelease}
+                      checked={values.choice.includes('authorizeRelease')}
                       onChange={e => handleAuthorizeRelease(e)}
                       id="authorizeRelease"
+                      
                     />
                     
                     <span className='ml-3'>
@@ -260,14 +271,14 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                       evaluation of the undersigned to the below listed
                       professional schools and/or programs.
                     </span>
-                    <div className="text-bred italic ">{errors.authorizeRelease?.message}</div>
+                   
                   </div>
                   <div className=' leading-relaxed text-justify'>
                     <input
                       type='checkbox'
                       name='choice'
                       value='allowEvaluation'
-                      checked={allowEvaluation}
+                      checked={values.choice.includes('allowEvaluation')}
                       onChange={e => handleAllowEvaluation(e)}
                       
                     />
@@ -290,7 +301,7 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                       type='checkbox'
                       name='choice'
                       value='allowAdvertising'
-                      checked={allowAdvertising}
+                      checked={values.choice.includes('allowAdvertising')}
                       onChange={e => handleAllowAdvertising(e)}
                       
                     />
@@ -304,7 +315,7 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                       Pre-Medical Interview Committee and the University of
                       Louisiana at Monroe.
                     </span>
-                    
+                    <ErrorMessage name="choice" />
                   </div>
                 </fieldset>
                 
@@ -328,16 +339,15 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                     type='text'
                     name='fullName'
                     id='fullName'
-                    
+                    // value={values.fullName}
                     defaultValue={userInfo.fullName}
                     onChange={event =>
-                      handleUserInfo('fullName', event.target.value)
+                      handleUserInfo('fullName', event.target.value, setFieldValue)
                     }
                     autoComplete='given-name'
-                    {...register('fullName')} 
-                    className={`form-control w-full ${errors.fullName ? 'is-invalid' : ''}`}
+                   
                   />
-                  <div className="text-bred italic ">{errors.fullName?.message}</div>
+                 <ErrorMessage name='fullName'/>
                 </div>
 
                 <div className='col-span-6 sm:col-span-3'>
@@ -356,10 +366,10 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                       handleUserInfo('cwid', event.target.value)
                     }
                     autoComplete='family-name'
-                    {...register('cwid')} 
-                    className={`form-control w-full ${errors.cwid ? 'is-invalid' : ''}`}
+                    
                   />
-                  <div className="text-bred italic ">{errors.cwid?.message}</div>
+                  <ErrorMessage className="text-bred italic" name="cwid" />
+                  {/* <div className="text-bred italic ">{errors.cwid?.message}</div> */}
                 </div>
               </div>
               <div className=' mt-5  grid grid-cols-6 gap-6'>
@@ -379,10 +389,11 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                       handleUserInfo('signature', event.target.value)
                     }
                     autoComplete='given-name'
-                    {...register('signature')} 
-                    className={`form-control w-full ${errors.signature ? 'is-invalid' : ''}`}
+                    // {...register('signature')} 
+                    // className={`form-control w-full ${errors.signature ? 'is-invalid' : ''}`}
                   />
-                  <div className="text-bred italic ">{errors.signature?.message}</div>
+                  <ErrorMessage className="text-bred italic" name="signature" />
+                  {/* <div className="text-bred italic ">{errors.signature?.message}</div> */}
                 </div>
 
                 <div className='col-span-6 sm:col-span-3'>
@@ -400,11 +411,11 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                     onChange={event =>
                       handleUserInfo('date', event.target.value)
                     }
-                    autoComplete='family-name'
-                    {...register('date')} 
-                    className={`form-control w-full ${errors.date ? 'is-invalid' : ''}`}
+                    // {...register('date')} 
+                    // className={`form-control w-full ${errors.date ? 'is-invalid' : ''}`}
                   />
-                  <div className="text-bred italic ">{errors.date?.message}</div>
+                  <ErrorMessage className="text-bred italic" name="date" />
+                  {/* <div className="text-bred italic">{errors.date?.message}</div> */}
                 </div>
               </div>
 
@@ -562,13 +573,16 @@ const formOptions = { resolver: yupResolver(validationSchema) };
                     >
                       Save
                     </button>
-                    <button className='bg-green text-white font-bold py-2 px-4 rounded mt-3  w-2/2'>
+                    <button type ="submit" disabled ={isSubmitting} className='bg-green text-white font-bold py-2 px-4 rounded mt-3  w-2/2'>
                       Submit
                     </button>
                   </div>
                 )}
               </div>
-            </form>
+            </Form>
+            )}</Formik>
+
+            
           </div>
         </div>
       </div>
@@ -577,3 +591,4 @@ const formOptions = { resolver: yupResolver(validationSchema) };
     <div>Loading...</div>
   );
 }
+
