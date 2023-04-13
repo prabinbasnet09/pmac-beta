@@ -81,7 +81,7 @@ function AppInfo() {
        <form onSubmit={handleSubmit}>
             <AppPersonalInfo />
             {/* <AppAcademicInfo formData={formData} onChangeForm={handleFormChange} errors={errors} /> */}
-            <Involvement /> 
+            {/* <Involvement />  */}
             {/* <div className='flex justify-center'>
                 <button type ="submit" className="  bg-green hover:opracity-50 text-white font-bold py-2 px-4 rounded"> 
                 Submit </button>

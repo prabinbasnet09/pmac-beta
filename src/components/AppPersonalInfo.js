@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CountrySelect from './CountrySelect';
-import axios from 'axios';
 import Select from 'react-select';
+import Table from './Table';
 
 const majors = [
   { value: "bio", label: "Biology" },
@@ -30,6 +30,20 @@ const minors = [
 
 export default function AppPersonalInfo() {
 
+  const headingsone = ['Activity', 'Years and Total Hours', 'Description of Involvement(Indicate leadership position if appropriate)'];
+    const headingstwo = ['Work', 'Years and Total Hours', 'Description of Position and Duties'];
+    const headingsthree = ['Experience', 'Years and Total Hours', 'Description of Experience and Duties'];
+    const headingsfour = ['Honor/Award', 'Received Date', 'Description of Award'];
+    const headingsfive = ['Research Project Name', 'Academic Years and Hours', 'Description of Project and Your Duties '];
+    const headingssix = ['Expierence: Description of Experience', 'Individual or Group', 'Dates and Hours'];
+
+    const [tableOne, setTableOne]=useState([]);
+    const [tableTwo, setTableTwo]=useState([]);
+    const [tableThree, setTableThree]=useState([]);
+    const [tableFour, setTableFour]=useState([]);
+    const [tableFive, setTableFive]=useState([]);
+    const [tableSix, setTableSix]=useState([]);
+    
   const [selectedCountry, setSelectedCountry] = useState('');
 
   const [selectedMajors, setSelectedMajors] = useState([]);
@@ -67,6 +81,25 @@ export default function AppPersonalInfo() {
 const [recommenderData, setrecommenderData] = useState([    ["", "", ""],
     ["", "", ""],
   ]);
+
+  const handleTableOneChange = (newData) => {
+    setTableOne(newData);
+  };
+  const handleTableTwoChange = (newData) => {
+    setTableTwo(newData);
+  };
+  const handleTableThreeChange = (newData) => {
+    setTableThree(newData);
+  };
+  const handleTableFourChange = (newData) => {
+    setTableFour(newData);
+  };
+  const handleTableFiveChange = (newData) => {
+    setTableFive(newData);
+  };
+  const handleTableSixChange = (newData) => {
+    setTableSix(newData);
+  };
 
   const handleRecommenderChange = (e, row, col) => {
     const newData = [...recommenderData];
@@ -481,9 +514,45 @@ const [recommenderData, setrecommenderData] = useState([    ["", "", ""],
       </tbody>
     </table>
 
+    <div className='mb-5'>
+      <div className="mt-10 sm:mt-0">
+            <div >
+              
+             
+                  <div className="overflow-hidden shadow sm:rounded-md">
+                    <div className="bg-white px-4 py-5 sm:p-6">
+                      
+                    <div className="mt-10 w-full md:mt-10">
+
+                    <h2 className="text-xl font-bold mb-2"> Membership/Academic Clubs </h2>
+                    <Table className="w-full" headings={headingsone} onTableDataChange={handleTableOneChange}/> 
+  
+                    <h2 className="text-xl font-bold mb-2 mt-10"> Work </h2>
+                    <Table className="w-full" headings={headingstwo} onTableDataChange={handleTableTwoChange}/> 
+
+                    <h2 className="text-xl font-bold mt-10"> Experiences within Chosen Field </h2>
+                    <Table className="w-full" headings={headingsthree} onTableDataChange={handleTableThreeChange}/> 
+
+                    <h2 className="text-xl font-bold mt-10"> Honors and Awards </h2>
+                    <Table className="w-full" headings={headingsfour} onTableDataChange={handleTableFourChange}/> 
+                
+                    <h2 className="text-xl font-bold mt-10"> Laboratory Research </h2>
+                    <Table className="w-full" headings={headingsfive} onTableDataChange={handleTableFiveChange}/>
+
+                    <h2 className="text-xl font-bold mt-10"> Volunteer Experiences </h2>
+                    <Table className="w-full" headings={headingssix} onTableDataChange={handleTableSixChange}/>
+              </div>
+                    </div>
+                    </div></div></div>
+
+
+        
+              </div>
 
                     
                   </div>
+
+                  
 
 
                     </div>

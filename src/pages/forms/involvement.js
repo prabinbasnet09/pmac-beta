@@ -7,7 +7,7 @@ import {useForm} from 'react-hook-form';
 
 function Involvement() {
     const {register, handleSubmit, formState: {errors}}= useForm();
-    const headingsone = ['Activity', 'Years and Total Hours', 'Description of Involvement(Indicate leadershuo position if appropriate)'];
+    const headingsone = ['Activity', 'Years and Total Hours', 'Description of Involvement(Indicate leadership position if appropriate)'];
     const headingstwo = ['Work', 'Years and Total Hours', 'Description of Position and Duties'];
     const headingsthree = ['Experience', 'Years and Total Hours', 'Description of Experience and Duties'];
     const headingsfour = ['Honor/Award', 'Received Date', 'Description of Award'];
@@ -15,7 +15,7 @@ function Involvement() {
     const headingssix = ['Expierence: Description of Experience', 'Individual or Group', 'Dates and Hours'];
     
 
-    const onSubmit = data => console.log(data);
+   
   return (
     <div className='mb-5'>
       <div className="mt-10 sm:mt-0">
