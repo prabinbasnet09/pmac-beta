@@ -36,12 +36,12 @@ export default function Profile(){
 
 
     return (
-        <div className='mt-10 ml-5'>
-            <div className='rounded-lg'>
-                <Image src={Logo} className="w-[5rem] " alt="ULM Logo" />
+        <div className='bg-gray grid justify-center mt-10 mx-20'>
+            <div className='flex justify-center rounded-lg mt-10 mb-5 w-60'>
+                <Image src={Logo} className="w-[5rem] rounded-full" alt="ULM Logo" />
             </div>
 
-            <div className="mt-10">
+            <div className="bg-white rounded-lg text-center shadow-xl">
             <p className='text-lg font-bold'>Profile</p>
                 <p>{activeUser.username}</p>
                 <p>{activeUser.name}</p>
@@ -49,7 +49,8 @@ export default function Profile(){
             </div>
 
             <form className=' mt-10 w-60' onSubmit={(e) => {e.preventDefault(); handleProfileUpdate()}}>
-                <label htmlFor="Name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Name</label>
+                <label htmlFor="Update Name" className="block mb-2 text-lg font-medium text-gray-900 dark:text-black">Update Name</label>
+                <label htmlFor="Name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Full Name</label>
                 <input  type="text" 
                         id="old_password" 
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" 
@@ -59,10 +60,11 @@ export default function Profile(){
                             e.preventDefault();
                             setName(e.target.value);
                         }} />
-                <button type="submit" className="mt-4 w-full bg-gray text-black font-bold p-3 rounded-lg">Submit</button>
+                <button type="submit" className="mt-4 border-2 border-black w-full bg-white text-black shadow-xl font-bold p-3 rounded-full">Submit</button>
             </form>
 
             <form className=' mt-10 w-60' onSubmit={(e) => {e.preventDefault(); handlePasswordUpdate()}}>
+                <label htmlFor="Update Password" className="block mb-2 text-lg font-medium text-gray-900 dark:text-black">Update Password</label>
                 <label htmlFor="Old Password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Old Password</label>
                 <input  type="password" 
                         id="password" 
@@ -82,7 +84,7 @@ export default function Profile(){
                             e.preventDefault();
                             setNewPassword(e.target.value);
                         }} />
-                <button type="submit" className="mt-4 w-full bg-gray text-black font-bold p-3 rounded-lg">Submit</button>
+                <button type="submit" className="mt-4 mb-10 border-2 border-black w-full bg-white text-black shadow-xl font-bold p-3 rounded-full">Submit</button>
             </form>
 
         </div>
