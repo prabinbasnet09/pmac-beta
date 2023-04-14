@@ -11,6 +11,7 @@ export const onVerifyUser = /* GraphQL */ `
       groups
       verified
       profilePicture
+<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -18,6 +19,12 @@ export const onVerifyUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+=======
+      fileURL
+      personalStatement
+      transcript
+      amcasForm
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -33,6 +40,7 @@ export const changePersonalStatement = /* GraphQL */ `
       groups
       verified
       profilePicture
+<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -40,11 +48,18 @@ export const changePersonalStatement = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+=======
+      fileURL
+      personalStatement
+      transcript
+      amcasForm
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
   }
 `;
+<<<<<<< HEAD
 export const changeFacultyRecommendation = /* GraphQL */ `
   mutation ChangeFacultyRecommendation(
     $input: ChangeFacultyRecommendationInput!
@@ -96,6 +111,11 @@ export const changeApplicationReleaseForm = /* GraphQL */ `
     $input: ChangeApplicantReleaseFormInput!
   ) {
     changeApplicationReleaseForm(input: $input) {
+=======
+export const changeFileURL = /* GraphQL */ `
+  mutation ChangeFileURL($input: ChangeFileURLInput!) {
+    changeFileURL(input: $input) {
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       id
       username
       email
@@ -103,6 +123,7 @@ export const changeApplicationReleaseForm = /* GraphQL */ `
       groups
       verified
       profilePicture
+<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -110,6 +131,12 @@ export const changeApplicationReleaseForm = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+=======
+      fileURL
+      personalStatement
+      transcript
+      amcasForm
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -125,6 +152,7 @@ export const changeTranscript = /* GraphQL */ `
       groups
       verified
       profilePicture
+<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -132,6 +160,12 @@ export const changeTranscript = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+=======
+      fileURL
+      personalStatement
+      transcript
+      amcasForm
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -147,6 +181,7 @@ export const changeProfilePicture = /* GraphQL */ `
       groups
       verified
       profilePicture
+<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -154,6 +189,12 @@ export const changeProfilePicture = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+=======
+      fileURL
+      personalStatement
+      transcript
+      amcasForm
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -172,6 +213,7 @@ export const createUser = /* GraphQL */ `
       groups
       verified
       profilePicture
+<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -179,6 +221,12 @@ export const createUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+=======
+      fileURL
+      personalStatement
+      transcript
+      amcasForm
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -197,6 +245,7 @@ export const updateUser = /* GraphQL */ `
       groups
       verified
       profilePicture
+<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -204,6 +253,12 @@ export const updateUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+=======
+      fileURL
+      personalStatement
+      transcript
+      amcasForm
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -222,6 +277,7 @@ export const deleteUser = /* GraphQL */ `
       groups
       verified
       profilePicture
+<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -229,6 +285,12 @@ export const deleteUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+=======
+      fileURL
+      personalStatement
+      transcript
+      amcasForm
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -241,6 +303,7 @@ export const createApplicantForm = /* GraphQL */ `
   ) {
     createApplicantForm(input: $input, condition: $condition) {
       userId
+<<<<<<< HEAD
       firstName
       lastName
       date
@@ -267,6 +330,14 @@ export const createApplicantForm = /* GraphQL */ `
       honors
       labResearch
       volunteer
+=======
+      fullName
+      cwid
+      cellPhone
+      email
+      major
+      minor
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -279,6 +350,7 @@ export const updateApplicantForm = /* GraphQL */ `
   ) {
     updateApplicantForm(input: $input, condition: $condition) {
       userId
+<<<<<<< HEAD
       firstName
       lastName
       date
@@ -305,6 +377,14 @@ export const updateApplicantForm = /* GraphQL */ `
       honors
       labResearch
       volunteer
+=======
+      fullName
+      cwid
+      cellPhone
+      email
+      major
+      minor
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -317,6 +397,7 @@ export const deleteApplicantForm = /* GraphQL */ `
   ) {
     deleteApplicantForm(input: $input, condition: $condition) {
       userId
+<<<<<<< HEAD
       firstName
       lastName
       date
@@ -469,6 +550,14 @@ export const deleteFacultyRecommendationForm = /* GraphQL */ `
       additionalComments
       evaluatorSignature
       date
+=======
+      fullName
+      cwid
+      cellPhone
+      email
+      major
+      minor
+>>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
