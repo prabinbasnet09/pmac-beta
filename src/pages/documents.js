@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { ActiveUser } from './_app';
+import { Auth } from 'aws-amplify';
 
 function Documents() {
   const activeUser = useContext(ActiveUser);
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+  useEffect(() => {
+    const fetchUser = async () => {
+      await Auth.currentAuthenticatedUser()
+        .then(user => setUser(user))
+        .catch(err => {
+          console.log(err);
+          setUser(null);
+          router.push('/login');
+        });
+    };
+    fetchUser();
+  }, []);
+
   return activeUser ? (
     <div className='flex items-center justify-center'>
       <div className='w-3/4 px-2 sm:px-0'>

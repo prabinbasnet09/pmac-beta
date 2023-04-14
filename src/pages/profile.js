@@ -4,12 +4,27 @@ import { useContext } from 'react';
 import { ActiveUser } from './_app';
 import { Auth } from 'aws-amplify';
 import Logo from '../images/ulm_academic_maroon_white.png';
+import { useRouter } from 'next/router';
 
 export default function Profile() {
   const activeUser = useContext(ActiveUser);
   const [name, setName] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      await Auth.currentAuthenticatedUser()
+        .then(user => true)
+        .catch(err => {
+          console.log(err);
+          setUser(null);
+          router.push('/login');
+        });
+    };
+    fetchUser();
+  }, []);
 
   const handlePasswordUpdate = async () => {
     try {
@@ -33,7 +48,7 @@ export default function Profile() {
     }
   };
 
-  return (
+  return activeUser ? (
     <div className='bg-gray grid justify-center mt-10 mx-20'>
       <div className='flex justify-center rounded-lg mt-10 mb-5 w-60'>
         <Image src={Logo} className='w-[5rem] rounded-full' alt='ULM Logo' />
@@ -140,5 +155,5 @@ export default function Profile() {
         </button>
       </form>
     </div>
-  );
+  ) : null;
 }

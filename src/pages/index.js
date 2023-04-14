@@ -10,15 +10,13 @@ export default function Home({ signOut }) {
   const activeUser = useContext(ActiveUser);
   const [groups, setGroups] = useState([]);
   const [users, setUsers] = useState(null);
-  const [user, setUser] = useState(null);
   const router = useRouter();
   useEffect(() => {
     const fetchUser = async () => {
       await Auth.currentAuthenticatedUser()
-        .then(user => setUser(user))
+        .then(user => true)
         .catch(err => {
           console.log(err);
-          setUser(null);
           router.push('/login');
         });
     };
@@ -33,7 +31,7 @@ export default function Home({ signOut }) {
   //   setUsers(users);
   // }, [activeUser]);
 
-  return user ? (
+  return activeUser ? (
     <div>
       <Head>
         <title>PMAC</title>
