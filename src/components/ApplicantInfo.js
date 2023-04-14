@@ -90,6 +90,7 @@ export default function ApplicantInfo(props) {
       </div>
 
       <div className='mt-2'>
+        {console.log(user)}
         <Checklist activeUser={user} />
         {user.facultyRecommendation && !changeFile ? (
           <>
