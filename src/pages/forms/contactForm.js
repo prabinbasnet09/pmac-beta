@@ -28,7 +28,7 @@ const Contact = () => {
 
   return (
     <>
-      <body>
+      <div>
         <form ref={form} onSubmit={sendEmail}>
           <center>
             <div>
@@ -101,12 +101,12 @@ const Contact = () => {
             </div>
           </center>
         </form>
-      </body>
-      <footer>
-        <div className="w-full bg-[#bcbcbc] py-1 px-4 border-ulm_maroon border-t-2">
+      </div>
+      <div className='min-h-screen'>
+        <div className=" sticky top-[100vh] w-full bg-[#bcbcbc] py-1 px-4 border-ulm_maroon border-t-2">
           <p className="text-center">© 2023 University of Louisiana Monroe</p>
         </div>
-      </footer>
+      </div>
     </>
   );
 };

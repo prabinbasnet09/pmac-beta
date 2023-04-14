@@ -128,101 +128,102 @@ export default function StatementTranscript() {
   return (
     <>
       <body>
-        <div className="border-b-2 text-[#3B0000]">
-          <Image
-            className="w-full mx-auto"
-            src="/ulm_banner.jpg"
-            alt=""
-            width={1980}
-            height={1024}
-          />
-        </div>
-        <div className="text-[#812633] max-w-[800px] mt-[70px] md:text-4xl w-full h-auto mx-auto flex text-center flex-col justify-center font-bold p-2">
-          Required Digital Documents
-        </div>
-
-        <p className="text-2xl font-bold text-ulm_maroon text-center mt-14">
-          Personal Statement, Unofficial Transcript, & Headshot
-        </p>
-        <p className=" font-bold p-2 mx-16 mt-5 md:text-xl justify-center ">
-          The personal statement should be approximately one page in length,
-          single spaced. The personal statement you included in your
-          AMCAS/AADSAS application is preferred. Please note that this is an
-          important document and should be carefully and thoughtfully prepared.
-          If you have questions about how to prepare a personal statement,
-          please contact
-          <a className=" text-ulm_red hover:text-sky-700">
-            <Link href="https://webservices.ulm.edu/facultyactivities/profile/awiedemeier">
-              {" "}
-              Dr. Allison Wiedemeier
-            </Link>
-          </a>{" "}
-          or
-          <a className="text-ulm_red hover:text-sky-700">
-            <Link href="https://webservices.ulm.edu/facultyactivities/profile/overturf">
-              {" "}
-              Dr. Matt Overturf
-            </Link>
-            .
-          </a>
-        </p>
-        {/*Upload Cards*/}
-        <div className="mx-auto flex justify-center column-3 max-w-[1240px]">
-          <div class="flex w-full justify-center mt-20">
-            <div className="bg-white shadow-xl shadow-black items-center grid grid-rows-3 px-4 border hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
-              <div className="text-center p-1 text-2xl font-bold">
-                Personal Statement
-              </div>
-              <div>
-                <Image
-                  className="mx-auto mt-10"
-                  src={upload}
-                  alt=""
-                  width={100}
-                  height={100}
-                />
-              </div>
-              <p className="text-black">
-                <FileUpload />
-              </p>
-            </div>
+        <div className='mx-auto'>
+          <div className="text-[#812633] max-w-[800px] mt-[70px] md:text-4xl w-full h-auto mx-auto flex text-center flex-col justify-center font-bold p-2">
+            Required Digital Documents
           </div>
 
-          <div class="flex w-full justify-center mt-20">
-            <div className="bg-white shadow-xl shadow-black items-center grid grid-rows-3 px-4 border hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
-              <div className="text-center p-1 text-2xl font-bold">
-                Unofficial Transcript
+          <p className="text-2xl font-bold text-ulm_maroon text-center mt-14">
+            Personal Statement
+          </p>
+          <p className=" font-bold p-2 mx-16 mt-5 md:text-xl justify-center ">
+            The personal statement should be approximately one page in length,
+            single spaced. The personal statement you included in your
+            AMCAS/AADSAS application is preferred. Please note that this is an
+            important document and should be carefully and thoughtfully
+            prepared. If you have questions about how to prepare a personal
+            statement, please contact
+            <a className=" text-ulm_red hover:text-sky-700">
+              <Link href="https://webservices.ulm.edu/facultyactivities/profile/awiedemeier">            
+                &nbsp;Dr. Allison Wiedemeier&nbsp;
+              </Link>
+            </a>
+            or
+            <a className="text-ulm_red hover:text-sky-700">
+              <Link href="https://webservices.ulm.edu/facultyactivities/profile/overturf">
+                {" "}
+                &nbsp;Dr. Matt Overturf
+              </Link>
+              .
+            </a>
+          </p>
+          <p className="text-2xl font-bold text-ulm_maroon text-center mt-14">
+            Unofficial Transcript & Headshot
+          </p>
+          <p className="font-bold p-2 mx-16 mt-5 md:text-xl text-center">
+            Also provide a copy of your unofficial transcript alongside a
+            profile photo.
+          </p>
+          {/*Upload Cards*/}
+          <div className="mx-auto flex justify-center column-3 max-w-[1240px]">
+            <div class="flex w-full justify-center mt-20">
+              <div className="bg-white shadow-xl shadow-black items-center grid grid-rows-3 px-4 border hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
+                <div className="text-center p-1 text-2xl font-bold">
+                  Personal Statement
+                </div>
+                <div>
+                  <Image
+                    className="mx-auto mt-10"
+                    src={upload}
+                    alt=""
+                    width={100}
+                    height={100}
+                  />
+                </div>
+                <p className="text-black">
+                  <FileUpload />
+                </p>
               </div>
-              <div>
-                <Image
-                  className="mx-auto mt-10"
-                  src={uploadOrange}
-                  alt=""
-                  width={100}
-                  height={100}
-                />
-              </div>
-              <p className="text-black">
-                <FileUpload />
-              </p>
             </div>
-          </div>
 
-          <div class="flex w-full justify-center mt-20">
-            <div className="bg-white shadow-xl shadow-black hover:shadow-[#7092BE] items-center grid grid-rows-3 px-4 border border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
-              <div className="text-center p-1 text-2xl font-bold">Headshot</div>
-              <div>
-                <Image
-                  className="mx-auto mt-10"
-                  src={uploadGreen}
-                  alt=""
-                  width={100}
-                  height={100}
-                />
+            <div class="flex w-full justify-center mt-20">
+              <div className="bg-white shadow-xl shadow-black items-center grid grid-rows-3 px-4 border hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
+                <div className="text-center p-1 text-2xl font-bold">
+                  Unofficial Transcript
+                </div>
+                <div>
+                  <Image
+                    className="mx-auto mt-10"
+                    src={uploadOrange}
+                    alt=""
+                    width={100}
+                    height={100}
+                  />
+                </div>
+                <p className="text-black">
+                  <FileUpload />
+                </p>
               </div>
-              <p className="text-black">
-                <FileUpload />
-              </p>
+            </div>
+
+            <div class="flex w-full justify-center mt-20">
+              <div className="bg-white shadow-xl shadow-black hover:shadow-[#7092BE] items-center grid grid-rows-3 px-4 border border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
+                <div className="text-center p-1 text-2xl font-bold">
+                  Headshot
+                </div>
+                <div>
+                  <Image
+                    className="mx-auto mt-10"
+                    src={uploadGreen}
+                    alt=""
+                    width={100}
+                    height={100}
+                  />
+                </div>
+                <p className="text-black">
+                  <FileUpload />
+                </p>
+              </div>
             </div>
           </div>
         </div>

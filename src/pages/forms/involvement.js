@@ -43,31 +43,31 @@ function Involvement() {
           <div className="overflow-hidden shadow sm:rounded-md">
             <div className="bg-white px-4 py-5 sm:p-6">
               <div className="mt-10 w-full md:mt-10">
-                <h2 className="text-xl font-bold mb-2">
+                <h2 className="text-xl font-bold mb-4">
                   {" "}
                   Membership/Academic Clubs{" "}
                 </h2>
                 <Table className="w-full" headings={headingsone} />
 
-                <h2 className="text-xl font-bold mb-2 mt-10"> Work </h2>
+                <h2 className="text-xl font-bold mb-4 mt-10"> Work </h2>
                 <Table className="w-full" headings={headingstwo} />
 
-                <h2 className="text-xl font-bold mt-10">
+                <h2 className="text-xl font-bold mt-10 mb-4">
                   {" "}
                   Experiences within Chosen Field{" "}
                 </h2>
                 <Table className="w-full" headings={headingsthree} />
 
-                <h2 className="text-xl font-bold mt-10"> Honors and Awards </h2>
+                <h2 className="text-xl font-bold mt-10 mb-4"> Honors and Awards </h2>
                 <Table className="w-full" headings={headingsfour} />
 
-                <h2 className="text-xl font-bold mt-10">
+                <h2 className="text-xl font-bold mt-10 mb-4">
                   {" "}
                   Laboratory Research{" "}
                 </h2>
                 <Table className="w-full" headings={headingsfive} />
 
-                <h2 className="text-xl font-bold mt-10">
+                <h2 className="text-xl font-bold mt-10 mb-4">
                   {" "}
                   Volunteer Experiences{" "}
                 </h2>

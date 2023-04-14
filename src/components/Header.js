@@ -27,11 +27,9 @@ const Header = (props) => {
       </ul>
 
       {/*Login Button*/}
-      <a href="https://pmac-beta-opnaptos3-prabinbasnet09.vercel.app/">
         <button className="bg-ulm_red w-[100px] rounded-md text-lg my-6 hover:shadow-black shadow-sm mx-auto font-bold px-2 text-white">
           <Link href="/SignUp">Login</Link>
         </button>
-      </a>
 
       {/*Burger Menu*/}
       <div onClick={handleNav} className="block md:hidden pl-4 text-black">

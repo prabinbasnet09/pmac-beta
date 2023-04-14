@@ -217,7 +217,7 @@ export default function InfoReleaseForm() {
         <div className="overflow-hidden shadow sm:rounded-md">
           <div className="border-2 border-[#7e7e7e] rounded-xl shadow-xl shadow-[#7092BE] shadow:opacity-20 w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 ">
             <h1 className="text-center text-4xl font-bold text-ulm_maroon">
-              Faculty Recommendation Form #1
+              Faculty Recommendation Form
             </h1>
 
             <div className=" p-4 text-black opacity-75 mx-auto">
@@ -300,7 +300,7 @@ export default function InfoReleaseForm() {
 
               {/*Table Start*/}
               <div>
-                <table class="border border-seperate border-slate-700 w-full text-center">
+                <table className="border border-seperate border-slate-700 w-full text-center">
                   <tbody>
                     <tr>
                       <td className="text-left px-4 font-bold text-ulm_logo_red border border-slate-600 ">
@@ -491,7 +491,7 @@ export default function InfoReleaseForm() {
                 <textarea
                   id="message"
                   rows="4"
-                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
+                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
                   placeholder="Write your thoughts here..."
                 ></textarea>
                 <div className="font-bold mt-10 mb-3">
@@ -501,7 +501,7 @@ export default function InfoReleaseForm() {
                 <textarea
                   id="message"
                   rows="4"
-                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500"
+                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500"
                   placeholder="Write your thoughts here..."
                 ></textarea>
               </div>
@@ -513,7 +513,7 @@ export default function InfoReleaseForm() {
               <textarea
                 id="message"
                 rows="4"
-                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500"
                 placeholder="Write your thoughts here..."
               ></textarea>
             </div>
@@ -522,7 +522,7 @@ export default function InfoReleaseForm() {
                 Please indicate the applicant&apos;s overall potential for
                 success.
               </p>
-              <table class="border border-seperate border-slate-700 w-full text-center">
+              <table className="border border-seperate border-slate-700 w-full text-center">
                 <tbody>
                   <tr>
                     <td className="border border-slate-600 hover:border-teal-500">
@@ -547,7 +547,7 @@ export default function InfoReleaseForm() {
               <textarea
                 id="message"
                 rows="4"
-                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500"
                 placeholder="Write your thoughts here..."
               ></textarea>
 
@@ -585,27 +585,26 @@ export default function InfoReleaseForm() {
                   </div>
                   <div className="w-[300px]">
                     <label for="start">
-                    <p className='mt-5 mb-3'>Date</p>
+                      <p className='mt-5 mb-3'>Date</p>
                     </label>
-                      <input
-                        type="date"
-                        id="date"
-                        name="trip-start"
-                        value="01/01/2023"
-                        min="4/12/23"
-                        max="2040-12-31"
-                        onChange={(event) =>
-                          handleUserInfo("signature", event.target.value)
-                        }
-                        autoComplete="date"
-                        {...register("date")}
-                        className={`form-control w-full ${
-                          errors.date ? "is-invalid" : ""
-                        }`}
-                      />
-                      <div className="text-bred italic ">
-                        {errors.date?.message}
-                      </div>
+                    <input
+                      type="date"
+                      id="date"
+                      name="trip-start"
+                      value="01/01/2023"
+                      min="4/12/23"
+                      max="2040-12-31"
+                      onChange={(event) =>
+                        handleUserInfo("signature", event.target.value)
+                      }
+                      autoComplete="date"
+                      {...register("date")}
+                      className={`form-control w-full ${
+                        errors.date ? "is-invalid" : ""
+                      }`}
+                    />
+                    <div className="text-bred italic ">
+                      {errors.date?.message}
                     </div>
                   </div>
                 </div>
@@ -614,6 +613,7 @@ export default function InfoReleaseForm() {
           </div>
         </div>
       </div>
+    </div>
   ) : (
     <div>Loading...</div>
   );

@@ -73,7 +73,7 @@ const MyTable = ({ headings }) => {
           <tr>
             <td colSpan={3} className="border border-gray-600 px-4 py-2">
               <button
-                className="bg-green hover:bg-green text-white font-bold py-2 px-4 rounded"
+                className="bg-ulm_maroon hover:bg-ulm_logo_red text-white font-bold py-2 px-4 rounded"
                 onClick={handleAddRow}
               >
                 Add Row
@@ -84,12 +84,12 @@ const MyTable = ({ headings }) => {
       </table>
       <div className="mt-4">
         <button
-          className="bg-green hover:bg-green text-white font-bold py-2 px-4 rounded mr-4"
+          className="bg-ulm_maroon hover:bg-ulm_logo_red text-white font-bold py-2 px-4 rounded mr-4"
           onClick={handleSaveTableData}
         >
           Save Table Data
         </button>
-        <button className="bg-bred hover:bg-red text-white font-bold py-2 px-4 rounded">
+        <button className="bg-ulm_maroon hover:bg-ulm_logo_red text-white font-bold py-2 px-4 rounded">
           Cancel
         </button>
       </div>
