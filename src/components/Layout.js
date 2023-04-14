@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header'
+import Footer from './Footer';
 
 const Layout = (props) => {
   const { children, user, signOut, route } = props;
@@ -31,7 +32,11 @@ const Layout = (props) => {
       <Header />
       {showNav && <Header user={user} signOut={signOut} />}
       {children}
+      <div className='h-screen'>
+      <Footer />
+      </div>
     </div>
+    
   );
 };
 

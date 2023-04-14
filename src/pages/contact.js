@@ -8,7 +8,7 @@ const USER_ID = "****************";
 const Contact = () => {
   return (
     <>
-      <body>
+      <div>
         <div className="border-b-2 text-[#3B0000] border-t-2 border-b-2 ">
           <Image
             className="w-full mx-auto"
@@ -23,7 +23,7 @@ const Contact = () => {
                 <p className='text-center mt-4 font-bold text-xl'>Use our contact form if you have any questions or comments.</p>
           <Email />
         </div>
-      </body>
+      </div>
     </>
   );
 };

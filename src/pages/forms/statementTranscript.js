@@ -127,7 +127,6 @@ export default function StatementTranscript() {
 
   return (
     <>
-      <body>
         <div className='mx-auto'>
           <div className="text-[#812633] max-w-[800px] mt-[70px] md:text-4xl w-full h-auto mx-auto flex text-center flex-col justify-center font-bold p-2">
             Required Digital Documents
@@ -136,7 +135,7 @@ export default function StatementTranscript() {
           <p className="text-2xl font-bold text-ulm_maroon text-center mt-14">
             Personal Statement
           </p>
-          <p className=" font-bold p-2 mx-16 mt-5 md:text-xl justify-center ">
+          <div className=" font-bold p-2 mx-16 mt-5 md:text-xl justify-center ">
             The personal statement should be approximately one page in length,
             single spaced. The personal statement you included in your
             AMCAS/AADSAS application is preferred. Please note that this is an
@@ -156,7 +155,7 @@ export default function StatementTranscript() {
               </Link>
               .
             </a>
-          </p>
+          </div>
           <p className="text-2xl font-bold text-ulm_maroon text-center mt-14">
             Unofficial Transcript & Headshot
           </p>
@@ -166,7 +165,7 @@ export default function StatementTranscript() {
           </p>
           {/*Upload Cards*/}
           <div className="mx-auto flex justify-center column-3 max-w-[1240px]">
-            <div class="flex w-full justify-center mt-20">
+            <div className="flex w-full justify-center mt-20">
               <div className="bg-white shadow-xl shadow-black items-center grid grid-rows-3 px-4 border hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
                 <div className="text-center p-1 text-2xl font-bold">
                   Personal Statement
@@ -186,7 +185,7 @@ export default function StatementTranscript() {
               </div>
             </div>
 
-            <div class="flex w-full justify-center mt-20">
+            <div className="flex w-full justify-center mt-20">
               <div className="bg-white shadow-xl shadow-black items-center grid grid-rows-3 px-4 border hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
                 <div className="text-center p-1 text-2xl font-bold">
                   Unofficial Transcript
@@ -206,7 +205,7 @@ export default function StatementTranscript() {
               </div>
             </div>
 
-            <div class="flex w-full justify-center mt-20">
+            <div className="flex w-full justify-center mt-20">
               <div className="bg-white shadow-xl shadow-black hover:shadow-[#7092BE] items-center grid grid-rows-3 px-4 border border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition">
                 <div className="text-center p-1 text-2xl font-bold">
                   Headshot
@@ -227,12 +226,6 @@ export default function StatementTranscript() {
             </div>
           </div>
         </div>
-      </body>
-      <footer>
-        <div className="w-full bg-[#bcbcbc] py-1 px-4 border-ulm_maroon border-t-2">
-          <p className="text-center">© 2023 University of Louisiana Monroe</p>
-        </div>
-      </footer>
     </>
   );
 }

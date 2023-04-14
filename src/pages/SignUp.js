@@ -108,6 +108,7 @@ function SignUp() {
             </div>
           </div>
         </div>
+        <div className='min-h-[800px]'></div>
       </section>
     </div>
   );

@@ -563,7 +563,7 @@ export default function InfoReleaseForm() {
                       htmlFor="evalSignature"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      <p className='mt-5 mb-3'>Signature of Evaluator</p>
+                      <p className="mt-5 mb-3">Signature of Evaluator</p>
                     </label>
                     <input
                       type="text"
@@ -585,7 +585,7 @@ export default function InfoReleaseForm() {
                   </div>
                   <div className="w-[300px]">
                     <label for="start">
-                      <p className='mt-5 mb-3'>Date</p>
+                      <p className="mt-5 mb-3">Date</p>
                     </label>
                     <input
                       type="date"
@@ -605,6 +605,13 @@ export default function InfoReleaseForm() {
                     />
                     <div className="text-bred italic ">
                       {errors.date?.message}
+                    </div>
+                    <div className='mt-10'>
+                      <p>
+                        <button className="bg-ulm_maroon w-[130px] hover:shadow-black shadow-sm rounded-md text-lg my-6 mx-auto font-bold px-2 text-white">
+                          Submit
+                        </button>
+                      </p>
                     </div>
                   </div>
                 </div>
