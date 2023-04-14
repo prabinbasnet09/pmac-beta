@@ -36,36 +36,7 @@ export default function AppAcademicInfo({ formData, onChangeForm, errors }) {
             <div className="overflow-hidden ">
               <div className="px-4 py-5 sm:p-6">
                 <div className="grid grid-cols-6 gap-6">
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="major"
-                      className="block text-sm font-medium text-black"
-                    >
-                      Major
-                    </label>
-                    <input
-                      type="text"
-                      name="major"
-                      id="major"
-                      value={formData.major}
-                      onChange={(event) => {
-                        onChangeForm(event);
-                      }}
-                      className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green focus:ring-green sm:text-sm ${
-                        errors.major
-                          ? "border-bred"
-                          : formData.major
-                          ? "border-green"
-                          : ""
-                      }`}
-                      {...register("major", { required: true, maxLength: 80 })}
-                    />
-                    {errors.major && (
-                      <span class="inline-flex text-sm text-bred">
-                        Please enter your Major.
-                      </span>
-                    )}
-                  </div>
+                 
 
                   <div className="col-span-6 sm:col-span-3">
                     <label

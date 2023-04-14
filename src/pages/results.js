@@ -1,13 +1,29 @@
-import React from "react";
-import Link from "next/link";
-
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState, useEffect, useContext } from 'react';
+import { Auth } from 'aws-amplify';
+import { ActiveUser } from './_app';
 
 export default function Result() {
-    return (
-        <div className="flex items-center justify-center">
-            <div className="w-3/4 px-2 sm:px-0">
-                <div className={`${"nav-body"}`}> 
-                    <div className='flex space-x-4'>
+  const activeUser = useContext(ActiveUser);
+  const router = useRouter();
+  useEffect(() => {
+    const fetchUser = async () => {
+      await Auth.currentAuthenticatedUser()
+        .then(user => true)
+        .catch(err => {
+          console.log(err);
+          setUser(null);
+          router.push('/login');
+        });
+    };
+    fetchUser();
+  }, []);
+  return activeUser ? (
+    <div className='flex items-center justify-center'>
+      <div className='w-3/4 px-2 sm:px-0'>
+        <div className={`${'nav-body'}`}>
+          <div className='flex space-x-4'>
                         <form className='w-3/4'  onSubmit={(e) => {e.preventDefault();}}>
                             <label htmlFor="Results" className="block mb-2 text-lg font-medium text-gray-900 dark:text-black">We would love to know about your results!</label>
                             <p>Let us know about your experience post-application so we can better serve our pre-med students. </p>
@@ -26,8 +42,8 @@ export default function Result() {
                             <button type="submit" className="mx-5 bg-green text-white font-bold py-2 px-4 rounded mt-3 mr-3 w-2/2">Submit</button>
                         </form>
                     </div>
-                </div>
-            </div>
         </div>
-    )
+      </div>
+    </div>
+  ) : null;
 }
