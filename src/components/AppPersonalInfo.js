@@ -62,7 +62,6 @@ export default function AppPersonalInfo() {
     lastName: '',
     cwid: '',
     number: '',
-    country: '',
     address: '',
     city:'',
     state:'',
@@ -76,6 +75,30 @@ export default function AppPersonalInfo() {
     examDate: '',
     appType: '',
     faculty: '',
+});
+
+const [mcat, setMCAT] = useState({
+  chemical: '',
+  critical: '',
+  biological: '',
+  psychological: '',
+});
+const [dat, setDAT] = useState({
+  natural: '',
+  perceptual: '',
+  reading: '',
+  quantitative: '',
+});
+const [oat, setOAT] = useState({
+  natural: '',
+  reading: '',
+  physics: '',
+  quantitative: '',
+});
+const [gre, setGRE] = useState({
+  verbal: '',
+  quantitative: '',
+  writing: '',
 });
 
 const [recommenderData, setrecommenderData] = useState([    ["", "", ""],
@@ -131,12 +154,15 @@ const [recommenderData, setrecommenderData] = useState([    ["", "", ""],
       
     };
 
+    const onSubmitHandler = () => {}
+
 
     return (
       <>
-    
+    <form onSubmit={onSubmitHandler}>
       <div className=" sm:mt-0">
           <div >
+            
           
             <div className=" w-full md:mt-10">
               
@@ -423,10 +449,162 @@ const [recommenderData, setrecommenderData] = useState([    ["", "", ""],
                       </span>
                       <span>Please include your breakdown scores.</span>
                     </label>
-                    <div className='overflow-x-auto'>
-      
-    </div>
 
+                    <h3 className='mt-3 mb-3'>MCAT</h3>
+                    <table className='w-full mb-5'>
+  <thead>
+    <tr className='bg-red text-white border border-black   '>
+      <th className='border border-black'>Chemical and Physical Foundations of Biological Systems</th>
+      <th className='border border-black'>Critical Analysis and Reasoning Skills</th>
+      <th className='border border-black'>Biological and Biochemical Foundations of Living Systems</th>
+      <th className='border border-black'>Psychological, Social, and Biological Foundations of Behavior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><input
+              type="text"
+              value={mcat.chemical}
+              onChange={(e) => setMCAT({ ...mcat, chemical: e.target.value })}
+              className="w-full px-2 py-1 border-black"
+            /></td>
+      <td><input
+              type="text"
+              value={mcat.critical}
+              onChange={(e) => setMCAT({ ...mcat, critical: e.target.value })}
+              className="w-full px-2 py-1 border-gray-300 focus:outline-none focus:ring-2"
+            /></td>
+      <td><input
+              type="text"
+              value={mcat.biological}
+              onChange={(e) => setMCAT({ ...mcat, biological: e.target.value })}
+              className="w-full px-2 py-1 border-gray-300 focus:outline-none focus:ring-2"
+            /></td>
+      <td><input
+              type="text"
+              value={mcat.psychological}
+              onChange={(e) => setMCAT({ ...mcat, psychological: e.target.value })}
+              className="w-full px-2 py-1 border-gray-300 focus:outline-none focus:ring-2"
+            /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 className='mt-3 mb-3'>DAT</h3>
+                    <table className='w-full mb-5'>
+  <thead>
+    <tr className='bg-red text-white border border-black   '>
+      <th className='border border-black'>Natural</th>
+      <th className='border border-black'>Perceptual</th>
+      <th className='border border-black'>Reading</th>
+      <th className='border border-black'>Quantitative</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><input
+              type="text"
+              value={dat.natural}
+              onChange={(e) => setDAT({ ...dat, natural: e.target.value })}
+              className="w-full px-2 py-1 border-black"
+            /></td>
+      <td><input
+              type="text"
+              value={dat.perceptual}
+              onChange={(e) => setDAT({ ...dat, perceptual: e.target.value })}
+              className="w-full px-2 py-1 border-gray-300 focus:outline-none focus:ring-2"
+            /></td>
+      <td><input
+              type="text"
+              value={dat.reading}
+              onChange={(e) => setDAT({ ...dat, reading: e.target.value })}
+              className="w-full px-2 py-1 border-gray-300 focus:outline-none focus:ring-2"
+            /></td>
+      <td><input
+              type="text"
+              value={dat.quantitative}
+              onChange={(e) => setDAT({ ...dat, quantitative: e.target.value })}
+              className="w-full px-2 py-1 border-gray-300 focus:outline-none focus:ring-2"
+            /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 className='mt-3 mb-3'>OAT</h3>
+                    <table className='w-full mb-5'>
+  <thead>
+    <tr className='bg-red text-white border border-black   '>
+      <th className='border border-black'>Natural</th>
+      <th className='border border-black'>Reading</th>
+      <th className='border border-black'>Physics</th>
+      <th className='border border-black'>Quantitative</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><input
+              type="text"
+              value={oat.natural}
+              onChange={(e) => setOAT({ ...oat, natural: e.target.value })}
+              className="w-full px-2 py-1 border-black"
+            /></td>
+      <td><input
+              type="text"
+              value={oat.reading}
+              onChange={(e) => setOAT({ ...oat, reading: e.target.value })}
+              className="w-full px-2 py-1 border-gray-300 focus:outline-none focus:ring-2"
+            /></td>
+      <td><input
+              type="text"
+              value={oat.physics}
+              onChange={(e) => setOAT({ ...oat, physics: e.target.value })}
+              className="w-full px-2 py-1 border-gray-300 focus:outline-none focus:ring-2"
+            /></td>
+      <td><input
+              type="text"
+              value={oat.quantitative}
+              onChange={(e) => setOAT({ ...oat, quantitative: e.target.value })}
+              className="w-full px-2 py-1 border-gray-300 focus:outline-none focus:ring-2"
+            /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 className='mt-3 mb-3'>GRE</h3>
+                    <table className='w-full mb-5'>
+  <thead>
+    <tr className='bg-red text-white border border-black   '>
+      <th className='border border-black'>Verbal</th>
+      <th className='border border-black'>Quantitative</th>
+      <th className='border border-black'>Writing</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><input
+              type="text"
+              value={gre.verbal}
+              onChange={(e) => setGRE({ ...gre, verbal: e.target.value })}
+              className="w-full px-2 py-1 border-black"
+            /></td>
+      <td><input
+              type="text"
+              value={gre.quantitative}
+              onChange={(e) => setGRE({ ...gre, quantitative: e.target.value })}
+              className="w-full px-2 py-1 border-gray-300 focus:outline-none focus:ring-2"
+            /></td>
+      <td><input
+              type="text"
+              value={gre.writing}
+              onChange={(e) => setGRE({ ...gre, writing: e.target.value })}
+              className="w-full px-2 py-1 border-gray-300 focus:outline-none focus:ring-2"
+            /></td>
+    </tr>
+  </tbody>
+</table>
+
+                  
     <div className="col-span-6 mb-5">
                     <label
                       htmlFor="appType"
@@ -518,12 +696,16 @@ const [recommenderData, setrecommenderData] = useState([    ["", "", ""],
       <div className="mt-10 sm:mt-0">
             <div >
               
-             
-                  <div className="overflow-hidden shadow sm:rounded-md">
-                    <div className="bg-white px-4 py-5 sm:p-6">
-                      
+                   
+                  <div className="overflow-hidden sm:rounded-md">
+                    <div className="">
+                    
                     <div className="mt-10 w-full md:mt-10">
-
+                    <div className='mt-5 mb-5 text-black font-bold text-2lg mx-auto'>
+              <p className='leading-relaxed text-justify'>
+                    List any memberships/activities, work, professional experiences, honors/awards and volunteer
+experiences for each semester and summer during your collegiate career. Please use additional paper if
+necessary. Where applicable, provide numbers of hours associated with that task per week.</p></div>
                     <h2 className="text-xl font-bold mb-2"> Membership/Academic Clubs </h2>
                     <Table className="w-full" headings={headingsone} onTableDataChange={handleTableOneChange}/> 
   
@@ -564,7 +746,7 @@ const [recommenderData, setrecommenderData] = useState([    ["", "", ""],
           </div>
         
         </div>
-  
+        </form>
       </>
     )
   }

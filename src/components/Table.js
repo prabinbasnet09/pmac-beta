@@ -33,13 +33,13 @@ const handleDeleteRow = () => {
 
   return (
     <div className="container mx-auto ">
-      <table className="border-collapse border border-gray-600">
+      <table className="border-collapse border border-black bg-red text-black px-2 py-4 w-full">
         <thead>
           <tr>
             {headings.map(heading => (
               <th
                 key={heading}
-                className="border border-gray-600 px-4 py-2 font-semibold"
+                className="border border-black font-semibold"
               >
                 {heading}
               </th>
@@ -51,15 +51,15 @@ const handleDeleteRow = () => {
   <tr
     key={row.id}
   >
-    <td className="border border-gray-600 px-4 py-2">
+    <td className="border border-black">
       <input
         type="text"
         value={row.column1}
-        className="w-full border-0 focus:outline-none"
+        className="w-full text-black border-0 focus:outline-none"
         onChange={(e) => handleCellChange(e, row.id, "column1")}
       />
     </td>
-    <td className="border border-gray-600 px-4 py-2">
+    <td className="border border-black">
       <input
         type="text"
         value={row.column2}
@@ -67,7 +67,7 @@ const handleDeleteRow = () => {
         onChange={(e) => handleCellChange(e, row.id, "column2")}
       />
     </td>
-    <td className="border border-gray-600 px-4 py-2">
+    <td className="border border-black">
       <input
         type="text"
         value={row.column3}
