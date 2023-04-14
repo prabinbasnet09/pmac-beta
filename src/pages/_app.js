@@ -1,23 +1,19 @@
-import { createContext, useState, useEffect } from 'react';
-import '../styles/globals.css';
+import { useState, useEffect, createContext } from 'react';
 import Layout from '@/components/Layout';
 import TabBar from '@/components/TabBar';
-
-import { Amplify, API } from 'aws-amplify';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css';
-import { Auth } from 'aws-amplify';
+import '@/styles/globals.css';
 
 import * as queries from '../graphql/queries';
 import { onUpdateUser } from '@/graphql/subscriptions.js';
 
-import awsExports from '../aws-exports';
 import { useRouter } from 'next/router';
-Amplify.configure({ ...awsExports, ssr: true });
+import { Amplify, API, Hub } from 'aws-amplify';
+import awsExports from '../aws-exports';
+Amplify.configure(awsExports);
 
 export const ActiveUser = createContext();
 
-export const ActiveUserProvider = ({ children, user }) => {
+export const ActiveUserProvider = ({ children, currentUser }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -84,10 +80,10 @@ export const ActiveUserProvider = ({ children, user }) => {
   let loggedUser;
   if (users.length === 1 && users[0].groups[0] === 'Student') {
     loggedUser = {
-      id: user.attributes.sub,
-      username: user.username,
-      name: user.attributes.name,
-      email: user.attributes.email,
+      id: currentUser.attributes.sub,
+      username: currentUser.username,
+      name: currentUser.attributes.name,
+      email: currentUser.attributes.email,
       group: users[0].groups,
       personalStatement: users[0].personalStatement,
       transcript: users[0].transcript,
@@ -99,12 +95,12 @@ export const ActiveUserProvider = ({ children, user }) => {
     };
   } else {
     loggedUser = {
-      id: user.attributes.sub,
-      username: user.username,
-      name: user.attributes.name,
-      email: user.attributes.email,
+      id: currentUser.attributes.sub,
+      username: currentUser.username,
+      name: currentUser.attributes.name,
+      email: currentUser.attributes.email,
       group: users
-        .filter(userProfile => userProfile.username === user.username)
+        .filter(userProfile => userProfile.username === currentUser.username)
         .map(user => user.groups[0]),
       users: users,
     };
@@ -115,9 +111,44 @@ export const ActiveUserProvider = ({ children, user }) => {
   );
 };
 
-function App({ Component, pageProps, user, signOut }) {
-  const [userGroup, setUserGroup] = useState();
+function App({ Component, pageProps }) {
   const router = useRouter();
+  const [currentUser, setCurrentUser] = useState(null);
+  const [userGroup, setUserGroup] = useState();
+
+  useEffect(() => {
+    const setLocalStorage = (key, value, ttl = 100 * 60 * 1000) => {
+      const expiresAt = new Date(Date.now() + ttl);
+      localStorage.setItem(key, JSON.stringify({ value, expiresAt }));
+    };
+
+    const getLocalStorage = key => {
+      const item = JSON.parse(localStorage.getItem(key));
+      if (!item) return null;
+
+      if (new Date() >= new Date(item.expiresAt)) {
+        localStorage.removeItem(key);
+        return null;
+      }
+      return item;
+    };
+
+    !currentUser && getLocalStorage('currentUser')
+      ? setCurrentUser(getLocalStorage('currentUser').value)
+      : null;
+
+    Hub.listen('auth', ({ payload: { event, data } }) => {
+      switch (event) {
+        case 'signIn':
+          setCurrentUser(data);
+          setLocalStorage('currentUser', data);
+          break;
+        case 'signOut':
+          setCurrentUser(null);
+          break;
+      }
+    });
+  }, []);
 
   const showNav =
     router.pathname === '/' ||
@@ -129,7 +160,7 @@ function App({ Component, pageProps, user, signOut }) {
   const getUserGroup = async () => {
     const userGroup = await API.graphql({
       query: queries.getUser,
-      variables: { id: user.attributes.sub },
+      variables: { id: currentUser.attributes.sub },
       authMode: 'AMAZON_COGNITO_USER_POOLS',
     })
       .then(res => {
@@ -142,7 +173,7 @@ function App({ Component, pageProps, user, signOut }) {
     setUserGroup(userGroup);
   };
 
-  getUserGroup();
+  currentUser && getUserGroup();
 
   const withLayout = Component => {
     return function WrappedComponent(props) {
@@ -217,22 +248,27 @@ function App({ Component, pageProps, user, signOut }) {
             ]
           : null;
       return (
-        <Layout user={user} signOut={signOut}>
+        <Layout user={currentUser}>
           {userGroup && showNav ? <TabBar tabList={tabs} /> : null}
-          <Component {...props} user={user} signOut={signOut} />
+          <Component {...props} />
         </Layout>
       );
     };
   };
 
   const LayoutComponent = withLayout(Component);
-
   return (
-    <ActiveUserProvider user={user}>
-      <LayoutComponent {...pageProps} user={user} signOut={signOut} />
-    </ActiveUserProvider>
+    <>
+      {currentUser ? (
+        <ActiveUserProvider currentUser={currentUser}>
+          <LayoutComponent {...pageProps} />
+        </ActiveUserProvider>
+      ) : (
+        <Component {...pageProps} />
+      )}
+    </>
   );
 }
 
-export default withAuthenticator(App);
-// export default App;
+// export default withAuthenticator(App);
+export default App;
