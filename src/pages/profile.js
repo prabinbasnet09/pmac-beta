@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useContext } from 'react';
@@ -158,18 +157,3 @@ export default function Profile() {
     </div>
   ) : null;
 }
-=======
-import React from 'react';
-import {useContext} from 'react';
-import { ActiveUser } from './_app';
-
-export default function Profile(){
-    const activeUser = useContext(ActiveUser);
-    return (
-        <div>
-            <p className='text-lg font-bold'>Profile</p>
-            <p>{activeUser.name}</p>
-        </div>
-    )
-}
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a

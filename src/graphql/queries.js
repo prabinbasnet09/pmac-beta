@@ -11,7 +11,6 @@ export const getStudentDocuments = /* GraphQL */ `
       groups
       verified
       profilePicture
-<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -19,12 +18,6 @@ export const getStudentDocuments = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
-=======
-      fileURL
-      personalStatement
-      transcript
-      amcasForm
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -40,7 +33,6 @@ export const getUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -48,12 +40,6 @@ export const getUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
-=======
-      fileURL
-      personalStatement
-      transcript
-      amcasForm
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -74,7 +60,6 @@ export const listUsers = /* GraphQL */ `
         groups
         verified
         profilePicture
-<<<<<<< HEAD
         facultyRecommendation
         personalStatement
         transcript
@@ -82,12 +67,6 @@ export const listUsers = /* GraphQL */ `
         applicantForm
         applicantReleaseForm
         schedule
-=======
-        fileURL
-        personalStatement
-        transcript
-        amcasForm
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
         createdAt
         updatedAt
       }
@@ -99,7 +78,6 @@ export const getApplicantForm = /* GraphQL */ `
   query GetApplicantForm($userId: String!) {
     getApplicantForm(userId: $userId) {
       userId
-<<<<<<< HEAD
       firstName
       lastName
       date
@@ -126,14 +104,6 @@ export const getApplicantForm = /* GraphQL */ `
       honors
       labResearch
       volunteer
-=======
-      fullName
-      cwid
-      cellPhone
-      email
-      major
-      minor
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -156,7 +126,6 @@ export const listApplicantForms = /* GraphQL */ `
     ) {
       items {
         userId
-<<<<<<< HEAD
         firstName
         lastName
         date
@@ -285,14 +254,6 @@ export const listFacultyRecommendationForms = /* GraphQL */ `
         additionalComments
         evaluatorSignature
         date
-=======
-        fullName
-        cwid
-        cellPhone
-        email
-        major
-        minor
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
         createdAt
         updatedAt
       }

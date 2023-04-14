@@ -14,7 +14,6 @@ type User
   groups: [String!]!
   verified: Boolean!
   profilePicture: String
-<<<<<<< HEAD
   facultyRecommendation: [String!] # 2 Faculty recommendation form, should be in array
   personalStatement: String
   transcript: String
@@ -22,31 +21,21 @@ type User
   applicantForm: String
   applicantReleaseForm: String
   schedule: String
-=======
-  fileURL: [String!] # 2 Faculty recommendation form, should be in array
-  personalStatement: String
-  transcript: String
-  amcasForm: String
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
 }
 
 type ApplicantForm
   @model
   @auth(
     rules: [
-<<<<<<< HEAD
       {
         allow: groups
         groups: ["Admin", "ChairCommittee", "Faculty"]
         operations: [read]
       }
-=======
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       { allow: owner, ownerField: "userId", operations: [create, read, update] }
     ]
   ) {
   userId: String! @primaryKey
-<<<<<<< HEAD
   firstName: String!
   lastName: String!
   date: String!
@@ -118,14 +107,6 @@ type FacultyRecommendationForm
   additionalComments: String!
   evaluatorSignature: String!
   date: String!
-=======
-  fullName: String!
-  cwid: String!
-  cellPhone: String!
-  email: String!
-  major: [String!]!
-  minor: [String!]
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
 }
 
 type Query {
@@ -135,18 +116,13 @@ type Query {
 type Mutation {
   onVerifyUser(input: VerifyUserInput!): User
   changePersonalStatement(input: ChangePersonalStatementInput!): User
-<<<<<<< HEAD
   changeFacultyRecommendation(input: ChangeFacultyRecommendationInput!): User
   changeApplicationForm(input: ChangeApplicantFormInput!): User
   changeApplicationReleaseForm(input: ChangeApplicantReleaseFormInput!): User
-=======
-  changeFileURL(input: ChangeFileURLInput!): User
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
   changeTranscript(input: ChangeTranscriptInput!): User
   changeProfilePicture(input: ChangeProfilePictureInput!): User
 }
 
-<<<<<<< HEAD
 input ChangeApplicantFormInput {
   id: ID!
   applicantForm: String!
@@ -160,11 +136,6 @@ input ChangeApplicantReleaseFormInput {
 input ChangeFacultyRecommendationInput {
   id: ID!
   facultyRecommendation: [String!]
-=======
-input ChangeFileURLInput {
-  id: ID!
-  fileURL: [String!]
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
 }
 
 input VerifyUserInput {

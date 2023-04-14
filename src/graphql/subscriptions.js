@@ -14,7 +14,6 @@ export const onCreateUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -22,12 +21,6 @@ export const onCreateUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
-=======
-      fileURL
-      personalStatement
-      transcript
-      amcasForm
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -46,7 +39,6 @@ export const onUpdateUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -54,12 +46,6 @@ export const onUpdateUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
-=======
-      fileURL
-      personalStatement
-      transcript
-      amcasForm
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -78,7 +64,6 @@ export const onDeleteUser = /* GraphQL */ `
       groups
       verified
       profilePicture
-<<<<<<< HEAD
       facultyRecommendation
       personalStatement
       transcript
@@ -86,12 +71,6 @@ export const onDeleteUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
-=======
-      fileURL
-      personalStatement
-      transcript
-      amcasForm
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -104,7 +83,6 @@ export const onCreateApplicantForm = /* GraphQL */ `
   ) {
     onCreateApplicantForm(filter: $filter, userId: $userId) {
       userId
-<<<<<<< HEAD
       firstName
       lastName
       date
@@ -131,14 +109,6 @@ export const onCreateApplicantForm = /* GraphQL */ `
       honors
       labResearch
       volunteer
-=======
-      fullName
-      cwid
-      cellPhone
-      email
-      major
-      minor
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -151,7 +121,6 @@ export const onUpdateApplicantForm = /* GraphQL */ `
   ) {
     onUpdateApplicantForm(filter: $filter, userId: $userId) {
       userId
-<<<<<<< HEAD
       firstName
       lastName
       date
@@ -178,14 +147,6 @@ export const onUpdateApplicantForm = /* GraphQL */ `
       honors
       labResearch
       volunteer
-=======
-      fullName
-      cwid
-      cellPhone
-      email
-      major
-      minor
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }
@@ -198,7 +159,6 @@ export const onDeleteApplicantForm = /* GraphQL */ `
   ) {
     onDeleteApplicantForm(filter: $filter, userId: $userId) {
       userId
-<<<<<<< HEAD
       firstName
       lastName
       date
@@ -351,14 +311,6 @@ export const onDeleteFacultyRecommendationForm = /* GraphQL */ `
       additionalComments
       evaluatorSignature
       date
-=======
-      fullName
-      cwid
-      cellPhone
-      email
-      major
-      minor
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       createdAt
       updatedAt
     }

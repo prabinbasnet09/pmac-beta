@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState, useEffect, createContext } from 'react';
 import Layout from '@/components/Layout';
 import TabBar from '@/components/TabBar';
@@ -15,27 +14,6 @@ Amplify.configure(awsExports);
 export const ActiveUser = createContext();
 
 export const ActiveUserProvider = ({ children, currentUser }) => {
-=======
-import { createContext, useState, useEffect} from "react";
-import '../styles/globals.css'
-import Layout from '@/components/Layout'
-import TabBar from '@/components/TabBar'
-
-import { Amplify, API} from "aws-amplify";
-import { withAuthenticator } from "@aws-amplify/ui-react";
-import '@aws-amplify/ui-react/styles.css';
-
-import * as queries from '../graphql/queries'
-import { onUpdateUser } from '@/graphql/subscriptions.js';
-
-import awsExports from "../aws-exports";
-import { useRouter } from 'next/router';
-Amplify.configure({...awsExports, ssr: true});
-
-export const ActiveUser = createContext();
-
-export const ActiveUserProvider = ({children, user}) => {
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -44,36 +22,22 @@ export const ActiveUserProvider = ({children, user}) => {
       localStorage.setItem(key, JSON.stringify({ value, expiresAt }));
     };
 
-<<<<<<< HEAD
     const getLocalStorage = key => {
       const item = JSON.parse(localStorage.getItem(key));
       if (!item) return null;
 
       if (new Date() >= new Date(item.expiresAt)) {
-=======
-    const getLocalStorage = (key) => {
-      const item = JSON.parse(localStorage.getItem(key));
-      if(!item) return null
-      
-      if(new Date() >= new Date(item.expiresAt)) {
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
         localStorage.removeItem(key);
         return null;
       }
       return item;
     };
-<<<<<<< HEAD
 
     if (!getLocalStorage('userInfo')) {
-=======
-    
-    if(!getLocalStorage('userInfo')) {
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       API.graphql({
         query: queries.listUsers,
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       })
-<<<<<<< HEAD
         .then(res => {
           setLocalStorage('userInfo', res.data.listUsers.items);
           setUsers(res.data.listUsers.items);
@@ -83,18 +47,6 @@ export const ActiveUserProvider = ({children, user}) => {
           return null;
         });
     } else {
-=======
-      .then((res) => {
-        setLocalStorage('userInfo', res.data.listUsers.items);
-        setUsers(res.data.listUsers.items);
-      })
-      .catch((err) => {
-        console.log(err);
-        return null;
-      });
-    }
-    else{
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
       setUsers(getLocalStorage('userInfo').value);
     }
 
@@ -102,16 +54,11 @@ export const ActiveUserProvider = ({children, user}) => {
       query: onUpdateUser,
       authMode: 'AMAZON_COGNITO_USER_POOLS',
     }).subscribe({
-<<<<<<< HEAD
       next: userData => {
-=======
-      next: (userData) => {
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
         API.graphql({
           query: queries.listUsers,
           authMode: 'AMAZON_COGNITO_USER_POOLS',
         })
-<<<<<<< HEAD
           .then(res => {
             setLocalStorage('userInfo', res.data.listUsers.items);
           })
@@ -209,56 +156,10 @@ function App({ Component, pageProps }) {
     router.pathname === '/schedule' ||
     router.pathname === '/results' ||
     router.pathname === '/applicants';
-=======
-        .then((res) => {
-          setLocalStorage('userInfo', res.data.listUsers.items);
-        })
-        .catch((err) => {
-          console.log(err);
-          return null;
-        });
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
-
-    return () => {
-      updateUser.unsubscribe();
-    }
-
-  }, []);
-
-  const loggedUser = {
-    id: user.attributes.sub,
-    username: user.username,
-    name: user.attributes.name,
-    email: user.attributes.email,
-    group: users.filter((userProfile) => userProfile.username === user.username).map((user) => user.groups[0]),
-    personalStatement: user.attributes.personalStatement,
-    transcript: user.attributes.transcript,
-    amcasForm: user.attributes.amcasForm,
-    users: users
-  } 
-  
-  return (
-    <ActiveUser.Provider value={loggedUser} >
-      {children}
-    </ActiveUser.Provider>
-  )
-}
-
-function App({ Component, pageProps, user, signOut}) {
-  const [userGroup, setUserGroup] = useState();
-  const router = useRouter();
-
-  const showNav = router.pathname === '/' || router.pathname === '/documents' || router.pathname === '/schedule' || router.pathname === '/results' || router.pathname === '/applicants';
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
 
   const getUserGroup = async () => {
     const userGroup = await API.graphql({
       query: queries.getUser,
-<<<<<<< HEAD
       variables: { id: currentUser.attributes.sub },
       authMode: 'AMAZON_COGNITO_USER_POOLS',
     })
@@ -371,109 +272,3 @@ function App({ Component, pageProps, user, signOut}) {
 
 // export default withAuthenticator(App);
 export default App;
-=======
-      variables: { id: user.attributes.sub },
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
-    })
-    .then((res) => {
-      return res.data.getUser.groups[0];
-    })
-    .catch((err) => {
-      console.log(err);
-      return null;
-    });
-    setUserGroup(userGroup);
-  }
-
-  getUserGroup();
-
-  const withLayout = (Component) => {
-    
-    
-    return function WrappedComponent(props) {
-    const tabs = 
-    (userGroup === "Student") ?
-        [{
-            name: "Dashboard",
-            path: "/"
-        },
-        {
-            name: "Documents",
-            path: "/documents"
-        },
-        {
-            name: "Schedule",
-            path: "/schedule"
-        },
-        {
-            name: "Results",
-            path: "/results"
-        },
-        ] :
-        
-        (userGroup === "Faculty") ?
-        [{
-            name: "Dashboard",
-            path: "/"
-        },
-        {
-            name: "Applicants",
-            path: "/applicants"
-        },
-        {
-            name: "Schedule",
-            path: "/schedule"
-        },
-        {
-            name: "Results",
-            path: "/results"
-        },
-        ] :
-        (userGroup === "ChairCommittee") ?
-        [{
-            name: "Dashboard",
-            path: "/"
-        },
-        {
-            name: "Applicants",
-            path: "/applicants"
-        },
-        {
-            name: "Schedule",
-            path: "/schedule"
-        },
-        {
-            name: "Results",
-            path: "/results"
-        },
-        ] :
-        (userGroup === "Admin") ?
-        [{
-            name: "Dashboard",
-            path: "/"
-        },
-        {
-            name: "Admin",
-            path: "/applicants"
-        }
-        ] :
-        null
-      return (
-        <Layout user={user} signOut={signOut}>
-          { userGroup && showNav ? <TabBar tabList={tabs} /> : null}
-          <Component {...props} user={user} signOut={signOut}/>
-        </Layout>
-      )
-    }
-  }
-  const LayoutComponent = withLayout(Component);
-
-  return ( 
-    <ActiveUserProvider user={user} >
-      <LayoutComponent {...pageProps} user={user} signOut={signOut} />
-    </ActiveUserProvider> 
-  )
-}
-
-export default withAuthenticator(App)
->>>>>>> 9346c4296420f80a7de36a5863d6d1f94c71db5a
