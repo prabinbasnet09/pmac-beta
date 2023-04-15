@@ -17,7 +17,7 @@ export default function Home({ signOut }) {
         .then(user => true)
         .catch(err => {
           console.log(err);
-          router.push('/login');
+          router.push('/home');
         });
     };
     fetchUser();
