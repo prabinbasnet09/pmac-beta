@@ -30,7 +30,7 @@ function Login() {
       await Auth.currentAuthenticatedUser()
         .then(user => {
           setUser(user);
-          router.push('/home');
+          router.push('/');
         })
         .catch(err => {
           console.log(err);
