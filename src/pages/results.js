@@ -37,10 +37,10 @@ export default function Result() {
                 Please let us know about your results!
               </label>
               <p className='text-base'>
-                After you've completed the application process, we'd appreciate
-                you filling out this brief survey if and when you are accepted
-                into a school. Letting us know about your experience helps us
-                better serve our pre-med students.{' '}
+                After you&apos;ve completed the application process, we&apos;d
+                appreciate you filling out this brief survey if and when you are
+                accepted into a school. Letting us know about your experience
+                helps us better serve our pre-med students.{' '}
               </p>
               <label className='block mt-10 mb-2 text-lg font-medium text-gray-900 dark:text-black'>
                 1. Tell us which school(s) you got accepted to, if any.
