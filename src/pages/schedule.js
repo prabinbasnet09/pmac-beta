@@ -63,7 +63,7 @@ function Schedular() {
         .then(user => true)
         .catch(err => {
           console.log(err);
-          setUser(null);
+
           router.push('/login');
         });
     };

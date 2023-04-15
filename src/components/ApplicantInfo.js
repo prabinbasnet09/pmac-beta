@@ -4,8 +4,8 @@ import { useState, useContext, useRef } from 'react';
 import { Storage } from '@aws-amplify/storage';
 import { ActiveUser } from '@/pages/_app';
 import { API } from '@aws-amplify/api';
-import { updateUser } from '@/graphql/mutations.js';
-import Checklist from './Checklist';
+import { updateUser } from '@/api/gql/mutations.js';
+import Checklist from './widgets/Checklist';
 
 export default function ApplicantInfo(props) {
   const activeUser = useContext(ActiveUser);
@@ -90,8 +90,7 @@ export default function ApplicantInfo(props) {
       </div>
 
       <div className='mt-2'>
-        {console.log(user)}
-        <Checklist activeUser={user} />
+        {/*<Checklist activeUser={user} />*/}
         {user.facultyRecommendation && !changeFile ? (
           <>
             <a

@@ -23,14 +23,6 @@ export default function Home({ signOut }) {
     fetchUser();
   }, []);
 
-  // useEffect(() => {
-  //   const { group, users } = activeUser;
-
-  //   setGroups(group);
-
-  //   setUsers(users);
-  // }, [activeUser]);
-
   return activeUser ? (
     <div>
       <Head>
@@ -39,7 +31,6 @@ export default function Home({ signOut }) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-
       <div>
         <Dashboard />
       </div>

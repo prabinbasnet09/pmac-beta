@@ -1,16 +1,13 @@
-import { useState, useEffect, createContext } from 'react';
+import { createContext, useState, useEffect } from 'react';
+import '../styles/globals.css';
 import Layout from '@/components/Layout';
-import TabBar from '@/components/TabBar';
-import '@/styles/globals.css';
-
-import * as queries from '../graphql/queries';
-import { onUpdateUser } from '@/graphql/subscriptions.js';
-
+import TabBar from '@/components/widgets/TabBar';
 import { useRouter } from 'next/router';
-import { Amplify, API, Hub } from 'aws-amplify';
 import awsExports from '../aws-exports';
+import * as queries from '../api/gql/queries';
+import { onUpdateUser } from '../api/gql/subscriptions';
+import { Amplify, API, Hub, Auth } from 'aws-amplify';
 Amplify.configure(awsExports);
-
 export const ActiveUser = createContext();
 
 export const ActiveUserProvider = ({ children, currentUser }) => {
@@ -223,7 +220,7 @@ function App({ Component, pageProps }) {
                 path: '/',
               },
               {
-                name: 'Applicants',
+                name: 'Users',
                 path: '/applicants',
               },
               {

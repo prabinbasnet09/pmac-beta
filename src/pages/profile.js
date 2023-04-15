@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useContext } from 'react';
 import { ActiveUser } from './_app';
 import { Auth } from 'aws-amplify';
-import Logo from '../images/ulm_academic_maroon_white.png';
+import Logo from 'public/ulm_academic_maroon_white.png';
 import { useRouter } from 'next/router';
 
 export default function Profile() {
@@ -19,7 +19,6 @@ export default function Profile() {
         .then(user => true)
         .catch(err => {
           console.log(err);
-          setUser(null);
           router.push('/login');
         });
     };

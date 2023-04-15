@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
-import Checklist from './Checklist';
+import Checklist from './widgets/Checklist';
 import { ActiveUser } from '@/pages/_app';
 
 export default function Dashboard() {
   const activeUser = useContext(ActiveUser);
-  return (
+
+  return activeUser ? (
     <div className='flex items-center justify-center'>
       <div className='w-3/4 px-2 sm:px-0'>
         <div className={`${'nav-body'}`}>
@@ -24,5 +25,5 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 }

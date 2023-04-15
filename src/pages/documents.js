@@ -73,7 +73,7 @@ function Documents() {
               </tr>
               <tr>
                 <td className='w-3/4   px-4 py-2 bg-white text-red font-bold disabled:'>
-                  Faculty Recommendation Form
+                  Faculty Recommendation Forms
                 </td>
                 <td className='w-1/4  px-4 py-2 bg-white '></td>
                 <td className='w-1/4  px-4 py-2 bg-white '></td>
@@ -83,7 +83,7 @@ function Documents() {
                 activeUser.facultyRecommendation[0] && (
                   <tr>
                     <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
-                      <Link href='/forms/statementTranscript'>
+                      <Link href='/forms/facultyRecForm'>
                         Faculty Recommendation Form 1
                       </Link>
                     </td>
@@ -97,8 +97,10 @@ function Documents() {
                 )
               ) : (
                 <tr>
-                  <td className='w-3/4 border border-black px-20 py-2 bg-white text-black disabled:'>
-                    Faculty Recommendation Form 1
+                  <td className='w-3/4 border border-black px-20 py-2 bg-white text-black hover:text-red hover:font-bold'>
+                    <Link href='/forms/facultyRecForm'>
+                      Faculty Recommendation Form 1
+                    </Link>
                   </td>
                   <td className='w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm'>
                     Incomplete...
@@ -113,7 +115,7 @@ function Documents() {
                 activeUser.facultyRecommendation[1] && (
                   <tr>
                     <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
-                      <Link href='/forms/statementTranscript'>
+                      <Link href='/forms/facultyRecForm'>
                         Faculty Recommendation Form 2
                       </Link>
                     </td>
@@ -127,8 +129,10 @@ function Documents() {
                 )
               ) : (
                 <tr>
-                  <td className='w-3/4 border border-black px-20 py-2 bg-white text-black disabled:'>
-                    Faculty Recommendation Form 2
+                  <td className='w-3/4 border border-black px-20 py-2 bg-white text-black hover:text-red hover:font-bold'>
+                    <Link href='/forms/facultyRecForm'>
+                      Faculty Recommendation Form 2
+                    </Link>
                   </td>
                   <td className='w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm'>
                     Incomplete...

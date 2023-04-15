@@ -1,4 +1,4 @@
-import Table from '.././../components/Table';
+import Table from '../../components/widgets/Table';
 import React, { useState, useContext, useEffect } from 'react';
 import CountrySelect from '.././../components/CountrySelect';
 import Select from 'react-select';
