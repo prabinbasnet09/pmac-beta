@@ -67,13 +67,13 @@ export default function Profile() {
             e.preventDefault();
             handleProfileUpdate();
           }}
-          >
+        >
           <label
-              htmlFor='Update Name'
-              className='block text-center mb-2 text-lg font-medium text-gray-900 dark:text-black'
-            >
-              Update Name
-            </label>
+            htmlFor='Update Name'
+            className='block text-center mb-2 text-lg font-medium text-gray-900 dark:text-black'
+          >
+            Update Name
+          </label>
           <label
             htmlFor='Name'
             className='block mb-2 text-sm font-medium text-gray-900 dark:text-black'
@@ -107,11 +107,11 @@ export default function Profile() {
           }}
         >
           <label
-              htmlFor='Update Password'
-              className='block text-center mb-2 text-lg font-medium text-gray-900 dark:text-black'
-            >
-              Update Password
-            </label>
+            htmlFor='Update Password'
+            className='block text-center mb-2 text-lg font-medium text-gray-900 dark:text-black'
+          >
+            Update Password
+          </label>
           <label
             htmlFor='Old Password'
             className='block mb-2 text-sm font-medium text-gray-900 dark:text-black'

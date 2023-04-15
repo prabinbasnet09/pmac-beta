@@ -10,7 +10,7 @@ import AppUsers from '@/components/AppUsers';
 export default function Applicants() {
   const activeUser = useContext(ActiveUser);
   const [users, setUsers] = useState();
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState();
 
   const router = useRouter();
   useEffect(() => {
@@ -38,9 +38,9 @@ export default function Applicants() {
             <ChairApplicantsList />
           ) : groups && groups === 'Faculty' ? (
             <FacultyApplicantsList />
-          ) : (
+          ) : groups && groups === 'Admin' ? (
             <AppUsers />
-          )}
+          ) : null}
         </div>
       </div>
     </div>

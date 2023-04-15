@@ -64,7 +64,7 @@ const Header = user => {
               </li>
               <li>
                 <p
-                  className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-[#c2c2c2]'
+                  className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-[#c2c2c2] cursor-pointer'
                   onClick={() => handleSignOut()}
                 >
                   Sign out
