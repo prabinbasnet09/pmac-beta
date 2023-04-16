@@ -71,7 +71,7 @@ function Schedular() {
   }, []);
 
   function renderEventContent(eventInfo) {
-    var infoTitle = window.prompt('What is the title of your event?');
+    let infoTitle = prompt('Please enter a new title for your event');
 
     setNewEvent({
       ...newEvent,
