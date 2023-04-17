@@ -3,7 +3,7 @@ type User
   @auth(
     rules: [
       { allow: groups, groups: ["Admin", "ChairCommittee"] }
-      { allow: groups, groups: ["Faculty"], operations: [create, read, update] }
+      { allow: groups, groups: ["Faculty"], operations: [read, update] }
       { allow: owner, ownerField: "username", operations: [read, update] }
     ]
   ) { # FOR TESTING ONLY!

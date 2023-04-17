@@ -99,7 +99,11 @@ export const ActiveUserProvider = ({ children, currentUser }) => {
       group: users
         .filter(userProfile => userProfile.username === currentUser.username)
         .map(user => user.groups[0]),
-      users: users,
+      users: users.filter(
+        userProfile =>
+          userProfile.groups[0] !== 'Admin' &&
+          userProfile.username !== currentUser.username
+      ),
     };
   }
 

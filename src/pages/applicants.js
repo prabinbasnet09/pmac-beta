@@ -37,7 +37,7 @@ export default function Applicants() {
           {groups && groups === 'ChairCommittee' ? (
             <ChairApplicantsList />
           ) : groups && groups === 'Faculty' ? (
-            <FacultyApplicantsList />
+            <FacultyApplicantsList users={activeUser.users} />
           ) : groups && groups === 'Admin' ? (
             <AppUsers />
           ) : null}

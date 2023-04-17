@@ -1,17 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Image from 'next/image';
 import Logo from 'public/ulm_academic_maroon_white.png';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
-// import AppUsers from './components/AppUsers';
-// import ApplicantInfo from './components/ApplicantInfo';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
 });
 
-export default function FacultyApplicantsList() {
+export default function FacultyApplicantsList(props) {
   const [toogleSelection, setToogleSelection] = useState(false);
   const handleUserSelection = (e, user) => {
     e.preventDefault();
@@ -20,29 +18,8 @@ export default function FacultyApplicantsList() {
       : setToogleSelection(true);
     setSelectedUser(user);
   };
-  const [selectedUser, setSelectedUser] = useState(true);
-  const [applicants, setApplicants] = useState([
-    {
-      name: 'John Doe',
-      id: '1',
-    },
-    {
-      name: 'Jane Doe',
-      id: '2',
-    },
-    {
-      name: 'John Smith',
-      id: '3',
-    },
-    {
-      name: 'Jane Smith',
-      id: '4',
-    },
-    {
-      name: 'Jane Smith',
-      id: '5',
-    },
-  ]);
+  const [selectedUser, setSelectedUser] = useState(false);
+  const [applicants, setApplicants] = useState(props.users);
   const [content, setContent] = useState('');
   const [showPopover, setShowPopover] = useState(false);
   const [steps, setSteps] = useState([
@@ -124,6 +101,7 @@ export default function FacultyApplicantsList() {
               <div
                 key={applicant.id}
                 className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
+                onClick={e => handleUserSelection(e, applicant)}
               >
                 {applicant.name}
               </div>
@@ -159,10 +137,8 @@ export default function FacultyApplicantsList() {
                 className='rounded-lg mr-3'
               />
               <div className='ml-5'>
-                <p className='text-lg font-medium'>Prabin Basnet</p>
-                <p className='text-gray-500 font-thin'>
-                  basnetpr@warhawks.ulm.edu
-                </p>
+                <p className='text-lg font-medium'>{selectedUser.name}</p>
+                <p className='text-gray-500 font-thin'>{selectedUser.email}</p>
               </div>
             </div>
             <div>
@@ -235,7 +211,7 @@ export default function FacultyApplicantsList() {
                       xmlns='http://www.w3.org/2000/svg'
                     >
                       <path
-                        fill-rule='evenodd'
+                        fillRule='evenodd'
                         d='M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z'
                         clipRule='evenodd'
                       ></path>
@@ -264,7 +240,7 @@ export default function FacultyApplicantsList() {
                       xmlns='http://www.w3.org/2000/svg'
                     >
                       <path
-                        fill-rule='evenodd'
+                        fillRule='evenodd'
                         d='M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z'
                         clipRule='evenodd'
                       ></path>
@@ -292,7 +268,7 @@ export default function FacultyApplicantsList() {
                       xmlns='http://www.w3.org/2000/svg'
                     >
                       <path
-                        fill-rule='evenodd'
+                        fillRule='evenodd'
                         d='M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z'
                         clipRule='evenodd'
                       ></path>
@@ -312,12 +288,23 @@ export default function FacultyApplicantsList() {
           </div>
         </div>
       ) : (
-        <div
-          div
-          classNameName='bg-white p-5 rounded-lg md:col-span-3 shadow-sm shadow-white text-center'
-        >
-          <p classNameName=' font-extralight'>
-            Choose applicants to view their status
+        <div className='bg-white p-5 rounded-lg md:col-span-3 shadow-sm shadow-white text-center'>
+          <p className=' font-semibold text-2xl text-red'>
+            Please choose applicants to view their status from the sidebar on
+            your left.
+          </p>
+
+          <p className=' font-light text-lg text-red text-justify mt-10 '>
+            <span className='font-semibold'>Assigned applicants</span> are the
+            applicants that have been assigned to you for an interview. You can
+            view their status by clicking on the applicant's name. Also, you can
+            take <span>notes</span> for each of the assigned applicants from the
+            text-editor that has been made available for your ease.
+          </p>
+
+          <p className=' font-light text-lg text-red text-justify mt-10'>
+            <span className='font-semibold'>Unassigned applicants</span> are the
+            applicants that have not been assigned to you for an interview.
           </p>
         </div>
       )}
