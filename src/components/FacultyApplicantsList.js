@@ -297,9 +297,9 @@ export default function FacultyApplicantsList(props) {
           <p className=' font-light text-lg text-red text-justify mt-10 '>
             <span className='font-semibold'>Assigned applicants</span> are the
             applicants that have been assigned to you for an interview. You can
-            view their status by clicking on the applicant's name. Also, you can
-            take <span>notes</span> for each of the assigned applicants from the
-            text-editor that has been made available for your ease.
+            view their status by clicking on the applicant&apos;s name. Also,
+            you can take <span>notes</span> for each of the assigned applicants
+            from the text-editor that has been made available for your ease.
           </p>
 
           <p className=' font-light text-lg text-red text-justify mt-10'>
