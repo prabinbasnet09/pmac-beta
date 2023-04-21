@@ -6,7 +6,7 @@ import { Auth } from 'aws-amplify';
 import SignIn from '@/components/SignIn';
 import LandingHeader from '@/components/LandingHeader';
 import Footer from '@/components/Footer';
-import { getUser } from '@/api/gql/queries';
+import { getUser } from '../graphql/queries';
 
 function Login() {
   const [user, setUser] = useState(null);

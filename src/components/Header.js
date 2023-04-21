@@ -22,12 +22,12 @@ const Header = user => {
   };
 
   return router.pathname !== '/login' ? (
-    <div className='flex justify-between items-center h-10 max-w-full mx-auto px-4 text-[#3B0000]'>
+    <div className='flex justify-between items-center h-15 max-w-full mx-auto px-4 text-[#3B0000] shadow-xl'>
       {/*Exchange ULM for ULM Logo*/}
       <Link href='/'>
         <h1 className='w-full text-3xl font-bold text-ulm_red'>ULM</h1>
       </Link>
-      <div className=' relative mt-10 mr-2 '>
+      <div className=' relative mt-2 mr-2 '>
         {/*Login Button*/}
         <button
           type='button'
@@ -37,8 +37,8 @@ const Header = user => {
           <Image
             src={Logo}
             alt='ULM Logo'
-            width={60}
-            height={60}
+            width={40}
+            height={40}
             className='border border-spacing-10 border-[#3B0000] rounded-full'
           />
         </button>

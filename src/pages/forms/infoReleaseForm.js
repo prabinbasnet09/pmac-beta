@@ -1,8 +1,8 @@
 import { React, useState, useEffect, useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import * as Yup from 'yup';
-import * as queries from '../../api/gql/queries';
-import * as mutations from '../../api/gql/mutations';
+import * as queries from '../../graphql/queries';
+import * as mutations from '../../graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
 import { setDate } from 'date-fns';
 import { ActiveUser } from '../_app';

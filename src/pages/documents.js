@@ -73,7 +73,7 @@ function Documents() {
               </tr>
               <tr>
                 <td className='w-3/4   px-4 py-2 bg-white text-red font-bold disabled:'>
-                  Faculty Recommendation Forms
+                  Faculty Evaluation Forms
                 </td>
                 <td className='w-1/4  px-4 py-2 bg-white '></td>
                 <td className='w-1/4  px-4 py-2 bg-white '></td>
@@ -142,6 +142,18 @@ function Documents() {
                   </td>
                 </tr>
               )}
+
+              <tr>
+                <td className='w-3/4 border border-black px-20 py-2 bg-white text-black hover:text-red hover:font-bold'>
+                  <Link href='/referees'>Add Referees</Link>
+                </td>
+                <td className='w-1/4 border border-black px-4 py-2 bg-white text-gray italic text-sm'>
+                  0/2
+                </td>
+                <td className='w-3/4 border border-black px-4 py-2 bg-white text-center text-red font-bold'>
+                  -
+                </td>
+              </tr>
 
               <tr>
                 <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>

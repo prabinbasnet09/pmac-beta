@@ -65,7 +65,7 @@ const Checklist = ({ activeUser }) => {
             <div className='flex justify-between items-end '>
               <div className='font-bold text-lg '>Not Started</div>
               <div className='text-[rgb(143,141,141)] italic text-sm'>
-                6 remaining...
+                {steps.filter(step => step.state === 0).length} remaining...
               </div>
             </div>
             {expandNotStarted ? (
@@ -74,7 +74,7 @@ const Checklist = ({ activeUser }) => {
                   step.state === 0 ? (
                     <li
                       key={String(step.label)}
-                      className=' p-4 my-2  hover:bg-[rgb(255,255,255)] shadow-inner rounded-3xl'
+                      className=' p-4 my-2  hover:bg-[rgb(255,255,255)] shadow-lg rounded-3xl border-2 border-[black]'
                     >
                       <div className='flex justify-between items-center'>
                         <h3 className='justify-left text-lg font-medium'>
@@ -91,7 +91,7 @@ const Checklist = ({ activeUser }) => {
             ) : null}
           </div>
           <div
-            className='bg-white rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]'
+            className='bg-white rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)] '
             onClick={e => {
               e.preventDefault();
               setExpandIncomplete(!expandIncomplete);
@@ -100,7 +100,7 @@ const Checklist = ({ activeUser }) => {
             <div className='flex justify-between items-end'>
               <div className='font-bold text-lg'>Incomplete</div>
               <div className='text-[rgb(143,141,141)] italic text-sm'>
-                1 on progress...
+                {steps.filter(step => step.state === 1).length} on progress...
               </div>
             </div>
             {expandIncomplete ? (
@@ -109,7 +109,7 @@ const Checklist = ({ activeUser }) => {
                   step.state === 1 ? (
                     <li
                       key={String(step.label)}
-                      className='p-4 my-3 hover:bg-[rgb(255,255,255)] shadow-xl rounded-3xl '
+                      className='p-4 my-3 hover:bg-[rgb(255,255,255)] shadow-xl rounded-3xl border-2 border-[black]'
                     >
                       <div className='flex justify-between items-center'>
                         <h3 className='justify-left text-lg font-medium'>
@@ -137,7 +137,7 @@ const Checklist = ({ activeUser }) => {
             <div className='flex justify-between items-end'>
               <div className='font-bold text-lg'>Completed</div>
               <div className='text-[rgb(143,141,141)] italic text-sm'>
-                1 completed...
+                {steps.filter(step => step.state === 2).length} completed...
               </div>
             </div>
             {expandComplete ? (
@@ -146,7 +146,7 @@ const Checklist = ({ activeUser }) => {
                   step.state === 2 ? (
                     <li
                       key={String(step.label)}
-                      className='p-4 hover:bg-[rgb(255,255,255)] shadow-xl rounded-3xl'
+                      className='p-4 my-3 hover:bg-[rgb(255,255,255)] shadow-xl rounded-3xl border-2 border-[black]'
                     >
                       <div className='flex justify-between items-center'>
                         <h3 className='justify-left text-lg font-medium'>

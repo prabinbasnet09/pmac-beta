@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { ActiveUser } from '../pages/_app.js';
 import { useContext, useState } from 'react';
 
-import { updateUser } from '@/api/gql/mutations.js';
-import { onUpdateUser } from '@/api/gql/subscriptions.js';
+import { updateUser } from '../graphql/mutations';
+import { onUpdateUser } from '../graphql/subscriptions';
 import { API } from '@aws-amplify/api';
 
 export default function AppUsers() {

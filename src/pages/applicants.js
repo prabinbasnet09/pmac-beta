@@ -35,7 +35,7 @@ export default function Applicants() {
       <div className='w-3/4 px-2 sm:px-0'>
         <div className={`${'nav-body'}`}>
           {groups && groups === 'ChairCommittee' ? (
-            <ChairApplicantsList />
+            <ChairApplicantsList users={activeUser.users} />
           ) : groups && groups === 'Faculty' ? (
             <FacultyApplicantsList users={activeUser.users} />
           ) : groups && groups === 'Admin' ? (

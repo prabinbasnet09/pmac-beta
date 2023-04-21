@@ -3,47 +3,18 @@ import Image from 'next/image';
 import Logo from 'public/ulm_academic_maroon_white.png';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
-
+import Link from 'next/link';
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
 });
 
 export default function FacultyApplicantsList(props) {
-  const [toogleSelection, setToogleSelection] = useState(false);
-  const handleUserSelection = (e, user) => {
-    e.preventDefault();
-    selectedUser === user
-      ? setToogleSelection(!toogleSelection)
-      : setToogleSelection(true);
-    setSelectedUser(user);
-  };
   const [selectedUser, setSelectedUser] = useState(false);
   const [applicants, setApplicants] = useState(props.users);
   const [content, setContent] = useState('');
   const [showPopover, setShowPopover] = useState(false);
-  const [steps, setSteps] = useState([
-    {
-      label: 'Application Release Form',
-      state: 1,
-    },
-    { label: 'Unofficial Transcript', state: 1 },
-    {
-      label: 'Application Information Form',
-      state: 1,
-    },
-    {
-      label: 'Faculty Recommendation',
-      state: 2,
-    },
-    { label: 'Schedule', state: 2 },
-    {
-      label: 'Personal Statement',
-      state: 2,
-    },
-    { label: 'Headshot', state: 2 },
-    { label: 'AMCAS Form', state: 2 },
-  ]);
+  const [steps, setSteps] = useState([]);
 
   const modules = {
     toolbar: [
@@ -88,6 +59,49 @@ export default function FacultyApplicantsList(props) {
     setContent(value);
   }
 
+  function setChecklist(e, user) {
+    e.preventDefault();
+    setSteps([
+      {
+        label: 'Application Release Form',
+        state: user.applicantReleaseForm
+          ? user.applicantReleaseForm === 'Submitted'
+            ? 2
+            : 1
+          : 0,
+      },
+      { label: 'Unofficial Transcript', state: user.transcript ? 2 : 0 },
+      {
+        label: 'Application Information Form',
+        state: user.applicantForm
+          ? user.applicantForm === 'Submitted'
+            ? 2
+            : 1
+          : 0,
+      },
+      {
+        label: 'Faculty Recommendation',
+        state: user.facultyRecommendation
+          ? user.facultyRecommendation.length === 2
+            ? 2
+            : 1
+          : 0,
+      },
+      { label: 'Schedule', state: user.schedule ? 2 : 0 },
+      {
+        label: 'Personal Statement',
+        state: user.personalStatement ? 2 : 0,
+      },
+      { label: 'Headshot', state: user.profilePicture ? 2 : 0 },
+      { label: 'AMCAS Form', state: user.amcas ? 2 : 0 },
+    ]);
+  }
+
+  const handleUserSelection = (e, user) => {
+    e.preventDefault();
+    setSelectedUser(user);
+  };
+
   return (
     <div className='bg-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-4 gap-2'>
       {/* applicants list */}
@@ -96,7 +110,7 @@ export default function FacultyApplicantsList(props) {
           <div className='p-3 mb-2 bg-[#681212] rounded-lg text-[#fff] text-lg font-bold text-center'>
             Assigned Applicants
           </div>
-          <div className='scrollbar-thin p-2'>
+          {/* <div className='scrollbar-thin p-2'>
             {applicants.map(applicant => (
               <div
                 key={applicant.id}
@@ -106,7 +120,7 @@ export default function FacultyApplicantsList(props) {
                 {applicant.name}
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
 
         <div>
@@ -117,7 +131,11 @@ export default function FacultyApplicantsList(props) {
             {applicants.map(applicant => (
               <div
                 key={applicant.id}
-                className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
+                className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e] active:bg-[#FDB913]'
+                onClick={e => {
+                  handleUserSelection(e, applicant);
+                  setChecklist(e, applicant);
+                }}
               >
                 {applicant.name}
               </div>
@@ -184,12 +202,25 @@ export default function FacultyApplicantsList(props) {
                   key={index}
                   className='w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-2 mb-4'
                 >
-                  <div className='bg-[#e4e4e4] rounded-lg p-4 mb-2 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'>
+                  <div className='bg-[#e4e4e4] rounded-lg p-4 mb-2 text-[#840029] cursor-pointer hover:bg-[#d8d8d8]'>
                     <div className='flex flex-row justify-between '>
                       <div className='text-lg font-medium text-gray-500'>
                         {step.label}
                       </div>
-                      <div className='text-lg font-medium'>{step.state}</div>
+                      {/* <div className='text-lg font-medium'>{step.state}</div> */}
+                      {step.state === 0 ? (
+                        <div className='text-sm font-semi-bold'>
+                          <span className='text-[#FF0000] '>Not Started</span>
+                        </div>
+                      ) : step.state === 1 ? (
+                        <div className='text-sm font-semi-bold'>
+                          <span className='text-yellow'>In Progress</span>
+                        </div>
+                      ) : (
+                        <div className='text-sm font-semi-bold'>
+                          <span className='text-green'>View</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -5,8 +5,8 @@ import { API } from '@aws-amplify/api';
 import {
   changePersonalStatement,
   changeTranscript,
-} from '@/api/gql/mutations.js';
-import { getUser } from '@/api/gql/queries.js';
+} from '../../graphql/mutations';
+import { getUser } from '../../graphql/queries';
 import { ActiveUser } from '../../pages/_app';
 import Image from 'next/image';
 import FileUpload from '@/components/widgets/FileUpload';

@@ -9,8 +9,9 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   loading: () => <p>Loading ...</p>,
 });
 
-export default function ChairApplicantsList() {
-  const [selectedUser, setSelectedUser] = useState(true);
+export default function ChairApplicantsList(props) {
+  const [applicants, setApplicants] = useState(props.users);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [committeeMembers, setCommitteeMembers] = useState([
     {
       id: '1',
@@ -70,52 +71,9 @@ export default function ChairApplicantsList() {
 
   const [selectedGroup, setSelectedGroup] = useState('Committee Members');
   const [toggle, setToggle] = useState(false);
-  const [applicants, setApplicants] = useState([
-    {
-      name: 'John Doe',
-      id: '1',
-    },
-    {
-      name: 'Jane Doe',
-      id: '2',
-    },
-    {
-      name: 'John Smith',
-      id: '3',
-    },
-    {
-      name: 'Jane Smith',
-      id: '4',
-    },
-    {
-      name: 'Jane Smith',
-      id: '5',
-    },
-  ]);
   const [content, setContent] = useState('');
   const [showPopover, setShowPopover] = useState(false);
-  const [steps, setSteps] = useState([
-    {
-      label: 'Application Release Form',
-      state: 1,
-    },
-    { label: 'Unofficial Transcript', state: 1 },
-    {
-      label: 'Application Information Form',
-      state: 1,
-    },
-    {
-      label: 'Faculty Recommendation',
-      state: 2,
-    },
-    { label: 'Schedule', state: 2 },
-    {
-      label: 'Personal Statement',
-      state: 2,
-    },
-    { label: 'Headshot', state: 2 },
-    { label: 'AMCAS Form', state: 2 },
-  ]);
+  const [steps, setSteps] = useState([]);
 
   const modules = {
     toolbar: [
@@ -166,6 +124,47 @@ export default function ChairApplicantsList() {
     setToggle(prevState => !prevState);
   };
 
+  const handleUserSelection = user => {
+    setSelectedUser(user);
+  };
+
+  function setChecklist(user) {
+    setSteps([
+      {
+        label: 'Application Release Form',
+        state: user.applicantReleaseForm
+          ? user.applicantReleaseForm === 'Submitted'
+            ? 2
+            : 1
+          : 0,
+      },
+      { label: 'Unofficial Transcript', state: user.transcript ? 2 : 0 },
+      {
+        label: 'Application Information Form',
+        state: user.applicantForm
+          ? user.applicantForm === 'Submitted'
+            ? 2
+            : 1
+          : 0,
+      },
+      {
+        label: 'Faculty Recommendation',
+        state: user.facultyRecommendation
+          ? user.facultyRecommendation.length === 2
+            ? 2
+            : 1
+          : 0,
+      },
+      { label: 'Schedule', state: user.schedule ? 2 : 0 },
+      {
+        label: 'Personal Statement',
+        state: user.personalStatement ? 2 : 0,
+      },
+      { label: 'Headshot', state: user.profilePicture ? 2 : 0 },
+      { label: 'AMCAS Form', state: user.amcas ? 2 : 0 },
+    ]);
+  }
+
   return (
     <div className='bg-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-4 gap-2'>
       {/* applicants list */}
@@ -200,9 +199,11 @@ export default function ChairApplicantsList() {
                   <li>
                     <span
                       className='block px-4 py-2 text-[#840029] hover:bg-[#e4e4e4]  hover:text-[#FDB913]'
-                      onClick={() => {
+                      onClick={e => {
+                        e.preventDefault();
                         setSelectedGroup('Committee Members');
                         setToggle(false);
+                        setSelectedUser(null);
                       }}
                     >
                       Committee Members
@@ -211,9 +212,11 @@ export default function ChairApplicantsList() {
                   <li>
                     <span
                       className='block px-4 py-2 text-[#840029] hover:bg-[#e4e4e4] hover:text-[#FDB913]'
-                      onClick={() => {
+                      onClick={e => {
+                        e.preventDefault();
                         setSelectedGroup('Applicants');
                         setToggle(false);
+                        setSelectedUser(null);
                       }}
                     >
                       Applicants
@@ -247,7 +250,7 @@ export default function ChairApplicantsList() {
             type='search'
             id='default-search'
             className='block w-full p-4 pl-10 text-sm text-black rounded-lg bg-[#e4e4e4]  focus:ring-[#681212] focus:border-[#681212] '
-            placeholder='Search Mockups, Logos...'
+            placeholder='Search Users...'
             required
           />
         </div>
@@ -257,6 +260,10 @@ export default function ChairApplicantsList() {
               <div
                 key={member.id}
                 className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
+                onClick={e => {
+                  e.preventDefault();
+                  handleUserSelection(member);
+                }}
               >
                 {member.name}
               </div>
@@ -268,6 +275,11 @@ export default function ChairApplicantsList() {
               <div
                 key={applicant.id}
                 className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
+                onClick={e => {
+                  e.preventDefault();
+                  handleUserSelection(applicant);
+                  setChecklist(applicant);
+                }}
               >
                 {applicant.name}
               </div>
@@ -287,10 +299,8 @@ export default function ChairApplicantsList() {
                 className='rounded-lg '
               />
               <div className='ml-5'>
-                <p className='text-lg font-medium'>Prabin Basnet</p>
-                <p className='text-gray-500 font-thin'>
-                  basnetpr@warhawks.ulm.edu
-                </p>
+                <p className='text-lg font-medium'>{selectedUser.name}</p>
+                <p className='text-gray-500 font-thin'>{selectedUser.email}</p>
               </div>
             </div>
             <div>
@@ -341,7 +351,19 @@ export default function ChairApplicantsList() {
                       <div className='text-lg font-medium text-gray-500'>
                         {step.label}
                       </div>
-                      <div className='text-lg font-medium'>{step.state}</div>
+                      {step.state === 0 ? (
+                        <div className='text-sm font-semi-bold'>
+                          <span className='text-[#FF0000] '>Not Started</span>
+                        </div>
+                      ) : step.state === 1 ? (
+                        <div className='text-sm font-semi-bold'>
+                          <span className='text-yellow'>In Progress</span>
+                        </div>
+                      ) : (
+                        <div className='text-sm font-semi-bold'>
+                          <span className='text-green'>View</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -513,9 +535,7 @@ export default function ChairApplicantsList() {
           div
           className='bg-white p-5 rounded-lg md:col-span-3 shadow-sm shadow-white text-center'
         >
-          <p className=' font-extralight'>
-            Choose applicants to view their status
-          </p>
+          <p className=' font-extralight'>Choose users to view their status</p>
         </div>
       )}
     </div>
