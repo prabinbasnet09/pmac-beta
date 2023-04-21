@@ -34,15 +34,17 @@ export default function InfoReleaseForm() {
   ]);
 
   const validationSchema = Yup.object().shape({
-    fullName: Yup.string().required('Full Name is required'),
+    userInfo: Yup.object().shape({
+      fullName: Yup.string().required('Full Name is required'),
     cwid: Yup.string()
       .required('CWID is required')
       .matches(
         /^[0-9]{8}$/,
         'CWID must be a valid date in the format xxxx-xxxx'
       ),
-    signature: Yup.string().required('Signature is required'),
     date: Yup.string().required('Date is Required'),
+    }),
+    
     choice: Yup.array()
       .of(Yup.string())
       .min(3, 'Please select all 3 checkboxes!'),
@@ -62,7 +64,6 @@ export default function InfoReleaseForm() {
   const [userInfo, setUserInfo] = useState({
     fullName: '',
     cwid: '',
-    signature: '',
     date: '',
   });
 
@@ -212,10 +213,10 @@ export default function InfoReleaseForm() {
   };
 
   const initialValues = {
-    fullName: userInfo.fullName || '',
+    userInfo:{fullName:  '',
     cwid: '',
-    signature: '',
-    date: '',
+    date: '',},
+    
     choice: [],
   };
 
@@ -330,29 +331,30 @@ export default function InfoReleaseForm() {
                         htmlFor='fullName'
                         className='block text-sm font-medium text-gray-700'
                       >
-                        Name (Print Clearly)
+                        Name
                       </label>
                       <input
                         type='text'
-                        name='fullName'
-                        id='fullName'
+                        name='userInfo.fullName'
+                        id='userInfo.fullName'
                         // value={values.fullName}
-                        defaultValue={userInfo.fullName}
-                        onChange={event =>
-                          handleUserInfo(
-                            'fullName',
-                            event.target.value,
-                            setFieldValue
-                          )
-                        }
+                        // defaultValue={userInfo.fullName}
+                        // onChange={event =>
+                        //   handleUserInfo(
+                        //     'fullName',
+                        //     event.target.value,
+                        //     setFieldValue
+                        //   )
+                        // }
+                        
                         autoComplete='given-name'
                       />
-                      <ErrorMessage name='fullName' />
+                   
                     </div>
 
                     <div className='col-span-6 sm:col-span-3'>
                       <label
-                        htmlFor='cwid'
+                        htmlFor='cwid' 
                         className='block text-sm font-medium text-gray-700'
                       >
                         CWID Number
@@ -372,32 +374,6 @@ export default function InfoReleaseForm() {
                     </div>
                   </div>
                   <div className=' mt-5  grid grid-cols-6 gap-6'>
-                    <div className=' col-span-6 sm:col-span-3'>
-                      <label
-                        htmlFor='signature'
-                        className='block text-sm font-medium text-gray-700'
-                      >
-                        Signature
-                      </label>
-                      <input
-                        type='text'
-                        name='signature'
-                        id='signature'
-                        defaultValue={userInfo.signature}
-                        onChange={event =>
-                          handleUserInfo('signature', event.target.value)
-                        }
-                        autoComplete='given-name'
-                        // {...register('signature')}
-                        // className={`form-control w-full ${errors.signature ? 'is-invalid' : ''}`}
-                      />
-                      <ErrorMessage
-                        className='text-bred italic'
-                        name='signature'
-                      />
-                      {/* <div className="text-bred italic ">{errors.signature?.message}</div> */}
-                    </div>
-
                     <div className='col-span-6 sm:col-span-3'>
                       <label
                         htmlFor='date'
@@ -598,3 +574,5 @@ export default function InfoReleaseForm() {
     <div>Loading...</div>
   );
 }
+
+

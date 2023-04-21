@@ -15,216 +15,19 @@ export default function InfoReleaseForm() {
   const activeUser = useContext(ActiveUser);
   const router = useRouter();
 
-  const [rows, setRows] = useState([
-    {
-      schoolName: '',
-      deadlineDate: '',
-      contactPerson: '',
-      address: '',
-    },
-  ]);
-
-  const validationSchema = Yup.object().shape({
-    fullName: Yup.string().required('Full Name is required'),
-    cwid: Yup.string()
-      .required('CWID is required')
-      .matches(
-        /^[0-9]{8}$/,
-        'CWID must be a valid date in the format xxxx-xxxx'
-      ),
-    signature: Yup.string().required('Signature is required'),
-    date: Yup.string().required('Date is Required'),
-  });
-
-  const rowSchema = Yup.object().shape({
-    schoolName: Yup.string().required('Full Name is required!'),
-    deadlineDate: Yup.string().required('Valid Date is required'),
-    contactPerson: Yup.string().required("Contact person's is required!"),
-    address: Yup.string().required('Address is required!'),
-  });
-
-  const formOptions = { resolver: yupResolver(validationSchema) };
-
-  // get functions to build form with useForm() hook
-  const { register, handleSubmit, reset, formState } = useForm(formOptions);
-  const { errors } = formState;
-
-  const [authorizeRelease, setAuthorizeRelease] = useState(false);
-  const [allowEvaluation, setAllowEvaluation] = useState(false);
-  const [allowAdvertising, setAllowAdvertising] = useState(false);
-
   const [userInfo, setUserInfo] = useState({
-    signature: '',
+    applicantName: '',
     evaluator: '',
     evalSignature: '',
     date: '',
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await API.graphql({
-        query: queries.listApplicantReleaseForms,
-        variables: { filter: { userId: { eq: activeUser.id } } },
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
-      })
-        .then(res => {
-          const data = res.data.listApplicantReleaseForms.items[0];
-          if (data) {
-            setAuthorizeRelease(data.authorizeRelease);
-            setAllowEvaluation(data.allowEvaluation);
-            setAllowAdvertising(data.allowAdvertising);
-            setUserInfo({
-              fullName: data.fullName,
-              cwid: data.cwid,
-              signature: data.signature,
-              date: data.date,
-            });
-            setRows(JSON.parse(data.schoolDetails));
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    };
-
-    fetchData();
-  }, [activeUser]);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      await Auth.currentAuthenticatedUser()
-        .then(user => true)
-        .catch(err => {
-          console.log(err);
-          router.push('/login');
-        });
-    };
-    fetchUser();
-  }, []);
-
-  const handleFormSubmit = async () => {
-    try {
-      const schoolDetails = rows.map(row => {
-        return {
-          schoolName: row.schoolName,
-          deadlineDate: row.deadlineDate,
-          contactPerson: row.contactPerson,
-          address: row.address,
-        };
-      });
-
-      const inputData = {
-        userId: activeUser.id,
-        authorizeRelease: authorizeRelease,
-        allowEvaluation: allowEvaluation,
-        allowAdvertising: allowAdvertising,
-        fullName: userInfo.fullName,
-        cwid: userInfo.cwid,
-        signature: userInfo.signature,
-        date: userInfo.date,
-        // schoolDetails: `[{\"authorizeRelease\":true, \"allowEvaluation\":true, \"allowAdvertisement\": true, \"schoolName\": \"ULM\", \"deadlineDate\": \"2023/03/18\", \"contactPerson\": \"Dr. Jose Cordova\", \"address\": \"Concordia, Monroe\"}, \
-        //                 {\"name\": \"name\", \"succeed\": true, \"date\": \"2021-05-05\", \"phone\": \"318-123-4567\", \"address\": \"1234 Main St, Monroe, LA 71203\"}]`
-        schoolDetails: JSON.stringify(schoolDetails),
-      };
-
-      const createForm = async () => {
-        await API.graphql({
-          query: mutations.createApplicantReleaseForm,
-          variables: { input: inputData },
-          authMode: 'AMAZON_COGNITO_USER_POOLS',
-        })
-          .then(async res => {
-            if (res.data.createApplicantReleaseForm) {
-              await API.graphql({
-                query: mutations.updateUser,
-                variables: {
-                  input: {
-                    id: activeUser.id,
-                    applicantReleaseForm: 'Submitted',
-                  },
-                },
-                authMode: 'AMAZON_COGNITO_USER_POOLS',
-              })
-                .then(res => {
-                  console.log(res);
-                })
-                .catch(err => {
-                  console.log(err);
-                });
-            }
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      };
-
-      const updateForm = async () => {
-        await API.graphql({
-          query: mutations.updateApplicantReleaseForm,
-          variables: { input: inputData },
-          authMode: 'AMAZON_COGNITO_USER_POOLS',
-        })
-          .then(res => {
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      };
-
-      activeUser.applicationReleaseForm ? updateForm() : createForm();
-    } catch (err) {
-      console.log('error creating InfoRelease Form:', err);
-    }
-  };
-
-  const handleAuthorizeRelease = e => {
-    setAuthorizeRelease(e.target.checked);
-  };
-
-  const handleAllowEvaluation = e => {
-    setAllowEvaluation(e.target.checked);
-  };
-
-  const handleAllowAdvertising = e => {
-    setAllowAdvertising(e.target.checked);
-  };
-
-  const handleRowChange = (index, field, value) => {
-    const newRows = [...rows];
-    newRows[index][field] = value;
-
-    setRows(newRows);
-  };
-
-  const handleDeleteRow = () => {
-    const newRows = [...rows];
-    newRows.pop(); // remove the last row
-
-    setRows(newRows);
-  };
-
+  
   const handleUserInfo = (field, value) => {
     setUserInfo(prevValues => ({ ...prevValues, [field]: value }));
   };
 
-  const handleAddRow = () => {
-    setRows([...rows, { name: '', date: '', phone: '', address: '' }]);
-  };
 
-  const ProgressBar = ({ progressPercentage }) => {
-    return (
-      <div className='h-1 w-full bg-gray-300'>
-        <div
-          style={{ width: `${progressPercentage}%` }}
-          className={`h-full ${
-            progressPercentage < 70 ? 'bg-red-600' : 'bg-green-600'
-          }`}
-        ></div>
-      </div>
-    );
-  };
 
   return activeUser ? (
     <div className='mt-10 sm:mt-0'>
@@ -234,6 +37,24 @@ export default function InfoReleaseForm() {
             <h1 className='text-center text-4xl font-bold text-ulm_maroon'>
               Faculty Recommendation Form
             </h1>
+
+            <form action="">
+
+            
+
+            <label
+                        htmlFor='applicantName' 
+                        className='block text-sm font-medium text-gray-700'
+                      >
+                        Applicant Name
+                      </label>
+                      <input
+                        type='text'
+                        name='applicantName'
+                        id='applicantName'
+                        className='w-full'
+                        autoComplete='family-name'
+                      />
 
             <div className=' p-4 text-black opacity-75 mx-auto'>
               <p className='leading-relaxed text-justify'>
@@ -252,37 +73,10 @@ export default function InfoReleaseForm() {
             </div>
 
             <div>
-              <div className='w-[500px]'>
-                <label
-                  htmlFor='signature'
-                  className='block text-sm font-medium text-gray-700'
-                >
-                  Signature of Applicant
-                </label>
-                <input
-                  type='text'
-                  name='signature'
-                  id='signature'
-                  defaultValue={userInfo.signature}
-                  onChange={event =>
-                    handleUserInfo('signature', event.target.value)
-                  }
-                  autoComplete='given-name'
-                  {...register('signature')}
-                  className={`form-control w-full ${
-                    errors.signature ? 'is-invalid' : ''
-                  }`}
-                />
-                <div className='text-bred italic '>
-                  {errors.signature?.message}
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className='w-[500px] mt-4'>
+              <div>
                 <label
                   htmlFor='evaluator'
-                  className='block text-sm font-medium text-gray-700'
+                  className='block text-sm font-medium text-black'
                 >
                   Name of Evaluator
                 </label>
@@ -295,14 +89,10 @@ export default function InfoReleaseForm() {
                     handleUserInfo('evaluator', event.target.value)
                   }
                   autoComplete='given-name'
-                  {...register('evaluator')}
-                  className={`form-control w-full ${
-                    errors.evaluator ? 'is-invalid' : ''
-                  }`}
+                  className='w-full'
+                 
                 />
-                <div className='text-bred italic '>
-                  {errors.evaluator?.message}
-                </div>
+               
               </div>
               <div className=' p-4 text-black opacity-75 mx-auto'>
                 <p className='text-justify'>
@@ -506,7 +296,7 @@ export default function InfoReleaseForm() {
                 <textarea
                   id='message'
                   rows='4'
-                  className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white'
+                  className='block p-2.5 w-full text-sm text-black '
                   placeholder='Write your thoughts here...'
                 ></textarea>
                 <div className='font-bold mt-10 mb-3'>
@@ -516,7 +306,7 @@ export default function InfoReleaseForm() {
                 <textarea
                   id='message'
                   rows='4'
-                  className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500'
+                  className='block p-2.5 w-full text-sm text-black rounded-lg border' 
                   placeholder='Write your thoughts here...'
                 ></textarea>
               </div>
@@ -528,7 +318,7 @@ export default function InfoReleaseForm() {
               <textarea
                 id='message'
                 rows='4'
-                className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500'
+                className='block p-2.5 w-full text-sm text-black rounded-lg border' 
                 placeholder='Write your thoughts here...'
               ></textarea>
             </div>
@@ -562,7 +352,7 @@ export default function InfoReleaseForm() {
               <textarea
                 id='message'
                 rows='4'
-                className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  bg-gray-700 border-gray-600 placeholder-gray-400 text-white  focus:border-blue-500'
+                className='block p-2.5 w-full text-sm text-black rounded-lg border' 
                 placeholder='Write your thoughts here...'
               ></textarea>
 
@@ -578,7 +368,7 @@ export default function InfoReleaseForm() {
                       htmlFor='evalSignature'
                       className='block text-sm font-medium text-gray-700'
                     >
-                      <p className='mt-5 mb-3'>Signature of Evaluator</p>
+                      <p className='mt-5 mb-3'>Name of Evaluator as Signature</p>
                     </label>
                     <input
                       type='text'
@@ -588,14 +378,11 @@ export default function InfoReleaseForm() {
                       onChange={event =>
                         handleUserInfo('signature', event.target.value)
                       }
-                      autoComplete='given-name'
-                      {...register('signature')}
-                      className={`form-control w-full ${
-                        errors.evalSignature ? 'is-invalid' : ''
-                      }`}
+                      className='w-full'
+                    
                     />
                     <div className='text-bred italic '>
-                      {errors.evalSignature?.message}
+                    
                     </div>
                   </div>
                   <div className='w-[300px]'>
@@ -606,20 +393,13 @@ export default function InfoReleaseForm() {
                       type='date'
                       id='date'
                       name='trip-start'
-                      value='01/01/2023'
-                      min='4/12/23'
-                      max='2040-12-31'
                       onChange={event =>
-                        handleUserInfo('signature', event.target.value)
+                        handleUserInfo('date', event.target.value)
                       }
+                      className='w-full'
                       autoComplete='date'
-                      {...register('date')}
-                      className={`form-control w-full ${
-                        errors.date ? 'is-invalid' : ''
-                      }`}
                     />
                     <div className='text-bred italic '>
-                      {errors.date?.message}
                     </div>
                     <div className='mt-10'>
                       <p>
@@ -628,10 +408,12 @@ export default function InfoReleaseForm() {
                         </button>
                       </p>
                     </div>
+
                   </div>
                 </div>
               </div>
             </div>
+            </form>
           </div>
         </div>
       </div>
