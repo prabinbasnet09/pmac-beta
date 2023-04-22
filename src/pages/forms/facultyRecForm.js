@@ -1,23 +1,103 @@
 import { React, useState, useEffect, useContext } from 'react';
-import { ActiveUser } from '../_app';
+import { ActiveUser } from '../_app'; 
 import { useRouter } from 'next/router';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 export default function InfoReleaseForm() {
   const activeUser = useContext(ActiveUser);
   const router = useRouter();
 
-  const [userInfo, setUserInfo] = useState({
+  const [intellecBelowAverage, setIntellecBelowAverage] = useState(false);
+  const [intellecAverage, setIntellecAverage]= useState(false);
+  const [intellecAboveAverge, setIntellecAboveAverage]=useState(false);
+  const [intellecExceptional, setIntellecException]=useState(false);
+  const [intellecNotObserved, setIntellecNotObserved]=useState(false);
+
+  const [uncertain, setUncertain]=useState(false);
+  const [certain, setCertain]=useState(false);
+  const [motivated, setMotivated]=useState(false);
+  const [motivationNotObserved, setMotivationNotObserved]= useState(false);
+
+  const [prodding, setProdding]= useState(false);
+  const [assignedWork, setAssignedWork]= useState(false);
+  const[suggestedWork, setSuggestedWork]= useState(false);
+  const [seeksOut, setSeeksOut]= useState(false);
+  const [initiativeNotObserved, setInitiativeNotObserved]= useState(false);
+
+  const [maturityBelowAverage, setMaturityBelowAverage] = useState(false);
+  const [maturityAverage, setMaturityAverage]= useState(false);
+  const [maturityAboveAverge, setMaturityAboveAverage]=useState(false);
+  const [maturityExceptional, setMaturityException]=useState(false);
+  const [maturityNotObserved, setMaturityNotObserved]=useState(false);
+
+  const [excitable, setExcitable]= useState(false);
+  const [upset, setUpset]= useState(false);
+  const [stable, setStable]= useState(false);
+  const [balanced, setBalanced]= useState(false);
+  const [emotionalNotObserved, setEmotionalNotObserved]= useState(false);
+
+  const [reliability, setReliability]= useState(false);
+  const [reliable, setReliable]= useState(false);
+  const [averageReliability, setAverageReliability]= useState(false);
+  const [unquestionedReliability, setUnquestionedReliability]= useState(false);
+  const [reliabilityNotObserved, setReliabilityNotObserved]= useState(false);
+
+  const[follow, setFollow]= useState(false);
+  const [leader, setLeader]= useState(false);
+  const [frequent, setFrequent]= useState(false);
+  const [outstanding, setOutstanding]= useState(false);
+  const [leadershipNotObserved, setLeadershipNotObserved]= useState(false);
+
+  const [untrustworthy, setUntrustworthy]=useState(false);
+  const [lapses, setLapses]=useState(false);
+  const[flaws, setFlaws]= useState(false);
+  const [trustworthy, setTrustworthy]=useState(false);
+  const [integrityNotObserved, setIntegrityNotObserved]=useState(false);
+
+  const [skillsBelowAverage, setSkillsBelowAverage] = useState(false);
+  const [skillsAverage, setSkillsAverage]= useState(false);
+  const [skillsAboveAverge, setSkillsAboveAverage]=useState(false);
+  const [skillsExceptional, setSkillsException]=useState(false);
+  const [skillsNotObserved, setSkillsNotObserved]=useState(false);
+
+  const [belowAverage, setBelowAverage] = useState(false);
+  const [average, setAverage]= useState(false);
+  const [aboveAverge, setAboveAverage]=useState(false);
+  const [wellAboveAverage, setWellAboveAverage]=useState(false);
+  const [trulyOutstanding, setTrulyOutstanding]=useState(false);
+  
+
+  const initialValues = {
     applicantName: '',
     evaluator: '',
     evalSignature: '',
     date: '',
-  });
-
-  
-  const handleUserInfo = (field, value) => {
-    setUserInfo(prevValues => ({ ...prevValues, [field]: value }));
+    capacityKnownStudent:'',
+    majorStrength:'',
+    weakness:'',
+    comments:'',
+    potential:'',
+    
   };
 
+  const validationSchema=Yup.object().shape({
+    applicantName: Yup.string().required('Applicant Name is required!'),
+    evaluator: Yup.string().required('Evaluator Name is required!'),
+    evalSignature: Yup.string().required('Name as Signature is Required!'),
+    date: Yup.date().required('Date is required!'),
+    capacityKnownStudent: Yup.string().required('This section is required!'),
+    majorStrength: Yup.string().required('This section is required!'),
+    weakness: Yup.string().required('This section is required!'),
+    comments: Yup.string().required('This section is required!'),
+  })
+
+
+  const onSubmit = (values, { setSubmitting }) => {
+    const user = values;
+    console.log(user);
+    setSubmitting(false);
+  };
 
 
   return activeUser ? (
@@ -28,24 +108,26 @@ export default function InfoReleaseForm() {
             <h1 className='text-center text-4xl font-bold text-ulm_maroon'>
               Faculty Recommendation Form
             </h1>
-
-            <form action="">
-
-            
+            <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+      {({ isSubmitting, values, setFieldValue }) => ( 
+            <Form>
 
             <label
                         htmlFor='applicantName' 
-                        className='block text-sm font-medium text-gray-700'
+                        className='block text-sm font-medium text-black'
                       >
                         Applicant Name
                       </label>
-                      <input
+                      <Field
                         type='text'
                         name='applicantName'
-                        id='applicantName'
                         className='w-full'
-                        autoComplete='family-name'
                       />
+                    <ErrorMessage name='applicantName' component='div' className='text-bred' />
 
             <div className=' p-4 text-black opacity-75 mx-auto'>
               <p className='leading-relaxed text-justify'>
@@ -71,18 +153,15 @@ export default function InfoReleaseForm() {
                 >
                   Name of Evaluator
                 </label>
-                <input
+                <Field
                   type='text'
                   name='evaluator'
                   id='evaluator'
-                  defaultValue={userInfo.evaluator}
-                  onChange={event =>
-                    handleUserInfo('evaluator', event.target.value)
-                  }
                   autoComplete='given-name'
                   className='w-full'
                  
                 />
+                 <ErrorMessage name='evaluator' component='div' className='text-bred' />
                
               </div>
               <div className=' p-4 text-black opacity-75 mx-auto'>
@@ -284,48 +363,81 @@ export default function InfoReleaseForm() {
                   How long and in what capacity have you known or observed this
                   student?
                 </div>
-                <textarea
-                  id='message'
-                  rows='4'
-                  className='block p-2.5 w-full text-sm text-black '
+                <Field as="textarea"
+
+type='text'
+name='capacityKnownStudent'
+                  rows={4}
+                  className='block p-2.5 w-full text-sm text-black rounded-lg border'
                   placeholder='Write your thoughts here...'
-                ></textarea>
+                ></Field>
+                <ErrorMessage name='capacityKnownStudent' component='div' className='text-bred' />
+
                 <div className='font-bold mt-10 mb-3'>
                   What do you consider to be the applicant&apos;s major
                   strength(s)?
                 </div>
-                <textarea
-                  id='message'
-                  rows='4'
+                <Field as="textarea"
+
+type='text'
+name='majorStrength'
+                  rows={4}
                   className='block p-2.5 w-full text-sm text-black rounded-lg border' 
                   placeholder='Write your thoughts here...'
-                ></textarea>
+                ></Field>
+                 <ErrorMessage name='majorStrength' component='div' className='text-bred' />
               </div>
 
               <div className='font-bold mt-10 mb-3'>
                 What do you consider to be the applicant&apos;s major
                 weakness(es)?
               </div>
-              <textarea
-                id='message'
-                rows='4'
+              <Field as="textarea"
+              type='text'
+              name='weakness'
+                rows={4}
                 className='block p-2.5 w-full text-sm text-black rounded-lg border' 
                 placeholder='Write your thoughts here...'
-              ></textarea>
+              ></Field>
+              <ErrorMessage name='majorStrength' component='div' className='text-bred' />
             </div>
             <div className='mt-10'>
               <p className='mb-4 font-bold'>
                 Please indicate the applicant&apos;s overall potential for
                 success.
               </p>
+              
               <table className='border border-seperate border-slate-700 w-full text-center'>
                 <tbody>
                   <tr>
                     <td className='border border-slate-600 hover:border-teal-500'>
-                      Below Average
+                    <Field
+                type='checkbox'
+                name='potential'
+                value='belowAverage'
+                checked={belowAverage}
+                onChange={(e) => {
+                  const { checked } = e.target;
+                  setBelowAverage(checked);
+                  setFieldValue('belowAverage', checked);
+                }}
+              />
+              <label>Below Average</label>
+                      
                     </td>
                     <td className='border border-slate-600 hover:border-teal-500'>
-                      Average
+                    <Field
+                type='checkbox'
+                name='potential'
+                value="average"
+                checked={average}
+                onChange={(e) => {
+                  const { checked } = e.target;
+                  setAverage(checked);
+                  setFieldValue('average', checked);
+                }}
+              />
+                    <span >Average</span>  
                     </td>
                     <td className='border border-slate-600 hover:border-teal-500'>
                       Above Average
@@ -340,12 +452,14 @@ export default function InfoReleaseForm() {
                 </tbody>
               </table>
               <p className='mt-5 mb-3 font-bold'>Additional Comments:</p>
-              <textarea
-                id='message'
-                rows='4'
+              <Field as="textarea"
+              type='text'
+              name='comments'
+                rows={4}
                 className='block p-2.5 w-full text-sm text-black rounded-lg border' 
                 placeholder='Write your thoughts here...'
-              ></textarea>
+              ></Field>
+              <ErrorMessage name='majorStrength' component='div' className='text-bred' />
 
               <div>
                 <p className='font-bold mt-14'>
@@ -353,7 +467,6 @@ export default function InfoReleaseForm() {
                   sign below and return this form to Dr. Allison Wiedemeier (326
                   CNSB).
                 </p>
-                <div className='w-[500px] grid grid-col-2'>
                   <div>
                     <label
                       htmlFor='evalSignature'
@@ -361,50 +474,39 @@ export default function InfoReleaseForm() {
                     >
                       <p className='mt-5 mb-3'>Name of Evaluator as Signature</p>
                     </label>
-                    <input
+                    <Field
                       type='text'
                       name='evalSignature'
                       id='evalSignature'
-                      defaultValue={userInfo.evalSignature}
-                      onChange={event =>
-                        handleUserInfo('signature', event.target.value)
-                      }
                       className='w-full'
-                    
                     />
-                    <div className='text-bred italic '>
-                    
-                    </div>
+                     <ErrorMessage name='evalSignature' component='div' className='text-bred' />
                   </div>
-                  <div className='w-[300px]'>
+                  <div >
                     <label htmlFor='start'>
                       <p className='mt-5 mb-3'>Date</p>
                     </label>
-                    <input
+                    <Field
                       type='date'
                       id='date'
-                      name='trip-start'
-                      onChange={event =>
-                        handleUserInfo('date', event.target.value)
-                      }
+                      name='date'
                       className='w-full'
-                      autoComplete='date'
                     />
-                    <div className='text-bred italic '>
-                    </div>
+                    <ErrorMessage name='date' component='div' className='text-bred' />
                     <div className='mt-10'>
                       <p>
-                        <button className='bg-ulm_maroon w-[130px] hover:shadow-black shadow-sm rounded-md text-lg my-6 mx-auto font-bold px-2 text-white'>
+                        <button type='submit' disabled={isSubmitting} className='bg-ulm_maroon hover:shadow-black shadow-sm rounded-md text-lg my-6 mx-auto font-bold px-2 text-white'>
                           Submit
                         </button>
                       </p>
                     </div>
 
                   </div>
-                </div>
               </div>
             </div>
-            </form>
+            </Form>
+            )}
+            </Formik>
           </div>
         </div>
       </div>
