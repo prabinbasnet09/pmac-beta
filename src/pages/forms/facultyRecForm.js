@@ -66,11 +66,12 @@ export default function InfoReleaseForm() {
   const [aboveAverge, setAboveAverage]=useState(false);
   const [wellAboveAverage, setWellAboveAverage]=useState(false);
   const [trulyOutstanding, setTrulyOutstanding]=useState(false);
+
+  const [sign, setSign]=useState(false);
   
 
   const initialValues = {
     applicantName: '',
-    evaluator: '',
     intellectual:'',
     motivation:'',
     initiative:'',
@@ -87,14 +88,14 @@ export default function InfoReleaseForm() {
     potential:'',
     evalSignature: '',
     date: '',
+    sign:false,
     
     
   };
 
   const validationSchema=Yup.object().shape({
     applicantName: Yup.string().required('Applicant Name is required!'),
-    evaluator: Yup.string().required('Evaluator Name is required!'),
-    evalSignature: Yup.string().required('Name as Signature is Required!'),
+    evalSignature: Yup.string().required('Evaluator Full Name is Required!'),
     date: Yup.date().required('Date is required!'),
     capacityKnownStudent: Yup.string().required('This section is required!'),
     majorStrength: Yup.string().required('This section is required!'),
@@ -110,6 +111,8 @@ export default function InfoReleaseForm() {
     leadership:Yup.string().required('This section is required!'),
     character:Yup.string().required('This section is required!'),
     verbal:Yup.string().required('This section is required!'),
+    sign: Yup.boolean()
+    .required("You must agree to the terms").oneOf([true], "You must agree to the terms!"),
   })
 
 
@@ -155,36 +158,18 @@ export default function InfoReleaseForm() {
                 pre-health professional program. The applicant has asked to be
                 interviewed by ULM&apos;s Pre-Medical Advisory Committee. The
                 information you provide will be used only in the
-                admissions/evaluation process. Please complete and return this
-                form to Dr. Allison Wiedemeier, CNSB 326, in the Biology
-                Department as soon as possible. You may be contacted by a member
+                admissions/evaluation process. Please complete this
+                form as soon as possible. You may be contacted by a member
                 of the Pre-Professional Health Advisory Committee seeking
                 additional information or verification. 
               </p>
             </div>
 
             <div>
-              <div>
-                <label
-                  htmlFor='evaluator'
-                  className='block text-sm font-medium text-black'
-                >
-                  Name of Evaluator
-                </label>
-                <Field
-                  type='text'
-                  name='evaluator'
-                  id='evaluator'
-                  autoComplete='given-name'
-                  className='w-full'
-                 
-                />
-                 <ErrorMessage name='evaluator' component='div' className='text-bred' />
-               
-              </div>
+            
               <div className=' p-4 text-black opacity-75 mx-auto'>
                 <p className='text-justify'>
-                  Please indicate your estimation of this applicant by circling
+                  Please indicate your estimation of this applicant by choosing
                   the appropriate description in the table below and answering
                   the following questions. Thank you for your assistance in this
                   process.
@@ -771,12 +756,11 @@ name='majorStrength'
                 className='block p-2.5 w-full text-sm text-black rounded-lg border' 
                 placeholder='Write your thoughts here...'
               ></Field>
-              <ErrorMessage name='majorStrength' component='div' className='text-bred' />
+              <ErrorMessage name='comments' component='div' className='text-bred' />
 
               <div>
                 <p className='font-bold mt-14'>
-                  Thank you for helping us to evaluate this applicant. Please
-                  sign below and return this form to Dr. Allison Wiedemeier (326
+                  Thank you for helping us to evaluate this applicant. If you have any questions regarding the form, please conatct Dr. Allison Wiedemeier (326
                   CNSB).
                 </p>
                   <div>
@@ -784,7 +768,7 @@ name='majorStrength'
                       htmlFor='evalSignature'
                       className='block text-sm font-medium text-gray-700'
                     >
-                      <p className='mt-5 mb-3'>Name of Evaluator as Signature</p>
+                      <p className='mt-5 mb-3'>Name of Evaluator</p>
                     </label>
                     <Field
                       type='text'
@@ -793,6 +777,20 @@ name='majorStrength'
                       className='w-full'
                     />
                      <ErrorMessage name='evalSignature' component='div' className='text-bred' />
+                  </div>
+                  <div>
+                  <Field
+                type='checkbox'
+                name='sign'
+                checked={sign}
+                onChange={(e) => {
+                  const { checked } = e.target;
+                  setSign(checked);
+                  setFieldValue('sign', checked);
+                }}
+              />
+              <span className='font-bold'> By checking this box, I hereby consent to using my name as a valid signature for all purposes related to this agreement.</span>
+              <ErrorMessage name='sign' component='div' className='text-bred' />
                   </div>
                   <div >
                     <label htmlFor='start'>
