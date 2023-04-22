@@ -1,14 +1,5 @@
 import { React, useState, useEffect, useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-
-import * as Yup from 'yup';
-import * as queries from '../../graphql/queries';
-import * as mutations from '../../graphql/mutations';
-import { API, graphqlOperation } from 'aws-amplify';
-import { setDate } from 'date-fns';
 import { ActiveUser } from '../_app';
-import { Auth } from 'aws-amplify';
 import { useRouter } from 'next/router';
 
 export default function InfoReleaseForm() {
