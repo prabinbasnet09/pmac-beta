@@ -24,6 +24,16 @@ export default function InfoReleaseForm() {
     fetchUser();
   }, []);
 
+  const [authorizeRelease, setAuthorizeRelease] = useState(false);
+  const [allowEvaluation, setAllowEvaluation] = useState(false);
+  const [allowAdvertising, setAllowAdvertising] = useState(false);
+
+  const [userInfo, setUserInfo] = useState({
+    fullName: '',
+    cwid: '',
+    date: '',
+  });
+
   const [rows, setRows] = useState([
     {
       schoolName: '',
@@ -32,6 +42,13 @@ export default function InfoReleaseForm() {
       address: '',
     },
   ]);
+
+  const rowSchema = Yup.object().shape({
+    schoolName: Yup.string().required('Full Name is required!'),
+    deadlineDate: Yup.string().required('Valid Date is required'),
+    contactPerson: Yup.string().required("Contact person's is required!"),
+    address: Yup.string().required('Address is required!'),
+  });
 
   const validationSchema = Yup.object().shape({
     userInfo: Yup.object().shape({
@@ -50,22 +67,6 @@ export default function InfoReleaseForm() {
       .min(3, 'Please select all 3 checkboxes!'),
   });
 
-  const rowSchema = Yup.object().shape({
-    schoolName: Yup.string().required('Full Name is required!'),
-    deadlineDate: Yup.string().required('Valid Date is required'),
-    contactPerson: Yup.string().required("Contact person's is required!"),
-    address: Yup.string().required('Address is required!'),
-  });
-
-  const [authorizeRelease, setAuthorizeRelease] = useState(false);
-  const [allowEvaluation, setAllowEvaluation] = useState(false);
-  const [allowAdvertising, setAllowAdvertising] = useState(false);
-
-  const [userInfo, setUserInfo] = useState({
-    fullName: '',
-    cwid: '',
-    date: '',
-  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -337,16 +338,6 @@ export default function InfoReleaseForm() {
                         type='text'
                         name='userInfo.fullName'
                         id='userInfo.fullName'
-                        // value={values.fullName}
-                        // defaultValue={userInfo.fullName}
-                        // onChange={event =>
-                        //   handleUserInfo(
-                        //     'fullName',
-                        //     event.target.value,
-                        //     setFieldValue
-                        //   )
-                        // }
-                        
                         autoComplete='given-name'
                       />
                    
@@ -370,7 +361,6 @@ export default function InfoReleaseForm() {
                         autoComplete='family-name'
                       />
                       <ErrorMessage className='text-bred italic' name='cwid' />
-                      {/* <div className="text-bred italic ">{errors.cwid?.message}</div> */}
                     </div>
                   </div>
                   <div className=' mt-5  grid grid-cols-6 gap-6'>
@@ -389,11 +379,9 @@ export default function InfoReleaseForm() {
                         onChange={event =>
                           handleUserInfo('date', event.target.value)
                         }
-                        // {...register('date')}
-                        // className={`form-control w-full ${errors.date ? 'is-invalid' : ''}`}
+                      
                       />
                       <ErrorMessage className='text-bred italic' name='date' />
-                      {/* <div className="text-bred italic">{errors.date?.message}</div> */}
                     </div>
                   </div>
 
