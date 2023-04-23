@@ -422,40 +422,39 @@ function Schedular() {
   // findFreeSlots(calendarAEvents, calendarBEvents);
 
   return (
-    <>
-      <div className='flex items-center justify-center'>
-        <div className='w-3/4 px-2 sm:px-0'>
-          <div className={`${'nav-body'}`}>
-            <div style={{ zIndex: '999' }} className='bg-maroon-500'>
-              <FullCalendar
-                plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin]}
-                headerToolbar={{
-                  right: 'addEventButton',
-                  center: 'prev,next',
-                }}
-                customButtons={{ addEventButton: { text: 'Add Event' } }}
-                initialView='timeGridWeek'
-                editable={true}
-                selectable={true}
-                weekends={false}
-                events={calendarOneEvents}
-                eventClick={handleEventClick}
-                eventColor='maroon'
-                nowIndicator={true}
-                selectMirror={true}
-                dateClick={info => alert('clicked' + info.dateStr)}
-                select={handleDateSelect}
-                selectLongPressDelay={1000}
-                eventChange={handleEventChange}
-                eventRemove={handleEventRemove}
-                slotMinTime='07:00:00'
-                slotMaxTime='18:00:00'
-                allDaySlot={false}
-                height='auto'
-              />
-            </div>
+    <div className='flex items-center justify-center'>
+      <div className='w-3/4 px-2 sm:px-0'>
+        <div className={`${'nav-body'}`}>
+          <div style={{ zIndex: '999' }} className='bg-maroon-500'>
+            <FullCalendar
+              plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin]}
+              headerToolbar={{
+                right: 'addEventButton',
+                center: 'prev,next',
+              }}
+              customButtons={{ addEventButton: { text: 'Add Event' } }}
+              initialView='timeGridWeek'
+              editable={true}
+              selectable={true}
+              weekends={false}
+              events={calendarOneEvents}
+              eventClick={handleEventClick}
+              eventColor='maroon'
+              nowIndicator={true}
+              selectMirror={true}
+              dateClick={info => alert('clicked' + info.dateStr)}
+              select={handleDateSelect}
+              selectLongPressDelay={1000}
+              eventChange={handleEventChange}
+              eventRemove={handleEventRemove}
+              slotMinTime='07:00:00'
+              slotMaxTime='18:00:00'
+              allDaySlot={false}
+              height='auto'
+            />
+          </div>
 
-            {/* <div>
+          {/* <div>
             {toggle ? (
               <div className='border border-black bg-red'>
                 <h1>PopUp</h1>
@@ -465,10 +464,9 @@ function Schedular() {
               </div>
             ) : null}
           </div> */}
-          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

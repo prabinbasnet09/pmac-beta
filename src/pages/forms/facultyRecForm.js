@@ -1,32 +1,126 @@
 import { React, useState, useEffect, useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-
-import * as Yup from 'yup';
-import * as queries from '../../graphql/queries';
-import * as mutations from '../../graphql/mutations';
-import { API, graphqlOperation } from 'aws-amplify';
-import { setDate } from 'date-fns';
-import { ActiveUser } from '../_app';
-import { Auth } from 'aws-amplify';
+import { ActiveUser } from '../_app'; 
 import { useRouter } from 'next/router';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 export default function InfoReleaseForm() {
   const activeUser = useContext(ActiveUser);
   const router = useRouter();
 
-  const [userInfo, setUserInfo] = useState({
+  const [intellecBelowAverage, setIntellecBelowAverage] = useState(false);
+  const [intellecAverage, setIntellecAverage]= useState(false);
+  const [intellecAboveAverge, setIntellecAboveAverage]=useState(false);
+  const [intellecExceptional, setIntellecException]=useState(false);
+  const [intellecNotObserved, setIntellecNotObserved]=useState(false);
+
+  const [uncertain, setUncertain]=useState(false);
+  const [certain, setCertain]=useState(false);
+  const [motivated, setMotivated]=useState(false);
+  const [motivationNotObserved, setMotivationNotObserved]= useState(false);
+
+  const [prodding, setProdding]= useState(false);
+  const [assignedWork, setAssignedWork]= useState(false);
+  const[suggestedWork, setSuggestedWork]= useState(false);
+  const [seeksOut, setSeeksOut]= useState(false);
+  const [initiativeNotObserved, setInitiativeNotObserved]= useState(false);
+
+  const [maturityBelowAverage, setMaturityBelowAverage] = useState(false);
+  const [maturityAverage, setMaturityAverage]= useState(false);
+  const [maturityAboveAverge, setMaturityAboveAverage]=useState(false);
+  const [maturityExceptional, setMaturityException]=useState(false);
+  const [maturityNotObserved, setMaturityNotObserved]=useState(false);
+
+  const [excitable, setExcitable]= useState(false);
+  const [upset, setUpset]= useState(false);
+  const [stable, setStable]= useState(false);
+  const [balanced, setBalanced]= useState(false);
+  const [emotionalNotObserved, setEmotionalNotObserved]= useState(false);
+
+  const [reliability, setReliability]= useState(false);
+  const [reliable, setReliable]= useState(false);
+  const [averageReliability, setAverageReliability]= useState(false);
+  const [unquestionedReliability, setUnquestionedReliability]= useState(false);
+  const [reliabilityNotObserved, setReliabilityNotObserved]= useState(false);
+
+  const[follow, setFollow]= useState(false);
+  const [leader, setLeader]= useState(false);
+  const [frequent, setFrequent]= useState(false);
+  const [outstanding, setOutstanding]= useState(false);
+  const [leadershipNotObserved, setLeadershipNotObserved]= useState(false);
+
+  const [untrustworthy, setUntrustworthy]=useState(false);
+  const [lapses, setLapses]=useState(false);
+  const[flaws, setFlaws]= useState(false);
+  const [trustworthy, setTrustworthy]=useState(false);
+  const [integrityNotObserved, setIntegrityNotObserved]=useState(false);
+
+  const [skillsBelowAverage, setSkillsBelowAverage] = useState(false);
+  const [skillsAverage, setSkillsAverage]= useState(false);
+  const [skillsAboveAverge, setSkillsAboveAverage]=useState(false);
+  const [skillsExceptional, setSkillsException]=useState(false);
+  const [skillsNotObserved, setSkillsNotObserved]=useState(false);
+
+  const [belowAverage, setBelowAverage] = useState(false);
+  const [average, setAverage]= useState(false);
+  const [aboveAverge, setAboveAverage]=useState(false);
+  const [wellAboveAverage, setWellAboveAverage]=useState(false);
+  const [trulyOutstanding, setTrulyOutstanding]=useState(false);
+
+  const [sign, setSign]=useState(false);
+  
+
+  const initialValues = {
     applicantName: '',
-    evaluator: '',
+    intellectual:'',
+    motivation:'',
+    initiative:'',
+    personal:'',
+    emotional:'',
+    dependability:'',
+    leadership:'',
+    character:'',
+    verbal:'',
+    capacityKnownStudent:'',
+    majorStrength:'',
+    weakness:'',
+    comments:'',
+    potential:'',
     evalSignature: '',
     date: '',
-  });
-
-  
-  const handleUserInfo = (field, value) => {
-    setUserInfo(prevValues => ({ ...prevValues, [field]: value }));
+    sign:false,
+    
+    
   };
 
+  const validationSchema=Yup.object().shape({
+    applicantName: Yup.string().required('Applicant Name is required!'),
+    evalSignature: Yup.string().required('Evaluator Full Name is Required!'),
+    date: Yup.date().required('Date is required!'),
+    capacityKnownStudent: Yup.string().required('This section is required!'),
+    majorStrength: Yup.string().required('This section is required!'),
+    weakness: Yup.string().required('This section is required!'),
+    comments: Yup.string().required('This section is required!'),
+    potential: Yup.string().required('This section is required!'),
+    intellectual: Yup.string().required('This section is required!'),
+    motivation:Yup.string().required('This section is required!'),
+    initiative:Yup.string().required('This section is required!'),
+    personal:Yup.string().required('This section is required!'),
+    emotional:Yup.string().required('This section is required!'),
+    dependability:Yup.string().required('This section is required!'),
+    leadership:Yup.string().required('This section is required!'),
+    character:Yup.string().required('This section is required!'),
+    verbal:Yup.string().required('This section is required!'),
+    sign: Yup.boolean()
+    .required("You must agree to the terms").oneOf([true], "You must agree to the terms!"),
+  })
+
+
+  const onSubmit = (values, { setSubmitting }) => {
+    const user = values;
+    console.log(user);
+    setSubmitting(false);
+  };
 
 
   return activeUser ? (
@@ -37,24 +131,26 @@ export default function InfoReleaseForm() {
             <h1 className='text-center text-4xl font-bold text-ulm_maroon'>
               Faculty Recommendation Form
             </h1>
-
-            <form action="">
-
-            
+            <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+      {({ isSubmitting, values, setFieldValue }) => ( 
+            <Form>
 
             <label
                         htmlFor='applicantName' 
-                        className='block text-sm font-medium text-gray-700'
+                        className='block text-sm font-medium text-black'
                       >
                         Applicant Name
                       </label>
-                      <input
+                      <Field
                         type='text'
                         name='applicantName'
-                        id='applicantName'
                         className='w-full'
-                        autoComplete='family-name'
                       />
+                    <ErrorMessage name='applicantName' component='div' className='text-bred' />
 
             <div className=' p-4 text-black opacity-75 mx-auto'>
               <p className='leading-relaxed text-justify'>
@@ -62,41 +158,18 @@ export default function InfoReleaseForm() {
                 pre-health professional program. The applicant has asked to be
                 interviewed by ULM&apos;s Pre-Medical Advisory Committee. The
                 information you provide will be used only in the
-                admissions/evaluation process. Please complete and return this
-                form to Dr. Allison Wiedemeier, CNSB 326, in the Biology
-                Department as soon as possible. You may be contacted by a member
+                admissions/evaluation process. Please complete this
+                form as soon as possible. You may be contacted by a member
                 of the Pre-Professional Health Advisory Committee seeking
-                additional information or verification. By signing below the
-                undersigned student hereby waives his/her right of access to
-                this information.
+                additional information or verification. 
               </p>
             </div>
 
             <div>
-              <div>
-                <label
-                  htmlFor='evaluator'
-                  className='block text-sm font-medium text-black'
-                >
-                  Name of Evaluator
-                </label>
-                <input
-                  type='text'
-                  name='evaluator'
-                  id='evaluator'
-                  defaultValue={userInfo.evaluator}
-                  onChange={event =>
-                    handleUserInfo('evaluator', event.target.value)
-                  }
-                  autoComplete='given-name'
-                  className='w-full'
-                 
-                />
-               
-              </div>
+            
               <div className=' p-4 text-black opacity-75 mx-auto'>
                 <p className='text-justify'>
-                  Please indicate your estimation of this applicant by circling
+                  Please indicate your estimation of this applicant by choosing
                   the appropriate description in the table below and answering
                   the following questions. Thank you for your assistance in this
                   process.
@@ -110,310 +183,640 @@ export default function InfoReleaseForm() {
                     <tr>
                       <td className='text-left px-4 font-bold text-ulm_logo_red border border-slate-600 '>
                         Intellectual Ability
+                        <br />
+                        <ErrorMessage name='intellectual' component='td' className='text-bred' />
                       </td>
                       <td className='border border-slate-600 hover:border-teal-500'>
-                        Below Average
+                      <Field
+                type='radio'
+                name='intellectual'
+                value="belowAverage"  
+              />
+              <div>Below Average</div>
+                         
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Average
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='intellectual'
+                value="average"  
+              />
+              <div>Average</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Above Average
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='intellectual'
+                value="aboveAverage"  
+              />
+              <div>Above Average</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Exceptional
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='intellectual'
+                value="exceptional"  
+              />
+              <div> Exceptional</div>
+                       
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Not Observed
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='intellectual'
+                value="IntellectualNotObserved"  
+              />
+              <div>Not Observed</div>
+                        
                       </td>
                     </tr>
                     <tr>
                       <td className='text-left px-4 font-bold text-ulm_logo_red border border-slate-600 '>
                         Motivation
+                        <br />
+                        <ErrorMessage name='motivation' component='td' className='text-bred' />
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Seems Uncertain
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='motivation'
+                value="uncertain"  
+              />
+              <div>Seems Uncertain</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Seems Certain
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='motivation'
+                value="certain"  
+              />
+              <div>Seems Certain</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Motivated
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='motivation'
+                value="motivated"  
+              />
+              <div>Motivated</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Highly Motivated
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='motivation'
+                value="highlyMotivated"  
+              />
+              <div>Highly Motivated</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Not Observed
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='motivation'
+                value="motivationNotObserved"  
+              />
+              <div>Not Observed</div>
+                        
                       </td>
                     </tr>
                     <tr>
                       <td className='text-left px-4 font-bold text-ulm_logo_red border border-slate-600 '>
                         Initiative
+                        <br />
+                        <ErrorMessage name='initiative' component='td' className='text-bred' />
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Needs Occasional Prodding
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='initiative'
+                value="needsProdding"  
+              />
+              <div>Needs Occasional Prodding</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Does All Assigned Work
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='initiative'
+                value="doesWork"  
+              />
+              <div>Does All Assigned Work</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Does Suggested Extra Work
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='initiative'
+                value="doesExtraWork"  
+              />
+              <div> Does Suggested Extra Work</div>
+                       
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Seeks Out Learning Opportunities
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='initiative'
+                value="seeksLearning"  
+              />
+              <div>Seeks Out Learning Opportunities</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Not Observed
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='initiative'
+                value="initiativeNotObserved"  
+              />
+              <div> Not Observed</div>
+                       
                       </td>
                     </tr>
                     <tr>
                       <td className='text-left px-4 font-bold text-ulm_logo_red border border-slate-600 '>
                         Personal & Social Maturity
+                        <br />
+                        <ErrorMessage name='personal' component='td' className='text-bred' />
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Below Average
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='personal'
+                value="personalBelowAverage"  
+              />
+              <div>Below Average</div>
+                         
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Average
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='personal'
+                value="personalAverage"  
+              />
+              <div> Average</div>
+                       
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Above Average
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='personal'
+                value="personalAboveAverage"  
+              />
+              <div>Above Average</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Exceptional Maturity
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='personal'
+                value="personalExceptional"  
+              />
+              <div>Exceptional</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Not Observed
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='personal'
+                value="personalNotObserved"  
+              />
+              <div>Not Observed</div>
+                        
                       </td>
                     </tr>
                     <tr>
                       <td className='text-left px-4 font-bold text-ulm_logo_red border border-slate-600 '>
                         Emotional Maturity
+                        <br />
+                        <ErrorMessage name='emotional' component='td' className='text-bred' />
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Very Excitable
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='emotional'
+                value="excitable"  
+              />
+              <div> Very Excitable</div>
+                       
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Easily Upset
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='emotional'
+                value="upset"  
+              />
+              <div>Easily Upset</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Usually Stable
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='emotional'
+                value="stable"  
+              />
+              <div> Usually Stable</div>
+                       
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Stable / Well Balanced
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='emotional'
+                value="wellBalanced"  
+              />
+              <div>Stable / Well Balanced</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Not Observed
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='emotional'
+                value="emotionalNotObserved"  
+              />
+              <div>Not Observed</div>
+                        
                       </td>
                     </tr>
                     <tr>
                       <td className='text-left px-4 font-bold text-ulm_logo_red border border-slate-600 '>
                         Dependability & Reliability
+                        <br />
+                        <ErrorMessage name='dependability' component='td' className='text-bred' />
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Doubtful Reliability
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='dependability'
+                value="reliabililty"  
+              />
+              <div>Doubtful Reliability</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Usually Reliable
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='dependability'
+                value="reliable"  
+              />
+              <div>Usually Reliable</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Above Average Reliability
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='dependability'
+                value="averageReliability"  
+              />
+              <div>Above Average Reliability</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Unquestioned Reliability
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='dependability'
+                value="unquestionedReliability"  
+              />
+              <div>Unquestioned Reliability</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Not Observed
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='dependability'
+                value="dependabilityNotObserved"  
+              />
+              <div>Not Observed</div>
+                        
                       </td>
                     </tr>
                     <tr>
                       <td className='text-left px-4 font-bold text-ulm_logo_red border border-slate-600 '>
                         Leadership
+                        <br />
+                        <ErrorMessage name='leadership' component='td' className='text-bred' />
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Satisfied to Follow
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='leadership'
+                value="follow"  
+              />
+              <div>Satisfied to Follow</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Occasionally a Leader
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='leadership'
+                value="leader"  
+              />
+              <div>Occasionally a Leader</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Frequently a Leader
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='leadership'
+                value="frequentLeader"  
+              />
+              <div>Frequently a Leader</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Outstanding Leader
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='leadership'
+                value="outstandingLeader"  
+              />
+              <div>Outstanding Leader</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Not Observed
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='leadership'
+                value="leadershipNotObserved"  
+              />
+                        <div> Not Observed</div>
+                       
                       </td>
                     </tr>
                     <tr>
                       <td className='text-left px-4 font-bold text-ulm_logo_red border border-slate-600 '>
                         Character / Integrity
+                        <br />
+                        <ErrorMessage name='character' component='td' className='text-bred' />
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Untrustworthy
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='character'
+                value="untrustworthy"  
+              />
+              <div> Untrustworthy</div>
+                       
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Occasional Lapses
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='character'
+                value="lapses"  
+              />
+              <div>Occasional Lapses</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        No Serious Flaws
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='character'
+                value="noFlaws"  
+              />
+              <div>No Serious Flaws</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Absolutely Trustworthy
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='character'
+                value="trustworthy"  
+              />
+              <div>Absolutely Trustworthy</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Not Observed
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='character'
+                value="characterNotObserved"  
+              />
+              <div> Not Observed</div>
+                       
                       </td>
                     </tr>
                     <tr>
                       <td className='text-left px-4 font-bold text-ulm_logo_red border border-slate-600 '>
                         Verbal Skills
+                        <br />
+                        <ErrorMessage name='verbal' component='td' className='text-bred' />
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Below Average
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='verbal'
+                value="verbalBelowAverage"  
+              />
+              <div>Below Average</div>
+                         
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Average
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='verbal'
+                value="verbalAverage"  
+              />
+              <div> Average</div>
+                       
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Above Average
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='verbal'
+                value="verbalAboveAverage"  
+              />
+              <div>Above Average</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Exceptional
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='verbal'
+                value="verbalExceptional"  
+              />
+              <div>Exceptional</div>
+                        
                       </td>
-                      <td className='border border-slate-600 hover:border-teal-500'>
-                        Not Observed
+                      <td className='border border-slate-600'>
+                      <Field
+                type='radio'
+                name='verbal'
+                value="verbalNotObserved"  
+              />
+              <div>Not Observed</div>
+                        
                       </td>
                     </tr>
+                   
                   </tbody>
                 </table>
                 <div className='font-bold mt-10 mb-3'>
                   How long and in what capacity have you known or observed this
                   student?
                 </div>
-                <textarea
-                  id='message'
-                  rows='4'
-                  className='block p-2.5 w-full text-sm text-black '
+                <Field as="textarea"
+
+type='text'
+name='capacityKnownStudent'
+                  rows={4}
+                  className='block p-2.5 w-full text-sm text-black rounded-lg border'
                   placeholder='Write your thoughts here...'
-                ></textarea>
+                ></Field>
+                <ErrorMessage name='capacityKnownStudent' component='div' className='text-bred' />
+
                 <div className='font-bold mt-10 mb-3'>
                   What do you consider to be the applicant&apos;s major
                   strength(s)?
                 </div>
-                <textarea
-                  id='message'
-                  rows='4'
+                <Field as="textarea"
+
+type='text'
+name='majorStrength'
+                  rows={4}
                   className='block p-2.5 w-full text-sm text-black rounded-lg border' 
                   placeholder='Write your thoughts here...'
-                ></textarea>
+                ></Field>
+                 <ErrorMessage name='majorStrength' component='div' className='text-bred' />
               </div>
 
               <div className='font-bold mt-10 mb-3'>
                 What do you consider to be the applicant&apos;s major
                 weakness(es)?
               </div>
-              <textarea
-                id='message'
-                rows='4'
+              <Field as="textarea"
+              type='text'
+              name='weakness'
+                rows={4}
                 className='block p-2.5 w-full text-sm text-black rounded-lg border' 
                 placeholder='Write your thoughts here...'
-              ></textarea>
+              ></Field>
+              <ErrorMessage name='weakness' component='div' className='text-bred' />
             </div>
             <div className='mt-10'>
               <p className='mb-4 font-bold'>
                 Please indicate the applicant&apos;s overall potential for
                 success.
               </p>
-              <table className='border border-seperate border-slate-700 w-full text-center'>
-                <tbody>
-                  <tr>
-                    <td className='border border-slate-600 hover:border-teal-500'>
-                      Below Average
-                    </td>
-                    <td className='border border-slate-600 hover:border-teal-500'>
-                      Average
-                    </td>
-                    <td className='border border-slate-600 hover:border-teal-500'>
-                      Above Average
-                    </td>
-                    <td className='border border-slate-600 hover:border-teal-500'>
-                      Well Above Average
-                    </td>
-                    <td className='border border-slate-600 hover:border-teal-500'>
-                      Truly Outstanding
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <Field
+                type='radio'
+                name='potential'
+                value='belowAverage'
+                
+              />
+              <label> Below Average</label>
+              <div>
+              
+              <Field
+                type='radio'
+                name='potential'
+                value="average"
+                
+              />
+                    <span > Average</span>
+              </div>
+              <div>
+              
+              <Field
+                type='radio'
+                name='potential'
+                value="aboveAverage"
+                
+              />
+                    <span > Above Average</span>
+              </div>
+              <div>
+              
+              <Field
+                type='radio'
+                name='potential'
+                value="wellAboveAverage"  
+              />
+                    <span > Well Above Average</span>
+              </div>
+              <div>
+              
+              <Field
+                type='radio'
+                name='potential'
+                value="trulyOutstanding"
+                
+              />
+                    <span > Truly Outstanding</span>
+              </div>
+              
+              
+             
+              <ErrorMessage name='potential' component='div' className='text-bred' />
               <p className='mt-5 mb-3 font-bold'>Additional Comments:</p>
-              <textarea
-                id='message'
-                rows='4'
+              <Field as="textarea"
+              type='text'
+              name='comments'
+                rows={4}
                 className='block p-2.5 w-full text-sm text-black rounded-lg border' 
                 placeholder='Write your thoughts here...'
-              ></textarea>
+              ></Field>
+              <ErrorMessage name='comments' component='div' className='text-bred' />
 
               <div>
                 <p className='font-bold mt-14'>
-                  Thank you for helping us to evaluate this applicant. Please
-                  sign below and return this form to Dr. Allison Wiedemeier (326
+                  Thank you for helping us to evaluate this applicant. If you have any questions regarding the form, please conatct Dr. Allison Wiedemeier (326
                   CNSB).
                 </p>
-                <div className='w-[500px] grid grid-col-2'>
                   <div>
                     <label
                       htmlFor='evalSignature'
                       className='block text-sm font-medium text-gray-700'
                     >
-                      <p className='mt-5 mb-3'>Name of Evaluator as Signature</p>
+                      <p className='mt-5 mb-3'>Name of Evaluator</p>
                     </label>
-                    <input
+                    <Field
                       type='text'
                       name='evalSignature'
                       id='evalSignature'
-                      defaultValue={userInfo.evalSignature}
-                      onChange={event =>
-                        handleUserInfo('signature', event.target.value)
-                      }
                       className='w-full'
-                    
                     />
-                    <div className='text-bred italic '>
-                    
-                    </div>
+                     <ErrorMessage name='evalSignature' component='div' className='text-bred' />
                   </div>
-                  <div className='w-[300px]'>
+                  <div>
+                  <Field
+                type='checkbox'
+                name='sign'
+                checked={sign}
+                onChange={(e) => {
+                  const { checked } = e.target;
+                  setSign(checked);
+                  setFieldValue('sign', checked);
+                }}
+              />
+              <span className='font-bold'> By checking this box, I hereby consent to using my name as a valid signature for all purposes related to this agreement.</span>
+              <ErrorMessage name='sign' component='div' className='text-bred' />
+                  </div>
+                  <div >
                     <label htmlFor='start'>
                       <p className='mt-5 mb-3'>Date</p>
                     </label>
-                    <input
+                    <Field
                       type='date'
                       id='date'
-                      name='trip-start'
-                      onChange={event =>
-                        handleUserInfo('date', event.target.value)
-                      }
+                      name='date'
                       className='w-full'
-                      autoComplete='date'
                     />
-                    <div className='text-bred italic '>
-                    </div>
+                    <ErrorMessage name='date' component='div' className='text-bred' />
                     <div className='mt-10'>
                       <p>
-                        <button className='bg-ulm_maroon w-[130px] hover:shadow-black shadow-sm rounded-md text-lg my-6 mx-auto font-bold px-2 text-white'>
+                        <button type='submit' disabled={isSubmitting} className='bg-ulm_maroon hover:shadow-black shadow-sm rounded-md text-lg my-6 mx-auto font-bold px-2 text-white'>
                           Submit
                         </button>
                       </p>
                     </div>
 
                   </div>
-                </div>
               </div>
             </div>
-            </form>
+            </Form>
+            )}
+            </Formik>
           </div>
         </div>
       </div>
