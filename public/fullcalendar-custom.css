@@ -1,0 +1,83 @@
+:root{
+    --fc-small-font-size: 1em;
+    --fc-border-color: #bdbdbd;
+}
+
+/* set the background color of the entire calendar */
+.fc {
+    background-color: #f2f2f2;
+    border-color: black;
+  }
+
+  /* set the background color of the header */
+  .fc-toolbar {
+    background-color: #840029;
+    color: #ffffff;
+    padding: 10px;
+  }
+
+  .fc th {
+    background-color: #000;
+    padding: 5px 0 5px 0;
+    color: #fff;
+    border-top: white;
+  }
+  
+  /* set the background color of the add event button */
+  .fc .fc-button-primary {
+    background-color: #FDB913 !important; 
+    color: #ffffff;
+    border-color: white !important;
+  }
+
+  /* change the color of the previous and next buttons */
+.fc-prev-button,
+.fc-next-button {
+  background-color: #FDB913 !important;
+  border-color: white !important;
+}
+  
+  /* set the margin and padding of the content area */
+  .fc-view-timeGridWeek .fc-time-grid-container,
+  .fc-view-timeGridWeek .fc-day-grid-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  
+  /* set the background color of each day cell */
+  .fc-time-grid-container .fc-bg {
+    background-color: #ffffff;
+  }
+  
+  
+  /* adjust the margins of each event box */
+  .fc-time-grid .fc-event {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .fc .fc-col-header-cell-cushion {
+    display: inline-block;
+    padding: 2px 4px;
+  }
+
+  .fc-event:hover,
+  .fc-event:hover .fc-event-title,
+  .fc-event:hover .fc-event-time {
+    background-color: #FDB913  !important;
+    color: #840029;
+  }
+  .fc-event-time{
+    padding-top: 10px;
+  }
+
+  .fc-event-title,
+  .fc-event-time {
+    text-align: center;
+    font-weight: bold;
+  }
+
+
+
+  
