@@ -2,7 +2,6 @@ import Table from '../../components/widgets/Table';
 import React, { useState, useContext, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import * as Yup from 'yup';
-import CountrySelect from '.././../components/CountrySelect';
 import { useRouter } from 'next/router';
 import { Auth } from 'aws-amplify';
 import { ActiveUser } from '../../pages/_app';
@@ -59,8 +58,6 @@ export default function AppInfo() {
   const [tableFive, setTableFive] = useState([]);
   const [tableSix, setTableSix] = useState([]);
 
-  const [selectedCountry, setSelectedCountry] = useState('');
-
   const [tableValues, setTableValues] = useState({
     amcasLetterId: '',
     aacomasCasNumber: '',
@@ -105,7 +102,8 @@ export default function AppInfo() {
     date: '',
     majors:'', 
     minor:'',
-    }
+    selectedCountry:'',
+    },
   }
 
   const validationSchema = Yup.object().shape({
@@ -113,12 +111,12 @@ export default function AppInfo() {
       firstName: Yup.string().required('First Name is required!'),
     lastName: Yup.string().required('Last Name is required!'),
     cwid: Yup.string()
-    .required('CWID is required')
+    .required('CWID is required!')
     .matches(
       /^[0-9]{8}$/,
       'CWID must be a valid in the format xxxx-xxxx'
     ),
-    number: Yup.string().required('Last Name is required!')
+    number: Yup.string().required('Phone number is required!')
     .matches(/^[0-9]{10}$/,
     'Number must be a valid date in the format xxxxxxxxxx'),
     address: Yup.string().required('Address is required!'),
@@ -130,19 +128,15 @@ export default function AppInfo() {
     expectedGrad: Yup.date().required('Valid graduation date is required!'),
     overallGPA: Yup.string().required('Overall GPA is required!'),
     date: Yup.date().required('Date of Proposed Entrance is required!'),
-    majors: Yup.string().required('Major(s) is required!'),
-    minor: Yup.string()
-    .test('has-strings', 'Please enter at least one string, separated by a comma and a space', (value) => {
-      if (!value) {
-        return false; // Empty value is not allowed
-      }
-      const strings = value.split(', ');
-      if (strings.length === 1) {
-        return true; // Only one string is allowed
-      }
-      return strings.every(str => str.trim().length > 0); // All strings must have at least one character
-    })
-    .required('This field is required'),
+    selectedCountry: Yup.string().required('Country name is required!'),
+    majors: Yup.string().matches(
+      /^[A-Za-z, ]+$/,
+      'Multiple Majors must be in the above mentioned format!'
+    ).required('Major(s) is required!'),
+    minor: Yup.string().matches(
+      /^[A-Za-z, ]+$/,
+      'Multiple Minors must be in the above mentioned format!'
+    ),
     })
     
 
@@ -208,19 +202,26 @@ export default function AppInfo() {
     setTableValues({ ...tableValues, [name]: value });
   };
 
-  function handleCountryChange(countryCode) {
-    setSelectedCountry(countryCode);
-  }
-
-  const handlePersonalInfo = (field, value) => {
-    setPersonalInfo(prevValues => ({ ...prevValues, [field]: value }));
+  const onTempSave = values => {
+    const formData = {
+      mcat,
+      dat,
+      oat,
+      gre,
+      recommenderData,
+      tableOne,
+      tableTwo,
+      tableThree,
+      tableFour,
+      tableFive,
+      tableSix,
+    };
+    console.log('Temp Save', values, formData);
   };
 
   const onSubmitHandler = (values, {setSubmitting}) => {
     event.preventDefault();
     const formData = {
-      tableValues,
-      personalInfo,
       mcat,
       dat,
       oat,
@@ -306,11 +307,11 @@ export default function AppInfo() {
                         >
                           Country
                         </label>
-                        <CountrySelect
-                          selectedCountry={selectedCountry}
-                          onCountryChange={handleCountryChange}
-                        />
-                        {/* <p>Selected country: {selectedCountry}</p> */}
+                        <Field name='personalInfo.selectedCountry' type='text' className='w-full rounded-md  '/>
+                       
+                        <ErrorMessage name='personalInfo.selectedCountry' component='div' className='text-bred'/>
+                        
+                      
                       </div>
 
                       <div className='col-span-6'>
@@ -926,14 +927,25 @@ export default function AppInfo() {
             </div>
           </div>
 
+          
           <div className='flex justify-center'>
-            <button
-              type='submit'
-              className='  bg-green hover:opracity-50 text-white font-bold py-2 px-4 rounded'
-            >
-              Submit{' '}
-            </button>
-          </div>
+          <button
+    type='button'
+    className='bg-gold hover:opacity-50 text-white font-bold py-2 px-7 rounded'
+    onClick={() => onTempSave(values)}
+  >
+    Save
+  </button>
+  <button
+    type='submit'
+    className='ml-5 bg-green hover:opacity-50 text-white font-bold py-2 px-7 rounded'
+  >
+    Submit
+  </button>
+  
+</div>
+
+          
         </Form>
          )}
          </Formik>
