@@ -1,5 +1,7 @@
 import Table from '../../components/widgets/Table';
 import React, { useState, useContext, useEffect } from 'react';
+import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
+import * as Yup from 'yup';
 import CountrySelect from '.././../components/CountrySelect';
 import { useRouter } from 'next/router';
 import { Auth } from 'aws-amplify';
@@ -81,11 +83,71 @@ export default function AppInfo() {
     expectedGrad: '',
     overallGPA: '',
     date: '',
-    scores: '',
-    examDate: '',
-    appType: '',
-    faculty: '',
+    majors:'', 
+    minor:'',
+
   });
+
+  const initialValues={
+    personalInfo: {
+      firstName: '',
+    lastName: '',
+    cwid: '',
+    number: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
+    ulm: '',
+    alternate: '',
+    expectedGrad: '',
+    overallGPA: '',
+    date: '',
+    majors:'', 
+    minor:'',
+    }
+  }
+
+  const validationSchema = Yup.object().shape({
+    personalInfo:Yup.object().shape({
+      firstName: Yup.string().required('First Name is required!'),
+    lastName: Yup.string().required('Last Name is required!'),
+    cwid: Yup.string()
+    .required('CWID is required')
+    .matches(
+      /^[0-9]{8}$/,
+      'CWID must be a valid in the format xxxx-xxxx'
+    ),
+    number: Yup.string().required('Last Name is required!')
+    .matches(/^[0-9]{10}$/,
+    'Number must be a valid date in the format xxxxxxxxxx'),
+    address: Yup.string().required('Address is required!'),
+    city: Yup.string().required('City is required!'),
+    state: Yup.string().required('State Name is required!'),
+    zip: Yup.number().required('Valid Zip code is required!'),
+    ulm: Yup.string().email('Email is invalid!').required('Valid ULM email address is required!'),
+    alternate: Yup.string().email('Email is invalid!').required('Valid alternate address is required!'),
+    expectedGrad: Yup.date().required('Valid graduation date is required!'),
+    overallGPA: Yup.string().required('Overall GPA is required!'),
+    date: Yup.date().required('Date of Proposed Entrance is required!'),
+    majors: Yup.string().required('Major(s) is required!'),
+    minor: Yup.string()
+    .test('has-strings', 'Please enter at least one string, separated by a comma and a space', (value) => {
+      if (!value) {
+        return false; // Empty value is not allowed
+      }
+      const strings = value.split(', ');
+      if (strings.length === 1) {
+        return true; // Only one string is allowed
+      }
+      return strings.every(str => str.trim().length > 0); // All strings must have at least one character
+    })
+    .required('This field is required'),
+    })
+    
+
+
+  })
 
   const [mcat, setMCAT] = useState({
     chemical: '',
@@ -154,11 +216,9 @@ export default function AppInfo() {
     setPersonalInfo(prevValues => ({ ...prevValues, [field]: value }));
   };
 
-  const onSubmitHandler = event => {
+  const onSubmitHandler = (values, {setSubmitting}) => {
     event.preventDefault();
     const formData = {
-      selectedMajors,
-      selectedMinors,
       tableValues,
       personalInfo,
       mcat,
@@ -166,7 +226,6 @@ export default function AppInfo() {
       oat,
       gre,
       recommenderData,
-      personalInfo,
       tableOne,
       tableTwo,
       tableThree,
@@ -174,7 +233,7 @@ export default function AppInfo() {
       tableFive,
       tableSix,
     };
-    console.log(formData);
+    console.log(values, formData);
   };
 
   return activeUser ? (
@@ -183,7 +242,13 @@ export default function AppInfo() {
         <h1 className='text-center text-4xl font-bold text-gold'>
           Applicant Information Form
         </h1>
-        <form onSubmit={onSubmitHandler}>
+        <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={onSubmitHandler}
+            >
+              {({ values, setFieldValue, isSubmitting }) => (
+        <Form>
           <div className=' sm:mt-0'>
             <div>
               <div className=' w-full md:mt-10'>
@@ -192,22 +257,13 @@ export default function AppInfo() {
                     <div className='grid grid-cols-6 gap-6'>
                       <div className='col-span-6 sm:col-span-3'>
                         <label
-                          htmlFor='first-name'
+                          htmlFor='firstName'
                           className='block text-sm font-medium text-black'
                         >
                           First name
                         </label>
-                        <input
-                          type='text'
-                          name='firstName'
-                          id='firstName'
-                          autoComplete='given-name'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.firstName}
-                          onChange={event =>
-                            handlePersonalInfo('firstName', event.target.value)
-                          }
-                        />
+                        <Field name='personalInfo.firstName' type='text' className='w-full rounded-md  ' />
+            <ErrorMessage name='personalInfo.firstName' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-3'>
@@ -217,17 +273,8 @@ export default function AppInfo() {
                         >
                           Last name
                         </label>
-                        <input
-                          type='text'
-                          name='lastName'
-                          id='lastName'
-                          autoComplete='family-name'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.lastName}
-                          onChange={event =>
-                            handlePersonalInfo('lastName', event.target.value)
-                          }
-                        />
+                        <Field name='personalInfo.lastName' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.lastName' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-3'>
@@ -237,16 +284,8 @@ export default function AppInfo() {
                         >
                           ULM CWID #
                         </label>
-                        <input
-                          type='text'
-                          name='cwid'
-                          id='cwid'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.cwid}
-                          onChange={event =>
-                            handlePersonalInfo('cwid', event.target.value)
-                          }
-                        />
+                        <Field name='personalInfo.cwid' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.cwid' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-3'>
@@ -256,16 +295,8 @@ export default function AppInfo() {
                         >
                           Cell Phone
                         </label>
-                        <input
-                          type='text'
-                          name='number'
-                          id='number'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.number}
-                          onChange={event =>
-                            handlePersonalInfo('number', event.target.value)
-                          }
-                        />
+                        <Field name='personalInfo.number' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.number' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-3'>
@@ -289,17 +320,8 @@ export default function AppInfo() {
                         >
                           Street address
                         </label>
-                        <input
-                          type='text'
-                          name='address'
-                          id='address'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.address}
-                          onChange={event =>
-                            handlePersonalInfo('address', event.target.value)
-                          }
-                          autoComplete='street-address'
-                        />
+                        <Field name='personalInfo.address' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.address' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-6 lg:col-span-2'>
@@ -309,17 +331,8 @@ export default function AppInfo() {
                         >
                           City
                         </label>
-                        <input
-                          type='text'
-                          name='city'
-                          id='city'
-                          autoComplete='address-level2'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.city}
-                          onChange={event =>
-                            handlePersonalInfo('city', event.target.value)
-                          }
-                        />
+                        <Field name='personalInfo.city' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.city' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-3 lg:col-span-2'>
@@ -329,17 +342,8 @@ export default function AppInfo() {
                         >
                           State / Province
                         </label>
-                        <input
-                          type='text'
-                          name='state'
-                          id='state'
-                          autoComplete='address-level1'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.state}
-                          onChange={event =>
-                            handlePersonalInfo('state', event.target.value)
-                          }
-                        />
+                        <Field name='personalInfo.state' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.state' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-3 lg:col-span-2'>
@@ -349,17 +353,8 @@ export default function AppInfo() {
                         >
                           ZIP / Postal code
                         </label>
-                        <input
-                          type='text'
-                          name='zip'
-                          id='zip'
-                          autoComplete='postal-code'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.zip}
-                          onChange={event =>
-                            handlePersonalInfo('zip', event.target.value)
-                          }
-                        />
+                        <Field name='personalInfo.zip' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.zip' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-3'>
@@ -369,17 +364,8 @@ export default function AppInfo() {
                         >
                           ULM Email address
                         </label>
-                        <input
-                          type='text'
-                          name='ulm'
-                          id='ulm'
-                          autoComplete='email'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.ulm}
-                          onChange={event =>
-                            handlePersonalInfo('ulm', event.target.value)
-                          }
-                        />
+                        <Field name='personalInfo.ulm' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.ulm' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-3'>
@@ -389,17 +375,8 @@ export default function AppInfo() {
                         >
                           Alternative Email address
                         </label>
-                        <input
-                          type='text'
-                          name='alternate'
-                          id='alternate'
-                          autoComplete='email'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.alternate}
-                          onChange={event =>
-                            handlePersonalInfo('alternate', event.target.value)
-                          }
-                        />
+                        <Field name='personalInfo.alternate' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.alternate' component='div' className='text-bred'/>
                       </div>
 
 
@@ -412,25 +389,19 @@ export default function AppInfo() {
                           Major(s)
                           <span className='italic text-sm opacity-50'> [For multiple majors, separate each major by a comma followed by a space. Example: X, X, X]</span> 
                         </label>
-                        <input
-                          type='text'
-                          name='majors'
-                          className='w-full rounded-md  '
-                        />
+                        <Field name='personalInfo.majors' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.majors' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-3'>
                       <label
-                          htmlFor='majors'
+                          htmlFor='minor'
                           className='block text-sm font-medium text-black'
                         >
                           Minor(s) <span className='italic text-sm opacity-50'>[For multiple minors, separate each minor by a comma followed by a space. Example: X, X, X]</span>
                         </label>
-                        <input
-                          type='text'
-                          name='minor'
-                          className='w-full rounded-md  '
-                        />
+                        <Field name='personalInfo.minor' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.minor' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-3'>
@@ -440,19 +411,8 @@ export default function AppInfo() {
                         >
                           Expected Graduation Date From ULM
                         </label>
-                        <input
-                          type='date'
-                          name='expectedGrad'
-                          id='expectedGrad'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.expectedGrad}
-                          onChange={event =>
-                            handlePersonalInfo(
-                              'expectedGrad',
-                              event.target.value
-                            )
-                          }
-                        />
+                        <Field name='personalInfo.expectedGrad' type='date' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.expectedGrad' component='div' className='text-bred'/>
                       </div>
 
                       <div className='col-span-6 sm:col-span-3'>
@@ -462,16 +422,8 @@ export default function AppInfo() {
                         >
                           Overall Collegiate GPA
                         </label>
-                        <input
-                          type='text'
-                          name='overallGPA'
-                          id='overallGPA'
-                          className='w-full rounded-md  '
-                          defaultValue={personalInfo.overallGPA}
-                          onChange={event =>
-                            handlePersonalInfo('overallGPA', event.target.value)
-                          }
-                        />
+                        <Field name='personalInfo.overallGPA' type='text' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.overallGPA' component='div' className='text-bred'/>
                       </div>
                       <div className='col-span-6 '>
                         <label
@@ -480,16 +432,8 @@ export default function AppInfo() {
                         >
                           Date of Proposed Entrance to Professional School
                         </label>
-                        <input
-                          type='date'
-                          id='date'
-                          name='date'
-                          className='w-full rounded-md'
-                          defaultValue={personalInfo.date}
-                          onChange={event =>
-                            handlePersonalInfo('date', event.target.value)
-                          }
-                        />
+                        <Field name='personalInfo.date' type='date' className='w-full rounded-md  '/>
+            <ErrorMessage name='personalInfo.date' component='div' className='text-bred'/>
                       </div>
                       <div className='col-span-6'>
                         <label
@@ -859,6 +803,7 @@ export default function AppInfo() {
                             Faculty Members Submitting Evaluation on your
                             Behalf:
                           </label>
+
                         </div>
                         <table className='border-collapse border border-black w-full'>
                           <thead className='bg-red text-white'>
@@ -989,7 +934,9 @@ export default function AppInfo() {
               Submit{' '}
             </button>
           </div>
-        </form>
+        </Form>
+         )}
+         </Formik>
       </div>
     </>
   ) : null;
