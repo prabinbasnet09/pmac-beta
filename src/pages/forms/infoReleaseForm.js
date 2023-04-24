@@ -217,6 +217,14 @@ export default function InfoReleaseForm() {
     allowAdvertising: allowAdvertising,
   };
 
+  const onTempSave = values => {
+    const formData = {
+      userInfo,
+      rows
+    };
+    console.log('Temp Save', formData);
+  };
+
   return activeUser ? (
     <div className='mt-10 sm:mt-0'>
       <div className='mt-10 w-full md:mt-10'>
@@ -528,30 +536,31 @@ export default function InfoReleaseForm() {
                   </button>
 
                   <div className='flex justify-center'>
-                    {activeUser.applicationReleaseForm === 'Submitted' ? (
+                    {/* {activeUser.applicationReleaseForm === 'Submitted' ? (
                       <button
                         className='bg-green text-white font-bold py-2 px-4 rounded mt-3  w-1/2'
                         onClick={e => handleFormSubmit(e)}
                       >
                         Update
                       </button>
-                    ) : (
-                      <div>
-                        <button
-                          className='bg-green text-white font-bold py-2 px-4 rounded mt-3 mr-3 w-2/2'
-                          onClick={e => handleFormSubmit(e)}
-                        >
-                          Save
-                        </button>
-                        <button
-                          type='submit'
-                          disabled={isSubmitting}
-                          className='bg-green text-white font-bold py-2 px-4 rounded mt-3  w-2/2'
-                        >
-                          Submit
-                        </button>
-                      </div>
-                    )}
+                    ) : ( */}
+                     <div className='flex justify-center'>
+          <button
+    type='button'
+    className='bg-gold hover:opacity-50 text-white font-bold py-2 px-7 rounded'
+    onClick={() => onTempSave(values)}
+  >
+    Save
+  </button>
+  <button
+    type='submit'
+    className='ml-5 bg-green hover:opacity-50 text-white font-bold py-2 px-7 rounded'
+  >
+    Submit
+  </button>
+  
+</div>
+                    {/* )} */}
                   </div>
                 </Form>
               )}
