@@ -109,7 +109,8 @@ export default function InfoReleaseForm() {
   }, [activeUser]);
 
   const handleFormSubmit = async (values, { setSubmitting }) => {
-    console.log(values);
+    const completeValues = {values, rows}
+    console.log(completeValues);
     // try {
     //   const schoolDetails = rows.map(row => {
     //     return {
@@ -202,7 +203,7 @@ export default function InfoReleaseForm() {
 
     setRows(newRows);
   };
-  
+
   const handleAddRow = () => {
     setRows([...rows, { name: '', date: '', phone: '', address: '' }]);
   };
@@ -279,7 +280,7 @@ export default function InfoReleaseForm() {
                       <ErrorMessage
               name='authorizeRelease'
               component='div'
-              className='text-bred font-bold'
+              className='text-bred '
             />
                       <div className=' leading-relaxed text-justify'>
                       <Field
@@ -309,7 +310,7 @@ export default function InfoReleaseForm() {
                       <ErrorMessage
               name='allowEvaluation'
               component='div'
-              className='text-bred font-bold'
+              className='text-bred'
             />
                       <div className=' leading-relaxed text-justify'>
                       <Field
@@ -334,7 +335,7 @@ export default function InfoReleaseForm() {
                         <ErrorMessage
               name='allowAdvertising'
               component='div'
-              className='text-bred font-bold'
+              className='text-bred'
             />
                       </div>
                     </fieldset>
