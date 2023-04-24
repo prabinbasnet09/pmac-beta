@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { ActiveUser } from './_app';
-export default function Referees() {
+export default function Referrals() {
   const activeUser = useContext(ActiveUser);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

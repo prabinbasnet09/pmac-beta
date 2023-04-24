@@ -21,7 +21,7 @@ export default function Home({ signOut }) {
         });
     };
     fetchUser();
-  }, []);
+  }, [router]);
 
   return activeUser ? (
     <div>
