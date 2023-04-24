@@ -13,7 +13,7 @@ const Contact = () => {
       <div className='min-h-screen flex flex-col'>
         <div>
           <LandingHeader />
-          <div className='border-b-2 text-[#3B0000] border-t-2 border-b-2 '>
+          <div className='text-[#3B0000] border-t-2 border-b-2 '>
             <Image
               className='w-full mx-auto'
               src='/ulm_banner.jpg'
@@ -23,7 +23,7 @@ const Contact = () => {
             />
           </div>
           <div>
-            <p className='mt-10 text-4xl font-bold text-ulm_maroon text-center mt-10'>
+            <p className='text-4xl font-bold text-ulm_maroon text-center mt-10'>
               Have questions? Get in touch with us!{' '}
             </p>
             <p className='text-center mt-4 font-bold text-xl'>

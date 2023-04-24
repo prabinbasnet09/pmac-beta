@@ -20,7 +20,7 @@ function Documents() {
         });
     };
     fetchUser();
-  }, []);
+  }, [router]);
 
   return activeUser ? (
     <div className='flex items-center justify-center'>
@@ -134,7 +134,7 @@ function Documents() {
                       Faculty Recommendation Form 2
                     </Link>
                   </td>
-                  <td className='w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm'>
+                  <td className='w-1/4 border border-black px-4 py-2 bg-white text-black italic text-sm'>
                     Incomplete...
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
@@ -145,7 +145,7 @@ function Documents() {
 
               <tr>
                 <td className='w-3/4 border border-black px-20 py-2 bg-white text-black hover:text-red hover:font-bold'>
-                  <Link href='/referees'>Add Referees</Link>
+                  <Link href='/referrals'>Add Referrals</Link>
                 </td>
                 <td className='w-1/4 border border-black px-4 py-2 bg-white text-gray italic text-sm'>
                   0/2
@@ -161,7 +161,7 @@ function Documents() {
                     Personal Statement
                   </Link>
                 </td>
-                <td className='w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm'>
+                <td className='w-1/4 border border-black px-4 py-2 bg-white text-black italic text-sm'>
                   {activeUser.personalStatement ? (
                     <span className=' text-green font-bold'>Complete</span>
                   ) : (
@@ -176,7 +176,7 @@ function Documents() {
                 <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
                   <Link href='/forms/statementTranscript'>Transcript</Link>
                 </td>
-                <td className='w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm'>
+                <td className='w-1/4 border border-black px-4 py-2 bg-white text-black italic text-sm'>
                   {activeUser.transcript ? (
                     <span className=' text-green font-bold'>Complete</span>
                   ) : (
@@ -191,7 +191,7 @@ function Documents() {
                 <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
                   <Link href='/forms/statementTranscript'>Headshot</Link>
                 </td>
-                <td className='w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm'>
+                <td className='w-1/4 border border-black px-4 py-2 bg-white text-black italic text-sm'>
                   {activeUser.profilePicture ? (
                     <span className=' text-green font-bold'>Complete</span>
                   ) : (
