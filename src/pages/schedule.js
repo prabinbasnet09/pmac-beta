@@ -3,10 +3,10 @@ import parse from 'date-fns/parse';
 import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import parseISO from 'date-fns/parseISO';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useLayoutEffect } from 'react';
 
 import ReactDatePicker from 'react-datepicker';
-import FullCalendar from '@fullcalendar/react';
+// import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -14,9 +14,14 @@ import { useRouter } from 'next/router';
 import { Auth } from 'aws-amplify';
 import dynamic from 'next/dynamic';
 
+const FullCalendar = dynamic(() => import('@fullcalendar/react'), {
+  ssr: false,
+});
+
 function Schedular() {
   const [allEvents, setAllEvents] = useState([]);
   const [toggle, setToggle] = useState(false);
+  const [calendarLoaded, setCalendarLoaded] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -31,6 +36,10 @@ function Schedular() {
       document.head.removeChild(link);
     };
   }, [router.pathname]);
+
+  useEffect(() => {
+    setCalendarLoaded(true);
+  }, []);
 
   const calendarOneEvents = [
     {
@@ -426,32 +435,34 @@ function Schedular() {
       <div className='w-3/4 px-2 sm:px-0'>
         <div className={`${'nav-body'}`}>
           <div style={{ zIndex: '999' }} className='bg-maroon-500'>
-            <FullCalendar
-              plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin]}
-              headerToolbar={{
-                right: 'addEventButton',
-                center: 'prev,next',
-              }}
-              customButtons={{ addEventButton: { text: 'Add Event' } }}
-              initialView='timeGridWeek'
-              editable={true}
-              selectable={true}
-              weekends={false}
-              events={calendarOneEvents}
-              eventClick={handleEventClick}
-              eventColor='maroon'
-              nowIndicator={true}
-              selectMirror={true}
-              dateClick={info => alert('clicked' + info.dateStr)}
-              select={handleDateSelect}
-              selectLongPressDelay={1000}
-              eventChange={handleEventChange}
-              eventRemove={handleEventRemove}
-              slotMinTime='07:00:00'
-              slotMaxTime='18:00:00'
-              allDaySlot={false}
-              height='auto'
-            />
+            {calendarLoaded && (
+              <FullCalendar
+                plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin]}
+                headerToolbar={{
+                  right: 'addEventButton',
+                  center: 'prev,next',
+                }}
+                customButtons={{ addEventButton: { text: 'Add Event' } }}
+                initialView='timeGridWeek'
+                editable={true}
+                selectable={true}
+                weekends={false}
+                events={calendarOneEvents}
+                eventClick={handleEventClick}
+                eventColor='maroon'
+                nowIndicator={true}
+                selectMirror={true}
+                dateClick={info => alert('clicked' + info.dateStr)}
+                select={handleDateSelect}
+                selectLongPressDelay={1000}
+                eventChange={handleEventChange}
+                eventRemove={handleEventRemove}
+                slotMinTime='07:00:00'
+                slotMaxTime='18:00:00'
+                allDaySlot={false}
+                height='auto'
+              />
+            )}
           </div>
 
           {/* <div>
