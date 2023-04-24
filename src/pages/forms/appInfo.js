@@ -1,34 +1,10 @@
 import Table from '../../components/widgets/Table';
 import React, { useState, useContext, useEffect } from 'react';
 import CountrySelect from '.././../components/CountrySelect';
-import Select from 'react-select';
 import { useRouter } from 'next/router';
 import { Auth } from 'aws-amplify';
 import { ActiveUser } from '../../pages/_app';
 
-const majors = [
-  { value: 'bio', label: 'Biology' },
-  { value: 'chem', label: 'Chemistry' },
-  { value: 'phy', label: 'Physics' },
-  { value: 'psych', label: 'Psychology' },
-  { value: 'biochem', label: 'Biochemistry' },
-  { value: 'math', label: 'Mathematics' },
-  { value: 'cs', label: 'Computer Science' },
-  { value: 'me', label: 'Mechanical Engineering' },
-  { value: 'ee', label: 'Electrical Engineering' },
-  { value: 'ce', label: 'Civil Engineering' },
-];
-
-const minors = [
-  { value: 'bio', label: 'Biology' },
-  { value: 'chem', label: 'Chemistry' },
-  { value: 'phy', label: 'Physics' },
-  { value: 'psych', label: 'Psychology' },
-  { value: 'biochem', label: 'Biochemistry' },
-  { value: 'math', label: 'Mathematics' },
-  { value: 'phil', label: 'Philosophy' },
-  { value: 'lang', label: 'Foreign Language' },
-];
 
 export default function AppInfo() {
   const activeUser = useContext(ActiveUser);
@@ -46,10 +22,11 @@ export default function AppInfo() {
     fetchUser();
   }, []);
 
+
   const headingsone = [
     'Activity',
     'Years and Total Hours',
-    'Description of Involvement(Indicate leadership position if appropriate)',
+    'Description of Involvement',
   ];
   const headingstwo = [
     'Work',
@@ -81,9 +58,6 @@ export default function AppInfo() {
   const [tableSix, setTableSix] = useState([]);
 
   const [selectedCountry, setSelectedCountry] = useState('');
-
-  const [selectedMajors, setSelectedMajors] = useState([]);
-  const [selectedMinors, setSelectedMinors] = useState([]);
 
   const [tableValues, setTableValues] = useState({
     amcasLetterId: '',
@@ -170,14 +144,6 @@ export default function AppInfo() {
   const handleInputChange = event => {
     const { name, value } = event.target;
     setTableValues({ ...tableValues, [name]: value });
-  };
-
-  const handleMajorChange = selectedOptions => {
-    setSelectedMajors(selectedOptions);
-  };
-
-  const handleMinorChange = selectedOptions => {
-    setSelectedMinors(selectedOptions);
   };
 
   function handleCountryChange(countryCode) {
@@ -436,39 +402,34 @@ export default function AppInfo() {
                         />
                       </div>
 
+
+
                       <div className='col-span-6 sm:col-span-3'>
-                        <label
-                          htmlFor='major'
+                      <label
+                          htmlFor='majors'
                           className='block text-sm font-medium text-black'
                         >
-                          Major
+                          Major(s)
+                          <span className='italic text-sm opacity-50'> [For multiple majors, separate each major by a comma followed by a space. Example: X, X, X]</span> 
                         </label>
-                        <Select
-                          id='majors'
+                        <input
+                          type='text'
                           name='majors'
-                          options={majors}
-                          isMulti
-                          value={selectedMajors}
-                          onChange={handleMajorChange}
-                          creatable
+                          className='w-full rounded-md  '
                         />
                       </div>
 
                       <div className='col-span-6 sm:col-span-3'>
-                        <label
-                          htmlFor='minor'
+                      <label
+                          htmlFor='majors'
                           className='block text-sm font-medium text-black'
                         >
-                          Minor
+                          Minor(s) <span className='italic text-sm opacity-50'>[For multiple minors, separate each minor by a comma followed by a space. Example: X, X, X]</span>
                         </label>
-                        <Select
-                          id='minors'
-                          name='minors'
-                          options={minors}
-                          isMulti
-                          value={selectedMinors}
-                          onChange={handleMinorChange}
-                          creatable
+                        <input
+                          type='text'
+                          name='minor'
+                          className='w-full rounded-md  '
                         />
                       </div>
 

@@ -29,13 +29,13 @@ const MyTable = ({ headings, onTableDataChange }) => {
 
   return (
     <div className='container mx-auto '>
-      <table className='border-collapse border border-black bg-red text-black px-2 py-4 w-full'>
+      <table className='w-full mb-5'>
         <thead>
-          <tr>
+          <tr className='bg-red text-white border border-black'>
             {headings.map(heading => (
               <th
                 key={heading}
-                className='border border-gray-600 px-4 py-2 font-semibold'
+                className='border border-black'
               >
                 {heading}
               </th>
@@ -45,28 +45,32 @@ const MyTable = ({ headings, onTableDataChange }) => {
         <tbody>
           {tableData.map(row => (
             <tr key={row.id}>
-              <td className='border border-black'>
-                <input
+              <td>
+                <textarea
                   type='text'
                   value={row.column1}
-                  className='w-full border-0 focus:outline-none'
-                  onChange={e => handleCellChange(e, row.id, 'column1')}
+                  row={4}
+                  className='w-full px-2 py-1 border-black'
+                  onChange={e => handleCellChange(e, row.id, 'column1')
+                }
                 />
               </td>
-              <td className='border border-black'>
-                <input
+              <td>
+                <textarea
                   type='text'
                   value={row.column2}
-                  className='w-full border-0 focus:outline-none'
+                  row={4}
                   onChange={e => handleCellChange(e, row.id, 'column2')}
+                  className='w-full px-2 py-1 border-black'
                 />
               </td>
-              <td className='border border-black'>
-                <input
+              <td>
+                <textarea
                   type='text'
                   value={row.column3}
-                  className='w-full border-0 focus:outline-none'
+                  row={4}
                   onChange={e => handleCellChange(e, row.id, 'column3')}
+                  className='w-full px-2 py-1 border-black'
                 />
               </td>
             </tr>
