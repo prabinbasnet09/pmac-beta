@@ -52,19 +52,29 @@ export default function InfoReleaseForm() {
 
   const validationSchema = Yup.object().shape({
     userInfo: Yup.object().shape({
-      fullName: Yup.string().required('Full Name is required'),
+      fullName: Yup.string().required('Full Name is required!'),
     cwid: Yup.string()
-      .required('CWID is required')
+      .required('CWID is required!')
       .matches(
         /^[0-9]{8}$/,
-        'CWID must be a valid date in the format xxxx-xxxx'
+        'CWID must be a valid date in the format xxxx-xxxx.'
       ),
-    date: Yup.string().required('Date is Required'),
+    date: Yup.date().required('Date is Required!'),
+   
     }),
-    
-    choice: Yup.array()
-      .of(Yup.string())
-      .min(3, 'Please select all 3 checkboxes!'),
+    authorizeRelease: Yup.boolean().oneOf(
+      [true],
+      'Authorize Release is required!'
+    ),
+    allowEvaluation: Yup.boolean().oneOf(
+      [true],
+      'Allow Evaluation is required!'
+    ),
+    allowAdvertising: Yup.boolean().oneOf(
+      [true],
+      'Allow Advertising is required!'
+    ),
+  
   });
 
 
@@ -99,95 +109,84 @@ export default function InfoReleaseForm() {
   }, [activeUser]);
 
   const handleFormSubmit = async (values, { setSubmitting }) => {
-    try {
-      const schoolDetails = rows.map(row => {
-        return {
-          schoolName: row.schoolName,
-          deadlineDate: row.deadlineDate,
-          contactPerson: row.contactPerson,
-          address: row.address,
-        };
-      });
-
-      const inputData = {
-        userId: activeUser.id,
-        authorizeRelease: authorizeRelease,
-        allowEvaluation: allowEvaluation,
-        allowAdvertising: allowAdvertising,
-        fullName: userInfo.fullName,
-        cwid: userInfo.cwid,
-        signature: userInfo.signature,
-        date: userInfo.date,
-        // schoolDetails: `[{\"authorizeRelease\":true, \"allowEvaluation\":true, \"allowAdvertisement\": true, \"schoolName\": \"ULM\", \"deadlineDate\": \"2023/03/18\", \"contactPerson\": \"Dr. Jose Cordova\", \"address\": \"Concordia, Monroe\"}, \
-        //                 {\"name\": \"name\", \"succeed\": true, \"date\": \"2021-05-05\", \"phone\": \"318-123-4567\", \"address\": \"1234 Main St, Monroe, LA 71203\"}]`
-        schoolDetails: JSON.stringify(schoolDetails),
-      };
-
-      const createForm = async () => {
-        await API.graphql({
-          query: mutations.createApplicantReleaseForm,
-          variables: { input: inputData },
-          authMode: 'AMAZON_COGNITO_USER_POOLS',
-        })
-          .then(async res => {
-            if (res.data.createApplicantReleaseForm) {
-              await API.graphql({
-                query: mutations.updateUser,
-                variables: {
-                  input: {
-                    id: activeUser.id,
-                    applicantReleaseForm: 'Submitted',
-                  },
-                },
-                authMode: 'AMAZON_COGNITO_USER_POOLS',
-              })
-                .then(res => {
-                  console.log(res);
-                })
-                .catch(err => {
-                  console.log(err);
-                });
-            }
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      };
-
-      const updateForm = async (values, { setSubmitting }) => {
-        await API.graphql({
-          query: mutations.updateApplicantReleaseForm,
-          variables: { input: inputData },
-          authMode: 'AMAZON_COGNITO_USER_POOLS',
-        })
-          .then(res => {
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      };
-
-      activeUser.applicationReleaseForm ? updateForm() : createForm();
-    } catch (err) {
-      console.log('error creating InfoRelease Form:', err);
-    }
-
     console.log(values);
+    // try {
+    //   const schoolDetails = rows.map(row => {
+    //     return {
+    //       schoolName: row.schoolName,
+    //       deadlineDate: row.deadlineDate,
+    //       contactPerson: row.contactPerson,
+    //       address: row.address,
+    //     };
+    //   });
+
+    //   const inputData = {
+    //     userId: activeUser.id,
+    //     authorizeRelease: authorizeRelease,
+    //     allowEvaluation: allowEvaluation,
+    //     allowAdvertising: allowAdvertising,
+    //     fullName: userInfo.fullName,
+    //     cwid: userInfo.cwid,
+    //     signature: userInfo.signature,
+    //     date: userInfo.date,
+    //     // schoolDetails: `[{\"authorizeRelease\":true, \"allowEvaluation\":true, \"allowAdvertisement\": true, \"schoolName\": \"ULM\", \"deadlineDate\": \"2023/03/18\", \"contactPerson\": \"Dr. Jose Cordova\", \"address\": \"Concordia, Monroe\"}, \
+    //     //                 {\"name\": \"name\", \"succeed\": true, \"date\": \"2021-05-05\", \"phone\": \"318-123-4567\", \"address\": \"1234 Main St, Monroe, LA 71203\"}]`
+    //     schoolDetails: JSON.stringify(schoolDetails),
+    //   };
+
+    //   const createForm = async () => {
+    //     await API.graphql({
+    //       query: mutations.createApplicantReleaseForm,
+    //       variables: { input: inputData },
+    //       authMode: 'AMAZON_COGNITO_USER_POOLS',
+    //     })
+    //       .then(async res => {
+    //         if (res.data.createApplicantReleaseForm) {
+    //           await API.graphql({
+    //             query: mutations.updateUser,
+    //             variables: {
+    //               input: {
+    //                 id: activeUser.id,
+    //                 applicantReleaseForm: 'Submitted',
+    //               },
+    //             },
+    //             authMode: 'AMAZON_COGNITO_USER_POOLS',
+    //           })
+    //             .then(res => {
+    //               console.log(res);
+    //             })
+    //             .catch(err => {
+    //               console.log(err);
+    //             });
+    //         }
+    //         console.log(res);
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //       });
+    //   };
+
+    //   const updateForm = async (values, { setSubmitting }) => {
+    //     await API.graphql({
+    //       query: mutations.updateApplicantReleaseForm,
+    //       variables: { input: inputData },
+    //       authMode: 'AMAZON_COGNITO_USER_POOLS',
+    //     })
+    //       .then(res => {
+    //         console.log(res);
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //       });
+    //   };
+
+    //   activeUser.applicationReleaseForm ? updateForm() : createForm();
+    // } catch (err) {
+    //   console.log('error creating InfoRelease Form:', err);
+    // }
+
+    // console.log(values);
     setSubmitting(false);
-  };
-
-  const handleAuthorizeRelease = e => {
-    setAuthorizeRelease(e.target.checked);
-  };
-
-  const handleAllowEvaluation = e => {
-    setAllowEvaluation(e.target.checked);
-  };
-
-  const handleAllowAdvertising = e => {
-    setAllowAdvertising(e.target.checked);
   };
 
   const handleRowChange = (index, field, value) => {
@@ -203,12 +202,7 @@ export default function InfoReleaseForm() {
 
     setRows(newRows);
   };
-
-  const handleUserInfo = (field, value, setFieldValue) => {
-    setUserInfo(prevValues => ({ ...prevValues, [field]: value }));
-    setFieldValue(prevValues => ({ ...prevValues, [field]: value }));
-  };
-
+  
   const handleAddRow = () => {
     setRows([...rows, { name: '', date: '', phone: '', address: '' }]);
   };
@@ -217,8 +211,9 @@ export default function InfoReleaseForm() {
     userInfo:{fullName:  '',
     cwid: '',
     date: '',},
-    
-    choice: [],
+    authorizeRelease: authorizeRelease,
+    allowEvaluation: allowEvaluation,
+    allowAdvertising: allowAdvertising,
   };
 
   return activeUser ? (
@@ -250,7 +245,7 @@ export default function InfoReleaseForm() {
               validationSchema={validationSchema}
               onSubmit={handleFormSubmit}
             >
-              {({ values, setFieldValue, handleFormSubmit, isSubmitting }) => (
+              {({ values, setFieldValue, isSubmitting }) => (
                 <Form>
                   <div>
                     <label className='block text-black font-bold mb-2'>
@@ -258,14 +253,18 @@ export default function InfoReleaseForm() {
                     </label>
                     <fieldset className='ml-9'>
                       <div className=' leading-relaxed text-justify'>
-                        <input
-                          type='checkbox'
-                          name='choice'
-                          value='authorizeRelease'
-                          checked={values.choice.includes('authorizeRelease')}
-                          onChange={e => handleAuthorizeRelease(e)}
-                          id='authorizeRelease'
-                        />
+                      <Field
+                type='checkbox'
+                name='authorizeRelease'
+                checked={authorizeRelease}
+                onChange={e => {
+                  const { checked } = e.target;
+                  setAuthorizeRelease(checked);
+                  setFieldValue('authorizeRelease', checked);
+                }}
+              />
+
+
 
                         <span className='ml-3'>
                           {' '}
@@ -275,14 +274,24 @@ export default function InfoReleaseForm() {
                           professional schools and/or programs.
                         </span>
                       </div>
+                      
+                        
+                      <ErrorMessage
+              name='authorizeRelease'
+              component='div'
+              className='text-bred font-bold'
+            />
                       <div className=' leading-relaxed text-justify'>
-                        <input
-                          type='checkbox'
-                          name='choice'
-                          value='allowEvaluation'
-                          checked={values.choice.includes('allowEvaluation')}
-                          onChange={e => handleAllowEvaluation(e)}
-                        />
+                      <Field
+                type='checkbox'
+                name='allowEvaluation'
+                checked={allowEvaluation}
+                onChange={e => {
+                  const { checked } = e.target;
+                  setAllowEvaluation(checked);
+                  setFieldValue('allowEvaluation', checked);
+                }}
+              />
 
                         <span className='ml-3'>
                           {' '}
@@ -297,15 +306,22 @@ export default function InfoReleaseForm() {
                           waive my right to see such evaluation.
                         </span>
                       </div>
+                      <ErrorMessage
+              name='allowEvaluation'
+              component='div'
+              className='text-bred font-bold'
+            />
                       <div className=' leading-relaxed text-justify'>
-                        <input
-                          type='checkbox'
-                          name='choice'
-                          value='allowAdvertising'
-                          checked={values.choice.includes('allowAdvertising')}
-                          onChange={e => handleAllowAdvertising(e)}
-                        />
-
+                      <Field
+                type='checkbox'
+                name='allowAdvertising'
+                checked={allowAdvertising}
+                onChange={e => {
+                  const { checked } = e.target;
+                  setAllowAdvertising(checked);
+                  setFieldValue('allowAdvertising', checked);
+                }}
+              />
                         <span className='ml-3'>
                           I will allow my name to be released to the University
                           if accepted to a professional school. The University
@@ -315,76 +331,61 @@ export default function InfoReleaseForm() {
                           Biology Program, Pre-Medical Interview Committee and
                           the University of Louisiana at Monroe.
                         </span>
-                        <ErrorMessage name='choice' />
+                        <ErrorMessage
+              name='allowAdvertising'
+              component='div'
+              className='text-bred font-bold'
+            />
                       </div>
                     </fieldset>
                   </div>
 
                   <h1 className='mb-5 mt-7 text-1xl font-bold'>
-                    By signing below, I understand that I am waiving my right to
+                    By writing below my name, I understand that I am waiving my right to
                     review the evaluation material and agree to the release of
                     my name and school upon acceptance.
                   </h1>
-
-                  <div className='grid grid-cols-6 gap-6 w-full'>
-                    <div className='col-span-6 sm:col-span-3'>
                       <label
                         htmlFor='fullName'
-                        className='block text-sm font-medium text-gray-700'
+                        className='block text-sm font-medium text-black'
                       >
                         Name
                       </label>
-                      <input
+                      <Field
                         type='text'
                         name='userInfo.fullName'
-                        id='userInfo.fullName'
-                        autoComplete='given-name'
+                        className='w-full'
                       />
-                   
-                    </div>
+                   <ErrorMessage name='userInfo.fullName' component='div' className='text-bred'/>
 
-                    <div className='col-span-6 sm:col-span-3'>
                       <label
                         htmlFor='cwid' 
-                        className='block text-sm font-medium text-gray-700'
+                        className='block mt-4 text-sm font-medium text-black'
                       >
                         CWID Number
                       </label>
-                      <input
+                      <Field
                         type='text'
-                        name='cwid'
-                        id='cwid'
-                        defaultValue={userInfo.cwid}
-                        onChange={event =>
-                          handleUserInfo('cwid', event.target.value)
-                        }
-                        autoComplete='family-name'
+                        name='userInfo.cwid'
+                        className='w-full'
+                       
                       />
-                      <ErrorMessage className='text-bred italic' name='cwid' />
-                    </div>
-                  </div>
-                  <div className=' mt-5  grid grid-cols-6 gap-6'>
-                    <div className='col-span-6 sm:col-span-3'>
+                       <ErrorMessage name='userInfo.cwid' component='div' className='text-bred'/>
+                 
                       <label
                         htmlFor='date'
-                        className='block text-sm font-medium text-gray-700'
+                        className='block mt-4 text-sm font-medium text-black'
                       >
                         Date
                       </label>
-                      <input
+                      <Field
                         type='date'
-                        name='date'
-                        id='date'
-                        defaultValue={userInfo.date}
-                        onChange={event =>
-                          handleUserInfo('date', event.target.value)
-                        }
+                        name='userInfo.date'
+                        className='w-full'
                       
                       />
-                      <ErrorMessage className='text-bred italic' name='date' />
-                    </div>
-                  </div>
-
+                      <ErrorMessage name='userInfo.date' component='div' className='text-bred' />
+                 
                   <h1 className='mt-7 text-1xl font-bold'>
                     Please provide the physical addresses of each school you are
                     applying to if those schools require individual letters. If
