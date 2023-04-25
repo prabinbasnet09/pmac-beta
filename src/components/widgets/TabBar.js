@@ -6,12 +6,13 @@ import { useContext } from "react";
 
 export default function TabBar({ tabList }) {
   const [tabs, setTabs] = useState(tabList);
-  const [isSidebar, setIsSidebar] = useState(false);
+  
   const router = useRouter();
+  const [isSidebar, setIsSidebar] = useState(false);
 
   useEffect(() => {
     function handleResize() {
-      setIsSidebar(window.innerWidth < 940);
+      setIsSidebar(window.innerWidth < 740);
     }
 
     window.addEventListener("resize", handleResize);
@@ -25,7 +26,7 @@ export default function TabBar({ tabList }) {
     <>
       <div className="flex items-center justify-center">
         {isSidebar ? (
-           <nav className="fixed left-0 top-1/3 transform -translate-y-1/2 h-80vh bg-ulm_maroon w-10 px-4 py-20 rounded-r-3xl">
+           <nav className="fixed left-0 top-1/2 transform -translate-y-1/2 h-80vh bg-ulm_maroon w-10 px-4 py-20 rounded-r-3xl">
            <ul className="space-y-20 flex flex-col justify-center items-center">
              {tabs &&
                tabs.map((tab, index) => (

@@ -262,7 +262,7 @@ function App({ Component, pageProps }) {
     <>
       {currentUser ? (
         <ActiveUserProvider currentUser={currentUser}>
-          <LayoutComponent {...pageProps} />
+          <LayoutComponent  {...pageProps} />
         </ActiveUserProvider>
       ) : (
         <Component {...pageProps} />
