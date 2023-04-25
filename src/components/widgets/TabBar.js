@@ -10,6 +10,7 @@ export default function TabBar({ tabList }) {
 
   const router = useRouter();
   return (
+    
     <div className="flex items-center justify-center">
       <nav className="w-3/4 pt-16 pb-2 py- sm:px-0">
         <ul className="flex justify-evenly space-x-1 rounded-xl bg-ulm_maroon p-4">
