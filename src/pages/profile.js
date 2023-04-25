@@ -48,8 +48,8 @@ export default function Profile() {
   };
 
   return activeUser ? (
-    <div className='flex justify-center items-center'>
-      <div className='flex flex-wrap gap-5 items-center w-3/4 justify-evenly bg-white shadow-2xl py px-2 sm:px-0 rounded-lg'>
+    <div className='flex mt-20 justify-center items-center'>
+      <div className='flex flex-wrap p-5 gap-10 items-center w-3/4 justify-evenly bg-white shadow-2xl py px-2 sm:px-0 rounded-lg'>
         <div className='grid gap-y-4'>
           <div className='flex justify-center items-center'>
             <Image src={Logo} className='h-40 w-40 rounded-full' alt='ULM Logo' />
