@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import '../styles/globals.css';
+import '../styles/calendar.module.css';
 import Layout from '@/components/Layout';
 import TabBar from '@/components/widgets/TabBar';
 import { useRouter } from 'next/router';
@@ -7,6 +8,8 @@ import awsExports from '../aws-exports';
 import * as queries from '../graphql/queries';
 import { onUpdateUser } from '../graphql/subscriptions';
 import { Amplify, API, Hub, Auth } from 'aws-amplify';
+// import '@fullcalendar/common/main.css';
+
 Amplify.configure(awsExports);
 export const ActiveUser = createContext();
 
@@ -262,7 +265,7 @@ function App({ Component, pageProps }) {
     <>
       {currentUser ? (
         <ActiveUserProvider currentUser={currentUser}>
-          <LayoutComponent  {...pageProps} />
+          <LayoutComponent {...pageProps} />
         </ActiveUserProvider>
       ) : (
         <Component {...pageProps} />
