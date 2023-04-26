@@ -54,7 +54,6 @@ export default function Dashboard() {
        <Checklist  activeUser={activeUser} />
      ) : null}
        
-    
    </div>
 </div>
 </div>

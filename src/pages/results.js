@@ -19,7 +19,24 @@ export default function Result() {
     fetchUser();
   }, [router]);
 
+  const [windowSize, setWindowSize] = useState({ width: undefined });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({ width: window.innerWidth });
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isSmallScreen = windowSize.width < 700;
+
   return activeUser ? (
+    <>
     <div className='flex items-center justify-center'>
       <div className='w-3/4 px-2 sm:px-0'>
         <div className={`${'nav-body'}`}>
@@ -67,6 +84,7 @@ export default function Result() {
           </div>
         </div>
       </div>
-    </div>
+    </div></>
+    
   ) : null;
 }
