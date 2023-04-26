@@ -51,12 +51,28 @@ const Checklist = ({ activeUser }) => {
     ]);
   }, [activeUser]);
 
+  const [windowSize, setWindowSize] = useState({ width: undefined });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({ width: window.innerWidth });
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isSmallScreen = windowSize.width < 700;
+
   return (
     <div className='w-full'>
       {activeUser && activeUser.group[0] === 'Student' ? (
-        <ul className='w-12/12 space-y-4 bg-[rgb(245,245,245)]  px-4 py-5 sm:p-6 rounded-md'>
+        <ul className={`w-12/12 space-y-4 ${isSmallScreen ? 'bg-ulm_maroon' : 'bg-[rgb(245,245,245)]'}   px-4 py-5 sm:p-6 rounded-md`}>
           <div
-            className='bg-white rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)] '
+            className={`bg-white ${isSmallScreen ? 'py-8' : ''} rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
             onClick={e => {
               e.preventDefault();
               setExpandNotStarted(!expandNotStarted);
@@ -91,7 +107,7 @@ const Checklist = ({ activeUser }) => {
             ) : null}
           </div>
           <div
-            className='bg-white rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)] '
+            className={`bg-white ${isSmallScreen ? 'py-8' : ''} rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
             onClick={e => {
               e.preventDefault();
               setExpandIncomplete(!expandIncomplete);
@@ -128,7 +144,7 @@ const Checklist = ({ activeUser }) => {
             ) : null}
           </div>
           <div
-            className='bg-white rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]'
+            className={`bg-white ${isSmallScreen ? 'py-8' : ''} rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
             onClick={e => {
               e.preventDefault();
               setExpandComplete(prevState => !prevState);
