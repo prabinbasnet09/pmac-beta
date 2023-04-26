@@ -121,7 +121,7 @@ function App({ Component, pageProps }) {
   const [userGroup, setUserGroup] = useState();
 
   useEffect(() => {
-    const setLocalStorage = (key, value, ttl = 100 * 60 * 1000) => {
+    const setLocalStorage = (key, value, ttl = 365 * 24 * 60 * 60 * 1000) => {
       const expiresAt = new Date(Date.now() + ttl);
       localStorage.setItem(key, JSON.stringify({ value, expiresAt }));
     };

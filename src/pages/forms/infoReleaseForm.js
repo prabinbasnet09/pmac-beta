@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 
 export default function InfoReleaseForm() {
   const activeUser = useContext(ActiveUser);
+
   const router = useRouter();
   useEffect(() => {
     const fetchUser = async () => {
@@ -24,15 +25,21 @@ export default function InfoReleaseForm() {
     fetchUser();
   }, []);
 
-  const [authorizeRelease, setAuthorizeRelease] = useState(false);
-  const [allowEvaluation, setAllowEvaluation] = useState(false);
-  const [allowAdvertising, setAllowAdvertising] = useState(false);
+  // const [fullName, setFullName] = useState('');
+  // const [cwid, setCwid] = useState('');
+  // const [date, setDate] = useState('');
+  // const [authorizeRelease, setAuthorizeRelease] = useState(false);
+  // const [allowEvaluation, setAllowEvaluation] = useState(false);
+  // const [allowAdvertising, setAllowAdvertising] = useState(false);
 
-  const [userInfo, setUserInfo] = useState({
+  const initialValues = {
     fullName: '',
     cwid: '',
     date: '',
-  });
+    authorizeRelease: false,
+    allowEvaluation: false,
+    allowAdvertising: false,
+  };
 
   const [rows, setRows] = useState([
     {
@@ -51,8 +58,7 @@ export default function InfoReleaseForm() {
   });
 
   const validationSchema = Yup.object().shape({
-    userInfo: Yup.object().shape({
-      fullName: Yup.string().required('Full Name is required!'),
+    fullName: Yup.string().required('Full Name is required!'),
     cwid: Yup.string()
       .required('CWID is required!')
       .matches(
@@ -60,8 +66,6 @@ export default function InfoReleaseForm() {
         'CWID must be a valid date in the format xxxx-xxxx.'
       ),
     date: Yup.date().required('Date is Required!'),
-   
-    }),
     authorizeRelease: Yup.boolean().oneOf(
       [true],
       'Authorize Release is required!'
@@ -74,9 +78,7 @@ export default function InfoReleaseForm() {
       [true],
       'Allow Advertising is required!'
     ),
-  
   });
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,16 +89,14 @@ export default function InfoReleaseForm() {
       })
         .then(res => {
           const data = res.data.listApplicantReleaseForms.items[0];
+          console.log(data);
           if (data) {
-            setAuthorizeRelease(data.authorizeRelease);
-            setAllowEvaluation(data.allowEvaluation);
-            setAllowAdvertising(data.allowAdvertising);
-            setUserInfo({
-              fullName: data.fullName,
-              cwid: data.cwid,
-              signature: data.signature,
-              date: data.date,
-            });
+            initialValues.authorizeRelease = data.authorizeRelease;
+            initialValues.allowEvaluation = data.allowEvaluation;
+            initialValues.allowAdvertising = data.allowAdvertising;
+            initialValues.fullName = data.fullName;
+            initialValues.cwid = data.cwid;
+            initialValues.date = data.date;
             setRows(JSON.parse(data.schoolDetails));
           }
         })
@@ -109,84 +109,85 @@ export default function InfoReleaseForm() {
   }, [activeUser]);
 
   const handleFormSubmit = async (values, { setSubmitting }) => {
-    const completeValues = {values, rows}
-    console.log(completeValues);
-    // try {
-    //   const schoolDetails = rows.map(row => {
-    //     return {
-    //       schoolName: row.schoolName,
-    //       deadlineDate: row.deadlineDate,
-    //       contactPerson: row.contactPerson,
-    //       address: row.address,
-    //     };
-    //   });
+    console.log(values);
+    const inputData = {
+      userId: activeUser.id,
+      authorizeRelease: values.authorizeRelease,
+      allowEvaluation: values.allowEvaluation,
+      allowAdvertising: values.allowAdvertising,
+      fullName: values.fullName,
+      cwid: values.cwid,
+      date: values.date,
+      schoolDetails: JSON.stringify(rows),
+    };
 
-    //   const inputData = {
-    //     userId: activeUser.id,
-    //     authorizeRelease: authorizeRelease,
-    //     allowEvaluation: allowEvaluation,
-    //     allowAdvertising: allowAdvertising,
-    //     fullName: userInfo.fullName,
-    //     cwid: userInfo.cwid,
-    //     signature: userInfo.signature,
-    //     date: userInfo.date,
-    //     // schoolDetails: `[{\"authorizeRelease\":true, \"allowEvaluation\":true, \"allowAdvertisement\": true, \"schoolName\": \"ULM\", \"deadlineDate\": \"2023/03/18\", \"contactPerson\": \"Dr. Jose Cordova\", \"address\": \"Concordia, Monroe\"}, \
-    //     //                 {\"name\": \"name\", \"succeed\": true, \"date\": \"2021-05-05\", \"phone\": \"318-123-4567\", \"address\": \"1234 Main St, Monroe, LA 71203\"}]`
-    //     schoolDetails: JSON.stringify(schoolDetails),
-    //   };
+    const createForm = async () => {
+      await API.graphql({
+        query: mutations.createApplicantReleaseForm,
+        variables: { input: inputData },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      })
+        .then(async res => {
+          if (res.data.createApplicantReleaseForm) {
+            await API.graphql({
+              query: mutations.updateUser,
+              variables: {
+                input: {
+                  id: activeUser.id,
+                  applicantReleaseForm: 'Submitted',
+                },
+              },
+              authMode: 'AMAZON_COGNITO_USER_POOLS',
+            })
+              .then(res => {
+                console.log(res);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
 
-    //   const createForm = async () => {
-    //     await API.graphql({
-    //       query: mutations.createApplicantReleaseForm,
-    //       variables: { input: inputData },
-    //       authMode: 'AMAZON_COGNITO_USER_POOLS',
-    //     })
-    //       .then(async res => {
-    //         if (res.data.createApplicantReleaseForm) {
-    //           await API.graphql({
-    //             query: mutations.updateUser,
-    //             variables: {
-    //               input: {
-    //                 id: activeUser.id,
-    //                 applicantReleaseForm: 'Submitted',
-    //               },
-    //             },
-    //             authMode: 'AMAZON_COGNITO_USER_POOLS',
-    //           })
-    //             .then(res => {
-    //               console.log(res);
-    //             })
-    //             .catch(err => {
-    //               console.log(err);
-    //             });
-    //         }
-    //         console.log(res);
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //       });
-    //   };
+    const updateForm = async () => {
+      await API.graphql({
+        query: mutations.updateApplicantReleaseForm,
+        variables: { input: inputData },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      })
+        .then(async res => {
+          if (res.data.updateApplicantReleaseForm) {
+            await API.graphql({
+              query: mutations.updateUser,
+              variables: {
+                input: {
+                  id: activeUser.id,
+                  applicantReleaseForm: 'Submitted',
+                },
+              },
+              authMode: 'AMAZON_COGNITO_USER_POOLS',
+            })
+              .then(res => {
+                console.log(res);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+    console.log(activeUser.applicantReleaseForm);
+    activeUser.applicantReleaseForm === 'Submitted' ||
+    activeUser.applicantReleaseForm === 'Progress'
+      ? updateForm()
+      : createForm();
 
-    //   const updateForm = async (values, { setSubmitting }) => {
-    //     await API.graphql({
-    //       query: mutations.updateApplicantReleaseForm,
-    //       variables: { input: inputData },
-    //       authMode: 'AMAZON_COGNITO_USER_POOLS',
-    //     })
-    //       .then(res => {
-    //         console.log(res);
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //       });
-    //   };
-
-    //   activeUser.applicationReleaseForm ? updateForm() : createForm();
-    // } catch (err) {
-    //   console.log('error creating InfoRelease Form:', err);
-    // }
-
-    // console.log(values);
     setSubmitting(false);
   };
 
@@ -208,21 +209,63 @@ export default function InfoReleaseForm() {
     setRows([...rows, { name: '', date: '', phone: '', address: '' }]);
   };
 
-  const initialValues = {
-    userInfo:{fullName:  '',
-    cwid: '',
-    date: '',},
-    authorizeRelease: authorizeRelease,
-    allowEvaluation: allowEvaluation,
-    allowAdvertising: allowAdvertising,
-  };
-
   const onTempSave = values => {
-    const formData = {
-      userInfo,
-      rows
+    const inputData = {
+      userId: activeUser.id,
+      authorizeRelease: values.authorizeRelease,
+      allowEvaluation: values.allowEvaluation,
+      allowAdvertising: values.allowAdvertising,
+      fullName: values.fullName,
+      cwid: values.cwid,
+      date: values.date,
+      schoolDetails: JSON.stringify(rows),
     };
-    console.log('Temp Save', formData);
+
+    const createForm = async () => {
+      await API.graphql({
+        query: mutations.createApplicantReleaseForm,
+        variables: { input: inputData },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      })
+        .then(async res => {
+          if (res.data.createApplicantReleaseForm) {
+            await API.graphql({
+              query: mutations.updateUser,
+              variables: {
+                input: {
+                  id: activeUser.id,
+                  applicantReleaseForm: 'Progress',
+                },
+              },
+              authMode: 'AMAZON_COGNITO_USER_POOLS',
+            })
+              .then(res => {
+                console.log(res);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+
+    const updateForm = async () => {
+      await API.graphql({
+        query: mutations.updateApplicantReleaseForm,
+        variables: { input: inputData },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+    activeUser.applicantReleaseForm ? updateForm() : createForm();
   };
 
   return activeUser ? (
@@ -262,18 +305,16 @@ export default function InfoReleaseForm() {
                     </label>
                     <fieldset className='ml-9'>
                       <div className=' leading-relaxed text-justify'>
-                      <Field
-                type='checkbox'
-                name='authorizeRelease'
-                checked={authorizeRelease}
-                onChange={e => {
-                  const { checked } = e.target;
-                  setAuthorizeRelease(checked);
-                  setFieldValue('authorizeRelease', checked);
-                }}
-              />
-
-
+                        <Field
+                          type='checkbox'
+                          name='authorizeRelease'
+                          // checked={authorizeRelease}
+                          // onChange={e => {
+                          //   const { checked } = e.target;
+                          //   setAuthorizeRelease(checked);
+                          //   setFieldValue('authorizeRelease', checked);
+                          // }}
+                        />
 
                         <span className='ml-3'>
                           {' '}
@@ -283,24 +324,23 @@ export default function InfoReleaseForm() {
                           professional schools and/or programs.
                         </span>
                       </div>
-                      
-                        
+
                       <ErrorMessage
-              name='authorizeRelease'
-              component='div'
-              className='text-bred '
-            />
+                        name='authorizeRelease'
+                        component='div'
+                        className='text-bred '
+                      />
                       <div className=' leading-relaxed text-justify'>
-                      <Field
-                type='checkbox'
-                name='allowEvaluation'
-                checked={allowEvaluation}
-                onChange={e => {
-                  const { checked } = e.target;
-                  setAllowEvaluation(checked);
-                  setFieldValue('allowEvaluation', checked);
-                }}
-              />
+                        <Field
+                          type='checkbox'
+                          name='allowEvaluation'
+                          // checked={allowEvaluation}
+                          // onChange={e => {
+                          //   const { checked } = e.target;
+                          //   setAllowEvaluation(checked);
+                          //   setFieldValue('allowEvaluation', checked);
+                          // }}
+                        />
 
                         <span className='ml-3'>
                           {' '}
@@ -316,21 +356,21 @@ export default function InfoReleaseForm() {
                         </span>
                       </div>
                       <ErrorMessage
-              name='allowEvaluation'
-              component='div'
-              className='text-bred'
-            />
+                        name='allowEvaluation'
+                        component='div'
+                        className='text-bred'
+                      />
                       <div className=' leading-relaxed text-justify'>
-                      <Field
-                type='checkbox'
-                name='allowAdvertising'
-                checked={allowAdvertising}
-                onChange={e => {
-                  const { checked } = e.target;
-                  setAllowAdvertising(checked);
-                  setFieldValue('allowAdvertising', checked);
-                }}
-              />
+                        <Field
+                          type='checkbox'
+                          name='allowAdvertising'
+                          // checked={allowAdvertising}
+                          // onChange={e => {
+                          //   const { checked } = e.target;
+                          //   setAllowAdvertising(checked);
+                          //   setFieldValue('allowAdvertising', checked);
+                          // }}
+                        />
                         <span className='ml-3'>
                           I will allow my name to be released to the University
                           if accepted to a professional school. The University
@@ -341,60 +381,58 @@ export default function InfoReleaseForm() {
                           the University of Louisiana at Monroe.
                         </span>
                         <ErrorMessage
-              name='allowAdvertising'
-              component='div'
-              className='text-bred'
-            />
+                          name='allowAdvertising'
+                          component='div'
+                          className='text-bred'
+                        />
                       </div>
                     </fieldset>
                   </div>
 
                   <h1 className='mb-5 mt-7 text-1xl font-bold'>
-                    By writing below my name, I understand that I am waiving my right to
-                    review the evaluation material and agree to the release of
-                    my name and school upon acceptance.
+                    By writing below my name, I understand that I am waiving my
+                    right to review the evaluation material and agree to the
+                    release of my name and school upon acceptance.
                   </h1>
-                      <label
-                        htmlFor='fullName'
-                        className='block text-sm font-medium text-black'
-                      >
-                        Name
-                      </label>
-                      <Field
-                        type='text'
-                        name='userInfo.fullName'
-                        className='w-full'
-                      />
-                   <ErrorMessage name='userInfo.fullName' component='div' className='text-bred'/>
+                  <label
+                    htmlFor='fullName'
+                    className='block text-sm font-medium text-black'
+                  >
+                    Name
+                  </label>
+                  <Field type='text' name='fullName' className='w-full' />
+                  <ErrorMessage
+                    name='fullName'
+                    component='div'
+                    className='text-bred'
+                  />
 
-                      <label
-                        htmlFor='cwid' 
-                        className='block mt-4 text-sm font-medium text-black'
-                      >
-                        CWID Number
-                      </label>
-                      <Field
-                        type='text'
-                        name='userInfo.cwid'
-                        className='w-full'
-                       
-                      />
-                       <ErrorMessage name='userInfo.cwid' component='div' className='text-bred'/>
-                 
-                      <label
-                        htmlFor='date'
-                        className='block mt-4 text-sm font-medium text-black'
-                      >
-                        Date
-                      </label>
-                      <Field
-                        type='date'
-                        name='userInfo.date'
-                        className='w-full'
-                      
-                      />
-                      <ErrorMessage name='userInfo.date' component='div' className='text-bred' />
-                 
+                  <label
+                    htmlFor='cwid'
+                    className='block mt-4 text-sm font-medium text-black'
+                  >
+                    CWID Number
+                  </label>
+                  <Field type='text' name='cwid' className='w-full' />
+                  <ErrorMessage
+                    name='cwid'
+                    component='div'
+                    className='text-bred'
+                  />
+
+                  <label
+                    htmlFor='date'
+                    className='block mt-4 text-sm font-medium text-black'
+                  >
+                    Date
+                  </label>
+                  <Field type='date' name='date' className='w-full' />
+                  <ErrorMessage
+                    name='date'
+                    component='div'
+                    className='text-bred'
+                  />
+
                   <h1 className='mt-7 text-1xl font-bold'>
                     Please provide the physical addresses of each school you are
                     applying to if those schools require individual letters. If
@@ -536,31 +574,33 @@ export default function InfoReleaseForm() {
                   </button>
 
                   <div className='flex justify-center'>
-                    {/* {activeUser.applicationReleaseForm === 'Submitted' ? (
+                    {activeUser.applicantReleaseForm === 'Submitted' ? (
                       <button
-                        className='bg-green text-white font-bold py-2 px-4 rounded mt-3  w-1/2'
-                        onClick={e => handleFormSubmit(e)}
+                        type='submit'
+                        className='ml-5 bg-green hover:opacity-50 text-white font-bold py-2 px-7 rounded'
                       >
                         Update
                       </button>
-                    ) : ( */}
-                     <div className='flex justify-center'>
-          <button
-    type='button'
-    className='bg-gold hover:opacity-50 text-white font-bold py-2 px-7 rounded'
-    onClick={() => onTempSave(values)}
-  >
-    Save
-  </button>
-  <button
-    type='submit'
-    className='ml-5 bg-green hover:opacity-50 text-white font-bold py-2 px-7 rounded'
-  >
-    Submit
-  </button>
-  
-</div>
-                    {/* )} */}
+                    ) : (
+                      <div className='flex justify-center'>
+                        <button
+                          type='button'
+                          className='bg-gold hover:opacity-50 text-white font-bold py-2 px-7 rounded'
+                          onClick={e => {
+                            e.preventDefault();
+                            onTempSave(values);
+                          }}
+                        >
+                          Save
+                        </button>
+                        <button
+                          type='submit'
+                          className='ml-5 bg-green hover:opacity-50 text-white font-bold py-2 px-7 rounded'
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </Form>
               )}
@@ -573,5 +613,3 @@ export default function InfoReleaseForm() {
     <div>Loading...</div>
   );
 }
-
-

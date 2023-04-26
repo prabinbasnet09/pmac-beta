@@ -36,25 +36,27 @@ type ApplicantForm
     ]
   ) {
   userId: String! @primaryKey
-  firstName: String!
-  lastName: String!
-  date: String!
-  cwid: String!
-  cellPhone: String!
-  country: String!
-  streetAddress: String!
-  city: String!
-  state: String!
-  zipCode: String!
-  email: String!
-  alternativeEmail: String!
-  major: [String!]!
-  minor: [String!]
-  gpa: Float!
-  expectedGraduation: String!
-  entranceDate: String!
-  entryExams: [AWSJSON!]
-  examDate: String!
+  firstName: String
+  lastName: String
+  date: String
+  cwid: String
+  cellPhone: String
+  country: String
+  streetAddress: String
+  city: String
+  state: String
+  zipCode: String
+  email: String
+  alternativeEmail: String
+  major: String
+  minor: String
+  gpa: Float
+  expectedGraduation: String
+  entranceDate: String
+  entryExams: AWSJSON
+  examDate: String
+  schoolApplication: String
+  applicationID: [AWSJSON!]
   facultyEvaluators: [AWSJSON!]
   involvement: [AWSJSON!]
   workExperience: [AWSJSON!]
@@ -77,13 +79,13 @@ type ApplicantReleaseForm
     ]
   ) {
   userId: String! @primaryKey
-  authorizeRelease: Boolean!
-  allowEvaluation: Boolean!
-  allowAdvertising: Boolean!
-  fullName: String!
-  cwid: String!
-  signature: String!
-  date: String!
+  authorizeRelease: Boolean
+  allowEvaluation: Boolean
+  allowAdvertising: Boolean
+  fullName: String
+  cwid: String
+  signature: String
+  date: String
   schoolDetails: [AWSJSON!]
 }
 
@@ -97,16 +99,16 @@ type FacultyRecommendationForm
     ]
   ) {
   userId: String! @primaryKey
-  applicantName: String!
-  signature: String!
-  evaluatorName: String!
-  applicantObservation: String!
-  applicantStrength: String!
-  applicantWeakness: String!
-  applicantPotential: String!
-  additionalComments: String!
-  evaluatorSignature: String!
-  date: String!
+  applicantName: String
+  signature: String
+  evaluatorName: String
+  applicantObservation: String
+  applicantStrength: String
+  applicantWeakness: String
+  applicantPotential: String
+  additionalComments: String
+  evaluatorSignature: String
+  date: String
 }
 
 type Query {

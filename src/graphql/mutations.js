@@ -260,6 +260,8 @@ export const createApplicantForm = /* GraphQL */ `
       entranceDate
       entryExams
       examDate
+      schoolApplication
+      applicationID
       facultyEvaluators
       involvement
       workExperience
@@ -298,6 +300,8 @@ export const updateApplicantForm = /* GraphQL */ `
       entranceDate
       entryExams
       examDate
+      schoolApplication
+      applicationID
       facultyEvaluators
       involvement
       workExperience
@@ -336,6 +340,8 @@ export const deleteApplicantForm = /* GraphQL */ `
       entranceDate
       entryExams
       examDate
+      schoolApplication
+      applicationID
       facultyEvaluators
       involvement
       workExperience

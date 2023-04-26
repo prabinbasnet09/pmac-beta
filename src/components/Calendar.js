@@ -4,13 +4,13 @@ import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import parseISO from 'date-fns/parseISO';
 import { useState, useEffect, useContext } from 'react';
+import { useRef } from 'react';
 
 import ReactDatePicker from 'react-datepicker';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
-
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import { useRouter } from 'next/router';
 import { Auth } from 'aws-amplify';
 import dynamic from 'next/dynamic';
@@ -19,6 +19,31 @@ function Schedular() {
   const [allEvents, setAllEvents] = useState([]);
   const [toggle, setToggle] = useState(false);
   const router = useRouter();
+
+  let draggable = null;
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const externalEventsEl = document.getElementById('external-events');
+      if (externalEventsEl) {
+        console.log('externalEventsEl', externalEventsEl);
+        draggable = new Draggable(externalEventsEl, {
+          itemSelector: '.fc-event',
+          eventData: function (eventEl) {
+            return {
+              title: eventEl.innerText,
+              id: Date.now(), // Assign a unique identifier to each dropped event
+            };
+          },
+        });
+      }
+    }
+
+    return () => {
+      if (draggable) {
+        draggable.destroy();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // Load the fullcalendar-custom.css file when the page is rendered
@@ -289,7 +314,6 @@ function Schedular() {
   }
 
   const handleDateSelect = selectInfo => {
-    setToggle(prevState => !prevState);
     let title = prompt('Please enter a new title for your event');
     let calendarApi = selectInfo.view.calendar;
 
@@ -320,8 +344,6 @@ function Schedular() {
         allDay: selectInfo.allDay,
         daysOfWeek: [dayOfTheWeek],
         startRecur: selectInfo.startStr,
-        startTime: startTimeString,
-        endTime: endTimeString,
       });
 
       setAllEvents(prevEvents => {
@@ -342,14 +364,30 @@ function Schedular() {
   };
 
   const handleEventChange = changeInfo => {
+    console.log(changeInfo);
+    const startDateTimeString = changeInfo.event.startStr;
+    const startDateTime = parseISO(startDateTimeString);
+    const startTimeString = format(startDateTime, 'HH:mm');
+
+    const dayOfTheWeek = `${getDay(startDateTime)}`;
+
+    const endDateTimeString = changeInfo.event.endStr;
+    const endDateTime = parseISO(endDateTimeString);
+    const endTimeString = format(endDateTime, 'HH:mm');
+
+    console.log(startTimeString, endTimeString);
     setAllEvents(prevEvents => {
       const updatedEvents = prevEvents.map(event => {
         if (event.id === changeInfo.event.id) {
+          console.log('match');
           return {
             ...event,
             title: changeInfo.event.title,
             start: changeInfo.event.startStr,
             end: changeInfo.event.endStr,
+            daysOfWeek: [dayOfTheWeek],
+            startTime: startTimeString,
+            endTime: endTimeString,
           };
         } else {
           return event;
@@ -419,24 +457,60 @@ function Schedular() {
     console.log(freeSlots);
     return freeSlots;
   };
-  console.log('hello');
-  // findFreeSlots(calendarAEvents, calendarBEvents);
+
+  const handleEventReceive = info => {
+    if (typeof info.event === 'object') {
+      const startDateTime = new Date(info.event.start);
+      const startTimeString = startDateTime.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+      });
+      const endDateTime = info.event.end
+        ? new Date(info.event.end)
+        : new Date(startDateTime.getTime() + 60 * 60 * 1000);
+      const endTimeString = endDateTime
+        ? endDateTime.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          })
+        : null;
+      const newEvent = {
+        id: Date.now(),
+        title: info.event.title,
+        start: info.event.start.toISOString(),
+        end: endDateTime ? endDateTime.toISOString() : null,
+        daysOfWeek: [`${startDateTime.getDay()}`],
+        startRecur: info.event.start.toISOString(),
+        startTime: startTimeString,
+        endTime: endTimeString,
+      };
+      setAllEvents([...allEvents, newEvent]);
+    }
+  };
 
   return (
     <>
       <div style={{ zIndex: '999' }} className='bg-maroon-500'>
+        <div id='external-events' className='absolute top-11 right-10 '>
+          <div className='fc-event cursor-pointer bg-[#FDB913] p-2 rounded-md text-black font-bold border-l-blue-50'>
+            Unavailable
+          </div>
+        </div>
         <FullCalendar
           plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin]}
           headerToolbar={{
-            right: 'addEventButton',
-            center: 'prev,next',
+            right: '',
+            left: 'prev,next',
+            center: 'title',
           }}
-          customButtons={{ addEventButton: { text: 'Add Event' } }}
+          // customButtons={{ addEventButton: { text: 'Add Event' } }}
           initialView='timeGridWeek'
           editable={true}
           selectable={true}
           weekends={false}
-          events={calendarOneEvents}
+          events={allEvents}
           eventClick={handleEventClick}
           eventColor='maroon'
           nowIndicator={true}
@@ -450,7 +524,14 @@ function Schedular() {
           slotMaxTime='18:00:00'
           allDaySlot={false}
           height='auto'
+          eventReceive={handleEventReceive}
         />
+      </div>
+
+      <div className='mt-5 font-bold text-lg text-center'>
+        {' '}
+        If the calendar does not load properly, please reload the page. Sorry
+        for the inconvenience.
       </div>
 
       {/* <div>

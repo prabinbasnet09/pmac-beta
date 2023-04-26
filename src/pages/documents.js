@@ -58,9 +58,13 @@ function Documents() {
                 </td>
                 <td className='w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm'>
                   {activeUser.applicantForm ? (
-                    <span className=' text-green font-bold'>Complete</span>
+                    activeUser.applicantForm === 'Submitted' ? (
+                      <span className=' text-green font-bold'>Complete</span>
+                    ) : (
+                      <span>Incomplete...</span>
+                    )
                   ) : (
-                    <span>Incomplete...</span>
+                    <span>Not Started</span>
                   )}
                 </td>
                 <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
@@ -68,7 +72,7 @@ function Documents() {
                 </td>
               </tr>
               <tr>
-                <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
+                <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hov  er:text-red hover:font-bold'>
                   <Link href='/forms/infoReleaseForm'>
                     Information Release Form
                   </Link>
@@ -151,7 +155,7 @@ function Documents() {
                       Faculty Recommendation Form 2
                     </Link>
                   </td>
-                  <td className='w-1/4 border border-black px-4 py-2 bg-white text-black italic text-sm'>
+                  <td className='w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm'>
                     Incomplete...
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
@@ -182,7 +186,7 @@ function Documents() {
                   {activeUser.personalStatement ? (
                     <span className=' text-green font-bold'>Complete</span>
                   ) : (
-                    <span>Incomplete...</span>
+                    <span className='text-gray'>Incomplete...</span>
                   )}
                 </td>
                 <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
@@ -197,7 +201,7 @@ function Documents() {
                   {activeUser.transcript ? (
                     <span className=' text-green font-bold'>Complete</span>
                   ) : (
-                    <span>Incomplete...</span>
+                    <span className='text-gray'>Incomplete...</span>
                   )}
                 </td>
                 <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
@@ -212,7 +216,7 @@ function Documents() {
                   {activeUser.profilePicture ? (
                     <span className=' text-green font-bold'>Complete</span>
                   ) : (
-                    <span>Incomplete...</span>
+                    <span className='text-gray'>Incomplete...</span>
                   )}
                 </td>
                 <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>

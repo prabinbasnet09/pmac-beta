@@ -30,15 +30,6 @@ export default function Home({ signOut }) {
         <meta name='description' content='Pre-medical Advisory committee' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
-        <link
-          href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css'
-          rel='stylesheet'
-        />
-        <link
-          href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css'
-          rel='stylesheet'
-          media='print'
-        />
       </Head>
       <div>
         <Dashboard />

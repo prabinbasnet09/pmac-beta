@@ -97,6 +97,8 @@ export const getApplicantForm = /* GraphQL */ `
       entranceDate
       entryExams
       examDate
+      schoolApplication
+      applicationID
       facultyEvaluators
       involvement
       workExperience
@@ -145,6 +147,8 @@ export const listApplicantForms = /* GraphQL */ `
         entranceDate
         entryExams
         examDate
+        schoolApplication
+        applicationID
         facultyEvaluators
         involvement
         workExperience
