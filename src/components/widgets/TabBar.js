@@ -12,7 +12,7 @@ export default function TabBar({ tabList }) {
 
   useEffect(() => {
     function handleResize() {
-      setIsSidebar(window.innerWidth < 740);
+      setIsSidebar(window.innerWidth < 700);
     }
 
     window.addEventListener("resize", handleResize);

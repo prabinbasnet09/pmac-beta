@@ -21,6 +21,19 @@
   background-color: rgb(200 201 199 / var(--tw-bg-opacity));
 }
 
+.nav-body-small {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  /* existing styles */
+  padding: 2rem;
+  border-radius: 1rem;
+  line-height: 1.25rem;
+  font-size: 0.875rem;
+  --tw-bg-opacity: 1;
+}
+
+
 .email{
   display: flex;
   align-items: center;
