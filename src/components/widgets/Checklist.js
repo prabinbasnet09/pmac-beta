@@ -71,6 +71,7 @@ const Checklist = ({ activeUser }) => {
     <div className='w-full'>
       {activeUser && activeUser.group[0] === 'Student' ? (
         <ul className={`w-12/12 space-y-4 ${isSmallScreen ? 'bg-ulm_maroon' : 'bg-[rgb(245,245,245)]'}   px-4 py-5 sm:p-6 rounded-md`}>
+          <div className='font-bold text-2xl'>Application Checklist</div>
           <div
             className={`bg-white ${isSmallScreen ? 'py-8' : ''} rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
             onClick={e => {
@@ -78,10 +79,10 @@ const Checklist = ({ activeUser }) => {
               setExpandNotStarted(!expandNotStarted);
             }}
           >
-            <div className='flex justify-between items-end '>
+            <div className='flex justify-between items-end space-x-3'>
               <div className='font-bold text-lg '>Not Started</div>
-              <div className='text-[rgb(143,141,141)] italic text-sm'>
-                {steps.filter(step => step.state === 0).length} remaining...
+              <div className='text-[rgb(143,141,141)] italic underline text-md'>
+                {steps.filter(step => step.state === 0).length} Remaining...
               </div>
             </div>
             {expandNotStarted ? (
@@ -93,7 +94,7 @@ const Checklist = ({ activeUser }) => {
                       className=' p-4 my-2  hover:bg-[rgb(255,255,255)] shadow-lg rounded-3xl border-2 border-[black]'
                     >
                       <div className='flex justify-between items-center'>
-                        <h3 className='justify-left text-lg font-medium'>
+                        <h3 className='justify-left text-lg font-medium hover:underline'>
                           {step.label}
                         </h3>
                         <div className='flex items-center'>
@@ -113,10 +114,10 @@ const Checklist = ({ activeUser }) => {
               setExpandIncomplete(!expandIncomplete);
             }}
           >
-            <div className='flex justify-between items-end'>
+            <div className='flex justify-between space-x-3 items-end'>
               <div className='font-bold text-lg'>Incomplete</div>
-              <div className='text-[rgb(143,141,141)] italic text-sm'>
-                {steps.filter(step => step.state === 1).length} on progress...
+              <div className='text-[rgb(143,141,141)] italic underline text-md'>
+                {steps.filter(step => step.state === 1).length} In Progress...
               </div>
             </div>
             {expandIncomplete ? (
@@ -128,7 +129,7 @@ const Checklist = ({ activeUser }) => {
                       className='p-4 my-3 hover:bg-[rgb(255,255,255)] shadow-xl rounded-3xl border-2 border-[black]'
                     >
                       <div className='flex justify-between items-center'>
-                        <h3 className='justify-left text-lg font-medium'>
+                        <h3 className='justify-left text-lg hover:underline font-medium'>
                           {step.label}
                         </h3>
                         {step.state === 1 && (
@@ -150,10 +151,10 @@ const Checklist = ({ activeUser }) => {
               setExpandComplete(prevState => !prevState);
             }}
           >
-            <div className='flex justify-between items-end'>
+            <div className='flex justify-between space-x-3 items-end'>
               <div className='font-bold text-lg'>Completed</div>
-              <div className='text-[rgb(143,141,141)] italic text-sm'>
-                {steps.filter(step => step.state === 2).length} completed...
+              <div className='text-[rgb(143,141,141)] italic underline text-md'>
+                {steps.filter(step => step.state === 2).length} Completed...
               </div>
             </div>
             {expandComplete ? (
@@ -165,7 +166,7 @@ const Checklist = ({ activeUser }) => {
                       className='p-4 my-3 hover:bg-[rgb(255,255,255)] shadow-xl rounded-3xl border-2 border-[black]'
                     >
                       <div className='flex justify-between items-center'>
-                        <h3 className='justify-left text-lg font-medium'>
+                        <h3 className='justify-left text-lg hover:underline font-medium'>
                           {step.label}
                         </h3>
                         {step.state === 2 && (
