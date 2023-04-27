@@ -17,7 +17,7 @@ export const ActiveUserProvider = ({ children, currentUser }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const setLocalStorage = (key, value, ttl = 5 * 60 * 1000) => {
+    const setLocalStorage = (key, value, ttl = 365 * 24 * 60 * 60 * 1000) => {
       const expiresAt = new Date(Date.now() + ttl);
       localStorage.setItem(key, JSON.stringify({ value, expiresAt }));
     };

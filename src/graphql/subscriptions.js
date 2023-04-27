@@ -264,15 +264,23 @@ export const onCreateFacultyRecommendationForm = /* GraphQL */ `
     onCreateFacultyRecommendationForm(filter: $filter, userId: $userId) {
       userId
       applicantName
-      signature
-      evaluatorName
-      applicantObservation
-      applicantStrength
-      applicantWeakness
-      applicantPotential
-      additionalComments
-      evaluatorSignature
       date
+      evaluatorName
+      intellectual
+      motivation
+      initiative
+      personal
+      emotional
+      dependability
+      leadership
+      character
+      verbal
+      studentCapacity
+      majorStrength
+      weaknesses
+      comments
+      potential
+      agreement
       createdAt
       updatedAt
     }
@@ -286,15 +294,23 @@ export const onUpdateFacultyRecommendationForm = /* GraphQL */ `
     onUpdateFacultyRecommendationForm(filter: $filter, userId: $userId) {
       userId
       applicantName
-      signature
-      evaluatorName
-      applicantObservation
-      applicantStrength
-      applicantWeakness
-      applicantPotential
-      additionalComments
-      evaluatorSignature
       date
+      evaluatorName
+      intellectual
+      motivation
+      initiative
+      personal
+      emotional
+      dependability
+      leadership
+      character
+      verbal
+      studentCapacity
+      majorStrength
+      weaknesses
+      comments
+      potential
+      agreement
       createdAt
       updatedAt
     }
@@ -308,15 +324,23 @@ export const onDeleteFacultyRecommendationForm = /* GraphQL */ `
     onDeleteFacultyRecommendationForm(filter: $filter, userId: $userId) {
       userId
       applicantName
-      signature
-      evaluatorName
-      applicantObservation
-      applicantStrength
-      applicantWeakness
-      applicantPotential
-      additionalComments
-      evaluatorSignature
       date
+      evaluatorName
+      intellectual
+      motivation
+      initiative
+      personal
+      emotional
+      dependability
+      leadership
+      character
+      verbal
+      studentCapacity
+      majorStrength
+      weaknesses
+      comments
+      potential
+      agreement
       createdAt
       updatedAt
     }

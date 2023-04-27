@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import { Auth } from 'aws-amplify';
 import dynamic from 'next/dynamic';
 
-function Schedular() {
+function Calendar() {
   const [allEvents, setAllEvents] = useState([]);
   const [toggle, setToggle] = useState(false);
   const router = useRouter();
@@ -44,19 +44,6 @@ function Schedular() {
       }
     };
   }, []);
-
-  useEffect(() => {
-    // Load the fullcalendar-custom.css file when the page is rendered
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = '/fullcalendar-custom.css';
-    document.head.appendChild(link);
-
-    // Remove the link tag when the component unmounts
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, [router.pathname]);
 
   const calendarOneEvents = [
     {
@@ -548,4 +535,4 @@ function Schedular() {
   );
 }
 
-export default Schedular;
+export default Calendar;

@@ -100,15 +100,23 @@ type FacultyRecommendationForm
   ) {
   userId: String! @primaryKey
   applicantName: String
-  signature: String
-  evaluatorName: String
-  applicantObservation: String
-  applicantStrength: String
-  applicantWeakness: String
-  applicantPotential: String
-  additionalComments: String
-  evaluatorSignature: String
   date: String
+  evaluatorName: String
+  intellectual: String
+  motivation: String
+  initiative: String
+  personal: String
+  emotional: String
+  dependability: String
+  leadership: String
+  character: String
+  verbal: String
+  studentCapacity: String
+  majorStrength: String
+  weaknesses: String
+  comments: String
+  potential: String
+  agreement: Boolean
 }
 
 type Query {

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Logo from 'public/ulm_academic_maroon_white.png';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -137,8 +138,13 @@ export default function ChairApplicantsList(props) {
             ? 2
             : 1
           : 0,
+        path: '/applications/applicant-release',
       },
-      { label: 'Unofficial Transcript', state: user.transcript ? 2 : 0 },
+      {
+        label: 'Unofficial Transcript',
+        state: user.transcript ? 2 : 0,
+        path: user.transcript,
+      },
       {
         label: 'Application Information Form',
         state: user.applicantForm
@@ -146,6 +152,7 @@ export default function ChairApplicantsList(props) {
             ? 2
             : 1
           : 0,
+        path: '/applications/applicant-information',
       },
       {
         label: 'Faculty Recommendation',
@@ -154,14 +161,24 @@ export default function ChairApplicantsList(props) {
             ? 2
             : 1
           : 0,
+        path: '/applications/facultyRecForm',
       },
-      { label: 'Schedule', state: user.schedule ? 2 : 0 },
+      { label: 'Schedule', state: user.schedule ? 2 : 0, path: '#' },
       {
         label: 'Personal Statement',
         state: user.personalStatement ? 2 : 0,
+        path: user.personalStatement,
       },
-      { label: 'Headshot', state: user.profilePicture ? 2 : 0 },
-      { label: 'AMCAS Form', state: user.amcas ? 2 : 0 },
+      {
+        label: 'Headshot',
+        state: user.profilePicture ? 2 : 0,
+        path: user.profilePicture,
+      },
+      {
+        label: 'AMCAS Form',
+        state: user.amcas ? 2 : 0,
+        path: user.amcas,
+      },
     ]);
   }
 
@@ -342,15 +359,20 @@ export default function ChairApplicantsList(props) {
           <div className='flex flex-wrap -mx-2'>
             {steps.map((step, index) => {
               return (
-                <div
+                <Link
+                  href={`${step.path}/?user=${encodeURIComponent(
+                    selectedUser.id
+                  )}`}
+                  target='_blank'
                   key={index}
                   className='w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-2 mb-4'
                 >
-                  <div className='bg-[#e4e4e4] rounded-lg p-4 mb-2 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'>
+                  <div className='bg-[#e4e4e4] rounded-lg p-4 mb-2 text-[#840029] cursor-pointer hover:bg-[#d8d8d8]'>
                     <div className='flex flex-row justify-between '>
                       <div className='text-lg font-medium text-gray-500'>
                         {step.label}
                       </div>
+                      {/* <div className='text-lg font-medium'>{step.state}</div> */}
                       {step.state === 0 ? (
                         <div className='text-sm font-semi-bold'>
                           <span className='text-[#FF0000] '>Not Started</span>
@@ -366,7 +388,7 @@ export default function ChairApplicantsList(props) {
                       )}
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

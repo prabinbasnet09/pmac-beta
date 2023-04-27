@@ -69,8 +69,13 @@ export default function FacultyApplicantsList(props) {
             ? 2
             : 1
           : 0,
+        path: '/applications/applicant-release',
       },
-      { label: 'Unofficial Transcript', state: user.transcript ? 2 : 0 },
+      {
+        label: 'Unofficial Transcript',
+        state: user.transcript ? 2 : 0,
+        path: user.transcript,
+      },
       {
         label: 'Application Information Form',
         state: user.applicantForm
@@ -78,6 +83,7 @@ export default function FacultyApplicantsList(props) {
             ? 2
             : 1
           : 0,
+        path: '/applications/applicant-information',
       },
       {
         label: 'Faculty Recommendation',
@@ -86,14 +92,24 @@ export default function FacultyApplicantsList(props) {
             ? 2
             : 1
           : 0,
+        path: '/applications/facultyRecForm',
       },
-      { label: 'Schedule', state: user.schedule ? 2 : 0 },
+      { label: 'Schedule', state: user.schedule ? 2 : 0, path: '#' },
       {
         label: 'Personal Statement',
         state: user.personalStatement ? 2 : 0,
+        path: user.personalStatement,
       },
-      { label: 'Headshot', state: user.profilePicture ? 2 : 0 },
-      { label: 'AMCAS Form', state: user.amcas ? 2 : 0 },
+      {
+        label: 'Headshot',
+        state: user.profilePicture ? 2 : 0,
+        path: user.profilePicture,
+      },
+      {
+        label: 'AMCAS Form',
+        state: user.amcas ? 2 : 0,
+        path: user.amcas,
+      },
     ]);
   }
 
@@ -198,7 +214,11 @@ export default function FacultyApplicantsList(props) {
           <div className='flex flex-wrap -mx-2'>
             {steps.map((step, index) => {
               return (
-                <div
+                <Link
+                  href={`${step.path}/?user=${encodeURIComponent(
+                    selectedUser.id
+                  )}`}
+                  target='_blank'
                   key={index}
                   className='w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-2 mb-4'
                 >
@@ -223,7 +243,7 @@ export default function FacultyApplicantsList(props) {
                       )}
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

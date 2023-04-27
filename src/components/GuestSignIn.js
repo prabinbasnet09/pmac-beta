@@ -8,7 +8,7 @@ export default function GuestSignIn() {
   const [guestPassword, setGuestPassword] = useState('');
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
-  const setLocalStorage = (key, value, ttl = 5 * 60 * 1000) => {
+  const setLocalStorage = (key, value, ttl = 365 * 24 * 60 * 60 * 1000) => {
     const expiresAt = new Date(Date.now() + ttl);
     localStorage.setItem(key, JSON.stringify({ value, expiresAt }));
   };
