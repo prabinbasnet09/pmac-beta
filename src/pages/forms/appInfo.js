@@ -1444,8 +1444,8 @@ export default function AppInfo() {
                                         <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
                                         <thead>
                                           <tr>
-                                           { headingsone.map(heading => (
-                                            <th className='border border-black px-4 py-2'>
+                                           { headingsone.map((heading, index) => (
+                                            <th key={index} className='border border-black px-4 py-2'>
                                             {heading}
                                           </th>
                                            ))}
@@ -1558,8 +1558,8 @@ export default function AppInfo() {
                                         <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
                                         <thead>
                                           <tr>
-                                           { headingstwo.map(heading => (
-                                            <th className='border border-black px-4 py-2'>
+                                           { headingstwo.map((heading, index) => (
+                                            <th key={index} className='border border-black px-4 py-2'>
                                             {heading}
                                           </th>
                                            ))}
@@ -1671,8 +1671,8 @@ export default function AppInfo() {
                                         <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
                                         <thead>
                                           <tr>
-                                           { headingsthree.map(heading => (
-                                            <th className='border border-black px-4 py-2'>
+                                           { headingsthree.map((heading, index) => (
+                                            <th key ={index} className='border border-black px-4 py-2'>
                                             {heading}
                                           </th>
                                            ))}
@@ -1782,8 +1782,8 @@ export default function AppInfo() {
                                         <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
                                         <thead>
                                           <tr>
-                                           { headingsfour.map(heading => (
-                                            <th className='border border-black px-4 py-2'>
+                                           { headingsfour.map((heading, index) => (
+                                            <th key ={index} className='border border-black px-4 py-2'>
                                             {heading}
                                           </th>
                                            ))}
@@ -1893,8 +1893,8 @@ export default function AppInfo() {
                                         <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
                                         <thead>
                                           <tr>
-                                           { headingsfive.map(heading => (
-                                            <th className='border border-black px-4 py-2'>
+                                           { headingsfive.map((heading, index) => (
+                                            <th key={index} className='border border-black px-4 py-2'>
                                             {heading}
                                           </th>
                                            ))}
@@ -2004,8 +2004,8 @@ export default function AppInfo() {
                                         <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
                                         <thead>
                                           <tr>
-                                           { headingssix.map(heading => (
-                                            <th className='border border-black px-4 py-2'>
+                                           { headingssix.map((heading, index) => (
+                                            <th key = {index} className='border border-black px-4 py-2'>
                                             {heading}
                                           </th>
                                            ))}
