@@ -1,3 +1,4 @@
+// This page is specially for admin
 import React, { useEffect } from 'react';
 import { ActiveUser } from '../pages/_app.js';
 import { useContext, useState } from 'react';

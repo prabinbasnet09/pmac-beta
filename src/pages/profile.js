@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { ActiveUser } from './_app';
 import { Auth } from 'aws-amplify';
 import Logo from 'public/ulm_academic_maroon_white.png';
+import HeadShot from 'public/headshot.webp';
 import { useRouter } from 'next/router';
 
 export default function Profile() {
@@ -52,7 +53,11 @@ export default function Profile() {
       <div className='flex flex-wrap p-5 gap-10 items-center w-3/4 justify-evenly bg-white shadow-2xl py px-2 sm:px-0 rounded-lg'>
         <div className='grid gap-y-4'>
           <div className='flex justify-center items-center'>
-            <Image src={Logo} className='h-40 w-40 rounded-full' alt='ULM Logo' />
+            <Image
+              src={HeadShot}
+              className='h-40 w-40 rounded-full'
+              alt='ULM Logo'
+            />
           </div>
           <div className='text-center rounded-lg'>
             <p className='text-lg font-bold'>Profile</p>

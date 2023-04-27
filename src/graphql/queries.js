@@ -217,15 +217,23 @@ export const getFacultyRecommendationForm = /* GraphQL */ `
     getFacultyRecommendationForm(userId: $userId) {
       userId
       applicantName
-      signature
-      evaluatorName
-      applicantObservation
-      applicantStrength
-      applicantWeakness
-      applicantPotential
-      additionalComments
-      evaluatorSignature
       date
+      evaluatorName
+      intellectual
+      motivation
+      initiative
+      personal
+      emotional
+      dependability
+      leadership
+      character
+      verbal
+      studentCapacity
+      majorStrength
+      weaknesses
+      comments
+      potential
+      agreement
       createdAt
       updatedAt
     }
@@ -249,15 +257,23 @@ export const listFacultyRecommendationForms = /* GraphQL */ `
       items {
         userId
         applicantName
-        signature
-        evaluatorName
-        applicantObservation
-        applicantStrength
-        applicantWeakness
-        applicantPotential
-        additionalComments
-        evaluatorSignature
         date
+        evaluatorName
+        intellectual
+        motivation
+        initiative
+        personal
+        emotional
+        dependability
+        leadership
+        character
+        verbal
+        studentCapacity
+        majorStrength
+        weaknesses
+        comments
+        potential
+        agreement
         createdAt
         updatedAt
       }

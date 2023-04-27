@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import Image from 'next/image';
 import Logo from '/public/ulm_logo.png';
+import HeadShot from '/public/headshot.webp';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Auth } from 'aws-amplify';
@@ -9,10 +10,12 @@ const Header = user => {
   const [activeUser, setActiveUser] = useState(user.user);
   const router = useRouter();
 
-  const [toggle, setToggle] = useState(false);
+  const [profileToggle, setProfileToggle] = useState(false);
+  const [notificationsToggle, setNotificationsToggle] = useState(false);
   const handleToggle = () => {
     console.log('toggle');
-    setToggle(prevState => !prevState);
+    setProfileToggle(prevState => !prevState);
+    setNotificationsToggle(false);
   };
 
   const handleSignOut = async () => {
@@ -27,23 +30,49 @@ const Header = user => {
       <Link href='/'>
         <h1 className='w-full text-3xl font-bold text-ulm_red'>ULM</h1>
       </Link>
-      <div className=' relative mt-2 mr-2 '>
+      <div className='mt-2 mr-2'>
         {/*Login Button*/}
-        <button
-          type='button'
-          className='text-sm rounded-full  focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600'
-          onClick={() => handleToggle()}
-        >
-          <Image
-            src={Logo}
-            alt='ULM Logo'
-            width={40}
-            height={40}
-            className='border border-spacing-10 border-[#3B0000] rounded-full'
-          />
-        </button>
-        {toggle ? (
-          <div className='absolute top-15 right-0 z-10 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 text-[#840029]'>
+        <div className='flex justify-between'>
+          <div className='mr-3'>
+            <button
+              type='button'
+              className='text-sm rounded-full  focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600'
+              onClick={() => handleToggle()}
+            >
+              <Image
+                src={HeadShot}
+                alt='ULM Logo'
+                width={40}
+                height={40}
+                className='border border-spacing-10 border-[#3B0000] rounded-full'
+              />
+            </button>
+          </div>
+          <div className=''>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth='1.1'
+              stroke='currentColor'
+              className='w-8 h-8 cursor-pointer'
+              onClick={e => {
+                e.preventDefault();
+                setNotificationsToggle(prevState => !prevState);
+                setProfileToggle(false);
+              }}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0'
+              />
+            </svg>
+          </div>
+        </div>
+
+        {profileToggle ? (
+          <div className='absolute top-15 right-16 z-10 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 text-[#840029]'>
             <div className='px-4 py-3 '>
               <span className='block text-sm text-gray-900 '>
                 {activeUser.attributes.name}
@@ -71,6 +100,20 @@ const Header = user => {
                 </p>
               </li>
             </ul>
+          </div>
+        ) : null}
+
+        {notificationsToggle ? (
+          <div className='absolute top-15 right-5 z-10 mt-2 w-60  rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 text-[#840029]'>
+            <ul className='p-3 text-gray cursor-pointer'>
+              <li className='hover:bg-gray-100'>
+                You have no new notifications.
+              </li>
+            </ul>
+            <hr className='width-full h-1 mx-full bg-[#bbb] border-0 rounded-lg' />
+            <div className='py-1  text-center cursor-pointer dark:hover:bg-[#c2c2c2]'>
+              Clear All
+            </div>
           </div>
         ) : null}
       </div>

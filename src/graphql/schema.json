@@ -2518,7 +2518,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "signature",
+          "name" : "date",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -2540,7 +2540,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "applicantObservation",
+          "name" : "intellectual",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -2551,7 +2551,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "applicantStrength",
+          "name" : "motivation",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -2562,7 +2562,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "applicantWeakness",
+          "name" : "initiative",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -2573,7 +2573,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "applicantPotential",
+          "name" : "personal",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -2584,7 +2584,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "additionalComments",
+          "name" : "emotional",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -2595,7 +2595,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "evaluatorSignature",
+          "name" : "dependability",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -2606,12 +2606,100 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "date",
+          "name" : "leadership",
           "description" : null,
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "character",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "verbal",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "studentCapacity",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "majorStrength",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "weaknesses",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "comments",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "potential",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "agreement",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -2714,7 +2802,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "signature",
+          "name" : "date",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2732,7 +2820,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantObservation",
+          "name" : "intellectual",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2741,7 +2829,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantStrength",
+          "name" : "motivation",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2750,7 +2838,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantWeakness",
+          "name" : "initiative",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2759,7 +2847,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantPotential",
+          "name" : "personal",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2768,7 +2856,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "additionalComments",
+          "name" : "emotional",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2777,7 +2865,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "evaluatorSignature",
+          "name" : "dependability",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2786,11 +2874,83 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "date",
+          "name" : "leadership",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "character",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "verbal",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "studentCapacity",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "majorStrength",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "weaknesses",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "comments",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "potential",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "agreement",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelBooleanInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -5528,7 +5688,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "signature",
+          "name" : "date",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5546,7 +5706,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantObservation",
+          "name" : "intellectual",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5555,7 +5715,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantStrength",
+          "name" : "motivation",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5564,7 +5724,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantWeakness",
+          "name" : "initiative",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5573,7 +5733,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantPotential",
+          "name" : "personal",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5582,7 +5742,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "additionalComments",
+          "name" : "emotional",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5591,7 +5751,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "evaluatorSignature",
+          "name" : "dependability",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5600,11 +5760,83 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "date",
+          "name" : "leadership",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "character",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "verbal",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "studentCapacity",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "majorStrength",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "weaknesses",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "comments",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "potential",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "agreement",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
             "ofType" : null
           },
           "defaultValue" : null
@@ -5627,7 +5859,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "signature",
+          "name" : "date",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -5645,7 +5877,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantObservation",
+          "name" : "intellectual",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -5654,7 +5886,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantStrength",
+          "name" : "motivation",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -5663,7 +5895,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantWeakness",
+          "name" : "initiative",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -5672,7 +5904,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantPotential",
+          "name" : "personal",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -5681,7 +5913,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "additionalComments",
+          "name" : "emotional",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -5690,7 +5922,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "evaluatorSignature",
+          "name" : "dependability",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -5699,11 +5931,83 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "date",
+          "name" : "leadership",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "character",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "verbal",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "studentCapacity",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "majorStrength",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "weaknesses",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "comments",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "potential",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "agreement",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelBooleanInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -5774,7 +6078,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "signature",
+          "name" : "date",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5792,7 +6096,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantObservation",
+          "name" : "intellectual",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5801,7 +6105,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantStrength",
+          "name" : "motivation",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5810,7 +6114,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantWeakness",
+          "name" : "initiative",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5819,7 +6123,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantPotential",
+          "name" : "personal",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5828,7 +6132,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "additionalComments",
+          "name" : "emotional",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5837,7 +6141,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "evaluatorSignature",
+          "name" : "dependability",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5846,11 +6150,83 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "date",
+          "name" : "leadership",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "character",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "verbal",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "studentCapacity",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "majorStrength",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "weaknesses",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "comments",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "potential",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "agreement",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
             "ofType" : null
           },
           "defaultValue" : null
@@ -7185,7 +7561,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "signature",
+          "name" : "date",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -7203,7 +7579,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantObservation",
+          "name" : "intellectual",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -7212,7 +7588,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantStrength",
+          "name" : "motivation",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -7221,7 +7597,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantWeakness",
+          "name" : "initiative",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -7230,7 +7606,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "applicantPotential",
+          "name" : "personal",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -7239,7 +7615,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "additionalComments",
+          "name" : "emotional",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -7248,7 +7624,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "evaluatorSignature",
+          "name" : "dependability",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -7257,11 +7633,83 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "date",
+          "name" : "leadership",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "character",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "verbal",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "studentCapacity",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "majorStrength",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "weaknesses",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "comments",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "potential",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "agreement",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionBooleanInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -8275,47 +8723,6 @@
         "onFragment" : false,
         "onField" : true
       }, {
-        "name" : "deprecated",
-        "description" : null,
-        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
-        "args" : [ {
-          "name" : "reason",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : "\"No longer supported\""
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_iam",
-        "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_lambda",
-        "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_oidc",
-        "description" : "Tells the service this field/object has access authorized by an OIDC token.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
         "name" : "aws_auth",
         "description" : "Directs the schema to enforce authorization on a field",
         "locations" : [ "FIELD_DEFINITION" ],
@@ -8358,6 +8765,14 @@
         "onFragment" : false,
         "onField" : false
       }, {
+        "name" : "aws_iam",
+        "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
         "name" : "aws_cognito_user_pools",
         "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
@@ -8379,6 +8794,47 @@
         "onFragment" : false,
         "onField" : false
       }, {
+        "name" : "aws_oidc",
+        "description" : "Tells the service this field/object has access authorized by an OIDC token.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_api_key",
+        "description" : "Tells the service this field/object has access authorized by an API key.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_lambda",
+        "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
         "name" : "aws_publish",
         "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
         "locations" : [ "FIELD_DEFINITION" ],
@@ -8396,14 +8852,6 @@
           },
           "defaultValue" : null
         } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_api_key",
-        "description" : "Tells the service this field/object has access authorized by an API key.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
