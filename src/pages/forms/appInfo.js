@@ -13,17 +13,6 @@ export default function AppInfo() {
   const activeUser = useContext(ActiveUser);
   const router = useRouter();
 
-  const [tableOne, setTableOne] = useState([
-    {
-      activity: 'test',
-    },
-  ]);
-  const [tableTwo, setTableTwo] = useState([]);
-  const [tableThree, setTableThree] = useState([]);
-  const [tableFour, setTableFour] = useState([]);
-  const [tableFive, setTableFive] = useState([]);
-  const [tableSix, setTableSix] = useState([]);
-
   const [tableValues, setTableValues] = useState({
     amcasLetterId: '',
     aacomasCasNumber: '',
@@ -149,6 +138,8 @@ export default function AppInfo() {
     activeUser && fetchData();
   }, [activeUser]);
 
+  
+
   const headingsone = [
     'Activity',
     'Years and Total Hours',
@@ -175,6 +166,43 @@ export default function AppInfo() {
     'Individual or Group',
     'Dates and Hours',
   ];
+
+  const [tableOne, setTableOne] = useState([
+    {
+      activity:'',
+    yearsAndHours:'',
+    descriInvolve:'',
+    },
+  ]);
+  const [tableTwo, setTableTwo] = useState([
+    {work:'',
+    yearsHours:'',
+    positionDescrip:'',}
+  ]);
+
+  const [tableThree, setTableThree] = useState([
+    {experience:'',
+    yearsAndTotalHours:'',
+    dutiesDescriptionExperience:'',}
+  ]);
+
+  const [tableFour, setTableFour] = useState([
+    {honorsAward:'',
+     receivedDate:'',
+     awardDescription:''}
+  ]);
+
+  const [tableFive, setTableFive] = useState([
+   { projectName:'',
+    yearsAndHrs:'',
+    descripDuties:'',}
+  ]);
+
+  const [tableSix, setTableSix] = useState([
+    {experience: '',
+    indivGroup:'',
+    dateHours:''}
+  ]);
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name is required!'),
@@ -217,24 +245,127 @@ export default function AppInfo() {
     schoolApplication: Yup.string().required('School Application is required!'),
   });
 
-  const handleTableOneChange = newData => {
-    setTableOne(newData);
+  const handleOneRowChange = (index, field, value) => {
+    const newRows = [...tableOne];
+    newRows[index][field] = value;
+
+    setTableOne(newRows);
   };
-  const handleTableTwoChange = newData => {
-    setTableTwo(newData);
+
+  const handleOneDeleteRow = () => {
+    const newRows = [...tableOne];
+    newRows.pop(); // remove the last row
+
+    setTableOne(newRows);
   };
-  const handleTableThreeChange = newData => {
-    setTableThree(newData);
+
+  const handleOneAddRow = () => {
+    setTableOne([...tableOne, { activity:'',
+    yearsAndHours:'',
+    descriInvolve:'' }]);
   };
-  const handleTableFourChange = newData => {
-    setTableFour(newData);
+
+  const handleTwoRowChange = (index, field, value) => {
+    const newRows = [...tableTwo];
+    newRows[index][field] = value;
+
+    setTableTwo(newRows);
   };
-  const handleTableFiveChange = newData => {
-    setTableFive(newData);
+
+  const handleTwoDeleteRow = () => {
+    const newRows = [...tableTwo];
+    newRows.pop(); // remove the last row
+
+    setTableTwo(newRows);
   };
-  const handleTableSixChange = newData => {
-    setTableSix(newData);
+
+  const handleTwoAddRow = () => {
+    setTableTwo([...tableTwo, { work:'',
+    yearsHours:'',
+    positionDescrip:'' }]);
   };
+
+  const handleThreeRowChange = (index, field, value) => {
+    const newRows = [...tableThree];
+    newRows[index][field] = value;
+
+    setTableThree(newRows);
+  };
+
+  const handleThreeDeleteRow = () => {
+    const newRows = [...tableThree];
+    newRows.pop(); // remove the last row
+
+    setTableThree(newRows);
+  };
+
+  const handleThreeAddRow = () => {
+    setTableThree([...tableThree, { experience:'',
+    yearsAndTotalHours:'',
+    dutiesDescriptionExperience:'', }]);
+  };
+
+  const handleFourRowChange = (index, field, value) => {
+    const newRows = [...tableFour];
+    newRows[index][field] = value;
+
+    setTableFour(newRows);
+  };
+
+  const handleFourDeleteRow = () => {
+    const newRows = [...tableFour];
+    newRows.pop(); // remove the last row
+
+    setTableFour(newRows);
+  };
+
+  const handleFourAddRow = () => {
+    setTableFour([...tableFour, { honorsAward:'',
+    receivedDate:'',
+    awardDescription:'' }]);
+  };
+
+  const handleFiveRowChange = (index, field, value) => {
+    const newRows = [...tableFive];
+    newRows[index][field] = value;
+
+    setTableFive(newRows);
+  };
+
+  const handleFiveDeleteRow = () => {
+    const newRows = [...tableFive];
+    newRows.pop(); // remove the last row
+
+    setTableFive(newRows);
+  };
+
+  const handleFiveAddRow = () => {
+    setTableFive([...tableFive, { projectName:'',
+    yearsAndHrs:'',
+    descripDuties:'', }]);
+  };
+
+  const handleSixRowChange = (index, field, value) => {
+    const newRows = [...tableSix];
+    newRows[index][field] = value;
+
+    setTableSix(newRows);
+  };
+
+  const handleSixDeleteRow = () => {
+    const newRows = [...tableSix];
+    newRows.pop(); // remove the last row
+
+    setTableSix(newRows);
+  };
+
+  const handleSixAddRow = () => {
+    setTableSix([...tableSix, { experience: '',
+    indivGroup:'',
+    dateHours:'' }]);
+  };
+
+  
 
   const handleRecommenderChange = (e, row, col) => {
     const newData = [...recommenderData];
@@ -284,6 +415,7 @@ export default function AppInfo() {
       labResearch: JSON.stringify(tableFive),
       volunteer: JSON.stringify(tableSix),
     };
+    console.log(inputData)
 
     const createForm = async () => {
       try {
@@ -1308,73 +1440,672 @@ export default function AppInfo() {
                                           {' '}
                                           Membership/Academic Clubs{' '}
                                         </h2>
-                                        <Table
-                                          className='w-full'
-                                          headings={headingsone}
-                                          onTableDataChange={
-                                            handleTableOneChange
-                                          }
-                                        />
+                                        <div className='overflow-x-auto'>
+                                        <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                        <thead>
+                                          <tr>
+                                           { headingsone.map(heading => (
+                                            <th className='border border-black px-4 py-2'>
+                                            {heading}
+                                          </th>
+                                           ))}
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {tableOne.map((tableOne, index) => (
+                          <tr key={index}>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableOne.activity}
+                                onChange={event =>
+                                  handleOneRowChange(
+                                    index,
+                                    'activity',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableOne.yearsAndHours}
+                                onChange={event =>
+                                  handleOneRowChange(
+                                    index,
+                                    'yearsAndHours',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableOne.descriInvolve}
+                                onChange={event =>
+                                  handleOneRowChange(
+                                    index,
+                                    'descriInvolve',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                                        </tbody>
+                                        </table>
+                                        </div>
+
+                                        <button
+                    className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                    type='button'
+                    onClick={handleOneAddRow}
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M12 4.5v15m7.5-7.5h-15'
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={handleOneDeleteRow}
+                    className='bg-bred text-white font-bold px-1 py-1 rounded mt-5 '
+                    type='button'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M19.5 12h-15'
+                      />
+                    </svg>
+                  </button>
+
+                                        
+                                       
 
                                         <h2 className='text-xl font-bold mb-2 mt-10'>
                                           {' '}
                                           Work{' '}
                                         </h2>
-                                        <Table
-                                          className='w-full'
-                                          headings={headingstwo}
-                                          onTableDataChange={
-                                            handleTableTwoChange
-                                          }
-                                        />
+
+                                        <div className='overflow-x-auto'>
+                                        <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                        <thead>
+                                          <tr>
+                                           { headingstwo.map(heading => (
+                                            <th className='border border-black px-4 py-2'>
+                                            {heading}
+                                          </th>
+                                           ))}
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {tableTwo.map((tableTwo, index) => (
+                          <tr key={index}>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableTwo.work}
+                                onChange={event =>
+                                  handleTwoRowChange(
+                                    index,
+                                    'work',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableTwo.yearsHours}
+                                onChange={event =>
+                                  handleTwoRowChange(
+                                    index,
+                                    'yearsHours',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableTwo.positionDescrip}
+                                onChange={event =>
+                                  handleTwoRowChange(
+                                    index,
+                                    'positionDescrip',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                                        </tbody>
+                                        </table>
+                                        </div>
+
+                                        <button
+                    className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                    type='button'
+                    onClick={handleTwoAddRow}
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M12 4.5v15m7.5-7.5h-15'
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={handleTwoDeleteRow}
+                    className='bg-bred text-white font-bold px-1 py-1 rounded mt-5 '
+                    type='button'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M19.5 12h-15'
+                      />
+                    </svg>
+                  </button>
+
+                                        
 
                                         <h2 className='text-xl font-bold mt-10'>
                                           {' '}
                                           Experiences within Chosen Field{' '}
                                         </h2>
-                                        <Table
-                                          className='w-full'
-                                          headings={headingsthree}
-                                          onTableDataChange={
-                                            handleTableThreeChange
-                                          }
-                                        />
+                                        
+                                        <div className='overflow-x-auto'>
+                                        <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                        <thead>
+                                          <tr>
+                                           { headingsthree.map(heading => (
+                                            <th className='border border-black px-4 py-2'>
+                                            {heading}
+                                          </th>
+                                           ))}
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {tableThree.map((tableThree, index) => (
+                          <tr key={index}>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableThree.experience}
+                                onChange={event =>
+                                  handleThreeRowChange(
+                                    index,
+                                    'experience',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableThree.yearsAndTotalHours}
+                                onChange={event =>
+                                  handleThreeRowChange(
+                                    index,
+                                    'yearsAndTotalHours',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableThree.dutiesDescriptionExperience}
+                                onChange={event =>
+                                  handleThreeRowChange(
+                                    index,
+                                    'dutiesDescriptionExperience',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                                        </tbody>
+                                        </table>
+                                        </div>
+
+                                        <button
+                    className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                    type='button'
+                    onClick={handleThreeAddRow}
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M12 4.5v15m7.5-7.5h-15'
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={handleThreeDeleteRow}
+                    className='bg-bred text-white font-bold px-1 py-1 rounded mt-5 '
+                    type='button'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M19.5 12h-15'
+                      />
+                    </svg>
+                  </button>
 
                                         <h2 className='text-xl font-bold mt-10'>
                                           {' '}
                                           Honors and Awards{' '}
                                         </h2>
-                                        <Table
-                                          className='w-full'
-                                          headings={headingsfour}
-                                          onTableDataChange={
-                                            handleTableFourChange
-                                          }
-                                        />
+                                       
+                                        <div className='overflow-x-auto'>
+                                        <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                        <thead>
+                                          <tr>
+                                           { headingsfour.map(heading => (
+                                            <th className='border border-black px-4 py-2'>
+                                            {heading}
+                                          </th>
+                                           ))}
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {tableFour.map((tableFour, index) => (
+                          <tr key={index}>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableFour.honorsAward}
+                                onChange={event =>
+                                  handleFourRowChange(
+                                    index,
+                                    'honorsAward',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableFour.receivedDate}
+                                onChange={event =>
+                                  handleFourRowChange(
+                                    index,
+                                    'receivedDate',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableFour.awardDescription}
+                                onChange={event =>
+                                  handleFourRowChange(
+                                    index,
+                                    'awardDescription',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                                        </tbody>
+                                        </table>
+                                        </div>
+
+                                        <button
+                    className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                    type='button'
+                    onClick={handleFourAddRow}
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M12 4.5v15m7.5-7.5h-15'
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={handleFourDeleteRow}
+                    className='bg-bred text-white font-bold px-1 py-1 rounded mt-5 '
+                    type='button'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M19.5 12h-15'
+                      />
+                    </svg>
+                  </button>
 
                                         <h2 className='text-xl font-bold mt-10'>
                                           {' '}
                                           Laboratory Research{' '}
                                         </h2>
-                                        <Table
-                                          className='w-full'
-                                          headings={headingsfive}
-                                          onTableDataChange={
-                                            handleTableFiveChange
-                                          }
-                                        />
+                                       
+                                        <div className='overflow-x-auto'>
+                                        <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                        <thead>
+                                          <tr>
+                                           { headingsfive.map(heading => (
+                                            <th className='border border-black px-4 py-2'>
+                                            {heading}
+                                          </th>
+                                           ))}
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {tableFive.map((tableFive, index) => (
+                          <tr key={index}>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableFive.projectName}
+                                onChange={event =>
+                                  handleFiveRowChange(
+                                    index,
+                                    'projectName',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableFive.yearsAndHrs}
+                                onChange={event =>
+                                  handleFiveRowChange(
+                                    index,
+                                    'yearsAndHrs',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableFive.descripDuties}
+                                onChange={event =>
+                                  handleFiveRowChange(
+                                    index,
+                                    'descripDuties',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                                        </tbody>
+                                        </table>
+                                        </div>
+
+                                        <button
+                    className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                    type='button'
+                    onClick={handleFiveAddRow}
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M12 4.5v15m7.5-7.5h-15'
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={handleFiveDeleteRow}
+                    className='bg-bred text-white font-bold px-1 py-1 rounded mt-5 '
+                    type='button'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M19.5 12h-15'
+                      />
+                    </svg>
+                  </button>
 
                                         <h2 className='text-xl font-bold mt-10'>
                                           {' '}
                                           Volunteer Experiences{' '}
                                         </h2>
-                                        <Table
-                                          className='w-full'
-                                          headings={headingssix}
-                                          onTableDataChange={
-                                            handleTableSixChange
-                                          }
-                                        />
+                                    
+                                        <div className='overflow-x-auto'>
+                                        <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                        <thead>
+                                          <tr>
+                                           { headingssix.map(heading => (
+                                            <th className='border border-black px-4 py-2'>
+                                            {heading}
+                                          </th>
+                                           ))}
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {tableSix.map((tableSix, index) => (
+                          <tr key={index}>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableSix.experience}
+                                onChange={event =>
+                                  handleSixRowChange(
+                                    index,
+                                    'experience',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableSix.indivGroup}
+                                onChange={event =>
+                                  handleSixRowChange(
+                                    index,
+                                    'indivGroup',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                            <td className='border border-black '>
+                              <textarea
+                                rows={4}
+                                className='border-none w-full text-black'
+                                type='text'
+                                defaultValue={tableSix.dateHours}
+                                onChange={event =>
+                                  handleSixRowChange(
+                                    index,
+                                    'dateHours',
+                                    event.target.value
+                                  )
+                                }
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                                        </tbody>
+                                        </table>
+                                        </div>
+
+                                        <button
+                    className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                    type='button'
+                    onClick={handleSixAddRow}
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M12 4.5v15m7.5-7.5h-15'
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={handleSixDeleteRow}
+                    className='bg-bred text-white font-bold px-1 py-1 rounded mt-5 '
+                    type='button'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='w-6 h-6'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M19.5 12h-15'
+                      />
+                    </svg>
+                  </button>
+
                                       </div>
                                     </div>
                                   </div>
