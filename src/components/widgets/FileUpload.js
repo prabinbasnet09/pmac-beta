@@ -13,10 +13,14 @@ const FileUpload = () => {
   const [selectedPersonalStatement, setSelectedPersonalStatement] =
     useState(null);
   const [selectedTranscript, setSelectedTranscript] = useState(null);
+  const [selectedHeadshot, setSelectedHeadshot] = useState(null);
   const [updatePersonalStatement, setUpdatePersonalStatement] = useState(false);
   const [updateTranscript, setUpdateTranscript] = useState(false);
+  const [updateHeadshot, setUpdateHeadshot] = useState(false);
+
   const handleInvisiblePersonalStatement = useRef(null);
   const handleInvisibleTranscript = useRef(null);
+  const handleInvisibleHeadshot = useRef(null);
 
   const handleClick = (e, fileType) => {
     e.preventDefault();

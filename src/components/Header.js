@@ -111,7 +111,13 @@ const Header = user => {
               </li>
             </ul>
             <hr className='width-full h-1 mx-full bg-[#bbb] border-0 rounded-lg' />
-            <div className='py-1  text-center cursor-pointer dark:hover:bg-[#c2c2c2]'>
+            <div
+              className='py-1  text-center cursor-pointer dark:hover:bg-[#c2c2c2]'
+              onClick={e => {
+                e.preventDefault();
+                setNotificationsToggle(false);
+              }}
+            >
               Clear All
             </div>
           </div>

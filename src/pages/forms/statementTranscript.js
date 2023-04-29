@@ -14,14 +14,42 @@ export default function StatementTranscript() {
   const [headShot, setHeadShot] = useState(null);
   const [transcript, setTranscript] = useState(null);
 
+  const [personalStatementToggle, setPersonalStatementToggle] = useState(false);
+  const [headShotToggle, setHeadShotToggle] = useState(false);
+  const [transcriptToggle, setTranscriptToggle] = useState(false);
+
   const handlePersonalStatement = personalStatement => {
     setPersonalStatement(personalStatement);
     console.log(file.name);
   };
 
-  async function uploadFileAndStoreURL(file) {
+  const handleFileURL = async file => {
     console.log(file.name);
-  }
+    const bucketName = '';
+    const path = `public/${selectedFile.name}`;
+
+    const objectURL = `https://s3.amazonaws.com/${bucketName}/${path}`;
+
+    try {
+      await API.graphql({
+        query: updateUser,
+        variables: {
+          input: {
+            id: user.id,
+            facultyRecommendation: objectURL,
+          },
+        },
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -60,70 +88,234 @@ export default function StatementTranscript() {
           </Link>
           .
         </div>
-        <div className='flex w-full justify-center mt-20'>
-          <div className='bg-white shadow-xl shadow-black items-center grid grid-rows-3 px-4 border hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition'>
+
+        <p className='text-4xl font-bold text-ulm_maroon text-center mt-20'>
+          Unofficial Transcript & Headshot
+        </p>
+        <p className='font-bold p-2 mx-16 mt-5 md:text-xl text-center'>
+          Also provide a copy of your
+          <span className='text-ulm_red hover:text-sky-700'>
+            {' '}
+            unofficial transcript{' '}
+          </span>{' '}
+          alongside a
+          <span className='text-ulm_red hover:text-sky-700'> headshot </span>
+          profile photo.
+        </p>
+      </div>
+      <div class='flex flex-col md:flex-row justify-center items-center gap-5 mt-20 ml-5 mr-5'>
+        <div class='w-full md:w-1/3 px-4 mb-4'>
+          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black  tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
             <div className='text-center p-1 text-2xl font-bold'>
               Personal Statement
             </div>
-            <div>
+            <div class='w-full'>
               <Image
-                className='mx-auto mt-10'
+                className='mx-auto py-5'
                 src={upload}
                 alt=''
                 width={100}
                 height={100}
               />
             </div>
-            <p className='text-black'>
-              <FileUpload />
-            </p>
+            <div className='mt-5'>
+              <div>
+                {personalStatementToggle ? (
+                  <div>
+                    <div className='mt-5 bg-[#fff] border border-dashed border-gray-300 rounded-md shadow-sm px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer'>
+                      <Link
+                        href='#'
+                        target='_blank'
+                        className='flex justify-center p-8'
+                      >
+                        <span className='ml-2 text-sm text-gray-700'>
+                          FileName
+                        </span>
+                      </Link>
+                    </div>
+                    <div className='flex justify-center mt-10'>
+                      <button
+                        className='mx-auto py-3 bg-[#008dff] rounded-lg px-10 text-lg hover:text-white'
+                        onClick={e => {
+                          e.preventDefault();
+                          setPersonalStatementToggle(false);
+                        }}
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <FileUploader
+                      acceptedFileTypes={[
+                        '.gif',
+                        '.bmp',
+                        '.doc',
+                        '.jpeg',
+                        '.jpg',
+                      ]}
+                      accessLevel='public'
+                    />
+                    {personalStatement && !personalStatementToggle ? (
+                      <div className='flex justify-center mt-5'>
+                        <button
+                          className='mx-auto py-3 bg-[#06ff86] rounded-lg px-10 text-lg hover:text-white'
+                          onClick={e => {
+                            e.preventDefault();
+                            setPersonalStatementToggle(prevValue => !prevValue);
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : null}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <p className='text-4xl font-bold text-ulm_maroon text-center mt-20'>
-        Unofficial Transcript & Headshot
-      </p>
-      <p className='font-bold p-2 mx-16 mt-5 md:text-xl text-center'>
-        Also provide a copy of your unofficial transcript alongside a profile
-        photo.
-      </p>
-      {/*Upload Cards*/}
-      <div className='mx-auto flex justify-center column-3 max-w-[1240px]'>
-        <div className='flex flex-wrap w-full justify-center mt-20'>
-          <div className='bg-white shadow-xl shadow-black items-center grid grid-rows-3 px-4 border hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition'>
+        <div class='w-full md:w-1/3 px-4 mb-4'>
+          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
             <div className='text-center p-1 text-2xl font-bold'>
               Unofficial Transcript
             </div>
-            <div>
+            <div class='w-full'>
               <Image
-                className='mx-auto mt-10'
+                className='mx-auto py-5'
                 src={uploadOrange}
                 alt=''
                 width={100}
                 height={100}
               />
             </div>
-            <p className='text-black'>
-              <FileUpload />
-            </p>
+            <div className='mt-5'>
+              <div>
+                {transcriptToggle ? (
+                  <div>
+                    <div className='mt-5 bg-[#fff] border border-dashed border-gray-300 rounded-md shadow-sm px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer'>
+                      <Link
+                        href='#'
+                        target='_blank'
+                        className='flex justify-center p-8'
+                      >
+                        <span className='ml-2 text-sm text-gray-700'>
+                          FileName
+                        </span>
+                      </Link>
+                    </div>
+                    <div className='flex justify-center mt-10'>
+                      <button
+                        className='mx-auto py-3 bg-[#e6781b] rounded-lg px-10 text-lg hover:text-white'
+                        onClick={e => {
+                          e.preventDefault();
+                          setTranscriptToggle(false);
+                        }}
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <FileUploader
+                      acceptedFileTypes={[
+                        '.gif',
+                        '.bmp',
+                        '.doc',
+                        '.jpeg',
+                        '.jpg',
+                      ]}
+                      accessLevel='public'
+                    />
+                    {transcript && !transcriptToggle ? (
+                      <div className='flex justify-center mt-5'>
+                        <button
+                          className='mx-auto py-3 bg-[#06ff86] rounded-lg px-10 text-lg hover:text-white'
+                          onClick={e => {
+                            e.preventDefault();
+                            setTranscriptToggle(prevValue => !prevValue);
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : null}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-
-        <div className='flex w-full justify-center mt-20'>
-          <div className='bg-white shadow-xl shadow-black hover:shadow-[#7092BE] items-center grid grid-rows-3 px-4 border border-black rounded-xl font-semibold text-sm text-black hover:text-[#7092BE] tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition'>
-            <div className='text-center p-1 text-2xl font-bold'>Headshot</div>
-            <div>
+        <div class='w-full md:w-1/3 px-4 mb-4'>
+          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
+            <div className='text-center p-1 text-2xl font-bold'> Headshot</div>
+            <div class='w-full'>
               <Image
-                className='mx-auto mt-10'
+                className='mx-auto py-5'
                 src={uploadGreen}
                 alt=''
                 width={100}
                 height={100}
               />
             </div>
-            <p className='text-black'>
-              <FileUpload />
-            </p>
+            <div className='mt-5'>
+              <div>
+                {headShotToggle ? (
+                  <div>
+                    <div className='mt-5 bg-[#fff] border border-dashed border-gray-300 rounded-md shadow-sm px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer'>
+                      <Link
+                        href='#'
+                        target='_blank'
+                        className='flex justify-center p-8'
+                      >
+                        <span className='ml-2 text-sm text-gray-700'>
+                          FileName
+                        </span>
+                      </Link>
+                    </div>
+                    <div className='flex justify-center mt-10'>
+                      <button
+                        className='mx-auto py-3 bg-[#06ff86] rounded-lg px-10 text-lg hover:text-white'
+                        onClick={e => {
+                          e.preventDefault();
+                          setHeadShotToggle(false);
+                        }}
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <FileUploader
+                      acceptedFileTypes={[
+                        '.gif',
+                        '.bmp',
+                        '.doc',
+                        '.jpeg',
+                        '.jpg',
+                      ]}
+                      accessLevel='public'
+                    />
+                    {headShot && !headShotToggle ? (
+                      <div className='flex justify-center mt-5'>
+                        <button
+                          className='mx-auto py-3 bg-[#06ff86] rounded-lg px-10 text-lg hover:text-white'
+                          onClick={e => {
+                            e.preventDefault();
+                            setHeadShotToggle(prevValue => !prevValue);
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : null}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
