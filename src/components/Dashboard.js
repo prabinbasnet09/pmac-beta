@@ -3,6 +3,8 @@ import Checklist from "./widgets/Checklist";
 import { ActiveUser } from "@/pages/_app";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+// import "@fullcalendar/core/main.css";
+// import "@fullcalendar/daygrid/main.css";
 
 export default function Dashboard() {
   const activeUser = useContext(ActiveUser);
@@ -36,14 +38,28 @@ export default function Dashboard() {
                 ) : null}
                 <div className="w-8/12 bg-[rgb(245,245,245)]  px-4 py-5 sm:p-6 rounded-md">
                   <div className="h-fit">
-                    <div className="font-bold text-lg">
-                      Calendar
+                    {/* <div className="font-bold text-lg">
+                      Calendar */}
+                    <div
+                      style={{
+                        height: "300px",
+                        width: "300px",
+                        position: "relative",
+                      }}
+                    >
                       <FullCalendar
                         plugins={[dayGridPlugin]}
                         initialView="dayGridMonth"
+                        titleFormat={{
+                          month: "short",
+                          day: "numeric",
+                        }}
+                        aspectRatio={1}
+                        height="100%"
                         //windowResize={() => {}}
                       />
                     </div>
+                    {/* </div> */}
                   </div>
                 </div>
               </div>
