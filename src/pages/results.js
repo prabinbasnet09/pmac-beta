@@ -38,89 +38,40 @@ export default function Result() {
   return activeUser ? (
     <>
     <div className='flex items-center justify-center'>
-      <div className='w-3/4 lg:px-2 sm:px-0'>
-        {isSmallScreen ? 
-
-<div className={`${'nav-body-small'}`}>
-<div className='flex justify-center space-x-4'>
-  <form
-    className=' bg-white rounded-lg p-10 w-3/4 mx-5'
-    onSubmit={e => {
-      e.preventDefault();
-    }}
-  >
-    <label
-      htmlFor='Results'
-      className='block mb-2 text-2xl font-bold text-gray-900 dark:text-black'
-    >
-      Please let us know about your results!
-    </label>
-    <p className='text-base'>
-    After applying, please fill out a brief survey if accepted, to help us improve our services for future pre-med students.
-    </p>
-    <label className='block mt-10 mb-2 text-lg font-medium text-gray-900 dark:text-black'>
-      1. Tell us which school(s) you got accepted to, if any.
-    </label>
-    <textarea
-      rows='4'
-      id='accepting_schools'
-      className='block mb-2 text-sm text-gray-800 bg-white dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 shadow-md w-full'
-      placeholder='List the school(s) you got accepted to.'
-    ></textarea>
-    <label className='block mb-2 text-lg font-medium text-gray-900 dark:text-black'>
-      2. Which school did you decide to go to?
-    </label>
-    <textarea
-      rows='4'
-      id='school_of_choice'
-      className='block mb-2 text-sm text-gray-800 bg-white dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 shadow-md w-full'
-      placeholder='Name the school you decided to attend.'
-    ></textarea>
-    <button
-      type='submit'
-      className='bg-green text-white font-bold py-2 px-4 rounded mt-3 mr-3 w-2/2'
-    >
-      Submit
-    </button>
-  </form>
-</div>
-</div>
-        
-        : 
-        
-        <div className={`${'nav-body'}`}>
-          <div className='flex justify-center space-x-4'>
+          <div className= {`${isSmallScreen ? 'px-0 w-full' : 'px-2 w-3/4'}`}>
+       
+        <div className={`${isSmallScreen ? 'nav-body-small' : 'nav-body'}`}>
+          <div className= {`${isSmallScreen ? 'w-3/2 mx-auto border border-black  p-4 mt-10 ml-9'  : 'nav-body'}`}>
             <form
-              className=' bg-white rounded-lg p-10 w-3/4 mx-5'
+              className={`bg-white rounded-lg ${isSmallScreen ? '' : 'p-5 w-full'}`}
               onSubmit={e => {
                 e.preventDefault();
               }}
             >
               <label
                 htmlFor='Results'
-                className='block mb-2 text-2xl font-bold text-gray-900 dark:text-black'
+                className='block mb-2 text-2xl font-bold text-black'
               >
                 Please let us know about your results!
               </label>
-              <p className='text-base'>
-              After applying, please fill out a brief survey if accepted, to help us improve our services for future pre-med students.
+              <p className='text-base'> If accepted, please fill out a brief survey to help us improve our services for future pre-med students!
               </p>
-              <label className='block mt-10 mb-2 text-lg font-medium text-gray-900 dark:text-black'>
-                1. Tell us which school(s) you got accepted to, if any.
+              <label className='block mt-3 mb-2 text-lg font-medium text-black'>
+                1. Tell us about the school(s) you got accepted to, if any.
               </label>
               <textarea
                 rows='4'
                 id='accepting_schools'
-                className='block mb-2 text-sm text-gray-800 bg-white dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 shadow-md w-full'
+                className='block mb-2 text-sm text-gray-800 bg-white focus:ring-0 w-full'
                 placeholder='List the school(s) you got accepted to.'
               ></textarea>
-              <label className='block mb-2 text-lg font-medium text-gray-900 dark:text-black'>
-                2. Which school did you decide to go to?
+              <label className='block mb-2 text-lg font-medium text-black'>
+                2. Which school did you decide to attend?
               </label>
               <textarea
                 rows='4'
                 id='school_of_choice'
-                className='block mb-2 text-sm text-gray-800 bg-white dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 shadow-md w-full'
+                className='block mb-2 text-sm text-gray-800 bg-white w-full'
                 placeholder='Name the school you decided to attend.'
               ></textarea>
               <button
@@ -131,7 +82,7 @@ export default function Result() {
               </button>
             </form>
           </div>
-        </div>}
+        </div>
         
       </div>
     </div></>
