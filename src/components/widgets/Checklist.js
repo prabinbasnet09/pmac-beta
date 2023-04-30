@@ -70,7 +70,7 @@ const Checklist = ({ activeUser }) => {
   return (
     <div className='w-full'>
       {activeUser && activeUser.group[0] === 'Student' ? (
-        <ul className={`w-12/12 space-y-4 ${isSmallScreen ? 'bg-ulm_maroon' : 'bg-[rgb(245,245,245)]'}   px-4 py-5 sm:p-6 rounded-md`}>
+        <ul className={`w-12/12 space-y-4 ${isSmallScreen ? '' : 'bg-[rgb(245,245,245)]'}   px-4 py-5 sm:p-6 rounded-md`}>
           <div className='font-bold text-2xl'>Application Checklist</div>
           <div
             className={`bg-white ${isSmallScreen ? 'py-8' : ''} rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}

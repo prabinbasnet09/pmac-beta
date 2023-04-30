@@ -26,7 +26,7 @@ function Documents() {
   return activeUser ? (
     <>
         <div className='flex items-center justify-center'>
-          <div className='w-3/4 px-2 sm:px-0'>
+          <div className='w-3/4 md:px-2  sm:px-0 '>
           <div className={`sm:block hidden ${'nav-body'}`}  > 
               <table className='w-full table-auto border  border-black  px-4 py-2 bg-red text-white '>
                 <thead>
@@ -225,7 +225,7 @@ function Documents() {
             </div>
 
             <div className={`sm:hidden ${'nav-body-small'}`}  > 
-              <table className='w-full table-auto border  border-black  px-4 py-2 bg-red text-white '>
+              <table className='w-full table-auto border  border-black bg-red text-white '>
                 <thead>
                   <tr>
                     <th className='w-2/4 border border-black px-4 py-2'>
