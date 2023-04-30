@@ -92,6 +92,7 @@ export const ActiveUserProvider = ({ children, currentUser }) => {
       applicantForm: users[0].applicantForm,
       applicantReleaseForm: users[0].applicantReleaseForm,
       schedule: users[0].schedule,
+      evaluators: users[0].evaluators,
     };
   } else {
     loggedUser = {

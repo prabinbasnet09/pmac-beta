@@ -21,6 +21,8 @@ export const onCreateUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -46,6 +48,8 @@ export const onUpdateUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -71,6 +75,8 @@ export const onDeleteUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -263,6 +269,7 @@ export const onCreateFacultyRecommendationForm = /* GraphQL */ `
   ) {
     onCreateFacultyRecommendationForm(filter: $filter, userId: $userId) {
       userId
+      facultyEmail
       applicantName
       date
       evaluatorName
@@ -293,6 +300,7 @@ export const onUpdateFacultyRecommendationForm = /* GraphQL */ `
   ) {
     onUpdateFacultyRecommendationForm(filter: $filter, userId: $userId) {
       userId
+      facultyEmail
       applicantName
       date
       evaluatorName
@@ -323,6 +331,7 @@ export const onDeleteFacultyRecommendationForm = /* GraphQL */ `
   ) {
     onDeleteFacultyRecommendationForm(filter: $filter, userId: $userId) {
       userId
+      facultyEmail
       applicantName
       date
       evaluatorName
@@ -341,6 +350,48 @@ export const onDeleteFacultyRecommendationForm = /* GraphQL */ `
       comments
       potential
       agreement
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateFacultyNotes = /* GraphQL */ `
+  subscription OnCreateFacultyNotes(
+    $filter: ModelSubscriptionFacultyNotesFilterInput
+  ) {
+    onCreateFacultyNotes(filter: $filter) {
+      facultyEmail
+      userId
+      date
+      notes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFacultyNotes = /* GraphQL */ `
+  subscription OnUpdateFacultyNotes(
+    $filter: ModelSubscriptionFacultyNotesFilterInput
+  ) {
+    onUpdateFacultyNotes(filter: $filter) {
+      facultyEmail
+      userId
+      date
+      notes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFacultyNotes = /* GraphQL */ `
+  subscription OnDeleteFacultyNotes(
+    $filter: ModelSubscriptionFacultyNotesFilterInput
+  ) {
+    onDeleteFacultyNotes(filter: $filter) {
+      facultyEmail
+      userId
+      date
+      notes
       createdAt
       updatedAt
     }

@@ -21,6 +21,8 @@ type User
   applicantForm: String
   applicantReleaseForm: String
   schedule: String
+  evaluators: [AWSJSON!]
+  assignedApplicants: [String!]
 }
 
 type ApplicantForm
@@ -98,7 +100,8 @@ type FacultyRecommendationForm
       { allow: owner, ownerField: "userId", operations: [read] }
     ]
   ) {
-  userId: String! @primaryKey
+  userId: String! @primaryKey(sortKeyFields: ["facultyEmail"])
+  facultyEmail: String!
   applicantName: String
   date: String
   evaluatorName: String
@@ -117,6 +120,23 @@ type FacultyRecommendationForm
   comments: String
   potential: String
   agreement: Boolean
+}
+
+type FacultyNotes
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Faculty", "ChairCommittee"]
+        operations: [create, read, update]
+      }
+    ]
+  ) {
+  facultyEmail: String! @primaryKey(sortKeyFields: ["userId"])
+  userId: String!
+  date: String
+  notes: String
 }
 
 type Query {

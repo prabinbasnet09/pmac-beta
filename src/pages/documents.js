@@ -97,31 +97,28 @@ function Documents() {
                     <td className='w-1/4  px-4 py-2 bg-white '></td>
                   </tr>
 
-                  {activeUser.facultyRecommendation ? (
-                    activeUser.facultyRecommendation[0] && (
-                      <tr>
-                        <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
-                          <Link href='/applications/facultyRecForm'>
-                            Faculty Recommendation Form 1
-                          </Link>
-                        </td>
-                        <td className='w-1/4 border border-black px-4 py-2 bg-white text-green font-bold'>
-                          Complete
-                        </td>
-                        <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                          03/25/2023
-                        </td>
-                      </tr>
-                    )
+                  {activeUser.facultyRecommendation &&
+                  activeUser.facultyRecommendation.length >= 1 ? (
+                    <tr>
+                      <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
+                        Faculty Recommendation Form 1
+                      </td>
+                      <td className='w-1/4 border border-black px-4 py-2 bg-white text-green font-bold'>
+                        Complete
+                      </td>
+                      <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                        03/25/2023
+                      </td>
+                    </tr>
                   ) : (
                     <tr>
-                      <td className='w-3/4 border border-black px-20 py-2 bg-white text-black hover:text-red hover:font-bold'>
-                        <Link href='/applications/facultyRecForm'>
-                          Faculty Recommendation Form 1
-                        </Link>
+                      <td className='w-3/4 border border-black px-20 py-2 bg-white text-black cursor-pointer hover:text-red hover:font-bold'>
+                        Faculty Recommendation Form 1
                       </td>
-                      <td className='w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm'>
-                        Incomplete...
+                      <td className='w-1/4 border border-black px-4 py-2 bg-white text-gray italic text-sm  '>
+                        <Link href='/forms/facultyRecommendation'>
+                          Incomplete...
+                        </Link>
                       </td>
                       <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
                         03/25/2023
@@ -129,30 +126,28 @@ function Documents() {
                     </tr>
                   )}
 
-                  {activeUser.facultyRecommendation ? (
-                    activeUser.facultyRecommendation[1] && (
-                      <tr>
-                        <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
-                          <Link href='/applications/facultyRecForm'>
-                            Faculty Recommendation Form 2
-                          </Link>
-                        </td>
-                        <td className='w-1/4 border border-black px-4 py-2 bg-white text-green font-bold'>
-                          Complete
-                        </td>
-                        <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                          03/25/2023
-                        </td>
-                      </tr>
-                    )
+                  {activeUser.facultyRecommendation &&
+                  activeUser.facultyRecommendation.length === 2 ? (
+                    <tr>
+                      <td className='w-3/4 border border-black px-4 py-2 bg-white text-black '>
+                        Faculty Recommendation Form 2
+                      </td>
+                      <td className='w-1/4 border border-black px-4 py-2 bg-white text-green font-bold'>
+                        Complete
+                      </td>
+                      <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                        03/25/2023
+                      </td>
+                    </tr>
                   ) : (
                     <tr>
-                      <td className='w-3/4 border border-black px-20 py-2 bg-white text-black hover:text-red hover:font-bold'>
-                        <Link href='/applications/facultyRecForm'>
+                      <td className='w-3/4 border border-black px-20 py-2 bg-white text-black hover:text-red hover:font-bold '>
+                        <Link href='/forms/facultyRecommendation'>
                           Faculty Recommendation Form 2
                         </Link>
                       </td>
-                      <td className='w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm'>
+
+                      <td className='w-1/4 border border-black px-4 py-2 bg-white  text-gray italic text-sm'>
                         Incomplete...
                       </td>
                       <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
@@ -165,8 +160,9 @@ function Documents() {
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black hover:text-red hover:font-bold'>
                       <Link href='/referrals'>Add Referrals</Link>
                     </td>
-                    <td className='w-1/4 border border-black px-4 py-2 bg-white text-gray italic text-sm'>
-                      0/2
+                    <td className='w-1/4 border border-black px-4 py-2 bg-white text-red font-semibold italic text-sm'>
+                      {activeUser.evaluators ? activeUser.evaluators.length : 0}
+                      /2
                     </td>
                     <td className='w-3/4 border border-black px-4 py-2 bg-white text-center text-red font-bold'>
                       -

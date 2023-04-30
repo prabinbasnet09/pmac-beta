@@ -11,10 +11,16 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 
 export default function FacultyApplicantsList(props) {
   const [selectedUser, setSelectedUser] = useState(false);
-  const [applicants, setApplicants] = useState(props.users);
+  const [applicants, setApplicants] = useState(
+    props.users.filter(
+      user =>
+        user.groups[0] !== 'Faculty' && user.groups[0] !== 'ChairCommittee'
+    )
+  );
   const [content, setContent] = useState('');
-  const [showPopover, setShowPopover] = useState(false);
   const [steps, setSteps] = useState([]);
+
+  console.log(applicants);
 
   const modules = {
     toolbar: [
@@ -92,7 +98,7 @@ export default function FacultyApplicantsList(props) {
             ? 2
             : 1
           : 0,
-        path: '/applications/facultyRecForm',
+        path: '/evaluators',
       },
       { label: 'Schedule', state: user.schedule ? 2 : 0, path: '#' },
       {
@@ -132,7 +138,7 @@ export default function FacultyApplicantsList(props) {
                 key={applicant.id}
                 className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
                 onClick={e => handleUserSelection(e, applicant)}
-              >
+              >    
                 {applicant.name}
               </div>
             ))}
@@ -143,7 +149,7 @@ export default function FacultyApplicantsList(props) {
           <div className='p-3 mt-10 mb-2 bg-[#681212] rounded-lg text-[#fff] text-lg font-bold text-center'>
             Unassigned Applicants
           </div>
-          <div className='scrollbar-thin p-2'>
+          <div className=' overflow-y-scroll scrollbar-thin  p-2'>
             {applicants.map(applicant => (
               <div
                 key={applicant.id}
@@ -190,24 +196,10 @@ export default function FacultyApplicantsList(props) {
                 value={content}
                 onChange={handleContentChange}
               />
-              <button
-                className='absolute top-0 right-0 px-3 py-1 font-bold text-xl text-black rounded-md'
-                onClick={() => setShowPopover(true)}
-              >
+              <button className='absolute top-0 right-0 px-3 py-1 font-bold text-xl text-black rounded-md'>
                 &#x26F6;
               </button>
             </div>
-            {showPopover && (
-              <div className='popover'>
-                <QuillNoSSRWrapper
-                  theme='snow'
-                  modules={modules}
-                  formats={formats}
-                  value={content}
-                  onChange={handleContentChange}
-                />
-              </div>
-            )}
           </div>
 
           {/* <!-- Students Checklist --> */}

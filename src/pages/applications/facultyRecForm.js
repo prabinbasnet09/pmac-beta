@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 
 export default function FacultyRecommendationdForm() {
   const router = useRouter();
-  const { user } = router.query;
+  const { user, facultyEmail } = router.query;
   const [sign, setSign] = useState(false);
 
   const initialValues = {
@@ -31,15 +31,24 @@ export default function FacultyRecommendationdForm() {
   };
 
   useEffect(() => {
-    const { user } = router.query;
     const fetchUser = async () => {
       await Auth.currentAuthenticatedUser().then(async () => {
         await API.graphql({
           query: queries.listFacultyRecommendationForms,
-          variables: { userId: user },
+          variables: {
+            filter: {
+              userId: {
+                eq: user,
+              },
+              facultyEmail: {
+                eq: facultyEmail,
+              },
+            },
+          },
           authMode: 'AMAZON_COGNITO_USER_POOLS',
         })
           .then(res => {
+            console.log(res);
             const data = res.data.listFacultyRecommendationForms.items[0];
             if (data) {
               initialValues.applicantName = data.applicantName;

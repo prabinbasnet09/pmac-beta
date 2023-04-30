@@ -39,3 +39,22 @@
   align-items: center;
   justify-content: center;
 }
+
+
+.scrollbar-thin {
+  max-height: 600px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+/* Hide the up and down arrow of the scrollbar */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #f5f5f5;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #d4d4d4;
+}

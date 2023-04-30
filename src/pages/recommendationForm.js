@@ -104,6 +104,7 @@ export default function RecommendationForm() {
       comments: values.comments,
       potential: values.potential,
       agreement: values.sign,
+      facultyEmail: guestUser.email,
     };
     axios
       .post(backendURL, requestBody, requestConfig)

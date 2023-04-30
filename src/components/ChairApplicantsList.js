@@ -161,7 +161,7 @@ export default function ChairApplicantsList(props) {
             ? 2
             : 1
           : 0,
-        path: '/applications/facultyRecForm',
+        path: '/evaluators',
       },
       { label: 'Schedule', state: user.schedule ? 2 : 0, path: '#' },
       {

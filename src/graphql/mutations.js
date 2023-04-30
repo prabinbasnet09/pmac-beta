@@ -18,6 +18,8 @@ export const onVerifyUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -40,6 +42,8 @@ export const changePersonalStatement = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -64,6 +68,8 @@ export const changeFacultyRecommendation = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -86,6 +92,8 @@ export const changeApplicationForm = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -110,6 +118,8 @@ export const changeApplicationReleaseForm = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -132,6 +142,8 @@ export const changeTranscript = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -154,6 +166,8 @@ export const changeProfilePicture = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -179,6 +193,8 @@ export const createUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -204,6 +220,8 @@ export const updateUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -229,6 +247,8 @@ export const deleteUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -421,6 +441,7 @@ export const createFacultyRecommendationForm = /* GraphQL */ `
   ) {
     createFacultyRecommendationForm(input: $input, condition: $condition) {
       userId
+      facultyEmail
       applicantName
       date
       evaluatorName
@@ -451,6 +472,7 @@ export const updateFacultyRecommendationForm = /* GraphQL */ `
   ) {
     updateFacultyRecommendationForm(input: $input, condition: $condition) {
       userId
+      facultyEmail
       applicantName
       date
       evaluatorName
@@ -481,6 +503,7 @@ export const deleteFacultyRecommendationForm = /* GraphQL */ `
   ) {
     deleteFacultyRecommendationForm(input: $input, condition: $condition) {
       userId
+      facultyEmail
       applicantName
       date
       evaluatorName
@@ -499,6 +522,51 @@ export const deleteFacultyRecommendationForm = /* GraphQL */ `
       comments
       potential
       agreement
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createFacultyNotes = /* GraphQL */ `
+  mutation CreateFacultyNotes(
+    $input: CreateFacultyNotesInput!
+    $condition: ModelFacultyNotesConditionInput
+  ) {
+    createFacultyNotes(input: $input, condition: $condition) {
+      facultyEmail
+      userId
+      date
+      notes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFacultyNotes = /* GraphQL */ `
+  mutation UpdateFacultyNotes(
+    $input: UpdateFacultyNotesInput!
+    $condition: ModelFacultyNotesConditionInput
+  ) {
+    updateFacultyNotes(input: $input, condition: $condition) {
+      facultyEmail
+      userId
+      date
+      notes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFacultyNotes = /* GraphQL */ `
+  mutation DeleteFacultyNotes(
+    $input: DeleteFacultyNotesInput!
+    $condition: ModelFacultyNotesConditionInput
+  ) {
+    deleteFacultyNotes(input: $input, condition: $condition) {
+      facultyEmail
+      userId
+      date
+      notes
       createdAt
       updatedAt
     }

@@ -18,6 +18,8 @@ export const getStudentDocuments = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -40,6 +42,8 @@ export const getUser = /* GraphQL */ `
       applicantForm
       applicantReleaseForm
       schedule
+      evaluators
+      assignedApplicants
       createdAt
       updatedAt
     }
@@ -67,6 +71,8 @@ export const listUsers = /* GraphQL */ `
         applicantForm
         applicantReleaseForm
         schedule
+        evaluators
+        assignedApplicants
         createdAt
         updatedAt
       }
@@ -213,9 +219,10 @@ export const listApplicantReleaseForms = /* GraphQL */ `
   }
 `;
 export const getFacultyRecommendationForm = /* GraphQL */ `
-  query GetFacultyRecommendationForm($userId: String!) {
-    getFacultyRecommendationForm(userId: $userId) {
+  query GetFacultyRecommendationForm($userId: String!, $facultyEmail: String!) {
+    getFacultyRecommendationForm(userId: $userId, facultyEmail: $facultyEmail) {
       userId
+      facultyEmail
       applicantName
       date
       evaluatorName
@@ -242,6 +249,7 @@ export const getFacultyRecommendationForm = /* GraphQL */ `
 export const listFacultyRecommendationForms = /* GraphQL */ `
   query ListFacultyRecommendationForms(
     $userId: String
+    $facultyEmail: ModelStringKeyConditionInput
     $filter: ModelFacultyRecommendationFormFilterInput
     $limit: Int
     $nextToken: String
@@ -249,6 +257,7 @@ export const listFacultyRecommendationForms = /* GraphQL */ `
   ) {
     listFacultyRecommendationForms(
       userId: $userId
+      facultyEmail: $facultyEmail
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -256,6 +265,7 @@ export const listFacultyRecommendationForms = /* GraphQL */ `
     ) {
       items {
         userId
+        facultyEmail
         applicantName
         date
         evaluatorName
@@ -274,6 +284,47 @@ export const listFacultyRecommendationForms = /* GraphQL */ `
         comments
         potential
         agreement
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getFacultyNotes = /* GraphQL */ `
+  query GetFacultyNotes($facultyEmail: String!, $userId: String!) {
+    getFacultyNotes(facultyEmail: $facultyEmail, userId: $userId) {
+      facultyEmail
+      userId
+      date
+      notes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFacultyNotes = /* GraphQL */ `
+  query ListFacultyNotes(
+    $facultyEmail: String
+    $userId: ModelStringKeyConditionInput
+    $filter: ModelFacultyNotesFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listFacultyNotes(
+      facultyEmail: $facultyEmail
+      userId: $userId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        facultyEmail
+        userId
+        date
+        notes
         createdAt
         updatedAt
       }
