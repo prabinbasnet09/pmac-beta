@@ -47,7 +47,7 @@ export default function Dashboard() {
 
       {isSmallScreen && (
         <div className='flex items-center justify-center'>
-          <div className='w-3/4 mt-20 ml-10 '>
+          <div className={`w-3/4 mt-20 ml-10 bg-gray rounded-lg `}>
             <div className='flex space-x-4'>
               {/* Display all the checklist */}
               {activeUser.group[0] === 'Student' ? (

@@ -31,16 +31,12 @@ export default function TabBar({ tabList }) {
               {tabs &&
                 tabs.map((tab, index) => (
                   <li key={index} className='transform rotate-90 origin-center'>
-                    <a
+                    <Link
                       href={tab.path}
-                      className={`${
-                        router.pathname === `${tab.path}`
-                          ? 'text-gold font-bold'
-                          : 'text-white font-bold hover:text-white'
-                      } whitespace-nowrap`}
+                      className='text-white font-bold'
                     >
                       {tab.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
             </ul>
