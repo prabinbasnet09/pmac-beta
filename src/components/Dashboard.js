@@ -1,6 +1,8 @@
-import { useState, useEffect, useContext } from 'react';
-import Checklist from './widgets/Checklist';
-import { ActiveUser } from '@/pages/_app';
+import { useState, useEffect, useContext } from "react";
+import Checklist from "./widgets/Checklist";
+import { ActiveUser } from "@/pages/_app";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
 
 export default function Dashboard() {
   const activeUser = useContext(ActiveUser);
@@ -12,11 +14,11 @@ export default function Dashboard() {
       setWindowSize({ width: window.innerWidth });
     }
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     handleResize();
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const isSmallScreen = windowSize.width < 700;
@@ -24,17 +26,24 @@ export default function Dashboard() {
   return activeUser ? (
     <>
       {!isSmallScreen && (
-        <div className='flex items-center justify-center '>
-          <div className='w-3/4 px-2 sm:px-0'>
-            <div className={`${'nav-body'}`}>
-              <div className='flex space-x-4'>
+        <div className="flex items-center justify-center ">
+          <div className="w-3/4 px-2 sm:px-0">
+            <div className={`${"nav-body"}`}>
+              <div className="flex space-x-4">
                 {/* Display all the checklist */}
-                {activeUser.group[0] === 'Student' ? (
+                {activeUser.group[0] === "Student" ? (
                   <Checklist activeUser={activeUser} />
                 ) : null}
-                <div className='w-8/12 bg-[rgb(245,245,245)]  px-4 py-5 sm:p-6 rounded-md'>
-                  <div className='h-fit'>
-                    <div className='font-bold text-lg'>Calendar</div>
+                <div className="w-8/12 bg-[rgb(245,245,245)]  px-4 py-5 sm:p-6 rounded-md">
+                  <div className="h-fit">
+                    <div className="font-bold text-lg">
+                      Calendar
+                      <FullCalendar
+                        plugins={[dayGridPlugin]}
+                        initialView="dayGridMonth"
+                        //windowResize={() => {}}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -46,11 +55,11 @@ export default function Dashboard() {
       )}
 
       {isSmallScreen && (
-        <div className='flex items-center justify-center'>
-          <div className='w-3/4 mt-20 ml-10 '>
-            <div className='flex space-x-4'>
+        <div className="flex items-center justify-center">
+          <div className="w-3/4 mt-20 ml-10 ">
+            <div className="flex space-x-4">
               {/* Display all the checklist */}
-              {activeUser.group[0] === 'Student' ? (
+              {activeUser.group[0] === "Student" ? (
                 <Checklist activeUser={activeUser} />
               ) : null}
             </div>
