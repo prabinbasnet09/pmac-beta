@@ -110,7 +110,7 @@ export default function StatementTranscript() {
       </div>
       <div class='flex flex-wrap justify-center md:flex-row gap-5 mt-20 ml-5 mr-5'>
         <div class='w-full md:w-1/3 px-4 mb-4'>
-          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black  tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
+          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border border-black rounded-xl font-semibold text-sm text-black  tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
             <div className='text-center p-1 text-2xl font-bold'>
               Personal Statement
             </div>
@@ -182,7 +182,7 @@ export default function StatementTranscript() {
           </div>
         </div>
         <div class='w-full md:w-1/3 px-4 mb-4'>
-          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
+          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border border-black rounded-xl font-semibold text-sm text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
             <div className='text-center p-1 text-2xl font-bold'>
               Unofficial Transcript
             </div>
@@ -254,7 +254,7 @@ export default function StatementTranscript() {
           </div>
         </div>
         <div class='w-full md:w-1/3 px-4 mb-4'>
-          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
+          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border border-black rounded-xl font-semibold text-sm text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
             <div className='text-center p-1 text-2xl font-bold'> Headshot</div>
             <div class='w-full'>
               <Image
@@ -324,7 +324,7 @@ export default function StatementTranscript() {
           </div>
         </div>
         <div class='w-full md:w-1/3 px-4 mb-4'>
-          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
+          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border border-black rounded-xl font-semibold text-sm text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
             <div className='text-center p-1 text-2xl font-bold'>
               {' '}
               AMCAS Form

@@ -593,8 +593,8 @@ export default function AppInfo() {
 
   return activeUser ? (
     <>
-      <div className='mt-9 rounded border-2 border-gold w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 '>
-        <h1 className='text-center text-4xl font-bold text-gold'>
+      <div className='mt-9 rounded border-2 border-gray w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 '>
+        <h1 className='text-center text-4xl font-bold text-ulm_maroon'>
           Applicant Information Form
         </h1>
         <Formik
@@ -954,7 +954,7 @@ export default function AppInfo() {
                               <span>Please include your breakdown scores.</span>
                             </label>
 
-                            <h3 className='mt-3 mb-3'>MCAT</h3>
+                            <h3 className='mt-3 mb-3 font-bold'>MCAT</h3>
                             <table className='w-full mb-5'>
                               <thead>
                                 <tr className='bg-red text-white border border-black   '>
@@ -1033,7 +1033,7 @@ export default function AppInfo() {
                               </tbody>
                             </table>
 
-                            <h3 className='mt-3 mb-3'>DAT</h3>
+                            <h3 className='mt-3 mb-3 font-bold'>DAT</h3>
                             <table className='w-full mb-5'>
                               <thead>
                                 <tr className='bg-red text-white border border-black   '>
@@ -1109,7 +1109,7 @@ export default function AppInfo() {
                               </tbody>
                             </table>
 
-                            <h3 className='mt-3 mb-3'>OAT</h3>
+                            <h3 className='mt-3 mb-3 font-bold'>OAT</h3>
                             <table className='w-full mb-5'>
                               <thead>
                                 <tr className='bg-red text-white border border-black   '>
@@ -1185,7 +1185,7 @@ export default function AppInfo() {
                               </tbody>
                             </table>
 
-                            <h3 className='mt-3 mb-3'>GRE</h3>
+                            <h3 className='mt-3 mb-3 font-bold'>GRE</h3>
                             <table className='w-full mb-5'>
                               <thead>
                                 <tr className='bg-red text-white border border-black   '>
@@ -1438,7 +1438,7 @@ export default function AppInfo() {
                                           Membership/Academic Clubs{' '}
                                         </h2>
                                         <div className='overflow-x-auto'>
-                                          <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                          <table className='table-auto border-collapse border border-black w-full bg-red  text-white '>
                                             <thead>
                                               <tr>
                                                 {headingsone.map(
@@ -1516,7 +1516,7 @@ export default function AppInfo() {
                                         </div>
 
                                         <button
-                                          className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                                          className='inline-flex items-center gap-1 bg-ulm_maroon text-white px-1 py-1 mt-5 mr-2 rounded'
                                           type='button'
                                           onClick={handleOneAddRow}
                                         >
@@ -1562,7 +1562,7 @@ export default function AppInfo() {
                                         </h2>
 
                                         <div className='overflow-x-auto'>
-                                          <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                          <table className='table-auto border-collapse border border-black w-full bg-red  text-white '>
                                             <thead>
                                               <tr>
                                                 {headingstwo.map(
@@ -1640,7 +1640,7 @@ export default function AppInfo() {
                                         </div>
 
                                         <button
-                                          className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                                          className='inline-flex items-center gap-1 bg-ulm_maroon text-white px-1 py-1 mt-5 mr-2 rounded'
                                           type='button'
                                           onClick={handleTwoAddRow}
                                         >
@@ -1686,7 +1686,7 @@ export default function AppInfo() {
                                         </h2>
 
                                         <div className='overflow-x-auto'>
-                                          <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                          <table className='table-auto border-collapse border border-black w-full bg-red  text-white '>
                                             <thead>
                                               <tr>
                                                 {headingsthree.map(
@@ -1764,7 +1764,7 @@ export default function AppInfo() {
                                         </div>
 
                                         <button
-                                          className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                                          className='inline-flex items-center gap-1 bg-ulm_maroon text-white px-1 py-1 mt-5 mr-2 rounded'
                                           type='button'
                                           onClick={handleThreeAddRow}
                                         >
@@ -1810,7 +1810,7 @@ export default function AppInfo() {
                                         </h2>
 
                                         <div className='overflow-x-auto'>
-                                          <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                          <table className='table-auto border-collapse border border-black w-full bg-red  text-white '>
                                             <thead>
                                               <tr>
                                                 {headingsfour.map(
@@ -1888,7 +1888,7 @@ export default function AppInfo() {
                                         </div>
 
                                         <button
-                                          className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                                          className='inline-flex items-center gap-1 bg-ulm_maroon text-white px-1 py-1 mt-5 mr-2 rounded'
                                           type='button'
                                           onClick={handleFourAddRow}
                                         >
@@ -1934,7 +1934,7 @@ export default function AppInfo() {
                                         </h2>
 
                                         <div className='overflow-x-auto'>
-                                          <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                          <table className='table-auto border-collapse border border-black w-full bg-red  text-white '>
                                             <thead>
                                               <tr>
                                                 {headingsfive.map(
@@ -2012,7 +2012,7 @@ export default function AppInfo() {
                                         </div>
 
                                         <button
-                                          className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                                          className='inline-flex items-center gap-1 bg-ulm_maroon text-white px-1 py-1 mt-5 mr-2 rounded'
                                           type='button'
                                           onClick={handleFiveAddRow}
                                         >
@@ -2058,7 +2058,7 @@ export default function AppInfo() {
                                         </h2>
 
                                         <div className='overflow-x-auto'>
-                                          <table className='table-auto border-collapse border border-black w-full bg-red opacity-75 text-white '>
+                                          <table className='table-auto border-collapse border border-black w-full bg-red  text-white '>
                                             <thead>
                                               <tr>
                                                 {headingssix.map(
@@ -2136,7 +2136,7 @@ export default function AppInfo() {
                                         </div>
 
                                         <button
-                                          className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                                          className='inline-flex items-center gap-1 bg-ulm_maroon text-white px-1 py-1 mt-5 mr-2 rounded'
                                           type='button'
                                           onClick={handleSixAddRow}
                                         >
@@ -2193,7 +2193,7 @@ export default function AppInfo() {
                 {activeUser.applicantForm === 'Submitted' ? (
                   <button
                     type='submit'
-                    className='ml-5 bg-green hover:opacity-50 text-white font-bold py-2 px-7 rounded'
+                    className='ml-5 bg-ulm_logo_red hover:opacity-50 text-white font-bold py-2 px-7 rounded'
                   >
                     Update
                   </button>
@@ -2201,14 +2201,14 @@ export default function AppInfo() {
                   <div className='flex justify-center'>
                     <button
                       type='button'
-                      className='bg-gold hover:opacity-50 text-white font-bold py-2 px-7 rounded'
+                      className='bg-ulm_maroon hover:opacity-50 text-white font-bold py-2 px-7 rounded'
                       onClick={() => onTempSave(values)}
                     >
                       Save
                     </button>
                     <button
                       type='submit'
-                      className='ml-5 bg-green hover:opacity-50 text-white font-bold py-2 px-7 rounded'
+                      className='ml-5 bg-ulm_logo_red hover:opacity-50 text-white font-bold py-2 px-7 rounded'
                     >
                       Submit
                     </button>

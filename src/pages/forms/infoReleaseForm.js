@@ -272,8 +272,8 @@ export default function InfoReleaseForm() {
     <div className='mt-10 sm:mt-0'>
       <div className='mt-10 w-full md:mt-10'>
         <div className='overflow-hidden shadow sm:rounded-md'>
-          <div className='border-2 border-gold w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 '>
-            <h1 className='text-center text-4xl font-bold text-gold'>
+          <div className='border-2 border-r border-gray w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 '>
+            <h1 className='text-center text-4xl font-bold text-ulm_maroon'>
               Information Release Form
             </h1>
 
@@ -533,7 +533,7 @@ export default function InfoReleaseForm() {
                   </div>
 
                   <button
-                    className='inline-flex items-center gap-1 bg-gold text-white px-1 py-1 mt-5 mr-2 rounded'
+                    className='inline-flex items-center gap-1 bg-ulm_maroon text-white px-1 py-1 mt-5 mr-2 rounded'
                     type='button'
                     onClick={handleAddRow}
                   >
@@ -585,7 +585,7 @@ export default function InfoReleaseForm() {
                       <div className='flex justify-center'>
                         <button
                           type='button'
-                          className='bg-gold hover:opacity-50 text-white font-bold py-2 px-7 rounded'
+                          className='bg-ulm_maroon hover:opacity-50 text-white font-bold py-2 px-7 rounded'
                           onClick={e => {
                             e.preventDefault();
                             onTempSave(values);
@@ -595,7 +595,7 @@ export default function InfoReleaseForm() {
                         </button>
                         <button
                           type='submit'
-                          className='ml-5 bg-green hover:opacity-50 text-white font-bold py-2 px-7 rounded'
+                          className='ml-5 bg-ulm_logo_red hover:opacity-50 text-white font-bold py-2 px-7 rounded'
                         >
                           Submit
                         </button>
