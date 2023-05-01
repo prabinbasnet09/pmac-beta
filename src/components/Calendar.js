@@ -1,33 +1,37 @@
-import format from "date-fns/format";
-import parse from "date-fns/parse";
-import startOfWeek from "date-fns/startOfWeek";
-import getDay from "date-fns/getDay";
-import parseISO from "date-fns/parseISO";
-import { useState, useEffect, useContext } from "react";
-import { useRef } from "react";
+import format from 'date-fns/format';
+import parse from 'date-fns/parse';
+import startOfWeek from 'date-fns/startOfWeek';
+import getDay from 'date-fns/getDay';
+import parseISO from 'date-fns/parseISO';
+import { useState, useEffect, useContext } from 'react';
+import { useRef } from 'react';
 
-import ReactDatePicker from "react-datepicker";
-import FullCalendar from "@fullcalendar/react";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
-import { useRouter } from "next/router";
-import { Auth } from "aws-amplify";
-import dynamic from "next/dynamic";
+import ReactDatePicker from 'react-datepicker';
+import FullCalendar from '@fullcalendar/react';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
+import { useRouter } from 'next/router';
+import * as mutations from '@/graphql/mutations';
+import * as queries from '@/graphql/queries';
+import { API } from 'aws-amplify';
+import dynamic from 'next/dynamic';
+import { ActiveUser } from '@/pages/_app';
+import Link from 'next/link';
 
-function Calendar() {
+function Calendar(props) {
+  const activeUser = useContext(ActiveUser);
   const [allEvents, setAllEvents] = useState([]);
   const [toggle, setToggle] = useState(false);
   const router = useRouter();
 
   let draggable = null;
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const externalEventsEl = document.getElementById("external-events");
+    if (typeof window !== 'undefined') {
+      const externalEventsEl = document.getElementById('external-events');
       if (externalEventsEl) {
-        console.log("externalEventsEl", externalEventsEl);
         draggable = new Draggable(externalEventsEl, {
-          itemSelector: ".fc-event",
+          itemSelector: '.fc-event',
           eventData: function (eventEl) {
             return {
               title: eventEl.innerText,
@@ -35,6 +39,14 @@ function Calendar() {
             };
           },
         });
+      }
+    }
+
+    if (activeUser && activeUser.schedule[0]) {
+      try {
+        setAllEvents(JSON.parse(activeUser.schedule));
+      } catch (error) {
+        console.log(activeUser.schedule);
       }
     }
 
@@ -47,130 +59,130 @@ function Calendar() {
 
   const calendarOneEvents = [
     {
-      id: "0",
-      title: "Unavailable",
-      start: "2023-04-24T08:00:00-05:00",
-      end: "2023-04-24T10:00:00-05:00",
-      daysOfWeek: [`${getDay(parseISO("2023-04-24T08:00:00-05:00"))}`],
-      startRecur: "2023-04-24",
-      startTime: format(parseISO("2023-04-24T08:00:00-05:00"), "HH:mm"),
-      endTime: format(parseISO("2023-04-24T10:00:00-05:00"), "HH:mm"),
+      id: '0',
+      title: 'Unavailable',
+      start: '2023-04-24T08:00:00-05:00',
+      end: '2023-04-24T10:00:00-05:00',
+      daysOfWeek: [`${getDay(parseISO('2023-04-24T08:00:00-05:00'))}`],
+      startRecur: '2023-04-24',
+      startTime: format(parseISO('2023-04-24T08:00:00-05:00'), 'HH:mm'),
+      endTime: format(parseISO('2023-04-24T10:00:00-05:00'), 'HH:mm'),
     },
     {
-      id: "1",
-      title: "Unavailable",
-      start: "2023-04-26T08:00:00-05:00",
-      end: "2023-04-26T10:00:00-05:00",
+      id: '1',
+      title: 'Unavailable',
+      start: '2023-04-26T08:00:00-05:00',
+      end: '2023-04-26T10:00:00-05:00',
     },
     {
-      id: "2",
-      title: "Unavailable",
-      start: "2023-04-25T11:00:00-05:00",
-      end: "2023-04-25T13:00:00-05:00",
+      id: '2',
+      title: 'Unavailable',
+      start: '2023-04-25T11:00:00-05:00',
+      end: '2023-04-25T13:00:00-05:00',
     },
     {
-      id: "3",
-      title: "Unavailable",
-      start: "2023-04-27T11:00:00-05:00",
-      end: "2023-04-27T13:00:00-05:00",
+      id: '3',
+      title: 'Unavailable',
+      start: '2023-04-27T11:00:00-05:00',
+      end: '2023-04-27T13:00:00-05:00',
     },
     {
-      id: "4",
-      title: "Unavailable",
-      start: "2023-04-28T07:30:00-05:00",
-      end: "2023-04-28T10:00:00-05:00",
+      id: '4',
+      title: 'Unavailable',
+      start: '2023-04-28T07:30:00-05:00',
+      end: '2023-04-28T10:00:00-05:00',
     },
     {
-      id: "5",
-      title: "Unavailable",
-      start: "2023-04-24T13:00:00-05:00",
-      end: "2023-04-24T17:00:00-05:00",
+      id: '5',
+      title: 'Unavailable',
+      start: '2023-04-24T13:00:00-05:00',
+      end: '2023-04-24T17:00:00-05:00',
     },
     {
-      id: "6",
-      title: "Unavailable",
-      start: "2023-04-26T13:00:00-05:00",
-      end: "2023-04-26T17:00:00-05:00",
+      id: '6',
+      title: 'Unavailable',
+      start: '2023-04-26T13:00:00-05:00',
+      end: '2023-04-26T17:00:00-05:00',
     },
   ];
 
   const calendarTwoEvents = [
     {
-      id: "0",
-      title: "Unavailable",
-      start: "2023-04-24T09:00:00-05:00",
-      end: "2023-04-24T11:00:00-05:00",
+      id: '0',
+      title: 'Unavailable',
+      start: '2023-04-24T09:00:00-05:00',
+      end: '2023-04-24T11:00:00-05:00',
     },
     {
-      id: "1",
-      title: "Unavailable",
-      start: "2023-04-26T09:00:00-05:00",
-      end: "2023-04-26T11:00:00-05:00",
+      id: '1',
+      title: 'Unavailable',
+      start: '2023-04-26T09:00:00-05:00',
+      end: '2023-04-26T11:00:00-05:00',
     },
     {
-      id: "2",
-      title: "Unavailable",
-      start: "2023-04-28T08:00:00-05:00",
-      end: "2023-04-28T11:00:00-05:00",
+      id: '2',
+      title: 'Unavailable',
+      start: '2023-04-28T08:00:00-05:00',
+      end: '2023-04-28T11:00:00-05:00',
     },
     {
-      id: "3",
-      title: "Unavailable",
-      start: "2023-04-25T10:00:00-05:00",
-      end: "2023-04-25T12:00:00-05:00",
+      id: '3',
+      title: 'Unavailable',
+      start: '2023-04-25T10:00:00-05:00',
+      end: '2023-04-25T12:00:00-05:00',
     },
     {
-      id: "4",
-      title: "Unavailable",
-      start: "2023-04-27T10:00:00-05:00",
-      end: "2023-04-27T12:00:00-05:00",
+      id: '4',
+      title: 'Unavailable',
+      start: '2023-04-27T10:00:00-05:00',
+      end: '2023-04-27T12:00:00-05:00',
     },
     {
-      id: "5",
-      title: "Unavailable",
-      start: "2023-04-26T13:00:00-05:00",
-      end: "2023-04-26T16:30:00-05:00",
+      id: '5',
+      title: 'Unavailable',
+      start: '2023-04-26T13:00:00-05:00',
+      end: '2023-04-26T16:30:00-05:00',
     },
     {
-      id: "6",
-      title: "Unavailable",
-      start: "2023-04-24T13:00:00-05:00",
-      end: "2023-04-24T16:30:00-05:00",
+      id: '6',
+      title: 'Unavailable',
+      start: '2023-04-24T13:00:00-05:00',
+      end: '2023-04-24T16:30:00-05:00',
     },
   ];
 
   const calendarThreeEvents = [
     {
-      id: "0",
-      title: "Unavailable",
-      start: "2023-04-24T08:00:00-05:00",
-      end: "2023-04-24T10:00:00-05:00",
+      id: '0',
+      title: 'Unavailable',
+      start: '2023-04-24T08:00:00-05:00',
+      end: '2023-04-24T10:00:00-05:00',
     },
 
     {
-      id: "1",
-      title: "Unavailable",
-      start: "2023-04-26T08:00:00-05:00",
-      end: "2023-04-26T10:00:00-05:00",
+      id: '1',
+      title: 'Unavailable',
+      start: '2023-04-26T08:00:00-05:00',
+      end: '2023-04-26T10:00:00-05:00',
     },
     {
-      id: "2",
-      title: "Unavailable",
-      start: "2023-04-28T09:30:00-05:00",
-      end: "2023-04-28T12:00:00-05:00",
+      id: '2',
+      title: 'Unavailable',
+      start: '2023-04-28T09:30:00-05:00',
+      end: '2023-04-28T12:00:00-05:00',
     },
 
     {
-      id: "3",
-      title: "Unavailable",
-      start: "2023-04-25T14:00:00-05:00",
-      end: "2023-04-25T16:00:00-05:00",
+      id: '3',
+      title: 'Unavailable',
+      start: '2023-04-25T14:00:00-05:00',
+      end: '2023-04-25T16:00:00-05:00',
     },
     {
-      id: "4",
-      title: "Unavailable",
-      start: "2023-04-27T11:00:00-05:00",
-      end: "2023-04-27T13:00:00-05:00",
+      id: '4',
+      title: 'Unavailable',
+      start: '2023-04-27T11:00:00-05:00',
+      end: '2023-04-27T13:00:00-05:00',
     },
   ];
 
@@ -196,7 +208,7 @@ function Calendar() {
       ) {
         const freeSlot = {
           id: `${freeSlots.length}`,
-          title: "Available",
+          title: 'Available',
           start: new Date(currentEvent.end).toISOString(),
           end: new Date(nextEvent.start).toISOString(),
         };
@@ -230,7 +242,7 @@ function Calendar() {
         let overlapping = true;
         for (let j = 0; j < calendars.length; j++) {
           const calendarEvents = calendars[j];
-          const overlappingEvent = calendarEvents.find((event) => {
+          const overlappingEvent = calendarEvents.find(event => {
             return (
               event.start <= currentEvent.end && event.end >= nextEvent.start
             );
@@ -243,7 +255,7 @@ function Calendar() {
         if (overlapping) {
           const freeSlot = {
             id: `${freeSlots.length}`,
-            title: "Available",
+            title: 'Available',
             start: new Date(currentEvent.end).toISOString(),
             end: new Date(nextEvent.start).toISOString(),
           };
@@ -271,7 +283,7 @@ function Calendar() {
   // ];
 
   const createEventId = () => {
-    return String(allEvents.length);
+    return Math.random().toString(36).substring(2);
   };
   // useEffect(() => {
   //   const fetchUser = async () => {
@@ -286,9 +298,7 @@ function Calendar() {
   //   fetchUser();
   // }, []);
 
-  useEffect(() => {
-    console.log(allEvents);
-  }, [allEvents]);
+  console.log();
 
   function handleEventClick(clickInfo) {
     if (
@@ -300,8 +310,8 @@ function Calendar() {
     }
   }
 
-  const handleDateSelect = (selectInfo) => {
-    let title = "Unavailable"; //prompt('Please enter a new title for your event');
+  const handleDateSelect = selectInfo => {
+    let title = 'Unavailable'; //prompt('Please enter a new title for your event');
     let calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // clear date selection
@@ -309,7 +319,7 @@ function Calendar() {
     console.log(selectInfo.startStr);
     const startDateTimeString = selectInfo.startStr;
     const startDateTime = parseISO(startDateTimeString);
-    const startTimeString = format(startDateTime, "HH:mm");
+    const startTimeString = format(startDateTime, 'HH:mm');
     console.log();
     console.log(startTimeString);
 
@@ -318,7 +328,7 @@ function Calendar() {
 
     const endDateTimeString = selectInfo.endStr;
     const endDateTime = parseISO(endDateTimeString);
-    const endTimeString = format(endDateTime, "HH:mm");
+    const endTimeString = format(endDateTime, 'HH:mm');
     console.log();
     console.log(endTimeString);
 
@@ -333,7 +343,7 @@ function Calendar() {
         startRecur: selectInfo.startStr,
       });
 
-      setAllEvents((prevEvents) => {
+      setAllEvents(prevEvents => {
         const newEvent = {
           id: createEventId(),
           title: title,
@@ -350,29 +360,31 @@ function Calendar() {
     }
   };
 
-  const handleEventChange = (changeInfo) => {
+  const handleEventChange = changeInfo => {
     console.log(changeInfo);
     const startDateTimeString = changeInfo.event.startStr;
     const startDateTime = parseISO(startDateTimeString);
-    const startTimeString = format(startDateTime, "HH:mm");
+    const startTimeString = format(startDateTime, 'HH:mm');
 
     const dayOfTheWeek = `${getDay(startDateTime)}`;
+    console.log(dayOfTheWeek);
 
     const endDateTimeString = changeInfo.event.endStr;
     const endDateTime = parseISO(endDateTimeString);
-    const endTimeString = format(endDateTime, "HH:mm");
+    const endTimeString = format(endDateTime, 'HH:mm');
 
     console.log(startTimeString, endTimeString);
-    setAllEvents((prevEvents) => {
-      const updatedEvents = prevEvents.map((event) => {
+    setAllEvents(prevEvents => {
+      const updatedEvents = prevEvents.map(event => {
         if (event.id === changeInfo.event.id) {
-          console.log("match");
+          console.log('match');
           return {
             ...event,
             title: changeInfo.event.title,
             start: changeInfo.event.startStr,
             end: changeInfo.event.endStr,
             daysOfWeek: [dayOfTheWeek],
+            startRecur: changeInfo.event.startStr,
             startTime: startTimeString,
             endTime: endTimeString,
           };
@@ -384,20 +396,20 @@ function Calendar() {
     });
   };
 
-  const handleEventRemove = (removeInfo) => {
-    setAllEvents((prevEvents) => {
+  const handleEventRemove = removeInfo => {
+    setAllEvents(prevEvents => {
       const updatedEvents = prevEvents.filter(
-        (event) => event.id !== removeInfo.event.id
+        event => event.id !== removeInfo.event.id
       );
       return updatedEvents;
     });
   };
 
-  const handleDate = (date) => {
+  const handleDate = date => {
     const newDate = new Date(date);
     const time = newDate.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
+      hour: '2-digit',
+      minute: '2-digit',
       hour12: false,
     });
     return time;
@@ -405,7 +417,7 @@ function Calendar() {
 
   const findFreeSlots = (calendarAEvents, calendarBEvents) => {
     const combinedEvents = [...calendarAEvents, ...calendarBEvents].map(
-      (event) => ({
+      event => ({
         start: new Date(event.start),
         end: new Date(event.end),
         calendar: event.calendar,
@@ -423,7 +435,7 @@ function Calendar() {
       const nextEvent = combinedEvents[i + 1];
       const gap = nextEvent.start - currentEvent.end;
 
-      if (currentEvent.calendar === "A") {
+      if (currentEvent.calendar === 'A') {
         latestEndTimeA = new Date(Math.max(latestEndTimeA, currentEvent.end));
       } else {
         latestEndTimeB = new Date(Math.max(latestEndTimeB, currentEvent.end));
@@ -445,26 +457,26 @@ function Calendar() {
     return freeSlots;
   };
 
-  const handleEventReceive = (info) => {
-    if (typeof info.event === "object") {
+  const handleEventReceive = info => {
+    if (typeof info.event === 'object') {
       const startDateTime = new Date(info.event.start);
-      const startTimeString = startDateTime.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "numeric",
+      const startTimeString = startDateTime.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
         hour12: true,
       });
       const endDateTime = info.event.end
         ? new Date(info.event.end)
         : new Date(startDateTime.getTime() + 60 * 60 * 1000);
       const endTimeString = endDateTime
-        ? endDateTime.toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "numeric",
+        ? endDateTime.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
             hour12: true,
           })
         : null;
       const newEvent = {
-        id: Date.now(),
+        id: createEventId(),
         title: info.event.title,
         start: info.event.start.toISOString(),
         end: endDateTime ? endDateTime.toISOString() : null,
@@ -477,46 +489,92 @@ function Calendar() {
     }
   };
 
-  return (
+  const handleSaveSchedule = async () => {
+    try {
+      await API.graphql({
+        query: mutations.updateUser,
+        variables: {
+          input: {
+            id: activeUser.id,
+            schedule: JSON.stringify(allEvents),
+          },
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log(allEvents);
+
+  return activeUser ? (
     <>
-      <div style={{ zIndex: "999" }} className="bg-maroon-500">
-        <div id="external-events" className="absolute top-11 right-10 ">
-          <div className="fc-event cursor-pointer bg-[#FDB913] p-2 rounded-md text-black font-bold border-l-blue-50">
-            Unavailable
+      <div style={{ zIndex: '999' }} className='bg-maroon-500'>
+        <div id='external-events' className='absolute top-11 right-10 '>
+          <div className='flex gap-4'>
+            <div className='text-lg font-bold text-white my-auto'>
+              Draggable &rarr;
+            </div>
+            <div className='fc-event cursor-pointer bg-[#FDB913] p-2 rounded-md text-black font-bold border-l-blue-50'>
+              Unavailable
+            </div>
           </div>
         </div>
         <FullCalendar
           plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin]}
           headerToolbar={{
-            right: "",
-            left: "prev,next",
-            center: "title",
+            right: '',
+            left: 'prev,next',
+            center: 'title',
           }}
           // customButtons={{ addEventButton: { text: 'Add Event' } }}
-          initialView="timeGridWeek"
+          initialView='timeGridWeek'
           editable={true}
           selectable={true}
           weekends={false}
           events={allEvents}
           eventClick={handleEventClick}
-          eventColor="maroon"
+          eventColor='maroon'
           nowIndicator={true}
           selectMirror={true}
-          dateClick={(info) => alert("clicked" + info.dateStr)}
+          dateClick={info => alert('clicked' + info.dateStr)}
           select={handleDateSelect}
           selectLongPressDelay={1000}
           eventChange={handleEventChange}
           eventRemove={handleEventRemove}
-          slotMinTime="07:00:00"
-          slotMaxTime="18:00:00"
+          slotMinTime='07:00:00'
+          slotMaxTime='18:00:00'
           allDaySlot={false}
-          height="auto"
+          height='auto'
           eventReceive={handleEventReceive}
         />
       </div>
+      <div
+        className='mt-8 p-5 mx-auto bg-[#FDB913] text-center text-xl  text-red w-fit rounded-md hover:font-bold hover:shadow-md hover:shadow-[#fff] cursor-pointer'
+        onClick={e => {
+          e.preventDefault();
+          handleSaveSchedule();
+        }}
+        disabled={allEvents.length === 0}
+      >
+        Save Schedule
+      </div>
 
-      <div className="mt-5 font-bold text-lg text-center">
-        {" "}
+      {activeUser.group[0] === 'ChairCommittee' ? (
+        <div className='flex justify-center'>
+          <Link
+            href={'/slots'}
+            className='mt-8 p-5 bg-[#FDB913] text-center text-xl  text-red w-fit rounded-md hover:font-bold hover:shadow-md hover:shadow-[#fff]'
+          >
+            Manage Interview Slots
+          </Link>
+        </div>
+      ) : null}
+
+      <div className='mt-5 font-bold text-lg text-center'>
+        {' '}
         If the calendar does not load properly, please reload the page. Sorry
         for the inconvenience.
       </div>
@@ -532,7 +590,7 @@ function Calendar() {
             ) : null}
           </div> */}
     </>
-  );
+  ) : null;
 }
 
 export default Calendar;

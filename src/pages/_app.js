@@ -17,7 +17,7 @@ export const ActiveUserProvider = ({ children, currentUser }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const setLocalStorage = (key, value, ttl = 365 * 24 * 60 * 60 * 1000) => {
+    const setLocalStorage = (key, value, ttl = 5 * 60 * 1000) => {
       const expiresAt = new Date(Date.now() + ttl);
       localStorage.setItem(key, JSON.stringify({ value, expiresAt }));
     };
@@ -91,8 +91,9 @@ export const ActiveUserProvider = ({ children, currentUser }) => {
       facultyRecommendation: users[0].facultyRecommendation,
       applicantForm: users[0].applicantForm,
       applicantReleaseForm: users[0].applicantReleaseForm,
-      schedule: users[0].schedule,
       evaluators: users[0].evaluators,
+      schedule: users[0].schedule,
+      notes: users[0].notes,
     };
   } else {
     loggedUser = {
@@ -108,6 +109,12 @@ export const ActiveUserProvider = ({ children, currentUser }) => {
           userProfile.groups[0] !== 'Admin' &&
           userProfile.username !== currentUser.username
       ),
+      assignedApplicants: users
+        .filter(userProfile => userProfile.username === currentUser.username)
+        .map(user => user.assignedApplicants),
+      schedule: users
+        .filter(userProfile => userProfile.username === currentUser.username)
+        .map(user => user.schedule),
     };
   }
 

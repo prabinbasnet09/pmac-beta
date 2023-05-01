@@ -10,17 +10,17 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 });
 
 export default function FacultyApplicantsList(props) {
+  const { users, activeUser } = props;
   const [selectedUser, setSelectedUser] = useState(false);
   const [applicants, setApplicants] = useState(
-    props.users.filter(
+    users.filter(
       user =>
         user.groups[0] !== 'Faculty' && user.groups[0] !== 'ChairCommittee'
     )
   );
   const [content, setContent] = useState('');
   const [steps, setSteps] = useState([]);
-
-  console.log(applicants);
+  const [assignedApplicants, setAssignedApplicants] = useState([]);
 
   const modules = {
     toolbar: [
@@ -75,7 +75,9 @@ export default function FacultyApplicantsList(props) {
             ? 2
             : 1
           : 0,
-        path: '/applications/applicant-release',
+        path: `/applications/applicant-release/?user=${encodeURIComponent(
+          user.id
+        )}`,
       },
       {
         label: 'Unofficial Transcript',
@@ -89,7 +91,9 @@ export default function FacultyApplicantsList(props) {
             ? 2
             : 1
           : 0,
-        path: '/applications/applicant-information',
+        path: `/applications/applicant-information/?user=${encodeURIComponent(
+          user.id
+        )}`,
       },
       {
         label: 'Faculty Recommendation',
@@ -98,7 +102,7 @@ export default function FacultyApplicantsList(props) {
             ? 2
             : 1
           : 0,
-        path: '/evaluators',
+        path: `/evaluators/?user=${encodeURIComponent(user.id)}`,
       },
       { label: 'Schedule', state: user.schedule ? 2 : 0, path: '#' },
       {
@@ -124,6 +128,8 @@ export default function FacultyApplicantsList(props) {
     setSelectedUser(user);
   };
 
+  console.log(activeUser.assignedApplicants[0]);
+
   return (
     <div className='bg-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-4 gap-2'>
       {/* applicants list */}
@@ -132,17 +138,24 @@ export default function FacultyApplicantsList(props) {
           <div className='p-3 mb-2 bg-[#681212] rounded-lg text-[#fff] text-lg font-bold text-center'>
             Assigned Applicants
           </div>
-          {/* <div className='scrollbar-thin p-2'>
-            {applicants.map(applicant => (
-              <div
-                key={applicant.id}
-                className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
-                onClick={e => handleUserSelection(e, applicant)}
-              >    
-                {applicant.name}
-              </div>
-            ))}
-          </div> */}
+          <div className='scrollbar-thin p-2'>
+            {applicants
+              .filter(applicant => {
+                return activeUser.assignedApplicants[0].includes(applicant.id);
+              })
+              .map(applicant => (
+                <div
+                  key={applicant.id}
+                  className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
+                  onClick={e => {
+                    handleUserSelection(e, applicant);
+                    setChecklist(e, applicant);
+                  }}
+                >
+                  {applicant.name}
+                </div>
+              ))}
+          </div>
         </div>
 
         <div>
@@ -150,18 +163,22 @@ export default function FacultyApplicantsList(props) {
             Unassigned Applicants
           </div>
           <div className=' overflow-y-scroll scrollbar-thin  p-2'>
-            {applicants.map(applicant => (
-              <div
-                key={applicant.id}
-                className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e] active:bg-[#FDB913]'
-                onClick={e => {
-                  handleUserSelection(e, applicant);
-                  setChecklist(e, applicant);
-                }}
-              >
-                {applicant.name}
-              </div>
-            ))}
+            {applicants
+              .filter(applicant => {
+                return !activeUser.assignedApplicants[0].includes(applicant.id);
+              })
+              .map(applicant => (
+                <div
+                  key={applicant.id}
+                  className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e] active:bg-[#FDB913]'
+                  onClick={e => {
+                    handleUserSelection(e, applicant);
+                    setChecklist(e, applicant);
+                  }}
+                >
+                  {applicant.name}
+                </div>
+              ))}
           </div>
         </div>
       </div>
@@ -207,9 +224,7 @@ export default function FacultyApplicantsList(props) {
             {steps.map((step, index) => {
               return (
                 <Link
-                  href={`${step.path}/?user=${encodeURIComponent(
-                    selectedUser.id
-                  )}`}
+                  href={`${step.path}`}
                   target='_blank'
                   key={index}
                   className='w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-2 mb-4'
@@ -226,7 +241,7 @@ export default function FacultyApplicantsList(props) {
                         </div>
                       ) : step.state === 1 ? (
                         <div className='text-sm font-semi-bold'>
-                          <span className='text-yellow'>In Progress</span>
+                          <span className='text-black'>In Progress</span>
                         </div>
                       ) : (
                         <div className='text-sm font-semi-bold'>

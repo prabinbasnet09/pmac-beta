@@ -138,7 +138,9 @@ export default function ChairApplicantsList(props) {
             ? 2
             : 1
           : 0,
-        path: '/applications/applicant-release',
+        path: `/applications/applicant-release/?user=${encodeURIComponent(
+          user.id
+        )}`,
       },
       {
         label: 'Unofficial Transcript',
@@ -152,7 +154,9 @@ export default function ChairApplicantsList(props) {
             ? 2
             : 1
           : 0,
-        path: '/applications/applicant-information',
+        path: `/applications/applicant-information/?user=${encodeURIComponent(
+          user.id
+        )}`,
       },
       {
         label: 'Faculty Recommendation',
@@ -161,7 +165,7 @@ export default function ChairApplicantsList(props) {
             ? 2
             : 1
           : 0,
-        path: '/evaluators',
+        path: `/evaluators/?user=${encodeURIComponent(user.id)}`,
       },
       { label: 'Schedule', state: user.schedule ? 2 : 0, path: '#' },
       {
@@ -360,9 +364,7 @@ export default function ChairApplicantsList(props) {
             {steps.map((step, index) => {
               return (
                 <Link
-                  href={`${step.path}/?user=${encodeURIComponent(
-                    selectedUser.id
-                  )}`}
+                  href={`${step.path}`}
                   target='_blank'
                   key={index}
                   className='w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-2 mb-4'
@@ -379,7 +381,7 @@ export default function ChairApplicantsList(props) {
                         </div>
                       ) : step.state === 1 ? (
                         <div className='text-sm font-semi-bold'>
-                          <span className='text-yellow'>In Progress</span>
+                          <span className='text-black'>In Progress</span>
                         </div>
                       ) : (
                         <div className='text-sm font-semi-bold'>

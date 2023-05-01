@@ -13,10 +13,12 @@ export default function StatementTranscript() {
   const [personalStatement, setPersonalStatement] = useState(null);
   const [headShot, setHeadShot] = useState(null);
   const [transcript, setTranscript] = useState(null);
+  const [amcasForm, setAmcasForm] = useState(null);
 
   const [personalStatementToggle, setPersonalStatementToggle] = useState(false);
   const [headShotToggle, setHeadShotToggle] = useState(false);
   const [transcriptToggle, setTranscriptToggle] = useState(false);
+  const [amcasFormToggle, setAmcasFormToggle] = useState(false);
 
   const handlePersonalStatement = personalStatement => {
     setPersonalStatement(personalStatement);
@@ -63,11 +65,14 @@ export default function StatementTranscript() {
         </p>
         <div className=' font-bold p-2 mx-16 mt-5 md:text-xl justify-center '>
           The personal statement should be approximately one page in length,
-          single spaced. The personal statement you included in your
-          AMCAS/AADSAS application is preferred. Please note that this is an
-          important document and should be carefully and thoughtfully prepared.
-          If you have questions about how to prepare a personal statement,
-          please contact
+          single spaced.{' '}
+          <span className='underline text-red'>
+            The personal statement you included in your AMCAS/AADSAS application
+            is preferred.
+          </span>{' '}
+          Please note that this is an important document and should be carefully
+          and thoughtfully prepared. If you have questions about how to prepare
+          a personal statement, please contact
           <Link
             href='https://webservices.ulm.edu/facultyactivities/profile/awiedemeier'
             target='_blank'
@@ -103,7 +108,7 @@ export default function StatementTranscript() {
           profile photo.
         </p>
       </div>
-      <div class='flex flex-col md:flex-row justify-center items-center gap-5 mt-20 ml-5 mr-5'>
+      <div class='flex flex-wrap justify-center md:flex-row gap-5 mt-20 ml-5 mr-5'>
         <div class='w-full md:w-1/3 px-4 mb-4'>
           <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black  tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
             <div className='text-center p-1 text-2xl font-bold'>
@@ -306,6 +311,79 @@ export default function StatementTranscript() {
                           onClick={e => {
                             e.preventDefault();
                             setHeadShotToggle(prevValue => !prevValue);
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : null}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='w-full md:w-1/3 px-4 mb-4'>
+          <div class='bg-white overflow-hidden shadow-md shadow-[#840029] p-10 hover:shadow-[#7092BE] border-black rounded-xl font-semibold text-sm text-black tracking-widest hover:bg-white active:bg-[#bcbcbc] focus:ring-gray disabled:opacity-25 transition min-h-[30rem]'>
+            <div className='text-center p-1 text-2xl font-bold'>
+              {' '}
+              AMCAS Form
+            </div>
+            <div class='w-full'>
+              <Image
+                className='mx-auto py-5'
+                src={upload}
+                alt=''
+                width={100}
+                height={100}
+              />
+            </div>
+            <div className='mt-5'>
+              <div>
+                {amcasFormToggle ? (
+                  <div>
+                    <div className='mt-5 bg-[#fff] border border-dashed border-gray-300 rounded-md shadow-sm px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer'>
+                      <Link
+                        href='#'
+                        target='_blank'
+                        className='flex justify-center p-8'
+                      >
+                        <span className='ml-2 text-sm text-gray-700'>
+                          FileName
+                        </span>
+                      </Link>
+                    </div>
+                    <div className='flex justify-center mt-10'>
+                      <button
+                        className='mx-auto py-3 bg-[#008dff] rounded-lg px-10 text-lg hover:text-white'
+                        onClick={e => {
+                          e.preventDefault();
+                          setAmcasFormToggle(false);
+                        }}
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <FileUploader
+                      acceptedFileTypes={[
+                        '.gif',
+                        '.bmp',
+                        '.doc',
+                        '.jpeg',
+                        '.jpg',
+                      ]}
+                      accessLevel='public'
+                    />
+                    {amcasForm && !amcasFormToggle ? (
+                      <div className='flex justify-center mt-5'>
+                        <button
+                          className='mx-auto py-3 bg-[#008dff] rounded-lg px-10 text-lg hover:text-white'
+                          onClick={e => {
+                            e.preventDefault();
+                            setAmcasFormToggle(prevValue => !prevValue);
                           }}
                         >
                           Cancel

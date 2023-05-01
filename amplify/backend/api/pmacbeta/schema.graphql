@@ -20,8 +20,9 @@ type User
   amcasForm: String
   applicantForm: String
   applicantReleaseForm: String
-  schedule: String
   evaluators: [AWSJSON!]
+  schedule: [AWSJSON!]
+  notes: [AWSJSON!]
   assignedApplicants: [String!]
 }
 

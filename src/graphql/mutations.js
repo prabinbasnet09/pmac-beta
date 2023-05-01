@@ -17,8 +17,9 @@ export const onVerifyUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt
@@ -41,8 +42,9 @@ export const changePersonalStatement = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt
@@ -67,8 +69,9 @@ export const changeFacultyRecommendation = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt
@@ -91,8 +94,9 @@ export const changeApplicationForm = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt
@@ -117,8 +121,9 @@ export const changeApplicationReleaseForm = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt
@@ -141,8 +146,9 @@ export const changeTranscript = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt
@@ -165,8 +171,9 @@ export const changeProfilePicture = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt
@@ -192,8 +199,9 @@ export const createUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt
@@ -219,8 +227,9 @@ export const updateUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt
@@ -246,8 +255,9 @@ export const deleteUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt

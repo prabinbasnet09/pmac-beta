@@ -20,8 +20,9 @@ export const onCreateUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt
@@ -47,8 +48,9 @@ export const onUpdateUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt
@@ -74,8 +76,9 @@ export const onDeleteUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
-      schedule
       evaluators
+      schedule
+      notes
       assignedApplicants
       createdAt
       updatedAt

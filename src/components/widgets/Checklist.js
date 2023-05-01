@@ -70,10 +70,16 @@ const Checklist = ({ activeUser }) => {
   return (
     <div className='w-full'>
       {activeUser && activeUser.group[0] === 'Student' ? (
-        <ul className={`w-12/12 space-y-4 ${isSmallScreen ? '' : 'bg-[rgb(245,245,245)]'}   px-4 py-5 sm:p-6 rounded-md`}>
+        <ul
+          className={`w-12/12 space-y-4 ${
+            isSmallScreen ? '' : 'bg-[rgb(245,245,245)]'
+          }   px-4 py-5 sm:p-6 rounded-md`}
+        >
           <div className='font-bold text-2xl'>Application Checklist</div>
           <div
-            className={`bg-white ${isSmallScreen ? 'py-8' : ''} rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
+            className={`bg-white ${
+              isSmallScreen ? 'py-8' : ''
+            } rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
             onClick={e => {
               e.preventDefault();
               setExpandNotStarted(!expandNotStarted);
@@ -81,7 +87,7 @@ const Checklist = ({ activeUser }) => {
           >
             <div className='flex justify-between items-end space-x-3'>
               <div className='font-bold text-lg '>Not Started</div>
-              <div className='text-[rgb(143,141,141)] italic underline text-md'>
+              <div className='text-[rgb(143,141,141)] italic text-md'>
                 {steps.filter(step => step.state === 0).length} Remaining...
               </div>
             </div>
@@ -94,7 +100,7 @@ const Checklist = ({ activeUser }) => {
                       className=' p-4 my-2  hover:bg-[rgb(255,255,255)] shadow-lg rounded-3xl border-2 border-[black]'
                     >
                       <div className='flex justify-between items-center'>
-                        <h3 className='justify-left text-lg font-medium hover:underline'>
+                        <h3 className='justify-left text-lg font-medium '>
                           {step.label}
                         </h3>
                         <div className='flex items-center'>
@@ -108,7 +114,9 @@ const Checklist = ({ activeUser }) => {
             ) : null}
           </div>
           <div
-            className={`bg-white ${isSmallScreen ? 'py-8' : ''} rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
+            className={`bg-white ${
+              isSmallScreen ? 'py-8' : ''
+            } rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
             onClick={e => {
               e.preventDefault();
               setExpandIncomplete(!expandIncomplete);
@@ -116,7 +124,7 @@ const Checklist = ({ activeUser }) => {
           >
             <div className='flex justify-between space-x-3 items-end'>
               <div className='font-bold text-lg'>Incomplete</div>
-              <div className='text-[rgb(143,141,141)] italic underline text-md'>
+              <div className='text-[rgb(143,141,141)] italic text-md'>
                 {steps.filter(step => step.state === 1).length} In Progress...
               </div>
             </div>
@@ -129,7 +137,7 @@ const Checklist = ({ activeUser }) => {
                       className='p-4 my-3 hover:bg-[rgb(255,255,255)] shadow-xl rounded-3xl border-2 border-[black]'
                     >
                       <div className='flex justify-between items-center'>
-                        <h3 className='justify-left text-lg hover:underline font-medium'>
+                        <h3 className='justify-left text-lg font-medium'>
                           {step.label}
                         </h3>
                         {step.state === 1 && (
@@ -145,7 +153,9 @@ const Checklist = ({ activeUser }) => {
             ) : null}
           </div>
           <div
-            className={`bg-white ${isSmallScreen ? 'py-8' : ''} rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
+            className={`bg-white ${
+              isSmallScreen ? 'py-8' : ''
+            } rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
             onClick={e => {
               e.preventDefault();
               setExpandComplete(prevState => !prevState);
@@ -153,7 +163,7 @@ const Checklist = ({ activeUser }) => {
           >
             <div className='flex justify-between space-x-3 items-end'>
               <div className='font-bold text-lg'>Completed</div>
-              <div className='text-[rgb(143,141,141)] italic underline text-md'>
+              <div className='text-[rgb(143,141,141)] italic text-md'>
                 {steps.filter(step => step.state === 2).length} Completed...
               </div>
             </div>
@@ -166,7 +176,7 @@ const Checklist = ({ activeUser }) => {
                       className='p-4 my-3 hover:bg-[rgb(255,255,255)] shadow-xl rounded-3xl border-2 border-[black]'
                     >
                       <div className='flex justify-between items-center'>
-                        <h3 className='justify-left text-lg hover:underline font-medium'>
+                        <h3 className='justify-left text-lg font-medium'>
                           {step.label}
                         </h3>
                         {step.state === 2 && (
