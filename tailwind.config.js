@@ -36,6 +36,7 @@ module.exports = {
         extend: {
           backgroundImage: {
             'ulm-library': "url('/public/ulm_library.jpg')",
+            'ulm-aerial': "url('/public/aerial.jpg')",
           },
         },
       },

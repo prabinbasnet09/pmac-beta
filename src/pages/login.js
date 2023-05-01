@@ -59,14 +59,25 @@ function Login() {
   };
 
   return !user || !guestUser ? (
-    <div className='min-h-screen flex flex-col'>
-      <div>
+    <div className='min-h-screen flex flex-col z-20'>
+      <div className='z-20'>
         <LandingHeader />
       </div>
-      <div>
-        <SignIn />
+      <div className='relative'>
+          <div className='z-10 fixed inset-0 w-full h-full object-cover mt-10'>
+            <Image
+              className='w-full mx-auto'
+              src='/aerial.jpg'
+              alt=''
+              width={1980}
+              height={1024}
+          />
+        </div>
+        </div>
+      <div className='z-20'>
+        <SignIn/>
       </div>
-      <div className='mt-auto'>
+      <div className='mt-auto z-20'>
         <Footer />
       </div>
     </div>
