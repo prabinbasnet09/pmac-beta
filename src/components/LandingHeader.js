@@ -18,7 +18,7 @@ const LandingHeader = () => {
   };
 
   return (
-    <div className='flex justify-between items-center h-10 max-w-full mx-auto px-4 text-[#3B0000]'>
+    <div className='flex justify-between items-center h-10 max-w-full mx-auto px-4 text-[#3B0000] bg-white'>
       {/*Exchange ULM for ULM Logo*/}
 
       <Link href='/home' className='w-full text-3xl font-bold text-ulm_red'>
