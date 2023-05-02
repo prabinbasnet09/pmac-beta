@@ -623,7 +623,7 @@ export default function ChairApplicantsList(props) {
                   ).filter(assigned => assigned.userId === applicant.id);
                   return user.length > 0 ? user : null;
                 })
-                .map(applicant => {
+                .map((applicant, index) => {
                   const date = new Date(
                     JSON.parse(applicant.interview)[0].start
                   ).toLocaleDateString();
@@ -633,7 +633,7 @@ export default function ChairApplicantsList(props) {
                   const complete = Date.now() > date;
                   console.log(complete);
                   return (
-                    <div className='bg-white p-3 rounded-xl'>
+                    <div className='bg-white p-3 rounded-xl' key={index}>
                       <Image
                         src={
                           applicant.profilePicture
