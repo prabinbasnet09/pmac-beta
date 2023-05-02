@@ -150,7 +150,9 @@ function Documents() {
                     <Link href='/referrals'>Add Referrals</Link>
                   </td>
                   <td className='w-1/4 border border-black px-4 py-2 bg-white text-red font-semibold italic text-sm'>
-                    {activeUser.evaluators ? activeUser.evaluators.length : 0}
+                    {activeUser.evaluators
+                      ? JSON.parse(activeUser.evaluators).length
+                      : 0}
                     /2
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white text-center text-red font-bold'>

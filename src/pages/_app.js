@@ -94,6 +94,7 @@ export const ActiveUserProvider = ({ children, currentUser }) => {
       evaluators: users[0].evaluators,
       schedule: users[0].schedule,
       notes: users[0].notes,
+      interview: users[0].interview,
     };
   } else {
     loggedUser = {

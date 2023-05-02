@@ -17,6 +17,7 @@ export const onVerifyUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes
@@ -42,6 +43,7 @@ export const changePersonalStatement = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes
@@ -69,6 +71,7 @@ export const changeFacultyRecommendation = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes
@@ -94,6 +97,7 @@ export const changeApplicationForm = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes
@@ -121,6 +125,7 @@ export const changeApplicationReleaseForm = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes
@@ -146,6 +151,7 @@ export const changeTranscript = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes
@@ -171,6 +177,7 @@ export const changeProfilePicture = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes
@@ -199,6 +206,7 @@ export const createUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes
@@ -227,6 +235,7 @@ export const updateUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes
@@ -255,6 +264,7 @@ export const deleteUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes

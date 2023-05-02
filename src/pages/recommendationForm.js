@@ -8,7 +8,7 @@ import axios from 'axios';
 export default function RecommendationForm() {
   const [guestUser, setGuestUser] = useState(null);
   const [sign, setSign] = useState(false);
-  const [userId, setUserId] = useState('e2b937bd-6aeb-4f12-b223-586a9db2bf11');
+  const [userId, setUserId] = useState();
 
   const router = useRouter();
 
@@ -29,6 +29,12 @@ export default function RecommendationForm() {
       setGuestUser(getLocalStorage('guestUser').value);
     }
   }, []);
+
+  useEffect(() => {
+    if (guestUser) {
+      setUserId(guestUser.id);
+    }
+  }, [guestUser]);
 
   const initialValues = {
     applicantName: '',

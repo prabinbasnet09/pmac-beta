@@ -20,6 +20,7 @@ export const onCreateUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes
@@ -48,6 +49,7 @@ export const onUpdateUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes
@@ -76,6 +78,7 @@ export const onDeleteUser = /* GraphQL */ `
       amcasForm
       applicantForm
       applicantReleaseForm
+      interview
       evaluators
       schedule
       notes

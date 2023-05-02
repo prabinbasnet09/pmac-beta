@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Logo from 'public/ulm_academic_maroon_white.png';
 import 'react-quill/dist/quill.snow.css';
@@ -12,7 +12,9 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 
 export default function ChairApplicantsList(props) {
   const [applicants, setApplicants] = useState(props.users);
+  const activeUser = props.activeUser;
   const [selectedUser, setSelectedUser] = useState(null);
+  const [complete, setComplete] = useState(false);
   const [committeeMembers, setCommitteeMembers] = useState([
     {
       id: '1',
@@ -167,7 +169,11 @@ export default function ChairApplicantsList(props) {
           : 0,
         path: `/evaluators/?user=${encodeURIComponent(user.id)}`,
       },
-      { label: 'Schedule', state: user.schedule ? 2 : 0, path: '#' },
+      {
+        label: 'Schedule',
+        state: user.schedule ? 2 : 0,
+        path: `/applicantSchedule?user=${encodeURIComponent(user.id)}`,
+      },
       {
         label: 'Personal Statement',
         state: user.personalStatement ? 2 : 0,
@@ -185,6 +191,20 @@ export default function ChairApplicantsList(props) {
       },
     ]);
   }
+
+  useEffect(() => {
+    let count = 0;
+    steps.forEach(step => {
+      if (step.state === 2) {
+        count++;
+      }
+    });
+    if (count === steps.length) {
+      setComplete(true);
+    } else {
+      setComplete(false);
+    }
+  }, [steps]);
 
   return (
     <div className='bg-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-4 gap-2'>
@@ -291,20 +311,60 @@ export default function ChairApplicantsList(props) {
             ))}
           </div>
         ) : (
-          <div className='scrollbar-thin px-2'>
-            {applicants.map(applicant => (
-              <div
-                key={applicant.id}
-                className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
-                onClick={e => {
-                  e.preventDefault();
-                  handleUserSelection(applicant);
-                  setChecklist(applicant);
-                }}
-              >
-                {applicant.name}
+          <div>
+            <div>
+              <div className='p-3 mb-2 bg-[#681212] rounded-lg text-[#fff] text-lg font-bold text-center'>
+                Assigned Applicants
               </div>
-            ))}
+              <div className='scrollbar-thin p-2'>
+                {applicants
+                  .filter(applicant => {
+                    const user = JSON.parse(
+                      activeUser.assignedApplicants[0]
+                    ).filter(assigned => assigned.userId === applicant.id);
+                    return user.length > 0 ? user : null;
+                  })
+                  .map(applicant => (
+                    <div
+                      key={applicant.id}
+                      className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
+                      onClick={e => {
+                        handleUserSelection(applicant);
+                        setChecklist(applicant);
+                      }}
+                    >
+                      {applicant.name}
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            <div>
+              <div className='p-3 mt-10 mb-2 bg-[#681212] rounded-lg text-[#fff] text-lg font-bold text-center'>
+                Unassigned Applicants
+              </div>
+              <div className=' overflow-y-scroll scrollbar-thin  p-2'>
+                {applicants
+                  .filter(applicant => {
+                    const user = JSON.parse(
+                      activeUser.assignedApplicants[0]
+                    ).filter(assigned => assigned.userId !== applicant.id);
+                    return user.length > 0 ? user : null;
+                  })
+                  .map(applicant => (
+                    <div
+                      key={applicant.id}
+                      className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
+                      onClick={e => {
+                        handleUserSelection(applicant);
+                        setChecklist(applicant);
+                      }}
+                    >
+                      {applicant.name}
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -423,7 +483,7 @@ export default function ChairApplicantsList(props) {
                     Application Process
                   </h3>
                   <p className='text-base font-normal text-gray-500 dark:text-gray-400'>
-                    Completed
+                    {complete ? 'Complete' : 'Incomplete'}
                   </p>
                 </div>
               </li>
@@ -451,7 +511,7 @@ export default function ChairApplicantsList(props) {
                     Interview Process
                   </h3>
                   <p className='text-base font-normal text-gray-500 dark:text-gray-400'>
-                    Dr. Burton Ashworth - 2/12/2021
+                    {complete ? 'Complete' : 'Incomplete'}
                   </p>
                 </div>
               </li>
@@ -478,7 +538,7 @@ export default function ChairApplicantsList(props) {
                     Offer
                   </h3>
                   <p className='text-base font-normal text-gray-500 dark:text-gray-400'>
-                    Not complete
+                    {complete ? 'Complete' : 'Incomplete'}
                   </p>
                 </div>
               </li>

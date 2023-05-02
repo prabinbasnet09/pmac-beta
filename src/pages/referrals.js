@@ -3,6 +3,7 @@ import { ActiveUser } from './_app';
 import { API } from 'aws-amplify';
 import { updateUser } from '../graphql/mutations';
 import axios from 'axios';
+import emailjs from 'emailjs-com';
 
 export default function Referrals() {
   const activeUser = useContext(ActiveUser);
@@ -10,12 +11,62 @@ export default function Referrals() {
   const [email, setEmail] = useState('');
   const [department, setDepartment] = useState('');
   const [evaluators, setEvaluators] = useState([]);
+  const [newEvaluators, setNewEvaluators] = useState([]);
 
   useEffect(() => {
     activeUser &&
       activeUser.evaluators &&
       setEvaluators(JSON.parse(activeUser.evaluators));
   }, []);
+
+  const registerUser = async () => {
+    const backendURL =
+      'https://99ym30ffli.execute-api.us-east-1.amazonaws.com/prod/register';
+    const requestConfig = {
+      headers: {
+        'x-api-key': 'PBDYZzW59J6ZeQH6qDFGE3kd8BE34BFRavTb6Sez',
+      },
+    };
+    const requestBody =
+      newEvaluators.length === 1
+        ? {
+            facultyEmail: newEvaluators[0].email,
+            userId: activeUser.id,
+          }
+        : {
+            facultyEmailOne: newEvaluators[0].email,
+            userIdOne: activeUser.id,
+            facultyEmailTwo: newEvaluators[1].email,
+            userIdTwo: activeUser.id,
+          };
+    return axios
+      .post(backendURL, requestBody, requestConfig)
+      .then(response => true)
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  console.log(evaluators);
+
+  const deleteUser = async email => {
+    const backendURL =
+      'https://99ym30ffli.execute-api.us-east-1.amazonaws.com/prod/delete';
+    const requestConfig = {
+      headers: {
+        'x-api-key': 'PBDYZzW59J6ZeQH6qDFGE3kd8BE34BFRavTb6Sez',
+      },
+    };
+    const requestBody = {
+      facultyEmail: email,
+      userId: activeUser.id,
+    };
+    return axios
+      .post(backendURL, requestBody, requestConfig)
+      .then(response => true)
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   const handleAddEvaluator = async => {
     const newEvaluator = {
@@ -24,6 +75,7 @@ export default function Referrals() {
       department: department,
     };
     setEvaluators([...evaluators, newEvaluator]);
+    setNewEvaluators([...newEvaluators, newEvaluator]);
   };
 
   const handleRemoveEvaluator = async (e, email) => {
@@ -32,10 +84,34 @@ export default function Referrals() {
       evaluator => evaluator.email !== email
     );
     setEvaluators(newEvaluators);
+    setNewEvaluators(newEvaluators);
+    deleteUser(email);
+  };
+
+  const sendEmail = async (email, name) => {
+    const params = {
+      receiver: 'basnetpr@warhawks.ulm.edu',
+      facultyEmail: email,
+      facultyName: name,
+      name: `${activeUser.name}`,
+      userId: activeUser.id,
+    };
+
+    await emailjs
+      .send('service_dwl8e5e', 'template_pmtw2de', params, 'nyjZso7dw3rv9ki41')
+      .then(
+        response => {
+          console.log('SUCCESS!', response.status, response.text);
+        },
+        err => {
+          console.log('FAILED...', err);
+        }
+      );
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
+    console.log('clicked');
     try {
       await API.graphql({
         query: updateUser,
@@ -46,24 +122,15 @@ export default function Referrals() {
           },
         },
       })
-        .then(res => {
-          const backendURL =
-            'https://99ym30ffli.execute-api.us-east-1.amazonaws.com/prod/register';
-          const requestConfig = {
-            headers: {
-              'x-api-key': 'PBDYZzW59J6ZeQH6qDFGE3kd8BE34BFRavTb6Sez',
-            },
-          };
-          const requestBody = {
-            facultyEmail: evaluators[0].email,
-            userId: activeUser.id,
-          };
-          axios
-            .post(backendURL, requestBody, requestConfig)
-            .then(response => true)
-            .catch(error => {
-              console.log(error);
-            });
+        .then(async res => {
+          evaluators.length !== 0 && (await registerUser());
+          if (newEvaluators.length === 1) {
+            sendEmail(newEvaluators[0].email, newEvaluators[0].name);
+          } else {
+            sendEmail(newEvaluators[0].email, newEvaluators[0].name);
+            sendEmail(newEvaluators[1].email, newEvaluators[1].name);
+          }
+          console.log(res);
         })
         .catch(err => {
           console.log(err);
@@ -72,8 +139,6 @@ export default function Referrals() {
       console.log(err);
     }
   };
-
-  console.log(evaluators);
 
   return activeUser ? (
     <div className='mt-10 sm:mt-0'>
@@ -98,6 +163,10 @@ export default function Referrals() {
               These must be faculty members that you have had as instructors
               while at ULM.
             </p>
+            <div className='text-center font-extralight mt-5 text-red'>
+              <span className='font-semibold'>Note:</span> You will have to
+              click Submit to apply your changes.
+            </div>
 
             <div className='w-fit bg-white text-red p-5 rounded-lg mx-auto my-10 shadow-lg'>
               <form onSubmit={e => handleSubmit(e)}>
@@ -216,7 +285,7 @@ export default function Referrals() {
             <div className='flex justify-center mt-10'>
               <button
                 className='text-white text-md bg-[#FDB913] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg  w-full sm:w-auto px-5 py-2.5 text-center  dark:focus:ring-red'
-                disabled={evaluators.length >= 2 || evaluators.length < 1}
+                disabled={evaluators.length > 2}
                 onClick={e => {
                   e.preventDefault();
                   handleSubmit(e);

@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Image from 'next/image';
 import Logo from 'public/ulm_academic_maroon_white.png';
 import 'react-quill/dist/quill.snow.css';
@@ -21,6 +21,7 @@ export default function FacultyApplicantsList(props) {
   const [content, setContent] = useState('');
   const [steps, setSteps] = useState([]);
   const [assignedApplicants, setAssignedApplicants] = useState([]);
+  const [complete, setComplete] = useState(false);
 
   const modules = {
     toolbar: [
@@ -104,7 +105,11 @@ export default function FacultyApplicantsList(props) {
           : 0,
         path: `/evaluators/?user=${encodeURIComponent(user.id)}`,
       },
-      { label: 'Schedule', state: user.schedule ? 2 : 0, path: '#' },
+      {
+        label: 'Schedule',
+        state: user.schedule ? 2 : 0,
+        path: `/applicantSchedule?user=${encodeURIComponent(user.id)}`,
+      },
       {
         label: 'Personal Statement',
         state: user.personalStatement ? 2 : 0,
@@ -123,12 +128,24 @@ export default function FacultyApplicantsList(props) {
     ]);
   }
 
+  useEffect(() => {
+    let count = 0;
+    steps.forEach(step => {
+      if (step.state === 2) {
+        count++;
+      }
+    });
+    if (count === steps.length) {
+      setComplete(true);
+    } else {
+      setComplete(false);
+    }
+  }, [steps]);
+
   const handleUserSelection = (e, user) => {
     e.preventDefault();
     setSelectedUser(user);
   };
-
-  console.log(activeUser.assignedApplicants[0]);
 
   return (
     <div className='bg-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-4 gap-2'>
@@ -141,7 +158,10 @@ export default function FacultyApplicantsList(props) {
           <div className='scrollbar-thin p-2'>
             {applicants
               .filter(applicant => {
-                return activeUser.assignedApplicants[0].includes(applicant.id);
+                const user = JSON.parse(
+                  activeUser.assignedApplicants[0]
+                ).filter(assigned => assigned.userId === applicant.id);
+                return user.length > 0 ? user : null;
               })
               .map(applicant => (
                 <div
@@ -165,12 +185,15 @@ export default function FacultyApplicantsList(props) {
           <div className=' overflow-y-scroll scrollbar-thin  p-2'>
             {applicants
               .filter(applicant => {
-                return !activeUser.assignedApplicants[0].includes(applicant.id);
+                const user = JSON.parse(
+                  activeUser.assignedApplicants[0]
+                ).filter(assigned => assigned.userId !== applicant.id);
+                return user.length > 0 ? user : null;
               })
               .map(applicant => (
                 <div
                   key={applicant.id}
-                  className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e] active:bg-[#FDB913]'
+                  className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
                   onClick={e => {
                     handleUserSelection(e, applicant);
                     setChecklist(e, applicant);
@@ -283,7 +306,7 @@ export default function FacultyApplicantsList(props) {
                     Application Process
                   </h3>
                   <p className='text-base font-normal text-gray-500 dark:text-gray-400'>
-                    Completed
+                    {complete ? 'Complete' : 'Incomplete'}
                   </p>
                 </div>
               </li>
@@ -311,7 +334,7 @@ export default function FacultyApplicantsList(props) {
                     Interview Process
                   </h3>
                   <p className='text-base font-normal text-gray-500 dark:text-gray-400'>
-                    Dr. Burton Ashworth - 2/12/2021
+                    {complete ? 'Complete' : 'Incomplete'}
                   </p>
                 </div>
               </li>
@@ -338,7 +361,7 @@ export default function FacultyApplicantsList(props) {
                     Offer
                   </h3>
                   <p className='text-base font-normal text-gray-500 dark:text-gray-400'>
-                    Not complete
+                    {complete ? 'Complete' : 'Incomplete'}
                   </p>
                 </div>
               </li>
