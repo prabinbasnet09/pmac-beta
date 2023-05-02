@@ -12,7 +12,7 @@ export default function TabBar({ tabList }) {
 
   useEffect(() => {
     function handleResize() {
-      setIsSidebar(window.innerWidth < 640);
+      setIsSidebar(window.innerWidth < 680);
     }
 
     window.addEventListener('resize', handleResize);
@@ -83,7 +83,7 @@ export default function TabBar({ tabList }) {
                   <li key={index}>
                     <Link
                       href={tab.path}
-                      className={`${'nav-link'} ${
+                      className={`w-full rounded-lg py-3 px-7 text-1xl font-bold leading-5 ${
                         router.pathname === `${tab.path}`
                           ? 'bg-white shadow'
                           : 'text-white hover:bg-white hover:text-black ;'
