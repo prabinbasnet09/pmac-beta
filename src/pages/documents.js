@@ -226,11 +226,15 @@ function Documents() {
             </table>
           </div>
 
-          <div className={`sm:hidden ${'nav-body-small'}`}>
-            <table className='w-full table-auto border  border-black bg-red text-white '>
+          <div className={`sm:hidden overflow-x-auto`}>
+          <table className='w-full mt-20 table-auto border-collapse border  border-black  px-8 py-2 bg-red text-white '>
               <thead>
                 <tr>
                   <th className='w-2/4 border border-black px-4 py-2'>Forms</th>
+                  <th className='w-1/4 border border-black px-4 py-2'>
+                    Status
+                  </th>
+                  <th className='w-1/4 border border-black px-10 py-2'>Due</th>
                 </tr>
               </thead>
               <tbody>
@@ -240,6 +244,20 @@ function Documents() {
                       Applicant Information Form
                     </Link>
                   </td>
+                  <td className='w-1/4 border border-black px-4 py-2 bg-white text-black text-gray italic text-sm'>
+                    {activeUser.applicantForm ? (
+                      activeUser.applicantForm === 'Submitted' ? (
+                        <span className=' text-green font-bold'>Complete</span>
+                      ) : (
+                        <span>Incomplete...</span>
+                      )
+                    ) : (
+                      <span>Not Started</span>
+                    )}
+                  </td>
+                  <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                    03/25/2023
+                  </td>
                 </tr>
                 <tr>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hov  er:text-red hover:font-bold'>
@@ -247,49 +265,82 @@ function Documents() {
                       Information Release Form
                     </Link>
                   </td>
+                  <td className='w-1/4 border border-black px-4 py-2 bg-white text-gray italic text-sm '>
+                    {activeUser.applicantReleaseForm ? (
+                      activeUser.applicantReleaseForm === 'Submitted' ? (
+                        <span className=' text-green font-bold'>Complete</span>
+                      ) : (
+                        <span>Incomplete...</span>
+                      )
+                    ) : (
+                      <span>Not Started...</span>
+                    )}
+                  </td>
+                  <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                    03/25/2023
+                  </td>
                 </tr>
                 <tr>
                   <td className='w-3/4   px-4 py-2 bg-white text-red font-bold disabled:'>
                     Faculty Evaluation Forms
                   </td>
+                  <td className='w-1/4  px-4 py-2 bg-white '></td>
+                  <td className='w-1/4  px-4 py-2 bg-white '></td>
                 </tr>
 
-                {activeUser.facultyRecommendation ? (
-                  activeUser.facultyRecommendation[0] && (
-                    <tr>
-                      <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
-                        <Link href='/applications/facultyRecForm'>
-                          Faculty Recommendation Form 1
-                        </Link>
-                      </td>
-                    </tr>
-                  )
+                {activeUser.facultyRecommendation &&
+                activeUser.facultyRecommendation.length >= 1 ? (
+                  <tr>
+                    <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
+                      Faculty Recommendation Form 1
+                    </td>
+                    <td className='w-1/4 border border-black px-4 py-2 bg-white text-green font-bold'>
+                      Complete
+                    </td>
+                    <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                      03/25/2023
+                    </td>
+                  </tr>
                 ) : (
                   <tr>
-                    <td className='w-3/4 border border-black px-20 py-2 bg-white text-black hover:text-red hover:font-bold'>
-                      <Link href='/applications/facultyRecForm'>
-                        Faculty Recommendation Form 1
-                      </Link>
+                    <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
+                      {/* <Link href='/applications/facultyRecForm'> */}
+                      Faculty Recommendation Form 1{/* </Link> */}
+                    </td>
+                    <td className='w-1/4 border border-black px-4 py-2 bg-white text-gray italic text-sm  '>
+                      Incomplete...
+                    </td>
+                    <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                      03/25/2023
                     </td>
                   </tr>
                 )}
 
-                {activeUser.facultyRecommendation ? (
-                  activeUser.facultyRecommendation[1] && (
-                    <tr>
-                      <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
-                        <Link href='/applications/facultyRecForm'>
-                          Faculty Recommendation Form 2
-                        </Link>
-                      </td>
-                    </tr>
-                  )
+                {activeUser.facultyRecommendation &&
+                activeUser.facultyRecommendation.length === 2 ? (
+                  <tr>
+                    <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
+                      Faculty Recommendation Form 2
+                    </td>
+                    <td className='w-1/4 border border-black px-4 py-2 bg-white text-green font-bold'>
+                      Complete
+                    </td>
+                    <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                      03/25/2023
+                    </td>
+                  </tr>
                 ) : (
                   <tr>
-                    <td className='w-3/4 border border-black px-20 py-2 bg-white text-black hover:text-red hover:font-bold'>
-                      <Link href='/applications/facultyRecForm'>
-                        Faculty Recommendation Form 2
-                      </Link>
+                    <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
+                      {/* <Link href='/applications/facultyRecForm'> */}
+                      Faculty Recommendation Form 2{/* </Link> */}
+                    </td>
+
+                    <td className='w-1/4 border border-black px-4 py-2 bg-white  text-gray italic text-sm'>
+                      Incomplete...
+                    </td>
+                    <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                      03/25/2023
                     </td>
                   </tr>
                 )}
@@ -297,6 +348,15 @@ function Documents() {
                 <tr>
                   <td className='w-3/4 border border-black px-20 py-2 bg-white text-black hover:text-red hover:font-bold'>
                     <Link href='/referrals'>Add Referrals</Link>
+                  </td>
+                  <td className='w-1/4 border border-black px-4 py-2 bg-white text-red font-semibold italic text-sm'>
+                    {activeUser.evaluators
+                      ? JSON.parse(activeUser.evaluators).length
+                      : 0}
+                    /2
+                  </td>
+                  <td className='w-3/4 border border-black px-4 py-2 bg-white text-center text-red font-bold'>
+                    -
                   </td>
                 </tr>
 
@@ -306,24 +366,65 @@ function Documents() {
                       Personal Statement
                     </Link>
                   </td>
+                  <td className='w-1/4 border border-black px-4 py-2 bg-white text-black italic text-sm'>
+                    {activeUser.personalStatement ? (
+                      <span className=' text-green font-bold'>Complete</span>
+                    ) : (
+                      <span className='text-gray'>Incomplete...</span>
+                    )}
+                  </td>
+                  <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                    03/25/2023
+                  </td>
                 </tr>
                 <tr>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
                     <Link href='/forms/statementTranscript'>Transcript</Link>
+                  </td>
+                  <td className='w-1/4 border border-black px-4 py-2 bg-white text-black italic text-sm'>
+                    {activeUser.transcript ? (
+                      <span className=' text-green font-bold'>Complete</span>
+                    ) : (
+                      <span className='text-gray'>Incomplete...</span>
+                    )}
+                  </td>
+                  <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                    03/25/2023
                   </td>
                 </tr>
                 <tr>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
                     <Link href='/forms/statementTranscript'>Headshot</Link>
                   </td>
+                  <td className='w-1/4 border border-black px-4 py-2 bg-white text-black italic text-sm'>
+                    {activeUser.profilePicture ? (
+                      <span className=' text-green font-bold'>Complete</span>
+                    ) : (
+                      <span className='text-gray'>Incomplete...</span>
+                    )}
+                  </td>
+                  <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                    03/25/2023
+                  </td>
                 </tr>
                 <tr>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white text-black hover:text-red hover:font-bold'>
                     <Link href='/forms/statementTranscript'>AMCAS Form</Link>
                   </td>
+                  <td className='w-1/4 border border-black px-4 py-2 bg-white text-black italic text-sm'>
+                    {activeUser.amcasForm ? (
+                      <span className=' text-green font-bold'>Complete</span>
+                    ) : (
+                      <span className='text-gray'>Incomplete...</span>
+                    )}
+                  </td>
+                  <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
+                    03/25/2023
+                  </td>
                 </tr>
               </tbody>
             </table>
+
           </div>
         </div>
       </div>
