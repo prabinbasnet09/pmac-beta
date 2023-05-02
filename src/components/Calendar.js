@@ -42,7 +42,7 @@ function Calendar(props) {
       }
     }
 
-    if (activeUser && activeUser.schedule[0]) {
+    if (activeUser && activeUser.schedule && activeUser.schedule[0]) {
       try {
         setAllEvents(JSON.parse(activeUser.schedule));
       } catch (error) {
