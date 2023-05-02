@@ -8,7 +8,6 @@ import awsExports from '../aws-exports';
 import * as queries from '../graphql/queries';
 import { onUpdateUser } from '../graphql/subscriptions';
 import { Amplify, API, Hub, Auth } from 'aws-amplify';
-// import '@fullcalendar/common/main.css';
 
 Amplify.configure(awsExports);
 export const ActiveUser = createContext();

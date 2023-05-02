@@ -232,8 +232,8 @@ export default function Referrals() {
               </form>
             </div>
 
-            <div className='relative shadow-md sm:rounded-lg w-fit m-auto'>
-              <table className='m-auto table-auto w-fit text-sm text-left text-red dark:text-gray-400'>
+            <div className='relative shadow-md sm:rounded-lg w-fit m-auto '>
+              <table className='m-auto table w-fit text-sm text-left text-red dark:text-gray-400 overflow-x-scroll scrollbar-thin'>
                 <thead className='text-xs text-red uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                   <tr>
                     <th scope='col' className='px-6 py-3'>
