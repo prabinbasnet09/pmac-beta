@@ -54,9 +54,9 @@ export default function Result() {
   return activeUser ? (
     <>
     <div className='flex items-center justify-center'>
-          <div className= {`${isSmallScreen ? 'px-0 w-full' : 'px-2 w-3/4'}`}>
+          <div className= {`${isSmallScreen ? 'px-0 w-3/4' : 'px-2 w-3/4'}`}>
        
-        <div className={`${isSmallScreen ? 'nav-body-small' : 'nav-body'}`}>
+        <div className={`${isSmallScreen ? 'nav-body-calendar' : 'nav-body'}`}>
           <div className= {`${isSmallScreen ? 'w-3/2 mx-auto border border-black  p-4 mt-10 ml-9'  : ''}`}>
             <form
               className={`bg-white rounded-lg ${isSmallScreen ? '' : 'p-5 w-full'}`}
