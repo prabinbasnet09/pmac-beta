@@ -126,7 +126,7 @@ export default function Referrals() {
           evaluators.length !== 0 && (await registerUser());
           if (newEvaluators.length === 1) {
             sendEmail(newEvaluators[0].email, newEvaluators[0].name);
-          } else {
+          } else if (newEvaluators.length === 2) {
             sendEmail(newEvaluators[0].email, newEvaluators[0].name);
             sendEmail(newEvaluators[1].email, newEvaluators[1].name);
           }

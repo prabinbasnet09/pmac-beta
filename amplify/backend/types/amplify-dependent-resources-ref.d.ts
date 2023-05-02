@@ -31,5 +31,11 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     }
+  },
+  "storage": {
+    "PMACBUCKET": {
+      "BucketName": "string",
+      "Region": "string"
+    }
   }
 }

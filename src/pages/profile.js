@@ -54,9 +54,13 @@ export default function Profile() {
         <div className='grid gap-y-4'>
           <div className='flex justify-center items-center'>
             <Image
-              src={HeadShot}
+              src={
+                activeUser.profilePicture ? activeUser.profilePicture : HeadShot
+              }
               className='h-40 w-40 rounded-full'
               alt='ULM Logo'
+              width={160}
+              height={160}
             />
           </div>
           <div className='text-center rounded-lg'>

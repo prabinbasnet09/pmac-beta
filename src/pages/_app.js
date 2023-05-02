@@ -60,6 +60,7 @@ export const ActiveUserProvider = ({ children, currentUser }) => {
         })
           .then(res => {
             setLocalStorage('userInfo', res.data.listUsers.items);
+            setUsers(res.data.listUsers.items);
           })
           .catch(err => {
             console.log(err);
@@ -76,48 +77,61 @@ export const ActiveUserProvider = ({ children, currentUser }) => {
     };
   }, []);
 
-  let loggedUser;
-  if (users.length === 1 && users[0].groups[0] === 'Student') {
-    loggedUser = {
-      id: currentUser.attributes.sub,
-      username: currentUser.username,
-      name: currentUser.attributes.name,
-      email: currentUser.attributes.email,
-      group: users[0].groups,
-      personalStatement: users[0].personalStatement,
-      transcript: users[0].transcript,
-      amcasForm: users[0].amcasForm,
-      facultyRecommendation: users[0].facultyRecommendation,
-      applicantForm: users[0].applicantForm,
-      applicantReleaseForm: users[0].applicantReleaseForm,
-      evaluators: users[0].evaluators,
-      schedule: users[0].schedule,
-      notes: users[0].notes,
-      interview: users[0].interview,
-    };
-  } else {
-    loggedUser = {
-      id: currentUser.attributes.sub,
-      username: currentUser.username,
-      name: currentUser.attributes.name,
-      email: currentUser.attributes.email,
-      group: users
-        .filter(userProfile => userProfile.username === currentUser.username)
-        .map(user => user.groups[0]),
-      users: users.filter(
-        userProfile =>
-          userProfile.groups[0] !== 'Admin' &&
-          userProfile.username !== currentUser.username
-      ),
-      assignedApplicants: users
-        .filter(userProfile => userProfile.username === currentUser.username)
-        .map(user => user.assignedApplicants),
-      schedule: users
-        .filter(userProfile => userProfile.username === currentUser.username)
-        .map(user => user.schedule),
-    };
-  }
+  useEffect(() => {
+    initializeUser();
+    console.log(loggedUser);
+  }, [users]);
 
+  let loggedUser;
+  const initializeUser = () => {
+    if (users.length === 1 && users[0].groups[0] === 'Student') {
+      loggedUser = {
+        id: currentUser.attributes.sub,
+        username: currentUser.username,
+        name: currentUser.attributes.name,
+        email: currentUser.attributes.email,
+        group: users[0].groups,
+        personalStatement: users[0].personalStatement,
+        transcript: users[0].transcript,
+        amcasForm: users[0].amcasForm,
+        facultyRecommendation: users[0].facultyRecommendation,
+        applicantForm: users[0].applicantForm,
+        applicantReleaseForm: users[0].applicantReleaseForm,
+        evaluators: users[0].evaluators,
+        schedule: users[0].schedule,
+        notes: users[0].notes,
+        interview: users[0].interview,
+        profilePicture: users[0].profilePicture,
+      };
+    } else {
+      loggedUser = {
+        id: currentUser.attributes.sub,
+        username: currentUser.username,
+        name: currentUser.attributes.name,
+        email: currentUser.attributes.email,
+        group: users
+          .filter(userProfile => userProfile.username === currentUser.username)
+          .map(user => user.groups[0]),
+        users: users.filter(
+          userProfile =>
+            userProfile.groups[0] !== 'Admin' &&
+            userProfile.username !== currentUser.username
+        ),
+        assignedApplicants: users
+          .filter(userProfile => userProfile.username === currentUser.username)
+          .map(user => user.assignedApplicants),
+        schedule: users
+          .filter(userProfile => userProfile.username === currentUser.username)
+          .map(user => user.schedule),
+        profilePicture: users
+          .filter(userProfile => userProfile.username === currentUser.username)
+          .map(user => user.profilePicture)[0],
+      };
+    }
+  };
+
+  initializeUser();
+  console.log('loggedUser', loggedUser);
   return (
     <ActiveUser.Provider value={loggedUser}>{children}</ActiveUser.Provider>
   );

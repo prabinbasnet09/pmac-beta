@@ -121,7 +121,7 @@ export default function ChairApplicantsList(props) {
       },
       {
         label: 'Schedule',
-        state: user.schedule ? 2 : 0,
+        state: user.schedule && JSON.parse(user.schedule).length > 0 ? 2 : 0,
         path: `/applicantSchedule?user=${encodeURIComponent(user.id)}`,
       },
       {
@@ -136,8 +136,8 @@ export default function ChairApplicantsList(props) {
       },
       {
         label: 'AMCAS Form',
-        state: user.amcas ? 2 : 0,
-        path: user.amcas,
+        state: user.amcasForm ? 2 : 0,
+        path: user.amcasForm,
       },
     ]);
   }

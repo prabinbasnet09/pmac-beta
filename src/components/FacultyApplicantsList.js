@@ -126,8 +126,8 @@ export default function FacultyApplicantsList(props) {
       },
       {
         label: 'AMCAS Form',
-        state: user.amcas ? 2 : 0,
-        path: user.amcas,
+        state: user.amcasForm ? 2 : 0,
+        path: user.amcasForm,
       },
     ]);
   }
@@ -314,7 +314,7 @@ export default function FacultyApplicantsList(props) {
               />
               {!createNote ? (
                 <button
-                  className='absolute top-2 right-2 px-3 py-1 font-bold text-sm text-black rounded-md bg-[#fff] shadow-sm shadow-black'
+                  className='absolute top-2 right-2 px-3 py-1 font-bold text-sm text-black rounded-md bg-[#fff] shadow-sm shadow-black hover:shadow-red'
                   onClick={e => {
                     e.preventDefault();
                     saveNotes();
@@ -324,13 +324,13 @@ export default function FacultyApplicantsList(props) {
                 </button>
               ) : (
                 <button
-                  className='absolute top-2 right-2 px-3 py-1 font-bold text-sm text-black rounded-md bg-[#fff] shadow-sm shadow-black'
+                  className='absolute top-2 right-2 px-3 py-1 font-bold text-sm text-black rounded-md bg-[#fff] shadow-sm shadow-black hover:shadow-red'
                   onClick={e => {
                     e.preventDefault();
                     createNotes();
                   }}
                 >
-                  Create
+                  Save
                 </button>
               )}
             </div>

@@ -41,13 +41,21 @@ const Checklist = ({ activeUser }) => {
             : 1
           : 0,
       },
-      { label: 'Schedule', state: activeUser.schedule ? 2 : 0 },
+      {
+        label: 'Schedule',
+        state:
+          activeUser.schedule &&
+          activeUser.schedule[0] &&
+          JSON.parse(activeUser.schedule).length > 0
+            ? 2
+            : 0,
+      },
       {
         label: 'Personal Statement',
         state: activeUser.personalStatement ? 2 : 0,
       },
       { label: 'Headshot', state: activeUser.profilePicture ? 2 : 0 },
-      { label: 'AMCAS Form', state: activeUser.amcas ? 2 : 0 },
+      { label: 'AMCAS Form', state: activeUser.amcasForm ? 2 : 0 },
     ]);
   }, [activeUser]);
 

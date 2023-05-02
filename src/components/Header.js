@@ -5,9 +5,11 @@ import HeadShot from '/public/headshot.webp';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Auth } from 'aws-amplify';
+import { ActiveUser } from '@/pages/_app';
 
 const Header = user => {
-  const [activeUser, setActiveUser] = useState(user.user);
+  const activeUser = useContext(ActiveUser);
+  const [currentUser, setCurrentUser] = useState(user.user);
   const router = useRouter();
 
   const [profileToggle, setProfileToggle] = useState(false);
@@ -24,7 +26,10 @@ const Header = user => {
     router.push('/login');
   };
 
-  return router.pathname !== '/login' ? (
+  return router.pathname !== '/login' &&
+    router.pathname !== '/about' &&
+    router.pathname !== '/contact' &&
+    router.pathname !== '/home' ? (
     <div className='flex justify-between items-center h-15 max-w-full mx-auto px-4 text-[#3B0000] shadow-xl'>
       {/*Exchange ULM for ULM Logo*/}
       <Link href='/'>
@@ -40,8 +45,12 @@ const Header = user => {
               onClick={() => handleToggle()}
             >
               <Image
-                src={HeadShot}
-                alt='ULM Logo'
+                src={
+                  activeUser.profilePicture
+                    ? activeUser.profilePicture
+                    : HeadShot
+                }
+                // alt='ULM Logo'
                 width={40}
                 height={40}
                 className='border border-spacing-10 border-[#3B0000] rounded-full'
@@ -75,10 +84,10 @@ const Header = user => {
           <div className='absolute top-15 right-16 z-10 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 text-[#840029]'>
             <div className='px-4 py-3 '>
               <span className='block text-sm text-gray-900 '>
-                {activeUser.attributes.name}
+                {currentUser.attributes.name}
               </span>
               <span className='block text-sm  text-gray-500 truncate dark:text-gray-400'>
-                {activeUser.attributes.email}
+                {currentUser.attributes.email}
               </span>
             </div>
             <hr className='width-full h-1 mx-auto bg-[#bbb] border-0 rounded-lg' />

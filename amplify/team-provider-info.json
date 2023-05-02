@@ -27,7 +27,8 @@
         "pmacbeta": {}
       },
       "storage": {
-        "s3e1623622": {}
+        "s3e1623622": {},
+        "PMACBUCKET": {}
       }
     }
   }

@@ -618,7 +618,7 @@ export default function Slots() {
               setSelectedUser(activeUser);
             }}
           >
-            My Calendar
+            View My Calendar
           </div>
           <div className='bg-white p-3 mb-5 rounded-lg w-auto shadow-sm shadow-black'>
             <div className='p-3 mb-2 bg-[#681212] rounded-lg text-[#fff] text-lg font-bold text-center'>
@@ -644,17 +644,26 @@ export default function Slots() {
               </div>
               <div className='scrollbar-thin'>
                 {/* Unassigned Applicants */}
-                {applicants.map((applicant, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
-                      onClick={() => setSelectedUser(applicant)}
-                    >
-                      {applicant.name}
-                    </div>
-                  );
-                })}
+                {applicants
+                  .filter(applicant => {
+                    const user =
+                      applicant.interview &&
+                      JSON.parse(applicant.interview).length > 0
+                        ? false
+                        : applicant;
+                    return user;
+                  })
+                  .map((applicant, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
+                        onClick={() => setSelectedUser(applicant)}
+                      >
+                        {applicant.name}
+                      </div>
+                    );
+                  })}
               </div>
             </div>
             <div className='mt-5'>
@@ -663,17 +672,26 @@ export default function Slots() {
               </div>
               <div className='scrollbar-thin'>
                 {/* Assigned Applicants */}
-                {applicants.map((applicant, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
-                      onClick={() => setSelectedUser(applicant)}
-                    >
-                      {applicant.name}
-                    </div>
-                  );
-                })}
+                {applicants
+                  .filter(applicant => {
+                    const user =
+                      applicant.interview &&
+                      JSON.parse(applicant.interview).length > 0
+                        ? applicant
+                        : false;
+                    return user;
+                  })
+                  .map((applicant, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className='mb-2 font-semibold bg-[#e4e4e4] rounded-lg p-3 text-[#840029] cursor-pointer hover:bg-[#9e9e9e]'
+                        onClick={() => setSelectedUser(applicant)}
+                      >
+                        {applicant.name}
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>

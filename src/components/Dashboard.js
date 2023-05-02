@@ -117,9 +117,11 @@ export default function Dashboard() {
                 </div>
               </div>
               <div className='bg-white mt-5 p-5 rounded-lg'>
-                <div className='text-red font-bold text-2xl'>
-                  Upcoming Interviews
-                </div>
+                {activeUser.group[0] === 'Student' ? (
+                  <div className='text-red font-bold text-2xl'>
+                    Upcoming Interviews
+                  </div>
+                ) : null}
                 {interviews.length > 0 ? (
                   <div className='flex flex-wrap justify-start gap-32 p-5 mt-5 ml-10'>
                     {interviews.map((interview, index) => {
@@ -146,11 +148,11 @@ export default function Dashboard() {
                       );
                     })}{' '}
                   </div>
-                ) : (
+                ) : activeUser.group[0] === 'Student' ? (
                   <div className='text-red text-xl mt-5'>
                     User has no upcoming interviews scheduled.
                   </div>
-                )}
+                ) : null}
               </div>
             </div>
           </div>
@@ -166,30 +168,37 @@ export default function Dashboard() {
                 <Checklist activeUser={activeUser} />
               ) : null}
             </div>
-            <div className='text-red text-center font-semibold text-2xl mt-5'>
-              Upcoming Interviews
-            </div>
-            <div className='flex flex-wrap justify-center gap-5  mt-5'>
-              {interviews.map((interview, index) => {
-                const date = new Date(interview.start).toLocaleDateString();
-                const time = new Date(interview.start).toLocaleTimeString();
-                return (
-                  <div
-                    key={index}
-                    className='bg-white p-5 shadow-md shadow-red rounded-lg text-center'
-                  >
-                    <div className='py-1 font-bold'>{interview.name}</div>
-                    <div className='py-1'>
-                      Scheduled on <span className='font-bold'>{date}</span>
-                    </div>
-                    <div className='py-1'>
-                      {' '}
-                      <span className='font-bold'>{time}</span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            {activeUser.group[0] === 'Student' ? (
+              <div>
+                <div className='text-red text-center font-semibold text-2xl mt-5'>
+                  Upcoming Interviews
+                </div>
+                <div className='flex flex-wrap justify-center gap-5  mt-5'>
+                  {interviews.map((interview, index) => {
+                    const date = new Date(interview.start).toLocaleDateString();
+                    const time = new Date(interview.start).toLocaleTimeString();
+                    return (
+                      <div
+                        key={index}
+                        className='bg-white p-5 shadow-md shadow-red rounded-lg text-center'
+                      >
+                        <div className='py-1 font-bold'>{interview.name}</div>
+                        <div className='py-1'>
+                          Scheduled on <span className='font-bold'>{date}</span>
+                        </div>
+                        <div className='py-1'>
+                          {' '}
+                          <span className='font-bold'>{time}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className='text-red text-center text-xl mt-5'>
+                  User has no upcoming interviews scheduled.
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
       )}
