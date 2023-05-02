@@ -7,7 +7,7 @@ import upload from '../../../public/upload.png';
 import uploadOrange from '../../../public/upload_orange.png';
 import uploadGreen from '../../../public/upload_green.png';
 import Link from 'next/link';
-import { TypeAnimation } from 'react-type-animation';
+
 
 export default function StatementTranscript() {
   const [personalStatement, setPersonalStatement] = useState(null);
