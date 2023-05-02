@@ -32,8 +32,8 @@ export default function Applicants() {
 
   return activeUser ? (
     <div className='flex items-center justify-center'>
-      <div className='w-3/4 px-2 sm:px-0'>
-        <div className={`${'nav-body'}`}>
+      <div className={` sm:block hidden w-3/4 px-2 sm:px-0`}>
+        <div className={` ${'nav-body'}`}>
           {groups && groups === 'ChairCommittee' ? (
             <ChairApplicantsList
               users={activeUser.users}
@@ -49,6 +49,23 @@ export default function Applicants() {
           ) : null}
         </div>
       </div>
-    </div>
+
+      
+      <div className={` sm:hidden w-3/2 ml-10  top-1/4 absolute `}>
+          {groups && groups === 'ChairCommittee' ? (
+            <ChairApplicantsList
+              users={activeUser.users}
+              activeUser={activeUser}
+            />
+          ) : groups && groups === 'Faculty' ? (
+            <FacultyApplicantsList
+              users={activeUser.users}
+              activeUser={activeUser}
+            />
+          ) : groups && groups === 'Admin' ? (
+            <AppUsers />
+          ) : null}
+        </div>
+      </div>
   ) : null;
 }

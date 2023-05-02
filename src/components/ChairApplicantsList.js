@@ -229,7 +229,7 @@ export default function ChairApplicantsList(props) {
   };
 
   return (
-    <div className='bg-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-4 gap-2'>
+    <div className='bg-gray rounded-lg grid grid-cols-1 md:grid-cols-4 gap-2'>
       {/* applicants list */}
       <div className='bg-white p-3 rounded-lg w-auto shadow-sm shadow-white'>
         <div className='text-center'>
@@ -257,7 +257,7 @@ export default function ChairApplicantsList(props) {
           </button>
           {toggle ? (
             <div className='relative'>
-              <div className=' absolute top-15 right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700 '>
+              <div className=' absolute top-15 right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-full  '>
                 <ul className='py-2 text-lg text-white cursor-pointer '>
                   <li>
                     <span
@@ -588,7 +588,7 @@ export default function ChairApplicantsList(props) {
           </div>
         </div>
       ) : selectedGroup === 'Committee Members' && selectedUser ? (
-        <div className='bg-white p-5 rounded-lg md:col-span-3 shadow-sm shadow-white'>
+        <div className={` bg-white p-5 rounded-lg md:col-span-3 shadow-sm shadow-white`}>
           <div className='flex items-center justify-between  mb-4 bg-[#e4e4e4] p-5 rounded-xl'>
             <div className='flex items-center '>
               <Image
@@ -611,7 +611,7 @@ export default function ChairApplicantsList(props) {
             </div>
           </div>
 
-          <div className=' bg-[#e4e4e4] w-full p-5 rounded-xl'>
+          <div className=' bg-[#e4e4e4] w-full p-5 rounded-xl '>
             <div className='p-5 text-2xl font-bold mb-5 text-red'>
               Applicants Assigned
             </div>

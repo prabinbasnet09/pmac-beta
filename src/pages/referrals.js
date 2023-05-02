@@ -145,30 +145,31 @@ export default function Referrals() {
       <div className='mt-10 w-full md:mt-10'>
         <div className='overflow-hidden shadow sm:rounded-md'>
           <div className='border-2 border-[#7e7e7e] rounded-xl shadow-xl shadow-[#7092BE] shadow:opacity-20 w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 '>
-            <p>
-              Arrange to have two faculty members familiar with you submit an
-              evaluation of your behalf using the faculty evaluation forms.
-              These evaluations need to be turned into the committee by the
-              faculty member.
+            <p className=' leading-relaxed text-justify'>
+              Request two faculty members familiar with you to submit Faculty Evaluation Form on your behalf.
+              It is important to note that the faculty member should submit the evaluation form themselves. 
             </p>
-
-            <p>
-              Please Note: It is preferable to use faculty that are not on the
-              Pre-Medical Advisory Committee. Also please do not use faculty
-              that might write you an independent letter of recommendation for
-              AMCAS/ CASPA, etc.{' '}
+            <br />
+            <p className=' leading-relaxed text-justify'>
+            It is recommended that applicants approach faculty members who are 
+            not on the pre-medical advisory committee. 
+            Additionally, it is best to avoid choosing from faculty who may have a conflict 
+            of interest, such as those who may be writing 
+            you an independent letter of recommendation 
+            for AMCAS, CASPA, or other application systems.
+            {' '}
             </p>
-
-            <p>
-              These must be faculty members that you have had as instructors
-              while at ULM.
+            <br />
+            <p className=' leading-relaxed text-justify'>
+            It is important to select faculty members as recommenders who have instructed you during your time at ULM. 
+            It is recommended to choose instructors who are familiar with your academic abilities, work ethic, and potential for success in a healthcare profession. 
             </p>
             <div className='text-center font-extralight mt-5 text-red'>
               <span className='font-semibold'>Note:</span> You will have to
               click Submit to apply your changes.
             </div>
 
-            <div className='w-fit bg-white text-red p-5 rounded-lg mx-auto my-10 shadow-lg'>
+            <div className='w-full bg-white text-red p-5 rounded-lg mx-auto my-10 shadow-lg'>
               <form onSubmit={e => handleSubmit(e)}>
                 <div className='mb-6'>
                   <label
