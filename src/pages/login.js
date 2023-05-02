@@ -61,21 +61,22 @@ function Login() {
   return !user || !guestUser ? (
     <div className='min-h-screen flex flex-col z-20'>
       <div className='z-20'>
-        <LandingHeader absolute/>
+        <LandingHeader absolute />
       </div>
       <div className='relative'>
-          <div className='z-10 fixed inset-0 w-full h-full object-cover'>
-            <Image
-              className='w-full mx-auto relative'
-              src='/aerial.jpg'
-              alt=''
-              width={1980}
-              height={1024}
+        <div className='z-10 fixed inset-0 w-full h-full object-cover'>
+          <Image
+            className='w-full mx-auto relative'
+            src='/aerial.jpg'
+            alt=''
+            width={1980}
+            height={1024}
+            style={{ height: '100%', objectFit: 'cover' }}
           />
         </div>
-        </div>
+      </div>
       <div className='z-20 justify-center'>
-        <SignIn/>
+        <SignIn />
       </div>
       <div className='mt-auto z-20'>
         <Footer />

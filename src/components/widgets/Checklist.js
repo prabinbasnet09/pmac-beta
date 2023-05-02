@@ -73,13 +73,16 @@ const Checklist = ({ activeUser }) => {
         <ul
           className={`w-12/12 space-y-4 ${
             isSmallScreen ? '' : 'bg-[rgb(245,245,245)]'
-          }   px-4 py-5 sm:p-6 rounded-md`}
+          }   px-4 py-5 sm:p-6 rounded-md h-full`}
         >
-          <div className='font-bold text-2xl'>Application Checklist</div>
+          <div className='font-bold text-2xl text-red'>
+            Application Checklist
+          </div>
+
           <div
-            className={`bg-white ${
-              isSmallScreen ? 'py-8' : ''
-            } rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
+            className={`bg-white shadow-red shadow-sm ${
+              isSmallScreen ? 'py-10' : ''
+            } rounded-xl p-4  cursor-pointer hover:bg-[rgb(226,226,226)]`}
             onClick={e => {
               e.preventDefault();
               setExpandNotStarted(!expandNotStarted);
@@ -114,9 +117,9 @@ const Checklist = ({ activeUser }) => {
             ) : null}
           </div>
           <div
-            className={`bg-white ${
+            className={`bg-white shadow-red shadow-sm ${
               isSmallScreen ? 'py-8' : ''
-            } rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
+            } rounded-xl p-4  cursor-pointer hover:bg-[rgb(226,226,226)]`}
             onClick={e => {
               e.preventDefault();
               setExpandIncomplete(!expandIncomplete);
@@ -153,9 +156,9 @@ const Checklist = ({ activeUser }) => {
             ) : null}
           </div>
           <div
-            className={`bg-white ${
+            className={`bg-white shadow-red shadow-sm ${
               isSmallScreen ? 'py-8' : ''
-            } rounded-xl p-4 shadow-xl cursor-pointer hover:bg-[rgb(226,226,226)]`}
+            } rounded-xl p-4  cursor-pointer hover:bg-[rgb(226,226,226)]`}
             onClick={e => {
               e.preventDefault();
               setExpandComplete(prevState => !prevState);

@@ -119,7 +119,7 @@ function Documents() {
                 {activeUser.facultyRecommendation &&
                 activeUser.facultyRecommendation.length === 2 ? (
                   <tr>
-                    <td className='w-3/4 border border-black px-4 py-2 bg-white text-black '>
+                    <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       Faculty Recommendation Form 2
                     </td>
                     <td className='w-1/4 border border-black px-4 py-2 bg-white text-green font-bold'>

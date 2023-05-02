@@ -39,7 +39,7 @@ export default function Schedular(props) {
         plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin]}
         headerToolbar={{
           right: '',
-          left: 'prev,next',
+          left: '',
           center: 'title',
         }}
         // customButtons={{ addEventButton: { text: 'Add Event' } }}

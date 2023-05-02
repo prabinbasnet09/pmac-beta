@@ -4,6 +4,9 @@ import Logo from 'public/ulm_academic_maroon_white.png';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import * as mutations from '@/graphql/mutations';
+import * as queries from '@/graphql/queries';
+import { API } from 'aws-amplify';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -11,70 +14,21 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 });
 
 export default function ChairApplicantsList(props) {
-  const [applicants, setApplicants] = useState(props.users);
+  const [applicants, setApplicants] = useState(
+    props.users.filter(user => user.groups[0] === 'Student')
+  );
   const activeUser = props.activeUser;
   const [selectedUser, setSelectedUser] = useState(null);
   const [complete, setComplete] = useState(false);
-  const [committeeMembers, setCommitteeMembers] = useState([
-    {
-      id: '1',
-      name: 'Dr. Burton Ashworth',
-      department: 'Psychology',
-      email: 'ashworth@gmail.com',
-    },
-    {
-      id: '2',
-      name: 'Ms. Kristin Chandler',
-      department: 'Career Connections',
-      email: '',
-    },
-    {
-      id: '3',
-      name: 'Dr. Kristi Davis',
-      department: 'Dental Hygiene',
-      email: '',
-    },
-    {
-      id: '4',
-      name: 'Dr. Emad El Giar',
-      department: 'Chemistry',
-      email: '',
-    },
-    {
-      id: '5',
-      name: 'Mr. Joshua Gann',
-      department: 'Kinesiology',
-      email: '',
-    },
-    {
-      id: '6',
-      name: 'Dr. Rohn Hill',
-      department: 'Pharmacy',
-      email: '',
-    },
-    {
-      id: '7',
-      name: 'Dr. Siva Muru',
-      department: 'Chemistry',
-      email: '',
-    },
-    {
-      id: '8',
-      name: 'Dr. Matt Overturf',
-      department: 'Biology',
-      email: '',
-    },
-    {
-      id: '9',
-      name: 'Dr. Allison Wiedemeir',
-      department: 'Biology',
-      email: '',
-    },
-  ]);
+  const [notes, setNotes] = useState(null);
+  const [createNote, setCreateNote] = useState(true);
+
+  const [committeeMembers, setCommitteeMembers] = useState(
+    props.users.filter(user => user.groups[0] === 'Faculty')
+  );
 
   const [selectedGroup, setSelectedGroup] = useState('Committee Members');
   const [toggle, setToggle] = useState(false);
-  const [content, setContent] = useState('');
   const [showPopover, setShowPopover] = useState(false);
   const [steps, setSteps] = useState([]);
 
@@ -118,17 +72,13 @@ export default function ChairApplicantsList(props) {
   ];
 
   function handleContentChange(value) {
-    setContent(value);
+    setNotes(value);
   }
 
   const handleToggleChange = e => {
     console.log('toggle', toggle);
     e.preventDefault();
     setToggle(prevState => !prevState);
-  };
-
-  const handleUserSelection = user => {
-    setSelectedUser(user);
   };
 
   function setChecklist(user) {
@@ -205,6 +155,78 @@ export default function ChairApplicantsList(props) {
       setComplete(false);
     }
   }, [steps]);
+
+  const handleUserSelection = user => {
+    setSelectedUser(user);
+    const fetchNotes = async () => {
+      try {
+        await API.graphql({
+          query: queries.getFacultyNotes,
+          variables: {
+            facultyEmail: activeUser.email,
+            userId: user.id,
+          },
+        }).then(response => {
+          response.data.getFacultyNotes
+            ? setNotes(response.data.getFacultyNotes.notes)
+            : setNotes(null);
+          // setNotes(response.data.getFaculty.notes);
+          response.data.getFacultyNotes
+            ? setCreateNote(false)
+            : setCreateNote(true);
+        });
+      } catch (error) {
+        console.log('error on fetching notes', error);
+      }
+    };
+    fetchNotes();
+  };
+
+  const createNotes = async () => {
+    try {
+      await API.graphql({
+        query: mutations.createFacultyNotes,
+        variables: {
+          input: {
+            facultyEmail: activeUser.email,
+            userId: selectedUser.id,
+            notes: notes,
+          },
+        },
+      })
+        .then(response => {
+          console.log('response from creating notes', response);
+        })
+        .catch(error => {
+          console.log('error on creating notes', error);
+        });
+    } catch (error) {
+      console.log('error on creating notes', error);
+    }
+  };
+
+  const saveNotes = async () => {
+    try {
+      await API.graphql({
+        query: mutations.updateFacultyNotes,
+        variables: {
+          input: {
+            facultyEmail: activeUser.email,
+            userId: selectedUser.id,
+            notes: notes,
+          },
+        },
+      })
+        .then(response => {
+          console.log('response from saving notes', response);
+        })
+        .catch(error => {
+          console.log('error on saving notes', error);
+        });
+    } catch (error) {
+      console.log('error on saving notes', error);
+    }
+  };
 
   return (
     <div className='bg-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-4 gap-2'>
@@ -385,7 +407,9 @@ export default function ChairApplicantsList(props) {
               </div>
             </div>
             <div>
-              <p className='mr-5 font-bold text-gray-500'>Status</p>
+              <button className='mr-2 px-2 py-1 font-bold text-gray-500 rounded-md shadow-sm shadow-black hover:shadow-red'>
+                Notify
+              </button>
             </div>
           </div>
 
@@ -396,15 +420,33 @@ export default function ChairApplicantsList(props) {
                 theme='snow'
                 modules={modules}
                 formats={formats}
-                value={content}
+                value={notes ? notes : ''}
                 onChange={handleContentChange}
               />
-              <button
-                className='absolute top-0 right-0 px-3 py-1 font-bold text-xl text-black rounded-md'
-                onClick={() => setShowPopover(true)}
-              >
-                &#x26F6;
-              </button>
+              {!createNote ? (
+                <button
+                  className='absolute top-2 right-2 px-2 py-1 font-bold text-xs text-black rounded-md bg-[#fff] shadow-sm shadow-black hover:shadow-red'
+                  onClick={e => {
+                    e.preventDefault();
+                    saveNotes();
+                  }}
+                >
+                  Save
+                </button>
+              ) : (
+                <button
+                  className='absolute top-2 right-2 px-2 py-1 font-bold text-xs text-black rounded-md bg-[#fff] shadow-sm shadow-black hover:shadow-red'
+                  onClick={e => {
+                    e.preventDefault();
+                    createNotes();
+                  }}
+                >
+                  Save
+                </button>
+              )}
+              <div className='text-red mt-2 ml-1 font-md'>
+                Note: Please click the save button to save your notes.
+              </div>
             </div>
             {showPopover && (
               <div className='popover'>
@@ -550,67 +592,78 @@ export default function ChairApplicantsList(props) {
           <div className='flex items-center justify-between  mb-4 bg-[#e4e4e4] p-5 rounded-xl'>
             <div className='flex items-center '>
               <Image
-                src={Logo}
+                src={
+                  selectedUser.profilePicture
+                    ? selectedUser.profilePicture
+                    : Logo
+                }
                 alt='ULM Logo'
                 width={150}
                 height={150}
                 className='rounded-lg mr-3'
               />
               <div className='ml-5 '>
-                <p className='text-xl font-medium'>Dr. Burton Ashworth</p>
+                <p className='text-xl font-medium'>{selectedUser.name}</p>
                 <p className='text-lg text-gray-500 font-thin'>
-                  ashworth@.ulm.edu
+                  {selectedUser.email}
                 </p>
               </div>
             </div>
           </div>
 
           <div className=' bg-[#e4e4e4] w-full p-5 rounded-xl'>
-            <div className='p-5 text-2xl font-bold mb-5'>
+            <div className='p-5 text-2xl font-bold mb-5 text-red'>
               Applicants Assigned
             </div>
             <div className='flex flex-wrap gap-4 justify-evenly items-center text-center '>
-              <div className='bg-white p-3 rounded-xl'>
-                <Image
-                  src={Logo}
-                  alt='ULM Logo'
-                  width={100}
-                  height={100}
-                  className='rounded-lg mx-auto py-5'
-                />
-                <div className='text-xl font-semibold mt-3'>Prabin Basnet</div>
-                <div className='text-lg'>basnetpr@warhawks.ulm.edu</div>
-                <div className='text-lg'>Scheduled on 2/12/2021</div>
-                <div className='text-lg font-medium text-green'>Completed</div>
-              </div>
-
-              <div className='bg-white p-3 rounded-xl'>
-                <Image
-                  src={Logo}
-                  alt='ULM Logo'
-                  width={100}
-                  height={100}
-                  className='rounded-lg mx-auto py-5'
-                />
-                <div className='text-xl font-semibold mt-3'>Prabin Basnet</div>
-                <div className='text-lg'>basnetpr@warhawks.ulm.edu</div>
-                <div className='text-lg'>Scheduled on 2/12/2021</div>
-                <div className='text-lg font-medium text-red'>Incomplete</div>
-              </div>
-
-              <div className='bg-white p-3  rounded-xl'>
-                <Image
-                  src={Logo}
-                  alt='ULM Logo'
-                  width={100}
-                  height={100}
-                  className='rounded-lg mx-auto py-5'
-                />
-                <div className='text-xl font-semibold mt-3'>Prabin Basnet</div>
-                <div className='text-lg'>basnetpr@warhawks.ulm.edu</div>
-                <div className='text-lg'>Scheduled on 2/12/2021</div>
-                <div className='text-lg font-medium text-red'>Incomplete</div>
-              </div>
+              {applicants
+                .filter(applicant => {
+                  const user = JSON.parse(
+                    selectedUser.assignedApplicants[0]
+                  ).filter(assigned => assigned.userId === applicant.id);
+                  return user.length > 0 ? user : null;
+                })
+                .map(applicant => {
+                  const date = new Date(
+                    JSON.parse(applicant.interview)[0].start
+                  ).toLocaleDateString();
+                  const time = new Date(
+                    JSON.parse(applicant.interview)[0].start
+                  ).toLocaleTimeString();
+                  const complete = Date.now() > date;
+                  console.log(complete);
+                  return (
+                    <div className='bg-white p-3 rounded-xl'>
+                      <Image
+                        src={
+                          applicant.profilePicture
+                            ? applicant.profilePicture
+                            : Logo
+                        }
+                        alt='ULM Logo'
+                        width={100}
+                        height={100}
+                        className='rounded-lg mx-auto py-5'
+                      />
+                      <div className='text-xl font-semibold mt-3'>
+                        {applicant.name}
+                      </div>
+                      <div className='text-lg py-0.5'>{applicant.email}</div>
+                      <div className='text-lg py-0.5'>
+                        Scheduled on{' '}
+                        <span className='font-semibold'>{date}</span> at{' '}
+                        <span className='font-semibold'>{time}</span>
+                      </div>
+                      <div className='text-lg font-medium py-0.5'>
+                        {complete ? (
+                          <span className='text-green'>Complete</span>
+                        ) : (
+                          <span className='text-[#FF0000]'>Incomplete</span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </div>

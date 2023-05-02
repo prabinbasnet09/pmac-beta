@@ -4,6 +4,10 @@ import Logo from 'public/ulm_academic_maroon_white.png';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { API } from 'aws-amplify';
+import * as queries from '../graphql/queries';
+import * as mutations from '../graphql/mutations';
+
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
@@ -22,6 +26,10 @@ export default function FacultyApplicantsList(props) {
   const [steps, setSteps] = useState([]);
   const [assignedApplicants, setAssignedApplicants] = useState([]);
   const [complete, setComplete] = useState(false);
+  const [notes, setNotes] = useState(null);
+  const [createNote, setCreateNote] = useState(true);
+
+  useEffect(() => {}, [notes]);
 
   const modules = {
     toolbar: [
@@ -61,10 +69,6 @@ export default function FacultyApplicantsList(props) {
     'link',
     'image',
   ];
-
-  function handleContentChange(value) {
-    setContent(value);
-  }
 
   function setChecklist(e, user) {
     e.preventDefault();
@@ -142,9 +146,83 @@ export default function FacultyApplicantsList(props) {
     }
   }, [steps]);
 
+  function handleContentChange(value) {
+    setNotes(value);
+  }
+
   const handleUserSelection = (e, user) => {
     e.preventDefault();
     setSelectedUser(user);
+
+    const fetchNotes = async () => {
+      try {
+        await API.graphql({
+          query: queries.getFacultyNotes,
+          variables: {
+            facultyEmail: activeUser.email,
+            userId: user.id,
+          },
+        }).then(response => {
+          response.data.getFacultyNotes
+            ? setNotes(response.data.getFacultyNotes.notes)
+            : setNotes(null);
+          // setNotes(response.data.getFaculty.notes);
+          response.data.getFacultyNotes
+            ? setCreateNote(false)
+            : setCreateNote(true);
+        });
+      } catch (error) {
+        console.log('error on fetching notes', error);
+      }
+    };
+
+    fetchNotes();
+  };
+
+  const createNotes = async () => {
+    try {
+      await API.graphql({
+        query: mutations.createFacultyNotes,
+        variables: {
+          input: {
+            facultyEmail: activeUser.email,
+            userId: selectedUser.id,
+            notes: notes,
+          },
+        },
+      })
+        .then(response => {
+          console.log('response from creating notes', response);
+        })
+        .catch(error => {
+          console.log('error on creating notes', error);
+        });
+    } catch (error) {
+      console.log('error on creating notes', error);
+    }
+  };
+
+  const saveNotes = async () => {
+    try {
+      await API.graphql({
+        query: mutations.updateFacultyNotes,
+        variables: {
+          input: {
+            facultyEmail: activeUser.email,
+            userId: selectedUser.id,
+            notes: notes,
+          },
+        },
+      })
+        .then(response => {
+          console.log('response from saving notes', response);
+        })
+        .catch(error => {
+          console.log('error on saving notes', error);
+        });
+    } catch (error) {
+      console.log('error on saving notes', error);
+    }
   };
 
   return (
@@ -216,13 +294,10 @@ export default function FacultyApplicantsList(props) {
                 height={50}
                 className='rounded-lg mr-3'
               />
-              <div className='ml-5'>
+              <div className=' flex-col ml-5 '>
                 <p className='text-lg font-medium'>{selectedUser.name}</p>
                 <p className='text-gray-500 font-thin'>{selectedUser.email}</p>
               </div>
-            </div>
-            <div>
-              <p className='mr-5 font-bold text-gray-500'>Status</p>
             </div>
           </div>
 
@@ -233,12 +308,34 @@ export default function FacultyApplicantsList(props) {
                 theme='snow'
                 modules={modules}
                 formats={formats}
-                value={content}
+                value={notes ? notes : ''}
                 onChange={handleContentChange}
+                height='400px'
               />
-              <button className='absolute top-0 right-0 px-3 py-1 font-bold text-xl text-black rounded-md'>
-                &#x26F6;
-              </button>
+              {!createNote ? (
+                <button
+                  className='absolute top-2 right-2 px-3 py-1 font-bold text-sm text-black rounded-md bg-[#fff] shadow-sm shadow-black'
+                  onClick={e => {
+                    e.preventDefault();
+                    saveNotes();
+                  }}
+                >
+                  Save
+                </button>
+              ) : (
+                <button
+                  className='absolute top-2 right-2 px-3 py-1 font-bold text-sm text-black rounded-md bg-[#fff] shadow-sm shadow-black'
+                  onClick={e => {
+                    e.preventDefault();
+                    createNotes();
+                  }}
+                >
+                  Create
+                </button>
+              )}
+            </div>
+            <div className='text-red mt-2 ml-1 font-md'>
+              Note: Please click the save button to save your notes.
             </div>
           </div>
 

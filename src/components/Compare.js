@@ -147,7 +147,7 @@ function Compare(props) {
         end: end.toISOString(),
       },
       {
-        userId: faculty.name,
+        name: faculty.name,
         start: start.toISOString(),
         end: end.toISOString(),
       },
@@ -176,25 +176,31 @@ function Compare(props) {
   };
 
   const handleEventClick = e => {
-    console.log('e', e);
-    const start = new Date(e.event.start);
-    const end = new Date(e.event.end);
-    const student = users.filter(user =>
-      user.groups ? user.groups[0] === 'Student' : null
-    )[0];
-    const faculty = users.filter(user =>
-      user.groups ? user.groups[0] === 'Faculty' : null
-    )[0];
+    let confirm = window.confirm(
+      'Are you sure you want to schedule this time slot?'
+    );
+    if (!confirm) {
+      const start = new Date(e.event.start);
+      const end = new Date(e.event.end);
+      const student = users.filter(user =>
+        user.groups ? user.groups[0] === 'Student' : null
+      )[0];
+      const faculty = users.filter(user =>
+        user.groups ? user.groups[0] === 'Faculty' : null
+      )[0];
 
-    users.map(user => {
-      if (user.id === activeUser.id) {
-        updateAssignedApplicants(user, student, start, end);
-      } else if (user.groups[0] === 'Faculty') {
-        updateAssignedApplicants(user, student, start, end);
-      } else {
-        updateApplicantInterview(user, faculty, start, end);
-      }
-    });
+      users.map(user => {
+        if (user.id === activeUser.id) {
+          updateAssignedApplicants(user, student, start, end);
+        } else if (user.groups[0] === 'Faculty') {
+          updateAssignedApplicants(user, student, start, end);
+        } else {
+          updateApplicantInterview(user, faculty, start, end);
+        }
+      });
+    } else {
+      return;
+    }
   };
 
   return activeUser ? (
