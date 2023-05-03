@@ -127,6 +127,9 @@ export const ActiveUserProvider = ({ children, currentUser }) => {
         profilePicture: users
           .filter(userProfile => userProfile.username === currentUser.username)
           .map(user => user.profilePicture)[0],
+        verified: users
+          .filter(userProfile => userProfile.username === currentUser.username)
+          .map(user => user.verified)[0],
       };
     }
   };

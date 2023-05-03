@@ -246,7 +246,7 @@ export default function StatementTranscript() {
           profile photo.
           <span className='block mt-1'>
             You can also upload a copy of your{' '}
-            <span className='text-red '>AMCAS Form</span>, if applicable.
+            <span className='text-red'>AMCAS Form</span>, if applicable.
           </span>
         </p>
       </div>

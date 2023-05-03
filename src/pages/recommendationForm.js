@@ -4,11 +4,13 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import LandingHeader from '@/components/LandingHeader';
 import axios from 'axios';
+import dynamic from 'next/dynamic';
 
 export default function RecommendationForm() {
   const [guestUser, setGuestUser] = useState(null);
   const [sign, setSign] = useState(false);
   const [userId, setUserId] = useState();
+  const [submitted, setSubmitted] = useState(false);
 
   const router = useRouter();
 
@@ -116,12 +118,31 @@ export default function RecommendationForm() {
       .post(backendURL, requestBody, requestConfig)
       .then(response => {
         console.log(response);
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 3000);
       })
       .catch(error => {
         console.log(error);
       });
 
     setSubmitting(false);
+  };
+  const handleClick = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this file!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+      }
+    });
   };
 
   return guestUser ? (
@@ -837,6 +858,11 @@ export default function RecommendationForm() {
                               >
                                 Submit
                               </button>
+                              {submitted && (
+                                <div className='text-green text-xl'>
+                                  Your form has been submitted successfully.
+                                </div>
+                              )}
                             </p>
                           </div>
                         </div>

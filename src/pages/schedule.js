@@ -35,7 +35,28 @@ export default function Schedule() {
     fetchUser();
   }, [router]);
 
-  return activeUser ? (
+  return activeUser && activeUser.group[0] === 'Faculty' ? (
+    activeUser.verified ? (
+      <div className='flex items-center justify-center'>
+        <div className='w-3/4 px-2 sm:px-0'>
+          <div className={`${'nav-body'}`}>
+            <Calendar user={activeUser} />
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div className='flex items-center justify-center'>
+        <div className={` sm:block hidden w-3/4 px-2 sm:px-0`}>
+          <div className={` ${'nav-body'}`}>
+            <div className='text-red text-2xl text-center'>
+              Please wait until the administrator verifies your account.
+            </div>
+          </div>
+          ;
+        </div>
+      </div>
+    )
+  ) : (
     <div className='flex items-center justify-center'>
       <div className='w-3/4 px-2 sm:px-0'>
         <div className={`${'nav-body'}`}>
@@ -43,5 +64,5 @@ export default function Schedule() {
         </div>
       </div>
     </div>
-  ) : null;
+  );
 }

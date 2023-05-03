@@ -30,7 +30,7 @@ export default function Applicants() {
     activeUser && setGroups(activeUser.group[0]);
   }, [activeUser]);
 
-  return activeUser ? (
+  return activeUser && activeUser.verified ? (
     <div className='flex items-center justify-center'>
       <div className={` sm:block hidden w-3/4 px-2 sm:px-0`}>
         <div className={` ${'nav-body'}`}>
@@ -66,5 +66,16 @@ export default function Applicants() {
         ) : null}
       </div>
     </div>
-  ) : null;
+  ) : (
+    <div className='flex items-center justify-center'>
+      <div className={` sm:block hidden w-3/4 px-2 sm:px-0`}>
+        <div className={` ${'nav-body'}`}>
+          <div className='text-red text-2xl text-center'>
+            Please wait until the administrator verifies your account.
+          </div>
+        </div>
+        ;
+      </div>
+    </div>
+  );
 }

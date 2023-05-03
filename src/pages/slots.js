@@ -193,33 +193,30 @@ export default function Slots() {
               </div>
             </div>
             <div className='text-lg font-semibold flex flex-col px-3 py-3'>
-              <div className='text-red'>
-                Unassigned
-                <div className='flex flex-col text-center'>
-                  {committeeMembers
-                    .filter(member => {
-                      const assigned =
-                        member.assignedApplicants &&
-                        member.assignedApplicants[0]
-                          ? JSON.parse(member.assignedApplicants).length
-                          : 0;
-                      return assigned === 0;
-                    })
-                    .map((member, index) => {
-                      return (
-                        <div
-                          key={index}
-                          onClick={() => setSelectedUser(member)}
-                          className='font-semibold py-1'
-                        >
-                          <span className='pr-2 font-semibold text-xl'>
-                            &rarr;
-                          </span>
-                          {member.name}
-                        </div>
-                      );
-                    })}
-                </div>
+              <div className='text-red'>Unassigned </div>
+              <div className='flex flex-col text-center'>
+                {committeeMembers
+                  .filter(member => {
+                    const assigned =
+                      member.assignedApplicants && member.assignedApplicants[0]
+                        ? JSON.parse(member.assignedApplicants).length
+                        : 0;
+                    return assigned === 0;
+                  })
+                  .map((member, index) => {
+                    return (
+                      <div
+                        key={index}
+                        onClick={() => setSelectedUser(member)}
+                        className='font-semibold py-1'
+                      >
+                        <span className='pr-2 font-semibold text-xl'>
+                          &rarr;
+                        </span>
+                        {member.name}
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -274,13 +271,21 @@ export default function Slots() {
                     }}
                   >
                     <option value={null}>Select a member</option>
-                    {committeeMembers.map((member, index) => {
-                      return (
-                        <option key={index} value={member.name}>
-                          {member.name}
-                        </option>
-                      );
-                    })}
+                    {committeeMembers
+                      .filter(member => {
+                        const hasSchedule =
+                          member.schedule &&
+                          member.schedule[0] &&
+                          Boolean(JSON.parse(member.schedule).length);
+                        return hasSchedule ? member : null;
+                      })
+                      .map((member, index) => {
+                        return (
+                          <option key={index} value={member.name}>
+                            {member.name}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
                 <div className='px-8 py-3'>
@@ -302,13 +307,21 @@ export default function Slots() {
                     }}
                   >
                     <option value={null}>Select a member</option>
-                    {committeeMembers.map((member, index) => {
-                      return (
-                        <option key={index} value={member.name}>
-                          {member.name}
-                        </option>
-                      );
-                    })}
+                    {committeeMembers
+                      .filter(member => {
+                        const hasSchedule =
+                          member.schedule &&
+                          member.schedule[0] &&
+                          Boolean(JSON.parse(member.schedule).length);
+                        return hasSchedule ? member : null;
+                      })
+                      .map((member, index) => {
+                        return (
+                          <option key={index} value={member.name}>
+                            {member.name}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
                 <div className='px-8 py-3'>
@@ -330,13 +343,21 @@ export default function Slots() {
                     }}
                   >
                     <option value={null}>Select a member</option>
-                    {committeeMembers.map((member, index) => {
-                      return (
-                        <option key={index} value={member.name}>
-                          {member.name}
-                        </option>
-                      );
-                    })}
+                    {committeeMembers
+                      .filter(member => {
+                        const hasSchedule =
+                          member.schedule &&
+                          member.schedule[0] &&
+                          Boolean(JSON.parse(member.schedule).length);
+                        return hasSchedule ? member : null;
+                      })
+                      .map((member, index) => {
+                        return (
+                          <option key={index} value={member.name}>
+                            {member.name}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
                 <div className='px-8 py-3'>
