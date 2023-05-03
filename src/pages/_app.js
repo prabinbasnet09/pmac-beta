@@ -182,8 +182,7 @@ function App({ Component, pageProps }) {
     router.pathname === '/documents' ||
     router.pathname === '/schedule' ||
     router.pathname === '/results' ||
-    router.pathname === '/applicants' ||
-    router.pathname === '/updates';
+    router.pathname === '/applicants';
 
   const getUserGroup = async () => {
     const userGroup = await API.graphql({
@@ -253,10 +252,6 @@ function App({ Component, pageProps }) {
               {
                 name: 'Schedule',
                 path: '/schedule',
-              },
-              {
-                name: 'Update',
-                path: '/updates',
               },
             ]
           : userGroup === 'Admin'

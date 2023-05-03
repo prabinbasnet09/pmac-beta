@@ -4,6 +4,7 @@ import { ActiveUser } from '@/pages/_app';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import FacultyDashboard from './FacultyDashboard';
 
 const calendarEvents = [
   {
@@ -75,8 +76,12 @@ export default function Dashboard() {
                 {/* Display all the checklist */}
                 {activeUser.group[0] === 'Student' ? (
                   <Checklist activeUser={activeUser} />
+                ) : activeUser.group[0] === 'Faculty' ? (
+                  <FacultyDashboard activeUser={activeUser} />
+                ) : activeUser.group[0] === 'ChairCommittee' ? (
+                  <FacultyDashboard activeUser={activeUser} />
                 ) : null}
-                <div className='w-4/12 bg-[rgb(245,245,245)]  px-4 py-5 sm:p-6 rounded-md'>
+                <div className='w-4/12  px-4 py-5 sm:p-6 rounded-md bg-white h shadow-sm shadow-black rounded-lg'>
                   <div className='h-fit '>
                     {/* <div className="font-bold text-lg">
                       Calendar */}
@@ -85,7 +90,9 @@ export default function Dashboard() {
                         height: '300px',
                         width: '300px',
                         position: 'relative',
+                        // className: 'h-fit',
                       }}
+                      className=''
                     >
                       <FullCalendar
                         plugins={[dayGridPlugin, interactionPlugin]}
@@ -96,7 +103,13 @@ export default function Dashboard() {
                         }}
                         aspectRatio={1}
                         height='100%'
-                        events={calendarEvents}
+                        events={
+                          activeUser &&
+                          activeUser.assignedApplicants &&
+                          activeUser.assignedApplicants[0]
+                            ? JSON.parse(activeUser.assignedApplicants)
+                            : calendarEvents
+                        }
                         eventMouseEnter={handleEventMouseEnter}
                         eventMouseLeave={handleEventMouseLeave}
                       />
@@ -116,41 +129,46 @@ export default function Dashboard() {
                   </div>
                 </div>
               </div>
-              <div className='bg-white mt-5 p-5 rounded-lg'>
+              <div>
                 {activeUser.group[0] === 'Student' ? (
-                  <div className='text-red font-bold text-2xl'>
-                    Upcoming Interviews
-                  </div>
-                ) : null}
-                {interviews.length > 0 ? (
-                  <div className='flex flex-wrap justify-start gap-32 p-5 mt-5 ml-10'>
-                    {interviews.map((interview, index) => {
-                      const date = new Date(
-                        interview.start
-                      ).toLocaleDateString();
-                      const time = new Date(
-                        interview.start
-                      ).toLocaleTimeString();
-                      return (
-                        <div
-                          key={index}
-                          className='bg-white p-5 shadow-md shadow-red rounded-lg text-center text-lg'
-                        >
-                          <div className='py-1 font-bold'>{interview.name}</div>
-                          <div className='py-1'>
-                            Scheduled on{' '}
-                            <span className='font-bold'>{date}</span>
-                          </div>
-                          <div className='py-1'>
-                            <span className='font-bold'>{time}</span>
-                          </div>
-                        </div>
-                      );
-                    })}{' '}
-                  </div>
-                ) : activeUser.group[0] === 'Student' ? (
-                  <div className='text-red text-xl mt-5'>
-                    User has no upcoming interviews scheduled.
+                  <div className='bg-white mt-5 p-5 rounded-lg'>
+                    <div className='text-red font-bold text-2xl'>
+                      Upcoming Interviews
+                    </div>
+
+                    {interviews.length > 0 ? (
+                      <div className='flex flex-wrap justify-start gap-32 p-5 mt-5 ml-10'>
+                        {interviews.map((interview, index) => {
+                          const date = new Date(
+                            interview.start
+                          ).toLocaleDateString();
+                          const time = new Date(
+                            interview.start
+                          ).toLocaleTimeString();
+                          return (
+                            <div
+                              key={index}
+                              className='bg-white p-5 shadow-md shadow-red rounded-lg text-center text-lg'
+                            >
+                              <div className='py-1 font-bold'>
+                                {interview.name}
+                              </div>
+                              <div className='py-1'>
+                                Scheduled on{' '}
+                                <span className='font-bold'>{date}</span>
+                              </div>
+                              <div className='py-1'>
+                                <span className='font-bold'>{time}</span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div className='text-red text-xl mt-5'>
+                        User has no upcoming interviews scheduled.
+                      </div>
+                    )}
                   </div>
                 ) : null}
               </div>
@@ -166,6 +184,10 @@ export default function Dashboard() {
               {/* Display all the checklist */}
               {activeUser.group[0] === 'Student' ? (
                 <Checklist activeUser={activeUser} />
+              ) : activeUser.group[0] === 'Faculty' ? (
+                <FacultyDashboard activeUser={activeUser} />
+              ) : activeUser.group[0] === 'ChairCommittee' ? (
+                <FacultyDashboard activeUser={activeUser} />
               ) : null}
             </div>
             {activeUser.group[0] === 'Student' ? (
