@@ -25,6 +25,7 @@ export const onCreateUser = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -54,6 +55,7 @@ export const onUpdateUser = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -83,6 +85,7 @@ export const onDeleteUser = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }

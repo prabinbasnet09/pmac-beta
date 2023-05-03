@@ -22,6 +22,7 @@ export const onVerifyUser = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -48,6 +49,7 @@ export const changePersonalStatement = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -76,6 +78,7 @@ export const changeFacultyRecommendation = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -102,6 +105,7 @@ export const changeApplicationForm = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -130,6 +134,7 @@ export const changeApplicationReleaseForm = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -156,6 +161,7 @@ export const changeTranscript = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -182,6 +188,7 @@ export const changeProfilePicture = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -211,6 +218,7 @@ export const createUser = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -240,6 +248,7 @@ export const updateUser = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -269,6 +278,7 @@ export const deleteUser = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }

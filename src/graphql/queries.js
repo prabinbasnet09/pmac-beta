@@ -22,6 +22,7 @@ export const getStudentDocuments = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -48,6 +49,7 @@ export const getUser = /* GraphQL */ `
       schedule
       notes
       assignedApplicants
+      results
       createdAt
       updatedAt
     }
@@ -79,6 +81,7 @@ export const listUsers = /* GraphQL */ `
         schedule
         notes
         assignedApplicants
+        results
         createdAt
         updatedAt
       }

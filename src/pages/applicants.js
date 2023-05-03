@@ -50,22 +50,21 @@ export default function Applicants() {
         </div>
       </div>
 
-      
       <div className={` sm:hidden w-3/2 ml-10  top-1/4 absolute `}>
-          {groups && groups === 'ChairCommittee' ? (
-            <ChairApplicantsList
-              users={activeUser.users}
-              activeUser={activeUser}
-            />
-          ) : groups && groups === 'Faculty' ? (
-            <FacultyApplicantsList
-              users={activeUser.users}
-              activeUser={activeUser}
-            />
-          ) : groups && groups === 'Admin' ? (
-            <AppUsers />
-          ) : null}
-        </div>
+        {groups && groups === 'ChairCommittee' ? (
+          <ChairApplicantsList
+            users={activeUser.users}
+            activeUser={activeUser}
+          />
+        ) : groups && groups === 'Faculty' ? (
+          <FacultyApplicantsList
+            users={activeUser.users}
+            activeUser={activeUser}
+          />
+        ) : groups && groups === 'Admin' ? (
+          <AppUsers />
+        ) : null}
       </div>
+    </div>
   ) : null;
 }

@@ -25,6 +25,7 @@ type User
   schedule: [AWSJSON!]
   notes: [AWSJSON!]
   assignedApplicants: [AWSJSON!]
+  results: [String!]
 }
 
 type ApplicantForm

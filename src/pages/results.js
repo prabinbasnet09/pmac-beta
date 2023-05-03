@@ -4,8 +4,12 @@ import { useState, useEffect, useContext } from 'react';
 import { Auth } from 'aws-amplify';
 import { ActiveUser } from './_app';
 import { useForm } from 'react-hook-form';
+import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Results from '@/components/Results';
+import { API } from 'aws-amplify';
+import * as mutations from '../graphql/mutations';
 
 export default function Result() {
   const activeUser = useContext(ActiveUser);
@@ -38,22 +42,40 @@ export default function Result() {
 
   const isSmallScreen = windowSize.width < 740;
 
-  const onSubmitHandler = data => {
-    console.log(data);
-  };
-
   const validationSchema = Yup.object({
     accepting: Yup.string().required('This section is required!'),
     choice: Yup.string().required('This section is required!'),
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(validationSchema),
-  });
+  const onSubmit = async (values, { setSubmitting }) => {
+    console.log(values);
+    try {
+      await API.graphql({
+        query: mutations.updateUser,
+        variables: {
+          input: {
+            id: activeUser.id,
+            results: [values.accepting, values.choice],
+          },
+        },
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+
+    setSubmitting(false);
+  };
+
+  const initialValues = {
+    accepting: activeUser && activeUser.results ? activeUser.results[0] : '',
+    choice: activeUser && activeUser.results ? activeUser.results[1] : '',
+  };
+
+  console.log(initialValues);
 
   return activeUser ? (
     <>
@@ -69,56 +91,65 @@ export default function Result() {
                   : ''
               }`}
             >
-              <form
-                className={`bg-white rounded-lg ${
-                  isSmallScreen ? '' : 'p-5 w-full'
-                }`}
-                onSubmit={handleSubmit(onSubmitHandler)}
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
               >
-                <label
-                  htmlFor='Results'
-                  className='block mb-2 text-2xl font-bold text-black'
-                >
-                  Please let us know about your results!
-                </label>
-                <p className='text-base'>
-                  {' '}
-                  If accepted, please fill out a brief survey to help us improve
-                  our services for future pre-med students!
-                </p>
-                <label className='block mt-3 mb-2 text-lg font-medium text-black'>
-                  1. Tell us about the school(s) you got accepted to, if any.
-                </label>
-                <textarea
-                  rows='4'
-                  id='accepting'
-                  className='block mb-2 text-sm text-black bg-white focus:ring-0 w-full'
-                  placeholder='List the school(s) you got accepted to.'
-                  {...register('accepting')}
-                ></textarea>
-                {errors.accepting && (
-                  <p className='text-bred mb-4'>{errors.accepting.message}</p>
+                {({ isSubmitting, values, setFieldValue }) => (
+                  <Form
+                    className={`bg-white rounded-lg ${
+                      isSmallScreen ? '' : 'p-5 w-full'
+                    }`}
+                  >
+                    <label
+                      htmlFor='Results'
+                      className='block mb-2 text-2xl font-bold text-black'
+                    >
+                      Please let us know about your results!
+                    </label>
+                    <p className='text-base'>
+                      {' '}
+                      If accepted, please fill out a brief survey to help us
+                      improve our services for future pre-med students!
+                    </p>
+                    <div className='mt-5 mb-5'>
+                      <label className='block mt-3 mb-2 text-lg font-medium text-black'>
+                        1. Tell us about the school(s) you got accepted to, if
+                        any.
+                      </label>
+                      <Field
+                        as='textarea'
+                        type='text'
+                        name='accepting'
+                        rows={4}
+                        className='block p-2.5 w-full text-sm text-black rounded-lg border'
+                        placeholder='Write your answers here...'
+                      ></Field>
+                    </div>
+                    <div className='mt-5 '>
+                      <label className='block mb-2 text-lg font-medium text-black'>
+                        2. Which school did you decide to attend?
+                      </label>
+                      <Field
+                        as='textarea'
+                        type='text'
+                        name='choice'
+                        rows={4}
+                        className='block p-2.5 w-full text-sm text-black rounded-lg border'
+                        placeholder='Write your answers here...'
+                      />
+                    </div>
+                    <button
+                      type='submit'
+                      disabled={isSubmitting}
+                      className='bg-ulm_maroon hover:shadow-black shadow-sm rounded-md text-lg my-6 mx-auto font-bold px-5 py-2 text-white'
+                    >
+                      Submit
+                    </button>
+                  </Form>
                 )}
-                <label className='block mb-2 text-lg font-medium text-black'>
-                  2. Which school did you decide to attend?
-                </label>
-                <textarea
-                  rows='4'
-                  id='school_of_choice'
-                  className='block mb-2 text-sm text-black bg-white w-full'
-                  placeholder='Name the school you decided to attend.'
-                  {...register('choice')}
-                ></textarea>
-                {errors.choice && (
-                  <p className='text-bred mb-4'>{errors.choice.message}</p>
-                )}
-                <button
-                  type='submit'
-                  className='bg-green text-white font-bold py-2 px-4 rounded mt-3 mr-3 w-2/2'
-                >
-                  Submit
-                </button>
-              </form>
+              </Formik>
             </div>
           </div>
         </div>

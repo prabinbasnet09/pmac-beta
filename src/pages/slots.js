@@ -99,21 +99,22 @@ export default function Slots() {
           </div>
           <div className='flex flex-wrap justify-evenly  dark:text-gray-400 py-2 '>
             <div className='text-lg font-semibold flex flex-col px-3 py-3'>
-              <div>3 Assigned</div>
+              <div className='text-red'>3 Assigned</div>
               <div className='flex flex-col text-center'>
                 {committeeMembers
                   .filter(member => {
-                    const applicantsAssigned = member.assignedApplicants
-                      ? member.assignedApplicants.length
-                      : 0;
-                    return applicantsAssigned === 3;
+                    const assigned =
+                      member.assignedApplicants && member.assignedApplicants[0]
+                        ? JSON.parse(member.assignedApplicants).length
+                        : 0;
+                    return assigned === 3;
                   })
                   .map((member, index) => {
                     return (
                       <div
                         key={index}
                         onClick={() => setSelectedUser(member)}
-                        className='font-light'
+                        className='font-semibold py-1'
                       >
                         {member.name}
                       </div>
@@ -122,21 +123,22 @@ export default function Slots() {
               </div>
             </div>
             <div className='text-lg font-semibold flex flex-col px-3 py-3'>
-              <div>2 Assigned</div>
+              <div className='text-red'>2 Assigned</div>
               <div className='flex flex-col text-center'>
                 {committeeMembers
                   .filter(member => {
-                    const applicantsAssigned = member.assignedApplicants
-                      ? member.assignedApplicants.length
-                      : 0;
-                    return applicantsAssigned === 2;
+                    const assigned =
+                      member.assignedApplicants && member.assignedApplicants[0]
+                        ? JSON.parse(member.assignedApplicants).length
+                        : 0;
+                    return assigned === 2;
                   })
                   .map((member, index) => {
                     return (
                       <div
                         key={index}
                         onClick={() => setSelectedUser(member)}
-                        className='font-light'
+                        className='font-semibold py-1'
                       >
                         {member.name}
                       </div>
@@ -145,14 +147,15 @@ export default function Slots() {
               </div>
             </div>
             <div className='text-lg font-semibold flex flex-col px-3 py-3'>
-              <div>1 Assigned</div>
+              <div className='text-red'>1 Assigned</div>
               <div className='flex flex-col text-center'>
                 {committeeMembers
                   .filter(member => {
-                    const applicantsAssigned = member.assignedApplicants
-                      ? member.assignedApplicants.length
-                      : 0;
-                    return applicantsAssigned === 1;
+                    const assigned =
+                      member.assignedApplicants && member.assignedApplicants[0]
+                        ? JSON.parse(member.assignedApplicants).length
+                        : 0;
+                    return assigned === 1;
                   })
                   .map((member, index) => {
                     return (
@@ -160,7 +163,7 @@ export default function Slots() {
                         <div
                           key={index}
                           onClick={() => setSelectedUser(member)}
-                          className='font-light'
+                          className='font-semibold py-1'
                         >
                           {member.name}
                         </div>
@@ -170,22 +173,24 @@ export default function Slots() {
               </div>
             </div>
             <div className='text-lg font-semibold flex flex-col px-3 py-3'>
-              <div>
+              <div className='text-red'>
                 Unassigned
                 <div className='flex flex-col text-center'>
                   {committeeMembers
                     .filter(member => {
-                      const applicantsAssigned = member.assignedApplicants
-                        ? member.assignedApplicants.length
-                        : 0;
-                      return applicantsAssigned === 0;
+                      const assigned =
+                        member.assignedApplicants &&
+                        member.assignedApplicants[0]
+                          ? JSON.parse(member.assignedApplicants).length
+                          : 0;
+                      return assigned === 0;
                     })
                     .map((member, index) => {
                       return (
                         <div
                           key={index}
                           onClick={() => setSelectedUser(member)}
-                          className='font-light'
+                          className='font-semibold py-1'
                         >
                           {member.name}
                         </div>

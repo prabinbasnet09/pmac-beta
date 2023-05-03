@@ -102,6 +102,7 @@ export const ActiveUserProvider = ({ children, currentUser }) => {
         notes: users[0].notes,
         interview: users[0].interview,
         profilePicture: users[0].profilePicture,
+        results: users[0].results,
       };
     } else {
       loggedUser = {
@@ -181,7 +182,8 @@ function App({ Component, pageProps }) {
     router.pathname === '/documents' ||
     router.pathname === '/schedule' ||
     router.pathname === '/results' ||
-    router.pathname === '/applicants';
+    router.pathname === '/applicants' ||
+    router.pathname === '/updates';
 
   const getUserGroup = async () => {
     const userGroup = await API.graphql({
@@ -237,10 +239,6 @@ function App({ Component, pageProps }) {
                 name: 'Schedule',
                 path: '/schedule',
               },
-              {
-                name: 'Results',
-                path: '/results',
-              },
             ]
           : userGroup === 'ChairCommittee'
           ? [
@@ -257,8 +255,8 @@ function App({ Component, pageProps }) {
                 path: '/schedule',
               },
               {
-                name: 'Results',
-                path: '/results',
+                name: 'Update',
+                path: '/updates',
               },
             ]
           : userGroup === 'Admin'
