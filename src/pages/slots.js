@@ -10,6 +10,7 @@ import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
+import parseISO from 'date-fns/parseISO';
 
 export default function Slots() {
   const router = useRouter();
@@ -26,6 +27,7 @@ export default function Slots() {
   const [toggleSchedules, setToggleSchedules] = useState(false);
   const [schedules, setSchedules] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
+  const [confirmSlot, setConfirmSlot] = useState(false);
 
   useEffect(() => {
     // Load the fullcalendar-custom.css file when the page is rendered
@@ -85,14 +87,24 @@ export default function Slots() {
 
   const handleConfirmSlot = async e => {
     e.preventDefault();
+    setConfirmSlot(true);
   };
 
-  console.log(schedules);
+  const handleDateSelect = async e => {
+    const start = parseISO(e.startStr);
+    const end = parseISO(e.endStr);
+    const confirm = window.confirm(
+      `Are you sure you want to schedule this slot? (Start: ${start} End: ${end})`
+    );
+    if (confirm) {
+      console.log(e);
+    }
+  };
 
   return activeUser ? (
     <div className='md:m-10 md:p-5 bg-[#F5F5F5] rounded-lg shadow-sm shadow-black'>
-      <div class='flex flex-wrap justify-center gap-10 md:mx-5 mx-2 mt-10'>
-        <div class='scrollbar-thin overflow-auto bg-white rounded-lg shadow-md shadow-black w-full '>
+      <div className='flex flex-wrap justify-center gap-10 md:mx-5 mx-2 mt-10'>
+        <div className='scrollbar-thin overflow-auto bg-white rounded-lg shadow-md shadow-black w-full '>
           {/* Committee Members */}
           <div className='p-3 text-center text-2xl text-red font-bold'>
             Committee Members
@@ -116,7 +128,9 @@ export default function Slots() {
                         onClick={() => setSelectedUser(member)}
                         className='font-semibold py-1'
                       >
-                        {member.name}
+                        <span className='pr-2 font-semibold text-xl'>
+                          &rarr;
+                        </span>
                       </div>
                     );
                   })}
@@ -140,6 +154,9 @@ export default function Slots() {
                         onClick={() => setSelectedUser(member)}
                         className='font-semibold py-1'
                       >
+                        <span className='pr-2 font-semibold text-xl'>
+                          &rarr;
+                        </span>
                         {member.name}
                       </div>
                     );
@@ -165,6 +182,9 @@ export default function Slots() {
                           onClick={() => setSelectedUser(member)}
                           className='font-semibold py-1'
                         >
+                          <span className='pr-2 font-semibold text-xl'>
+                            &rarr;
+                          </span>
                           {member.name}
                         </div>
                       </>
@@ -192,6 +212,9 @@ export default function Slots() {
                           onClick={() => setSelectedUser(member)}
                           className='font-semibold py-1'
                         >
+                          <span className='pr-2 font-semibold text-xl'>
+                            &rarr;
+                          </span>
                           {member.name}
                         </div>
                       );
@@ -335,13 +358,45 @@ export default function Slots() {
                     }}
                   >
                     <option value={null}>Select an applicant</option>
-                    {applicants.map((applicant, index) => {
-                      return (
-                        <option key={index} value={applicant.name}>
-                          {applicant.name}
-                        </option>
-                      );
-                    })}
+                    {/* {applicants
+                      .filter(applicant => {
+                        const hasInterview =
+                          applicant.interview &&
+                          applicant.interview[0] &&
+                          Boolean(JSON.parse(applicant.interview).length);
+                        return hasInterview ? null : applicant;
+                      })
+                      .map((applicant, index) => {
+                        return (
+                          <option key={index} value={applicant.name}>
+                            {applicant.name}
+                          </option>
+                        );
+                      })} */}
+                    {applicants
+                      .filter(applicant => {
+                        const hasInterview =
+                          applicant.interview &&
+                          applicant.interview[0] &&
+                          Boolean(JSON.parse(applicant.interview).length);
+                        const hasSchedule =
+                          applicant.schedule &&
+                          applicant.schedule[0] &&
+                          Boolean(JSON.parse(applicant.schedule).length);
+
+                        return hasInterview
+                          ? null
+                          : hasSchedule
+                          ? applicant
+                          : null;
+                      })
+                      .map((applicant, index) => {
+                        return (
+                          <option key={index} value={applicant.name}>
+                            {applicant.name}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
               </div>
@@ -527,13 +582,30 @@ export default function Slots() {
                     }}
                   >
                     <option value={null}>Select an applicant</option>
-                    {applicants.map((applicant, index) => {
-                      return (
-                        <option key={index} value={applicant.name}>
-                          {applicant.name}
-                        </option>
-                      );
-                    })}
+                    {applicants
+                      .filter(applicant => {
+                        const hasInterview =
+                          applicant.interview &&
+                          applicant.interview[0] &&
+                          Boolean(JSON.parse(applicant.interview).length);
+                        const hasSchedule =
+                          applicant.schedule &&
+                          applicant.schedule[0] &&
+                          Boolean(JSON.parse(applicant.schedule).length);
+
+                        return hasInterview
+                          ? null
+                          : hasSchedule
+                          ? applicant
+                          : null;
+                      })
+                      .map((applicant, index) => {
+                        return (
+                          <option key={index} value={applicant.name}>
+                            {applicant.name}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
               </div>
@@ -580,7 +652,7 @@ export default function Slots() {
                   className='mt-5 p-3 mb-5 bg-[#FDB913] text-center text-lg  text-red w-fit rounded-md hover:font-bold hover:shadow-md hover:shadow-[#fff] cursor-pointer'
                   onClick={e => {
                     e.preventDefault();
-                    // handleConfirmSlot(e);
+                    handleConfirmSlot(e);
                   }}
                 >
                   Confirm Slot
@@ -597,7 +669,7 @@ export default function Slots() {
                   // customButtons={{ addEventButton: { text: 'Add Event' } }}
                   initialView='timeGridWeek'
                   editable={false}
-                  selectable={false}
+                  selectable={true}
                   weekends={false}
                   eventColor='maroon'
                   nowIndicator={true}
@@ -606,6 +678,7 @@ export default function Slots() {
                   slotMaxTime='18:00:00'
                   allDaySlot={false}
                   height='auto'
+                  select={handleDateSelect}
                 />
               </div>
             </div>

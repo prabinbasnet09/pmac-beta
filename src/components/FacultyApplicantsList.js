@@ -244,10 +244,13 @@ export default function FacultyApplicantsList(props) {
             <div className='scrollbar-thin p-2'>
               {applicants
                 .filter(applicant => {
-                  const user = JSON.parse(
-                    activeUser.assignedApplicants[0]
-                  ).filter(assigned => assigned.userId === applicant.id);
-                  return user.length > 0 ? user : null;
+                  const user =
+                    activeUser.assignedApplicants &&
+                    activeUser.assignedApplicants[0] &&
+                    JSON.parse(activeUser.assignedApplicants[0]).filter(
+                      assigned => assigned.userId === applicant.id
+                    );
+                  return user && user.length > 0 ? applicant : null;
                 })
                 .map(applicant => (
                   <div
@@ -271,10 +274,15 @@ export default function FacultyApplicantsList(props) {
             <div className=' overflow-y-scroll scrollbar-thin  p-2'>
               {applicants
                 .filter(applicant => {
-                  const user = JSON.parse(
-                    activeUser.assignedApplicants[0]
-                  ).filter(assigned => assigned.userId !== applicant.id);
-                  return user.length > 0 ? user : null;
+                  const assignedApplicants =
+                    activeUser.assignedApplicants &&
+                    JSON.parse(activeUser.assignedApplicants[0]);
+                  const user =
+                    !assignedApplicants ||
+                    !assignedApplicants.some(
+                      assigned => assigned.userId === applicant.id
+                    );
+                  return user ? applicant : null;
                 })
                 .map(applicant => (
                   <div
@@ -295,13 +303,15 @@ export default function FacultyApplicantsList(props) {
           <div className='bg-white p-5 rounded-lg md:col-span-3 shadow-sm shadow-white'>
             <div className='flex items-center justify-between mb-4'>
               <div className='flex items-center'>
-                <Image
-                  src={Logo}
-                  alt='ULM Logo'
-                  width={50}
-                  height={50}
-                  className='rounded-lg mr-3'
-                />
+                <div className='hidden sm:block'>
+                  <Image
+                    src={Logo}
+                    alt='ULM Logo'
+                    width={50}
+                    height={50}
+                    className='rounded-lg mr-3'
+                  />
+                </div>
                 <div className=' flex-col ml-5 '>
                   <p className='text-lg font-medium'>{selectedUser.name}</p>
                   <p className='text-gray-500 font-thin'>

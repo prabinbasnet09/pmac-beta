@@ -7,6 +7,7 @@ export default function GuestSignIn() {
   const [guestEmail, setGuestEmail] = useState('');
   const [guestPassword, setGuestPassword] = useState('');
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [signInError, setSignInError] = useState(false);
 
   const setLocalStorage = (key, value, ttl = 365 * 24 * 60 * 60 * 1000) => {
     const expiresAt = new Date(Date.now() + ttl);
@@ -35,6 +36,8 @@ export default function GuestSignIn() {
       })
       .catch(error => {
         console.log(error);
+        setSignInError(true);
+        setTimeout(() => setSignInError(false), 3000);
       });
   };
 
@@ -124,6 +127,11 @@ export default function GuestSignIn() {
         >
           Sign in
         </button>
+        {signInError && (
+          <div className='text-red text-center'>
+            Username/Email or password is incorrect.
+          </div>
+        )}
       </form>
     </div>
   );

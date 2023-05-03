@@ -244,6 +244,10 @@ export default function StatementTranscript() {
           alongside a
           <span className='text-ulm_red hover:text-sky-700'> headshot </span>
           profile photo.
+          <span className='block mt-1'>
+            You can also upload a copy of your{' '}
+            <span className='text-red '>AMCAS Form</span>, if applicable.
+          </span>
         </p>
       </div>
       <div className='flex flex-wrap justify-center md:flex-row gap-5 mt-20 ml-5 mr-5'>

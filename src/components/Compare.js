@@ -179,7 +179,7 @@ function Compare(props) {
     let confirm = window.confirm(
       'Are you sure you want to schedule this time slot?'
     );
-    if (!confirm) {
+    if (confirm) {
       const start = new Date(e.event.start);
       const end = new Date(e.event.end);
       const student = users.filter(user =>

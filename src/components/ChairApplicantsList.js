@@ -325,7 +325,7 @@ export default function ChairApplicantsList(props) {
             />
           </div>
           {selectedGroup === 'Committee Members' ? (
-            <div className=' cursor-pointer'>
+            <div className='cursor-pointer'>
               {committeeMembers.map(member => (
                 <div
                   key={member.id}
@@ -348,10 +348,13 @@ export default function ChairApplicantsList(props) {
                 <div className='scrollbar-thin p-2'>
                   {applicants
                     .filter(applicant => {
-                      const user = JSON.parse(
-                        activeUser.assignedApplicants[0]
-                      ).filter(assigned => assigned.userId === applicant.id);
-                      return user.length > 0 ? user : null;
+                      const user =
+                        activeUser.assignedApplicants &&
+                        activeUser.assignedApplicants[0] &&
+                        JSON.parse(activeUser.assignedApplicants[0]).filter(
+                          assigned => assigned.userId === applicant.id
+                        );
+                      return user && user.length > 0 ? applicant : null;
                     })
                     .map(applicant => (
                       <div
@@ -372,13 +375,18 @@ export default function ChairApplicantsList(props) {
                 <div className='p-3 mt-10 mb-2 bg-[#681212] rounded-lg text-[#fff] text-lg font-bold text-center'>
                   Unassigned Applicants
                 </div>
-                <div className=' overflow-y-scroll scrollbar-thin  p-2'>
+                <div className='overflow-y-scroll scrollbar-thin  p-2'>
                   {applicants
                     .filter(applicant => {
-                      const user = JSON.parse(
-                        activeUser.assignedApplicants[0]
-                      ).filter(assigned => assigned.userId !== applicant.id);
-                      return user.length > 0 ? user : null;
+                      const assignedApplicants =
+                        activeUser.assignedApplicants &&
+                        JSON.parse(activeUser.assignedApplicants[0]);
+                      const user =
+                        !assignedApplicants ||
+                        !assignedApplicants.some(
+                          assigned => assigned.userId === applicant.id
+                        );
+                      return user ? applicant : null;
                     })
                     .map(applicant => (
                       <div
@@ -401,15 +409,19 @@ export default function ChairApplicantsList(props) {
           <div className='bg-white p-5 rounded-lg md:col-span-3 shadow-sm shadow-white'>
             <div className='flex items-center justify-between mb-4'>
               <div className='flex flex-wrap items-center'>
-                <Image
-                  src={
-                    activeUser.profilePicture ? activeUser.profilePicture : Logo
-                  }
-                  alt='ULM Logo'
-                  width={50}
-                  height={50}
-                  className='rounded-lg '
-                />
+                <div className='hidden sm:block'>
+                  <Image
+                    src={
+                      activeUser.profilePicture
+                        ? activeUser.profilePicture
+                        : Logo
+                    }
+                    alt='ULM Logo'
+                    width={50}
+                    height={50}
+                    className='rounded-lg '
+                  />
+                </div>
                 <div className='ml-5'>
                   <p className='text-lg font-medium'>{selectedUser.name}</p>
                   <p className='text-gray-500 font-thin'>
@@ -417,7 +429,7 @@ export default function ChairApplicantsList(props) {
                   </p>
                 </div>
               </div>
-              <div>
+              <div className='hidden sm:block'>
                 <button className='mr-2 px-2 py-1 font-bold text-gray-500 rounded-md shadow-sm shadow-black hover:shadow-red'>
                   Notify
                 </button>
@@ -515,7 +527,6 @@ export default function ChairApplicantsList(props) {
                   <div className='flex items-center'>
                     <div className='z-10 flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full ring-0 ring-white dark:bg-[#840029] sm:ring-8 dark:ring-gray-900 shrink-0'>
                       <svg
-                        aria-hidden='true'
                         className='w-3 h-3 text-white'
                         fill='currentColor'
                         viewBox='0 0 20 20'
@@ -621,17 +632,19 @@ export default function ChairApplicantsList(props) {
           <div className='bg-white p-5 rounded-lg md:col-span-3 shadow-sm shadow-white'>
             <div className='flex items-center justify-between  mb-4 bg-[#e4e4e4] p-5 rounded-xl'>
               <div className='flex items-center '>
-                <Image
-                  src={
-                    selectedUser.profilePicture
-                      ? selectedUser.profilePicture
-                      : Logo
-                  }
-                  alt='ULM Logo'
-                  width={150}
-                  height={150}
-                  className='rounded-lg mr-3'
-                />
+                <div>
+                  <Image
+                    src={
+                      selectedUser.profilePicture
+                        ? selectedUser.profilePicture
+                        : Logo
+                    }
+                    alt='ULM Logo'
+                    width={150}
+                    height={150}
+                    className='rounded-lg mr-3'
+                  />
+                </div>
                 <div className='ml-5 '>
                   <p className='text-xl font-medium'>{selectedUser.name}</p>
                   <p className='text-lg text-gray-500 font-thin'>
@@ -648,10 +661,13 @@ export default function ChairApplicantsList(props) {
               <div className='flex flex-wrap gap-4 justify-evenly items-center text-center '>
                 {applicants
                   .filter(applicant => {
-                    const user = JSON.parse(
-                      selectedUser.assignedApplicants[0]
-                    ).filter(assigned => assigned.userId === applicant.id);
-                    return user.length > 0 ? user : null;
+                    const user =
+                      selectedUser.assignedApplicants &&
+                      selectedUser.assignedApplicants[0] &&
+                      JSON.parse(selectedUser.assignedApplicants[0]).filter(
+                        assigned => assigned.userId === applicant.id
+                      );
+                    return user && user.length > 0 ? user : null;
                   })
                   .map((applicant, index) => {
                     const date = new Date(
@@ -663,7 +679,10 @@ export default function ChairApplicantsList(props) {
                     const complete = Date.now() > date;
                     console.log(complete);
                     return (
-                      <div className='bg-white p-3 rounded-xl' key={index}>
+                      <div
+                        className='bg-white shadow-sm shadow-black p-3 rounded-xl'
+                        key={index}
+                      >
                         <Image
                           src={
                             applicant.profilePicture
@@ -698,10 +717,7 @@ export default function ChairApplicantsList(props) {
             </div>
           </div>
         ) : (
-          <div
-            div
-            className='bg-white p-5 rounded-lg md:col-span-3 shadow-sm shadow-white text-center'
-          >
+          <div className='bg-white p-5 rounded-lg md:col-span-3 shadow-sm shadow-white text-center'>
             <p className=' font-extralight'>
               Choose users to view their status
             </p>

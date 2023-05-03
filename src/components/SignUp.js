@@ -43,7 +43,6 @@ export default function SignUp() {
         },
       });
       console.log(user);
-      setSignUp(true);
       setSignUpToggle(true);
     } catch (error) {
       console.log('error signing up:', error);
@@ -56,7 +55,6 @@ export default function SignUp() {
     e.preventDefault();
     try {
       await Auth.confirmSignUp(username, code);
-      setVerify(true);
     } catch (error) {
       console.log('error confirming sign up', error);
       setVerifyError(true);
