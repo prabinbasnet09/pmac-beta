@@ -106,7 +106,7 @@ export default function SignUp() {
                 id='name'
                 className='bg-white border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5  '
                 placeholder='John Smith'
-                required=''
+                required
                 onChange={e => {
                   e.preventDefault();
                   setName(e.target.value);
@@ -126,7 +126,7 @@ export default function SignUp() {
                 id='username'
                 className='bg-white border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5  '
                 placeholder='johnsmith'
-                required=''
+                required
                 onChange={e => {
                   e.preventDefault();
                   setUsername(e.target.value);
@@ -146,7 +146,7 @@ export default function SignUp() {
                 id='email'
                 className='bg-white border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5  '
                 placeholder='name@company.com'
-                required=''
+                required
                 onChange={e => {
                   e.preventDefault();
                   setEmail(e.target.value);
@@ -166,7 +166,7 @@ export default function SignUp() {
                 id='password'
                 placeholder='••••••••'
                 className='bg-white border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5'
-                required=''
+                required
                 onChange={e => {
                   e.preventDefault();
                   setPassword(e.target.value);
@@ -186,7 +186,7 @@ export default function SignUp() {
                 id='password'
                 placeholder='••••••••'
                 className='bg-white border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5'
-                required=''
+                required
               />
             </div>
             <div className='flex items-center justify-between'>
@@ -214,9 +214,15 @@ export default function SignUp() {
               Sign Up
             </button>
             {usernameError ? (
-              <div className='text-red text-center'>
-                Username already exists.{' '}
-              </div>
+              username ? (
+                <div className='text-red text-center'>
+                  Username already exists.{' '}
+                </div>
+              ) : (
+                <div className='text-red text-center'>
+                  Please enter all the required fields to sign up.
+                </div>
+              )
             ) : null}
           </form>
         </>

@@ -165,7 +165,7 @@ function SignIn() {
                             <input
                               className='bg-white border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5  '
                               placeholder='johnsmith'
-                              required=''
+                              required
                               onChange={e => {
                                 e.preventDefault();
                                 setUsername(e.target.value);
@@ -185,7 +185,7 @@ function SignIn() {
                               id='password'
                               placeholder='••••••••'
                               className='bg-white border border-black text-black sm:text-sm rounded-lg focus:ring-green focus:border-green block w-full p-2.5'
-                              required=''
+                              required
                               onChange={e => {
                                 e.preventDefault();
                                 setPassword(e.target.value);
