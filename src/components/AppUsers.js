@@ -3,9 +3,10 @@ import React, { useEffect } from 'react';
 import { ActiveUser } from '../pages/_app.js';
 import { useContext, useState } from 'react';
 
-import { updateUser } from '../graphql/mutations';
+import { updateUser, deleteUser } from '../graphql/mutations';
 import { onUpdateUser } from '../graphql/subscriptions';
 import { API } from '@aws-amplify/api';
+import { Auth } from '@aws-amplify/auth';
 
 export default function AppUsers() {
   const activeUser = useContext(ActiveUser);
@@ -84,9 +85,47 @@ export default function AppUsers() {
     }
   };
 
+  const handleDeleteUser = async user => {
+    const confirm = window.confirm('Are you sure you want to delete?');
+    if (!confirm) return;
+    const params = {
+      Username: user.username,
+      UserPoolId: 'us-east-1_mzA1SonwR',
+    };
+    try {
+      await API.graphql({
+        query: deleteUser,
+        variables: {
+          input: {
+            id: user.id,
+          },
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      })
+        .then(async res => {
+          console.log(res);
+          try {
+            await Auth.adminDeleteUser(params)
+              .then(res => {
+                window.alert('User deleted successfully');
+              })
+              .catch(err => {
+                window.alert('User not deleted');
+              });
+          } catch (err) {
+            window.alert('User not deleted');
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
-    <div>
-      <div className='relative overflow-x-auto shadow-md sm:rounded-lg bg-white'>
+    <div className='w-full'>
+      <div className='md:relative overflow-x-auto shadow-md sm:rounded-lg bg-white '>
         <div className='flex items-center justify-between pb-4 bg-white dark:bg-gray-900'>
           <label htmlFor='table-search' className='sr-only'>
             Search
@@ -116,7 +155,7 @@ export default function AppUsers() {
           </div>
         </div>
 
-        <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+        <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-x-scroll'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope='col' className='px-6 py-3'>
@@ -135,6 +174,9 @@ export default function AppUsers() {
                   </th>
                   <th scope='col' className='px-6 py-3'>
                     Verified
+                  </th>
+                  <th scope='col' className='px-6 py-3'>
+                    Delete User
                   </th>
                 </>
               ) : (
@@ -209,6 +251,17 @@ export default function AppUsers() {
                               Click to verify
                             </button>
                           )}
+                        </td>
+                        <td className='px-6 py-4'>
+                          <button
+                            className='p-2 bg-[#e51010] text-[rgb(255,255,255) rounded-lg text-white font-semibold'
+                            onClick={e => {
+                              e.preventDefault();
+                              handleDeleteUser(user);
+                            }}
+                          >
+                            Delete
+                          </button>
                         </td>
                       </>
                     ) : (

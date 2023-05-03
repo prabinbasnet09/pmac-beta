@@ -257,10 +257,6 @@ function App({ Component, pageProps }) {
           : userGroup === 'Admin'
           ? [
               {
-                name: 'Dashboard',
-                path: '/',
-              },
-              {
                 name: 'Admin',
                 path: '/applicants',
               },

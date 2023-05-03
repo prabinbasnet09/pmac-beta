@@ -406,3 +406,45 @@ export const onDeleteFacultyNotes = /* GraphQL */ `
     }
   }
 `;
+export const onCreateDueDate = /* GraphQL */ `
+  subscription OnCreateDueDate(
+    $filter: ModelSubscriptionDueDateFilterInput
+    $Student: String
+  ) {
+    onCreateDueDate(filter: $filter, Student: $Student) {
+      dueDate
+      date
+      createdAt
+      updatedAt
+      Student
+    }
+  }
+`;
+export const onUpdateDueDate = /* GraphQL */ `
+  subscription OnUpdateDueDate(
+    $filter: ModelSubscriptionDueDateFilterInput
+    $Student: String
+  ) {
+    onUpdateDueDate(filter: $filter, Student: $Student) {
+      dueDate
+      date
+      createdAt
+      updatedAt
+      Student
+    }
+  }
+`;
+export const onDeleteDueDate = /* GraphQL */ `
+  subscription OnDeleteDueDate(
+    $filter: ModelSubscriptionDueDateFilterInput
+    $Student: String
+  ) {
+    onDeleteDueDate(filter: $filter, Student: $Student) {
+      dueDate
+      date
+      createdAt
+      updatedAt
+      Student
+    }
+  }
+`;

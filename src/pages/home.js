@@ -56,7 +56,9 @@ const Landing = () => {
       <div className='min-h-screen flex flex-col'>
         <Hero />
         <Purpose />
-        <Apply />
+        <div className='hidden sm:block'>
+          <Apply />
+        </div>
         <Player />
         <Footer />
       </div>

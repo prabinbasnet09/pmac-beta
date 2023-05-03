@@ -3,11 +3,13 @@ import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { ActiveUser } from './_app';
-import { Auth } from 'aws-amplify';
+import { Auth, API } from 'aws-amplify';
+import * as queries from '../graphql/queries';
 
 function Documents() {
   const activeUser = useContext(ActiveUser);
   const [user, setUser] = useState(null);
+  const [date, setDate] = useState(null);
   const router = useRouter();
   useEffect(() => {
     const fetchUser = async () => {
@@ -21,6 +23,25 @@ function Documents() {
     };
     fetchUser();
   }, [router]);
+
+  useEffect(() => {
+    try {
+      API.graphql({
+        query: queries.getDueDate,
+        variables: {
+          dueDate: 'dueDate',
+        },
+      })
+        .then(data => {
+          setDate(JSON.parse(data.data.getDueDate.date));
+        })
+        .catch(err => {
+          console.log('error fetching due date:', err);
+        });
+    } catch (err) {
+      console.log('error fetching due date:', err);
+    }
+  }, [date]);
 
   return activeUser ? (
     <>
@@ -56,7 +77,7 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
                 <tr>
@@ -77,7 +98,7 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
                 <tr>
@@ -98,7 +119,7 @@ function Documents() {
                       Complete
                     </td>
                     <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                      03/25/2023
+                      {date ? new Date(date).toLocaleDateString() : '-'}
                     </td>
                   </tr>
                 ) : (
@@ -111,7 +132,7 @@ function Documents() {
                       Incomplete...
                     </td>
                     <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                      03/25/2023
+                      {date ? new Date(date).toLocaleDateString() : '-'}
                     </td>
                   </tr>
                 )}
@@ -126,7 +147,7 @@ function Documents() {
                       Complete
                     </td>
                     <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                      03/25/2023
+                      {date ? new Date(date).toLocaleDateString() : '-'}
                     </td>
                   </tr>
                 ) : (
@@ -140,7 +161,7 @@ function Documents() {
                       Incomplete...
                     </td>
                     <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                      03/25/2023
+                      {date ? new Date(date).toLocaleDateString() : '-'}
                     </td>
                   </tr>
                 )}
@@ -174,7 +195,7 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
                 <tr>
@@ -189,7 +210,7 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
                 <tr>
@@ -204,7 +225,7 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
                 <tr>
@@ -219,7 +240,7 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
               </tbody>
@@ -227,7 +248,7 @@ function Documents() {
           </div>
 
           <div className={`sm:hidden overflow-x-auto`}>
-          <table className='w-full mt-20 table-auto border-collapse border  border-black  px-8 py-2 bg-red text-white '>
+            <table className='w-full mt-20 table-auto border-collapse border  border-black  px-8 py-2 bg-red text-white '>
               <thead>
                 <tr>
                   <th className='w-2/4 border border-black px-4 py-2'>Forms</th>
@@ -256,7 +277,7 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
                 <tr>
@@ -277,7 +298,7 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
                 <tr>
@@ -298,7 +319,7 @@ function Documents() {
                       Complete
                     </td>
                     <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                      03/25/2023
+                      {date ? new Date(date).toLocaleDateString() : '-'}
                     </td>
                   </tr>
                 ) : (
@@ -311,7 +332,7 @@ function Documents() {
                       Incomplete...
                     </td>
                     <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                      03/25/2023
+                      {date ? new Date(date).toLocaleDateString() : '-'}
                     </td>
                   </tr>
                 )}
@@ -326,7 +347,7 @@ function Documents() {
                       Complete
                     </td>
                     <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                      03/25/2023
+                      {date ? new Date(date).toLocaleDateString() : '-'}
                     </td>
                   </tr>
                 ) : (
@@ -340,7 +361,7 @@ function Documents() {
                       Incomplete...
                     </td>
                     <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                      03/25/2023
+                      {date ? new Date(date).toLocaleDateString() : '-'}
                     </td>
                   </tr>
                 )}
@@ -374,7 +395,7 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
                 <tr>
@@ -389,7 +410,7 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
                 <tr>
@@ -404,7 +425,7 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
                 <tr>
@@ -419,12 +440,11 @@ function Documents() {
                     )}
                   </td>
                   <td className='w-3/4 border border-black px-4 py-2 bg-white  text-red font-bold'>
-                    03/25/2023
+                    {date ? new Date(date).toLocaleDateString() : '-'}
                   </td>
                 </tr>
               </tbody>
             </table>
-
           </div>
         </div>
       </div>

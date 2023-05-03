@@ -602,3 +602,45 @@ export const deleteFacultyNotes = /* GraphQL */ `
     }
   }
 `;
+export const createDueDate = /* GraphQL */ `
+  mutation CreateDueDate(
+    $input: CreateDueDateInput!
+    $condition: ModelDueDateConditionInput
+  ) {
+    createDueDate(input: $input, condition: $condition) {
+      dueDate
+      date
+      createdAt
+      updatedAt
+      Student
+    }
+  }
+`;
+export const updateDueDate = /* GraphQL */ `
+  mutation UpdateDueDate(
+    $input: UpdateDueDateInput!
+    $condition: ModelDueDateConditionInput
+  ) {
+    updateDueDate(input: $input, condition: $condition) {
+      dueDate
+      date
+      createdAt
+      updatedAt
+      Student
+    }
+  }
+`;
+export const deleteDueDate = /* GraphQL */ `
+  mutation DeleteDueDate(
+    $input: DeleteDueDateInput!
+    $condition: ModelDueDateConditionInput
+  ) {
+    deleteDueDate(input: $input, condition: $condition) {
+      dueDate
+      date
+      createdAt
+      updatedAt
+      Student
+    }
+  }
+`;

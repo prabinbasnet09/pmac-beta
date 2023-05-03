@@ -5,6 +5,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FacultyDashboard from './FacultyDashboard';
+import AppUsers from './AppUsers';
 
 const calendarEvents = [
   {
@@ -80,54 +81,66 @@ export default function Dashboard() {
                   <FacultyDashboard activeUser={activeUser} />
                 ) : activeUser.group[0] === 'ChairCommittee' ? (
                   <FacultyDashboard activeUser={activeUser} />
+                ) : activeUser.group[0] === 'Admin' ? (
+                  <AppUsers activeUser={activeUser} />
                 ) : null}
-                <div className='w-4/12  px-4 py-5 sm:p-6 rounded-md bg-white h shadow-sm shadow-black rounded-lg'>
-                  <div className='h-fit '>
-                    {/* <div className="font-bold text-lg">
+                {activeUser.group[0] === 'Student' ||
+                activeUser.group[0] === 'Faculty' ||
+                activeUser.group[0] === 'ChairCommittee' ? (
+                  <div className='w-4/12  px-4 py-5 sm:p-6 rounded-md bg-white h shadow-sm shadow-black rounded-lg'>
+                    <div className='h-fit '>
+                      {/* <div className="font-bold text-lg">
                       Calendar */}
-                    <div
-                      style={{
-                        height: '300px',
-                        width: '300px',
-                        position: 'relative',
-                        // className: 'h-fit',
-                      }}
-                      className=''
-                    >
-                      <FullCalendar
-                        plugins={[dayGridPlugin, interactionPlugin]}
-                        initialView='dayGridMonth'
-                        titleFormat={{
-                          month: 'short',
-                          day: 'numeric',
+
+                      <div
+                        style={{
+                          height: '300px',
+                          width: '300px',
+                          position: 'relative',
+                          // className: 'h-fit',
                         }}
-                        aspectRatio={1}
-                        height='100%'
-                        events={
-                          activeUser &&
-                          activeUser.assignedApplicants &&
-                          activeUser.assignedApplicants[0]
-                            ? JSON.parse(activeUser.assignedApplicants)
-                            : calendarEvents
-                        }
-                        eventMouseEnter={handleEventMouseEnter}
-                        eventMouseLeave={handleEventMouseLeave}
-                      />
-                      {eventDescription && (
-                        <div
-                          style={{
-                            position: 'relative',
-                            backgroundPositionX: '15px',
-                            backgroundPositionY: '15px',
+                        className=''
+                      >
+                        <FullCalendar
+                          plugins={[dayGridPlugin, interactionPlugin]}
+                          initialView='dayGridMonth'
+                          titleFormat={{
+                            month: 'short',
+                            day: 'numeric',
                           }}
-                        >
-                          {eventDescription}
-                        </div>
-                      )}
+                          aspectRatio={1}
+                          height='100%'
+                          events={
+                            activeUser &&
+                            activeUser.assignedApplicants &&
+                            activeUser.assignedApplicants[0]
+                              ? JSON.parse(activeUser.assignedApplicants)
+                              : activeUser &&
+                                activeUser.interview &&
+                                activeUser.interview[0]
+                              ? JSON.parse(activeUser.interview)
+                              : calendarEvents
+                          }
+                          eventMouseEnter={handleEventMouseEnter}
+                          eventMouseLeave={handleEventMouseLeave}
+                        />
+                        {eventDescription && (
+                          <div
+                            style={{
+                              position: 'relative',
+                              backgroundPositionX: '15px',
+                              backgroundPositionY: '15px',
+                            }}
+                          >
+                            {eventDescription}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* </div> */}
                     </div>
-                    {/* </div> */}
                   </div>
-                </div>
+                ) : null}
               </div>
               <div>
                 {activeUser.group[0] === 'Student' ? (
@@ -188,7 +201,9 @@ export default function Dashboard() {
                 <FacultyDashboard activeUser={activeUser} />
               ) : activeUser.group[0] === 'ChairCommittee' ? (
                 <FacultyDashboard activeUser={activeUser} />
-              ) : null}
+              ) : (
+                <AppUsers />
+              )}
             </div>
             {activeUser.group[0] === 'Student' ? (
               <div>

@@ -26,6 +26,7 @@ function SignIn() {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const [signInToggle, setSignInToggle] = useState(true);
+  const [usernameError, setUsernameError] = useState(false);
 
   const handleSingInToggle = e => {
     e.preventDefault();
@@ -47,6 +48,17 @@ function SignIn() {
     }
     return item;
   };
+
+  const handleForgotUsername = async => {
+    console.log('forgot username');
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setUsernameError(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [usernameError]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -79,6 +91,7 @@ function SignIn() {
       router.push('/');
     } catch (error) {
       console.log('error', error);
+      setUsernameError(true);
     }
   };
 
@@ -266,6 +279,11 @@ function SignIn() {
                           >
                             Sign in
                           </button>
+                          {usernameError ? (
+                            <div className='text-center text-red'>
+                              Username or password is incorrect.
+                            </div>
+                          ) : null}
                         </form>
                       </div>
                     ) : null}
@@ -428,7 +446,17 @@ function SignIn() {
                     <SignUp />
                   </>
                 )}
+
                 <div className='pl-6 space-y-2 md:space-y-6 sm:p-8'>
+                  <button
+                    className='text-sm text-semibold hover:underline hover:font-bold'
+                    onClick={e => {
+                      e.preventDefault(e);
+                      handleForgotUsername(e);
+                    }}
+                  >
+                    Forgot Username?
+                  </button>
                   <p className='text-sm font-light text-gray-500 '>
                     Don’t have an account yet?{' '}
                     <button
@@ -443,7 +471,7 @@ function SignIn() {
                     </button>
                   </p>
                   <p>
-                    <button onClick={e => changeLoginUser(e)}>
+                    <button onClick={e => changeLoginUser(e)} className='mb-5'>
                       Login as Guest
                     </button>
                   </p>
@@ -452,7 +480,7 @@ function SignIn() {
             ) : (
               <div>
                 <GuestSignIn />
-                <p className='pl-6 space-y-2 md:space-y-6 sm:p-8'>
+                <p className='pl-6 space-y-2 md:space-y-6 sm:p-8 mb-5'>
                   <button onClick={e => changeLoginUser(e)}>
                     Login as User
                   </button>

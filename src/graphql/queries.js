@@ -341,3 +341,40 @@ export const listFacultyNotes = /* GraphQL */ `
     }
   }
 `;
+export const getDueDate = /* GraphQL */ `
+  query GetDueDate($dueDate: String!) {
+    getDueDate(dueDate: $dueDate) {
+      dueDate
+      date
+      createdAt
+      updatedAt
+      Student
+    }
+  }
+`;
+export const listDueDates = /* GraphQL */ `
+  query ListDueDates(
+    $dueDate: String
+    $filter: ModelDueDateFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listDueDates(
+      dueDate: $dueDate
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        dueDate
+        date
+        createdAt
+        updatedAt
+        Student
+      }
+      nextToken
+    }
+  }
+`;

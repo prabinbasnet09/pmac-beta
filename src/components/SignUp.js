@@ -9,12 +9,26 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signUpToggle, setSignUpToggle] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
+  const [verifyError, setVerifyError] = useState(false);
   const [code, setCode] = useState('');
   const router = useRouter();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setUsernameError(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [usernameError]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setVerifyError(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [verifyError]);
 
   const handleSignUp = async e => {
     e.preventDefault();
-    setSignUpToggle(prevState => !prevState);
     console.log('clicked');
     try {
       const { user } = await Auth.signUp({
@@ -29,8 +43,12 @@ export default function SignUp() {
         },
       });
       console.log(user);
+      setSignUp(true);
+      setSignUpToggle(true);
     } catch (error) {
       console.log('error signing up:', error);
+      setUsernameError(true);
+      setSignUpToggle(false);
     }
   };
 
@@ -38,8 +56,10 @@ export default function SignUp() {
     e.preventDefault();
     try {
       await Auth.confirmSignUp(username, code);
+      setVerify(true);
     } catch (error) {
       console.log('error confirming sign up', error);
+      setVerifyError(true);
     }
   };
 
@@ -57,8 +77,10 @@ export default function SignUp() {
     try {
       await Auth.resendSignUp(username);
       console.log('code resent successfully');
+      window.alert('Code resent successfully');
     } catch (err) {
       console.log('error resending code: ', err);
+      window.alert('Error resending code. Please try again.');
     }
   };
 
@@ -193,6 +215,11 @@ export default function SignUp() {
             >
               Sign Up
             </button>
+            {usernameError ? (
+              <div className='text-red text-center'>
+                Username already exists.{' '}
+              </div>
+            ) : null}
           </form>
         </>
       ) : (
@@ -219,6 +246,11 @@ export default function SignUp() {
             >
               Submit
             </button>
+            {verifyError ? (
+              <div className='text-red text-center'>
+                Invalid code. Please try again.
+              </div>
+            ) : null}
             <p
               className='flex justify-center mt-5 underline underline-offset-4 font-medium hover:font-bold cursor-pointer'
               onClick={e => resendConfirmationCode(e)}

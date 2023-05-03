@@ -2,34 +2,36 @@ import { useState, useEffect } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { API } from 'aws-amplify';
+import * as queries from '../graphql/queries';
+import * as mutations from '../graphql/mutations';
 
 export default function FacultyDashboard(props) {
   const { activeUser } = props;
   const [interviews, setInterviews] = useState([]);
   const [users, setUsers] = useState([]);
-  const [value, setValue] = useState({
-    startDate: new Date(),
-    endDate: new Date().setMonth(11),
-  });
+  const [value, setValue] = useState(null);
+  const [date, setDate] = useState(null);
 
-  const handleValueChange = newValue => {
-    console.log('newValue:', newValue);
-    setValue(newValue);
-  };
-  const customStyles = {
-    wrapper: '',
-    input: 'border-gray-400 rounded-md border h-10 w-full px-3',
-    clearButton: 'text-sm text-gray-500',
-    calendarWrapper: 'bg-white border-gray-400 border rounded-lg shadow-lg',
-    calendarHeader: 'bg-gray-100 text-gray-700',
-    calendarNavButton: 'text-gray-500 hover:text-gray-700',
-    calendarDaysWrapper: 'grid grid-cols-7 gap-2 p-2',
-    calendarDay: 'text-center text-gray-700 h-8 leading-8 rounded-full',
-    calendarDayHover: 'hover:bg-gray-100',
-    calendarDayActive: 'bg-gray-400 text-white',
-    calendarDayInactive: 'text-gray-400',
-    calendarDayDisabled: 'text-gray-200 cursor-not-allowed',
-  };
+  useEffect(() => {
+    try {
+      API.graphql({
+        query: queries.getDueDate,
+        variables: {
+          dueDate: 'dueDate',
+        },
+      })
+        .then(data => {
+          setDate(JSON.parse(data.data.getDueDate.date));
+        })
+        .catch(err => {
+          console.log('error fetching due date:', err);
+        });
+    } catch (err) {
+      console.log('error fetching due date:', err);
+    }
+  }, [date]);
+
   useEffect(() => {
     if (
       activeUser &&
@@ -40,6 +42,53 @@ export default function FacultyDashboard(props) {
     }
     setUsers(activeUser.users);
   }, [activeUser]);
+
+  const handleDateChange = newValue => {
+    setValue(new Date(newValue));
+  };
+
+  const handleDateSubmit = async () => {
+    //   try {
+    //     await API.graphql({
+    //       query: mutations.createDueDate,
+    //       variables: {
+    //         input: {
+    //           dueDate: 'dueDate',
+    //           date: JSON.stringify(new Date(value)),
+    //         },
+    //       },
+    //     })
+    //       .then(() => {
+    //         alert('Due date updated!');
+    //       })
+    //       .catch(err => {
+    //         console.log('error updating due date:', err);
+    //       });
+    //   } catch (err) {
+    //     console.log('error updating due date:', err);
+    //   }
+    // };
+
+    try {
+      await API.graphql({
+        query: mutations.updateDueDate,
+        variables: {
+          input: {
+            dueDate: 'dueDate',
+            date: JSON.stringify(new Date(value)),
+          },
+        },
+      })
+        .then(() => {
+          alert('Due date updated!');
+        })
+        .catch(err => {
+          console.log('error updating due date:', err);
+        });
+    } catch (err) {
+      console.log('error updating due date:', err);
+    }
+  };
 
   return (
     <div className='w-full rounded-lg h-auto '>
@@ -55,7 +104,6 @@ export default function FacultyDashboard(props) {
                 );
               })
               .map((user, index) => {
-                console.log(user);
                 return (
                   <li key={index} className='py-1'>
                     &#8594; {user.name}
@@ -92,17 +140,24 @@ export default function FacultyDashboard(props) {
                 Update Applications Due Date
               </div>
               <div className='text-xl my-10 text-center '>
-                Current Due Date: 05/10/2023
+                Current Due Date:{' '}
+                {date ? new Date(date).toLocaleDateString() : null}
               </div>
               <div className='flex justify-center'>
                 <div>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker />
+                    <DatePicker value={value} onChange={handleDateChange} />
                   </LocalizationProvider>
                 </div>
               </div>
               <div className='flex justify-center my-10'>
-                <div className='px-5 py-2 rounded-lg text-lg bg-white shadow-sm shadow-red w-fit'>
+                <div
+                  className='px-5 py-2 rounded-lg text-lg bg-white shadow-sm shadow-red w-fit cursor-pointer'
+                  onClick={e => {
+                    e.preventDefault();
+                    handleDateSubmit();
+                  }}
+                >
                   Change Due Date
                 </div>
               </div>

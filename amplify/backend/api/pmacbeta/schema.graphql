@@ -142,6 +142,23 @@ type FacultyNotes
   notes: String
 }
 
+type DueDate
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["ChairCommittee"]
+        operations: [create, read, update]
+      }
+      { allow: groups, groups: ["Faculty"], operations: [read] }
+      { allow: owner, groups: ["Student"], operations: [read] }
+    ]
+  ) {
+  dueDate: String! @primaryKey
+  date: String
+}
+
 type Query {
   getStudentDocuments(id: ID!): User
 }
