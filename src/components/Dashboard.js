@@ -6,7 +6,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FacultyDashboard from './FacultyDashboard';
 import AppUsers from './AppUsers';
-
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 const calendarEvents = [
   {
     id: '0',
@@ -43,7 +44,15 @@ export default function Dashboard() {
 
     handleResize();
 
-    return () => window.removeEventListener('resize', handleResize);
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/fullcalendar-custom.css';
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -87,19 +96,17 @@ export default function Dashboard() {
                 {activeUser.group[0] === 'Student' ||
                 activeUser.group[0] === 'Faculty' ||
                 activeUser.group[0] === 'ChairCommittee' ? (
-                  <div className='w-4/12  px-4 py-5 sm:p-6 rounded-md bg-white h shadow-sm shadow-black rounded-lg'>
-                    <div className='h-fit '>
+                  <div className='hidden sm:block  px-4 py-5 sm:p-6 rounded-md bg-white h shadow-sm shadow-black '>
+                    <div className='flex justify-center '>
                       {/* <div className="font-bold text-lg">
                       Calendar */}
 
                       <div
                         style={{
+                          width: '300px ',
                           height: '300px',
-                          width: '300px',
                           position: 'relative',
-                          // className: 'h-fit',
                         }}
-                        className=''
                       >
                         <FullCalendar
                           plugins={[dayGridPlugin, interactionPlugin]}
@@ -123,6 +130,13 @@ export default function Dashboard() {
                           }
                           eventMouseEnter={handleEventMouseEnter}
                           eventMouseLeave={handleEventMouseLeave}
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            position: 'relative',
+                            zIndex: '0',
+                          }}
+                          eventColor='#F87171'
                         />
                         {eventDescription && (
                           <div

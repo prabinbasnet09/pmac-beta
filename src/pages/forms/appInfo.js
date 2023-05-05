@@ -8,10 +8,40 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/router';
 import { Auth } from 'aws-amplify';
 import { ActiveUser } from '../../pages/_app';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AppInfo() {
   const activeUser = useContext(ActiveUser);
   const router = useRouter();
+
+  const success = msg =>
+    toast(msg, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const error = error =>
+    toast(error, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
 
   const [tableValues, setTableValues] = useState({
     amcasLetterId: '',
@@ -414,6 +444,7 @@ export default function AppInfo() {
       volunteer: JSON.stringify(tableSix),
     };
     console.log(inputData);
+
     const createForm = async () => {
       try {
         await API.graphql({
@@ -435,9 +466,11 @@ export default function AppInfo() {
               })
                 .then(res => {
                   console.log(res);
+                  success('Form saved!');
                 })
                 .catch(err => {
                   console.log(err);
+                  error('Error saving form!');
                 });
             }
           })
@@ -458,9 +491,11 @@ export default function AppInfo() {
         })
           .then(res => {
             console.log(res);
+            success('Form Updated!');
           })
           .catch(err => {
             console.log(err);
+            error('Error updating form!');
           });
       } catch (err) {
         console.log(err);
@@ -510,6 +545,7 @@ export default function AppInfo() {
       volunteer: JSON.stringify(tableSix),
     };
     console.log(inputData);
+
     const createForm = async () => {
       try {
         await API.graphql({
@@ -532,9 +568,11 @@ export default function AppInfo() {
               })
                 .then(res => {
                   console.log(res);
+                  success('Form submitted!');
                 })
                 .catch(err => {
                   console.log(err);
+                  error('Error submitting form!');
                 });
             }
           })
@@ -568,9 +606,11 @@ export default function AppInfo() {
               })
                 .then(res => {
                   console.log(res);
+                  success('Form Submitted!');
                 })
                 .catch(err => {
                   console.log(err);
+                  error('Error submitting form!');
                 });
             }
           })

@@ -33,6 +33,8 @@ export default function Evaluators() {
     selectedUser && setEvaluators(JSON.parse(selectedUser.evaluators));
   }, [selectedUser]);
 
+  console.log(evaluators);
+
   return selectedUser ? (
     <div>
       <p className='text-center text-4xl text-[#8a1b1b] font-bold mt-16 ml-5'>
@@ -100,11 +102,12 @@ export default function Evaluators() {
             ) : null}
           </table>
         </div>
-        {!evaluators && (
-          <div className='text-center mt-10 text-2xl'>
-            The user has not assigned any evaluators yet.
-          </div>
-        )}
+        {!evaluators ||
+          (evaluators.length === 0 && (
+            <div className='text-center text-red mt-20 text-4xl'>
+              The user has not assigned any evaluators yet.
+            </div>
+          ))}
       </div>
     </div>
   ) : null;

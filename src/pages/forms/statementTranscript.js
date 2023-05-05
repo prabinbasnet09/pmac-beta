@@ -11,6 +11,8 @@ import { TypeAnimation } from 'react-type-animation';
 import { API } from 'aws-amplify';
 import { updateUser } from '../../graphql/mutations';
 import { ActiveUser } from '../_app';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function StatementTranscript() {
   const activeUser = useContext(ActiveUser);
@@ -23,6 +25,34 @@ export default function StatementTranscript() {
   const [headShotToggle, setHeadShotToggle] = useState(false);
   const [transcriptToggle, setTranscriptToggle] = useState(false);
   const [amcasFormToggle, setAmcasFormToggle] = useState(false);
+
+  const success = msg =>
+    toast(msg, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const error = error =>
+    toast(error, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
 
   useEffect(() => {
     activeUser &&
@@ -95,9 +125,11 @@ export default function StatementTranscript() {
       })
         .then(res => {
           console.log(res);
+          success('Personal Statement uploaded!');
         })
         .catch(err => {
           console.log(err);
+          error('Error uploading Personal Statement!');
         });
     } catch (err) {
       console.log(err);
@@ -124,9 +156,11 @@ export default function StatementTranscript() {
       })
         .then(res => {
           console.log(res);
+          success('Headshot uploaded!');
         })
         .catch(err => {
           console.log(err);
+          error('Error uploading Headshot!');
         });
     } catch (err) {
       console.log(err);
@@ -153,9 +187,11 @@ export default function StatementTranscript() {
       })
         .then(res => {
           console.log(res);
+          success('Transcript uploaded!');
         })
         .catch(err => {
           console.log(err);
+          error('Error uploading Transcript!');
         });
     } catch (err) {
       console.log(err);
@@ -182,9 +218,11 @@ export default function StatementTranscript() {
       })
         .then(res => {
           console.log(res);
+          success('AMCAS Form uploaded!');
         })
         .catch(err => {
           console.log(err);
+          error('Error uploading AMCAS Form!');
         });
     } catch (err) {
       console.log(err);

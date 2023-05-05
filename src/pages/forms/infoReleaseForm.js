@@ -8,11 +8,41 @@ import { setDate } from 'date-fns';
 import { ActiveUser } from '../_app';
 import { Auth } from 'aws-amplify';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function InfoReleaseForm() {
   const activeUser = useContext(ActiveUser);
-
   const router = useRouter();
+
+  const success = msg =>
+    toast(msg, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const error = error =>
+    toast(error, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
+
   useEffect(() => {
     const fetchUser = async () => {
       await Auth.currentAuthenticatedUser()
@@ -141,9 +171,11 @@ export default function InfoReleaseForm() {
             })
               .then(res => {
                 console.log(res);
+                success('Form Submitted!');
               })
               .catch(err => {
                 console.log(err);
+                error('Error submitting form!');
               });
           }
         })
@@ -172,9 +204,11 @@ export default function InfoReleaseForm() {
             })
               .then(res => {
                 console.log(res);
+                success('Form Submitted!');
               })
               .catch(err => {
                 console.log(err);
+                error('Error submitting form!');
               });
           }
         })
@@ -241,9 +275,11 @@ export default function InfoReleaseForm() {
             })
               .then(res => {
                 console.log(res);
+                success('Form Saved!');
               })
               .catch(err => {
                 console.log(err);
+                error('Error saving form!');
               });
           }
         })
@@ -260,9 +296,11 @@ export default function InfoReleaseForm() {
       })
         .then(res => {
           console.log(res);
+          success('Form Saved!');
         })
         .catch(err => {
           console.log(err);
+          error('Error saving form!');
         });
     };
     activeUser.applicantReleaseForm ? updateForm() : createForm();

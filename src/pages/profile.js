@@ -6,6 +6,8 @@ import { Auth } from 'aws-amplify';
 import Logo from 'public/ulm_academic_maroon_white.png';
 import HeadShot from 'public/headshot.webp';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Profile() {
   const activeUser = useContext(ActiveUser);
@@ -13,6 +15,34 @@ export default function Profile() {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const router = useRouter();
+
+  const success = msg =>
+    toast(msg, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const error = error =>
+    toast(error, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -30,9 +60,10 @@ export default function Profile() {
     try {
       const user = await Auth.currentAuthenticatedUser();
       await Auth.changePassword(user, oldPassword, newPassword);
-      alert('Password successfully changed!');
-    } catch (error) {
-      console.log('error changing password: ', error);
+      success('Password successfully changed!');
+    } catch (err) {
+      console.log('error changing password: ', err);
+      error('Error changing password!');
     }
   };
 
@@ -42,8 +73,9 @@ export default function Profile() {
       await Auth.updateUserAttributes(user, {
         name: name,
       });
-      alert('Profile successfully updated!');
+      success('Profile successfully updated!');
     } catch (error) {
+      error('Error updating profile!');
       console.log('error updating profile: ', error);
     }
   };

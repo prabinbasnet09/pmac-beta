@@ -8,6 +8,8 @@ import { API } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
 import Results from '../components/Results';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -30,6 +32,34 @@ export default function FacultyApplicantsList(props) {
   const [notes, setNotes] = useState(null);
   const [createNote, setCreateNote] = useState(true);
   const [showResults, setShowResults] = useState(false);
+
+  const success = msg =>
+    toast(msg, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const error = error =>
+    toast(error, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
 
   useEffect(() => {}, [notes]);
 
@@ -196,9 +226,11 @@ export default function FacultyApplicantsList(props) {
       })
         .then(response => {
           console.log('response from creating notes', response);
+          success('Notes saved successfully');
         })
         .catch(error => {
           console.log('error on creating notes', error);
+          error('Error on saving notes');
         });
     } catch (error) {
       console.log('error on creating notes', error);
@@ -219,9 +251,11 @@ export default function FacultyApplicantsList(props) {
       })
         .then(response => {
           console.log('response from saving notes', response);
+          success('Notes saved successfully');
         })
         .catch(error => {
           console.log('error on saving notes', error);
+          error('Error on saving notes');
         });
     } catch (error) {
       console.log('error on saving notes', error);

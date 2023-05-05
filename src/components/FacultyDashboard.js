@@ -5,6 +5,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { API } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function FacultyDashboard(props) {
   const { activeUser } = props;
@@ -12,6 +14,34 @@ export default function FacultyDashboard(props) {
   const [users, setUsers] = useState([]);
   const [value, setValue] = useState(null);
   const [date, setDate] = useState(null);
+
+  const dateUpdateSuccess = () =>
+    toast('Due date updated!', {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const dateUpdateError = () =>
+    toast('Error updating due date!', {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
 
   useEffect(() => {
     try {
@@ -30,7 +60,7 @@ export default function FacultyDashboard(props) {
     } catch (err) {
       console.log('error fetching due date:', err);
     }
-  }, [date]);
+  }, []);
 
   useEffect(() => {
     if (
@@ -80,9 +110,11 @@ export default function FacultyDashboard(props) {
         },
       })
         .then(() => {
-          alert('Due date updated!');
+          setDate(new Date(value));
+          dateUpdateSuccess();
         })
         .catch(err => {
+          dateUpdateError();
           console.log('error updating due date:', err);
         });
     } catch (err) {

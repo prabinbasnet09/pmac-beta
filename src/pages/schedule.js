@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Auth } from 'aws-amplify';
 import { ActiveUser } from './_app.js';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Schedule() {
   const router = useRouter();

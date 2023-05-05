@@ -10,6 +10,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Results from '@/components/Results';
 import { API } from 'aws-amplify';
 import * as mutations from '../graphql/mutations';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Result() {
   const activeUser = useContext(ActiveUser);
@@ -27,6 +29,34 @@ export default function Result() {
   }, [router]);
 
   const [windowSize, setWindowSize] = useState({ width: undefined });
+
+  const success = msg =>
+    toast(msg, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const error = error =>
+    toast(error, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
 
   useEffect(() => {
     function handleResize() {
@@ -61,10 +91,12 @@ export default function Result() {
       })
         .then(res => {
           console.log(res);
+          success('Results submitted!');
         })
         .catch(err => console.log(err));
     } catch (err) {
       console.log(err);
+      error('Error submitting results!');
     }
 
     setSubmitting(false);

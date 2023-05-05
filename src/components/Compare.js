@@ -5,8 +5,6 @@ import getDay from 'date-fns/getDay';
 import parseISO from 'date-fns/parseISO';
 import { useState, useEffect, useContext } from 'react';
 import { useRef } from 'react';
-
-import ReactDatePicker from 'react-datepicker';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -16,6 +14,8 @@ import * as mutations from '@/graphql/mutations';
 import * as queries from '@/graphql/queries';
 import { API } from 'aws-amplify';
 import { ActiveUser } from '@/pages/_app';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Compare(props) {
   const activeUser = useContext(ActiveUser);
@@ -24,26 +24,54 @@ function Compare(props) {
   const [calendarTwoEvents, setCalendarTwoEvents] = useState([]);
   const [calendarThreeEvents, setCalendarThreeEvents] = useState([]);
   const [users, setUsers] = useState([]);
+  const [scheduleList, setScheduleList] = useState([]); // [calendarOneEvents, calendarTwoEvents, calendarThreeEvents
   const [toggle, setToggle] = useState(false);
   const router = useRouter();
+
+  const success = msg =>
+    toast(msg, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const error = error =>
+    toast(error, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
+
   useEffect(() => {
-    if (props.schedules && props.schedules.length > 0) {
-      setCalendarOneEvents(props.schedules[0]);
-      setCalendarTwoEvents(props.schedules[1]);
-      setCalendarThreeEvents(props.schedules[2]);
-    }
+    setScheduleList(props.schedules);
     setUsers(props.userList);
   }, [props.schedules]);
 
   console.log('users', users);
 
+  //Function to create a unique random ID for the event
   const createEventId = () => {
     return Math.random().toString(36).substring(2);
   };
 
-  function findAvailableSlots(calendars) {
-    console.log('calendars', calendars);
-    const mergedEvents = calendars.flat().sort((a, b) => {
+  //Function to find the available slots
+  function findAvailableSlots(scheduleList) {
+    console.log('calendars', scheduleList);
+    const mergedEvents = scheduleList.flat().sort((a, b) => {
       return new Date(a.start) - new Date(b.start);
     });
 
@@ -58,8 +86,8 @@ function Compare(props) {
 
       if (nextStartTime - currentEndTime >= 2 * 60 * 60 * 1000) {
         let overlapping = true;
-        for (let j = 0; j < calendars.length; j++) {
-          const calendarEvents = calendars[j];
+        for (let j = 0; j < scheduleList.length; j++) {
+          const calendarEvents = scheduleList[j];
           const overlappingEvent = calendarEvents.find(event => {
             return (
               event.start <= currentEvent.end && event.end >= nextEvent.start
@@ -90,11 +118,7 @@ function Compare(props) {
     return freeSlots;
   }
 
-  const availableSlots = findAvailableSlots([
-    calendarOneEvents,
-    calendarTwoEvents,
-    calendarThreeEvents,
-  ]);
+  const availableSlots = findAvailableSlots(scheduleList);
 
   const updateAssignedApplicants = async (user, student, start, end) => {
     let assignedApplicants = [];
@@ -166,9 +190,11 @@ function Compare(props) {
       })
         .then(res => {
           console.log('res', res);
+          success('Interview Scheduled');
         })
         .catch(err => {
           console.log('err', err);
+          error('Error Scheduling Interview');
         });
     } catch (err) {
       console.log({ err });

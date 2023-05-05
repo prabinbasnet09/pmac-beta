@@ -8,6 +8,7 @@ import awsExports from '../aws-exports';
 import * as queries from '../graphql/queries';
 import { onUpdateUser } from '../graphql/subscriptions';
 import { Amplify, API, Hub, Auth } from 'aws-amplify';
+import { ToastContainer } from 'react-toastify';
 
 Amplify.configure(awsExports);
 export const ActiveUser = createContext();
@@ -269,6 +270,7 @@ function App({ Component, pageProps }) {
         <Layout user={currentUser}>
           {userGroup && showNav ? <TabBar tabList={tabs} /> : null}
           <Component {...props} />
+          <ToastContainer />
         </Layout>
       );
     };

@@ -4,6 +4,8 @@ import { API } from 'aws-amplify';
 import { updateUser } from '../graphql/mutations';
 import axios from 'axios';
 import emailjs from 'emailjs-com';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Referrals() {
   const activeUser = useContext(ActiveUser);
@@ -12,6 +14,34 @@ export default function Referrals() {
   const [department, setDepartment] = useState('');
   const [evaluators, setEvaluators] = useState([]);
   const [newEvaluators, setNewEvaluators] = useState([]);
+
+  const success = msg =>
+    toast(msg, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const error = error =>
+    toast(error, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
 
   useEffect(() => {
     activeUser &&
@@ -41,8 +71,11 @@ export default function Referrals() {
           };
     return axios
       .post(backendURL, requestBody, requestConfig)
-      .then(response => true)
+      .then(response => {
+        success('Evaluator(s) added successfully');
+      })
       .catch(error => {
+        error('Evaluator(s) already registered or error adding evaluator(s)');
         console.log(error);
       });
   };
@@ -62,8 +95,11 @@ export default function Referrals() {
     };
     return axios
       .post(backendURL, requestBody, requestConfig)
-      .then(response => true)
+      .then(response => {
+        success('User deleted successfully');
+      })
       .catch(error => {
+        error('Error deleting user');
         console.log(error);
       });
   };
@@ -90,7 +126,7 @@ export default function Referrals() {
 
   const sendEmail = async (email, name) => {
     const params = {
-      receiver: 'basnetpr@warhawks.ulm.edu',
+      receiver: email,
       facultyEmail: email,
       facultyName: name,
       name: `${activeUser.name}`,
@@ -130,9 +166,11 @@ export default function Referrals() {
             sendEmail(newEvaluators[0].email, newEvaluators[0].name);
             sendEmail(newEvaluators[1].email, newEvaluators[1].name);
           }
+          success('Sent out email(s) to evaluator(s)');
           console.log(res);
         })
         .catch(err => {
+          error('Error sending out email(s) to evaluator(s)');
           console.log(err);
         });
     } catch (err) {
@@ -146,23 +184,25 @@ export default function Referrals() {
         <div className='overflow-hidden shadow sm:rounded-md'>
           <div className='border-2 border-[#7e7e7e] rounded-xl shadow-xl shadow-[#7092BE] shadow:opacity-20 w-4/5 mx-auto mb-7 px-4 py-5 sm:p-6 '>
             <p className=' leading-relaxed text-justify'>
-              Request two faculty members familiar with you to submit Faculty Evaluation Form on your behalf.
-              It is important to note that the faculty member should submit the evaluation form themselves. 
+              Request two faculty members familiar with you to submit Faculty
+              Evaluation Form on your behalf. It is important to note that the
+              faculty member should submit the evaluation form themselves.
             </p>
             <br />
             <p className=' leading-relaxed text-justify'>
-            It is recommended that applicants approach faculty members who are 
-            not on the pre-medical advisory committee. 
-            Additionally, it is best to avoid choosing from faculty who may have a conflict 
-            of interest, such as those who may be writing 
-            you an independent letter of recommendation 
-            for AMCAS, CASPA, or other application systems.
-            {' '}
+              It is recommended that applicants approach faculty members who are
+              not on the pre-medical advisory committee. Additionally, it is
+              best to avoid choosing from faculty who may have a conflict of
+              interest, such as those who may be writing you an independent
+              letter of recommendation for AMCAS, CASPA, or other application
+              systems.{' '}
             </p>
             <br />
             <p className=' leading-relaxed text-justify'>
-            It is important to select faculty members as recommenders who have instructed you during your time at ULM. 
-            It is recommended to choose instructors who are familiar with your academic abilities, work ethic, and potential for success in a healthcare profession. 
+              It is important to select faculty members as recommenders who have
+              instructed you during your time at ULM. It is recommended to
+              choose instructors who are familiar with your academic abilities,
+              work ethic, and potential for success in a healthcare profession.
             </p>
             <div className='text-center font-extralight mt-5 text-red'>
               <span className='font-semibold'>Note:</span> You will have to

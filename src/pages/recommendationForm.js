@@ -5,14 +5,43 @@ import * as Yup from 'yup';
 import LandingHeader from '@/components/LandingHeader';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RecommendationForm() {
   const [guestUser, setGuestUser] = useState(null);
   const [sign, setSign] = useState(false);
   const [userId, setUserId] = useState();
-  const [submitted, setSubmitted] = useState(false);
 
   const router = useRouter();
+
+  const formSubmitSuccess = () =>
+    toast('Form was submitted successfully!', {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const formSubmitError = () =>
+    toast('Error submitting the form!', {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
 
   useEffect(() => {
     const getLocalStorage = key => {
@@ -118,31 +147,12 @@ export default function RecommendationForm() {
       .post(backendURL, requestBody, requestConfig)
       .then(response => {
         console.log(response);
-        setSubmitted(true);
-        setTimeout(() => {
-          setSubmitted(false);
-        }, 3000);
+        formSubmitSuccess();
       })
       .catch(error => {
         console.log(error);
+        formSubmitError();
       });
-
-    setSubmitting(false);
-  };
-  const handleClick = () => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this file!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then(result => {
-      if (result.isConfirmed) {
-        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-      }
-    });
   };
 
   return guestUser ? (
@@ -858,11 +868,6 @@ export default function RecommendationForm() {
                               >
                                 Submit
                               </button>
-                              {submitted && (
-                                <div className='text-green text-xl'>
-                                  Your form has been submitted successfully.
-                                </div>
-                              )}
                             </p>
                           </div>
                         </div>

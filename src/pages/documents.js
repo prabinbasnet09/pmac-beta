@@ -114,6 +114,12 @@ function Documents() {
                   <tr>
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       Faculty Recommendation Form 1
+                      {activeUser.evaluators ? (
+                        <span className='text-red font-semibold'>
+                          {' '}
+                          - {JSON.parse(activeUser.evaluators)[0].name}
+                        </span>
+                      ) : null}
                     </td>
                     <td className='w-1/4 border border-black px-4 py-2 bg-white text-green font-bold'>
                       Complete
@@ -127,6 +133,12 @@ function Documents() {
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       {/* <Link href='/applications/facultyRecForm'> */}
                       Faculty Recommendation Form 1{/* </Link> */}
+                      {activeUser.evaluators ? (
+                        <span className='text-red font-semibold'>
+                          {' '}
+                          - {JSON.parse(activeUser.evaluators)[0].name}
+                        </span>
+                      ) : null}
                     </td>
                     <td className='w-1/4 border border-black px-4 py-2 bg-white text-gray italic text-sm  '>
                       Incomplete...
@@ -142,6 +154,12 @@ function Documents() {
                   <tr>
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       Faculty Recommendation Form 2
+                      {activeUser.evaluators ? (
+                        <span className='text-red font-semibold'>
+                          {' '}
+                          - {JSON.parse(activeUser.evaluators)[1].name}
+                        </span>
+                      ) : null}
                     </td>
                     <td className='w-1/4 border border-black px-4 py-2 bg-white text-green font-bold'>
                       Complete
@@ -155,6 +173,12 @@ function Documents() {
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       {/* <Link href='/applications/facultyRecForm'> */}
                       Faculty Recommendation Form 2{/* </Link> */}
+                      {activeUser.evaluators ? (
+                        <span className='text-red font-semibold'>
+                          {' '}
+                          - {JSON.parse(activeUser.evaluators)[1].name}
+                        </span>
+                      ) : null}
                     </td>
 
                     <td className='w-1/4 border border-black px-4 py-2 bg-white  text-gray italic text-sm'>
@@ -314,6 +338,12 @@ function Documents() {
                   <tr>
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       Faculty Recommendation Form 1
+                      {activeUser.evaluators ? (
+                        <span className='text-red font-semibold'>
+                          {' '}
+                          - {JSON.parse(activeUser.evaluators)[0].name}
+                        </span>
+                      ) : null}
                     </td>
                     <td className='w-1/4 border border-black px-4 py-2 bg-white text-green font-bold'>
                       Complete
@@ -327,6 +357,12 @@ function Documents() {
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       {/* <Link href='/applications/facultyRecForm'> */}
                       Faculty Recommendation Form 1{/* </Link> */}
+                      {activeUser.evaluators ? (
+                        <span className='text-red font-semibold'>
+                          {' '}
+                          - {JSON.parse(activeUser.evaluators)[0].name}
+                        </span>
+                      ) : null}
                     </td>
                     <td className='w-1/4 border border-black px-4 py-2 bg-white text-gray italic text-sm  '>
                       Incomplete...
@@ -342,6 +378,12 @@ function Documents() {
                   <tr>
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       Faculty Recommendation Form 2
+                      {activeUser.evaluators ? (
+                        <span className='text-red font-semibold'>
+                          {' '}
+                          - {JSON.parse(activeUser.evaluators)[1].name}
+                        </span>
+                      ) : null}
                     </td>
                     <td className='w-1/4 border border-black px-4 py-2 bg-white text-green font-bold'>
                       Complete
@@ -355,6 +397,12 @@ function Documents() {
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       {/* <Link href='/applications/facultyRecForm'> */}
                       Faculty Recommendation Form 2{/* </Link> */}
+                      {activeUser.evaluators ? (
+                        <span className='text-red font-semibold'>
+                          {' '}
+                          - {JSON.parse(activeUser.evaluators)[1].name}
+                        </span>
+                      ) : null}
                     </td>
 
                     <td className='w-1/4 border border-black px-4 py-2 bg-white  text-gray italic text-sm'>

@@ -18,12 +18,42 @@ import { API } from 'aws-amplify';
 import dynamic from 'next/dynamic';
 import { ActiveUser } from '@/pages/_app';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Calendar(props) {
   const activeUser = useContext(ActiveUser);
   const [allEvents, setAllEvents] = useState([]);
   const [toggle, setToggle] = useState(false);
   const router = useRouter();
+
+  const success = msg =>
+    toast(msg, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const error = error =>
+    toast(error, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
 
   let draggable = null;
   useEffect(() => {
@@ -307,6 +337,7 @@ function Calendar(props) {
       )
     ) {
       clickInfo.event.remove();
+      success('Event deleted!');
     }
   }
 
@@ -501,8 +532,14 @@ function Calendar(props) {
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       })
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
+        .then(res => {
+          console.log(res);
+          success('Schedule saved!');
+        })
+        .catch(err => {
+          console.log(err);
+          error('Error saving schedule!');
+        });
     } catch (err) {
       console.log(err);
     }

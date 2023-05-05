@@ -7,12 +7,41 @@ import { updateUser, deleteUser } from '../graphql/mutations';
 import { onUpdateUser } from '../graphql/subscriptions';
 import { API } from '@aws-amplify/api';
 import { Auth } from '@aws-amplify/auth';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AppUsers() {
   const activeUser = useContext(ActiveUser);
   const [users, setUsers] = useState(activeUser.users);
 
   let groupList = ['Student', 'Faculty', 'ChairCommittee'];
+  const success = msg =>
+    toast(msg, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const error = error =>
+    toast(error, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
 
   useEffect(() => {
     const updateUser = API.graphql({
@@ -52,9 +81,11 @@ export default function AppUsers() {
       })
         .then(res => {
           console.log(res);
+          success('User verified successfully');
         })
         .catch(err => {
           console.log(err);
+          error('User not verified');
         });
     } catch (err) {
       console.log(err);
@@ -76,9 +107,11 @@ export default function AppUsers() {
       })
         .then(res => {
           console.log(res);
+          success('User group updated successfully');
         })
         .catch(err => {
           console.log(err);
+          error('User group not updated');
         });
     } catch (err) {
       console.log(err);
@@ -107,13 +140,13 @@ export default function AppUsers() {
           try {
             await Auth.adminDeleteUser(params)
               .then(res => {
-                window.alert('User deleted successfully');
+                success('User deleted successfully');
               })
               .catch(err => {
-                window.alert('User not deleted');
+                error('User not deleted');
               });
           } catch (err) {
-            window.alert('User not deleted');
+            console.log(err);
           }
         })
         .catch(err => {

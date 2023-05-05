@@ -11,6 +11,8 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import parseISO from 'date-fns/parseISO';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Slots() {
   const router = useRouter();
@@ -26,8 +28,35 @@ export default function Slots() {
   const [compareUsers, setCompareUsers] = useState([]);
   const [toggleSchedules, setToggleSchedules] = useState(false);
   const [schedules, setSchedules] = useState([]);
-  const [allEvents, setAllEvents] = useState([]);
   const [confirmSlot, setConfirmSlot] = useState(false);
+
+  const success = msg =>
+    toast(msg, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#4BB543',
+      },
+    });
+
+  const error = error =>
+    toast(error, {
+      position: 'top-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      style: {
+        backgroundColor: '#FF0000',
+      },
+    });
 
   useEffect(() => {
     // Load the fullcalendar-custom.css file when the page is rendered
@@ -66,23 +95,30 @@ export default function Slots() {
   }, [router]);
 
   const handleCompareSchedules = e => {
-    const schedulesList = [
-      chairCommittee ? JSON.parse(chairCommittee.schedule) : null,
-      committeeOne ? JSON.parse(committeeOne.schedule) : null,
-      committeeTwo ? JSON.parse(committeeTwo.schedule) : null,
-      committeeThree ? JSON.parse(committeeThree.schedule) : null,
-      applicant ? JSON.parse(applicant.schedule) : null,
-    ];
-    const userList = [
-      chairCommittee ? chairCommittee : null,
-      committeeOne ? committeeOne : null,
-      committeeTwo ? committeeTwo : null,
-      committeeThree ? committeeThree : null,
-      applicant ? applicant : null,
-    ];
-    setCompareUsers(userList.filter(user => user !== null));
-    setSchedules(schedulesList.filter(schedule => schedule !== null));
-    setToggleSchedules(true);
+    if (
+      (chairCommittee || committeeOne || committeeTwo || committeeThree) &&
+      applicant
+    ) {
+      const schedulesList = [
+        chairCommittee ? JSON.parse(chairCommittee.schedule) : null,
+        committeeOne ? JSON.parse(committeeOne.schedule) : null,
+        committeeTwo ? JSON.parse(committeeTwo.schedule) : null,
+        committeeThree ? JSON.parse(committeeThree.schedule) : null,
+        applicant ? JSON.parse(applicant.schedule) : null,
+      ];
+      const userList = [
+        chairCommittee ? chairCommittee : null,
+        committeeOne ? committeeOne : null,
+        committeeTwo ? committeeTwo : null,
+        committeeThree ? committeeThree : null,
+        applicant ? applicant : null,
+      ];
+      setCompareUsers(userList.filter(user => user !== null));
+      setSchedules(schedulesList.filter(schedule => schedule !== null));
+      setToggleSchedules(true);
+    } else {
+      error('Please select at least one committee member and one applicant');
+    }
   };
 
   const handleConfirmSlot = async e => {
@@ -97,7 +133,7 @@ export default function Slots() {
       `Are you sure you want to schedule this slot? (Start: ${start} End: ${end})`
     );
     if (confirm) {
-      console.log(e);
+      success('Slot scheduled!');
     }
   };
 
@@ -421,44 +457,7 @@ export default function Slots() {
                   </select>
                 </div>
               </div>
-              {/* <div className='m-2 shadow-md shadow-black px-20'>
-              <div className='relative overflow-x-auto'>
-                <div className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-                  <div className='flex flex-wrap justify-around'>
-                    <div scope='col' className='px-6 py-3 bg-red'>
-                      <div>Committee Member</div>
-                      <div className='flex flex-col text-center'>
-                        <div>A</div>
-                        <div>A</div>
-                        <div>A</div>
-                        <div>A</div>
-                        <div>A</div>
-                        <div>A</div>
-                      </div>
-                    </div>
-                    <div scope='col' className='px-6 py-3'>
-                      <div>Applicants</div>
-                      <div className='flex flex-col text-center'>
-                        <div>A</div>
-                        <div>A</div>
-                        <div>A</div>
-                        <div>A</div>
-                        <div>A</div>
-                        <div>A</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div class='border-b dark:bg-gray-800 dark:border-gray-700'>
-                    <div
-                      scope='row'
-                      class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
+
               <div className='flex justify-center'>
                 <div
                   className='mt-5 p-3 mb-5 bg-[#FDB913] text-center text-lg  text-red w-fit rounded-md hover:font-bold hover:shadow-md hover:shadow-[#fff] cursor-pointer'
@@ -706,7 +705,16 @@ export default function Slots() {
           </div>
         </div>
       </div>
-
+      {toggleSchedules ? (
+        <div>
+          <div className='flex justify-center mt-20 text-4xl text-red font-semibold'>
+            Available Schedules
+          </div>
+          <div className='bg-white mx-6 mt-5 p-5 mb-5 rounded-lg md:col-span-3 shadow-lg shadow-black'>
+            <Compare schedules={schedules} userList={compareUsers} />
+          </div>
+        </div>
+      ) : null}
       <div className='bg-[#F8F8FF] rounded-lg grid grid-cols-1 md:grid-cols-4 gap-2  mt-10 mx-5 mb-5'>
         <div className='p-3 rounded-lg w-auto shadow-lg shadow-black'>
           {/* Committee Members */}
@@ -799,17 +807,6 @@ export default function Slots() {
           <Schedular user={selectedUser} />
         </div>
       </div>
-      {console.log('schedules', schedules)}
-      {toggleSchedules ? (
-        <div>
-          <div className='flex justify-center mt-20 text-4xl text-red font-semibold'>
-            Available Schedules
-          </div>
-          <div className='bg-white mx-6 mt-5 p-5 mb-5 rounded-lg md:col-span-3 shadow-lg shadow-black'>
-            <Compare schedules={schedules} userList={compareUsers} />
-          </div>
-        </div>
-      ) : null}
     </div>
   ) : null;
 }
