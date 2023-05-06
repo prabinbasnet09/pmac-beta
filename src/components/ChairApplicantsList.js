@@ -8,6 +8,7 @@ import * as mutations from '@/graphql/mutations';
 import * as queries from '@/graphql/queries';
 import { API } from 'aws-amplify';
 import Results from '@/components/Results';
+import emailjs from 'emailjs-com';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -268,6 +269,26 @@ export default function ChairApplicantsList(props) {
     setShowResults(prevState => !prevState);
   };
 
+  const sendEmail = async () => {
+    const params = {
+      receiver: selectedUser.email,
+      student: selectedUser.name,
+    };
+
+    await emailjs
+      .send('service_dwl8e5e', 'template_4wn2kse', params, 'nyjZso7dw3rv9ki41')
+      .then(
+        response => {
+          console.log('SUCCESS!', response.status, response.text);
+          success('Email sent successfully');
+        },
+        err => {
+          console.log('FAILED...', err);
+          error('Error on sending email');
+        }
+      );
+  };
+
   return (
     <div>
       <div className='bg-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-4 gap-2'>
@@ -464,7 +485,14 @@ export default function ChairApplicantsList(props) {
                 </div>
               </div>
               <div className='hidden sm:block'>
-                <button className='mr-2 px-2 py-1 font-bold text-gray-500 rounded-md shadow-sm shadow-black hover:shadow-red'>
+                <button
+                  data-popover-target='popover-default'
+                  className='mr-2 px-2 py-1 font-bold text-gray-500 rounded-md shadow-sm shadow-black hover:shadow-red'
+                  onClick={e => {
+                    e.preventDefault();
+                    sendEmail();
+                  }}
+                >
                   Notify
                 </button>
               </div>

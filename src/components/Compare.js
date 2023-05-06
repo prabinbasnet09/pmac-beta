@@ -20,9 +20,6 @@ import 'react-toastify/dist/ReactToastify.css';
 function Compare(props) {
   const activeUser = useContext(ActiveUser);
   const [allEvents, setAllEvents] = useState([]);
-  const [calendarOneEvents, setCalendarOneEvents] = useState([]);
-  const [calendarTwoEvents, setCalendarTwoEvents] = useState([]);
-  const [calendarThreeEvents, setCalendarThreeEvents] = useState([]);
   const [users, setUsers] = useState([]);
   const [scheduleList, setScheduleList] = useState([]); // [calendarOneEvents, calendarTwoEvents, calendarThreeEvents
   const [toggle, setToggle] = useState(false);
@@ -60,8 +57,6 @@ function Compare(props) {
     setScheduleList(props.schedules);
     setUsers(props.userList);
   }, [props.schedules]);
-
-  console.log('users', users);
 
   //Function to create a unique random ID for the event
   const createEventId = () => {
@@ -115,6 +110,9 @@ function Compare(props) {
         }
       }
     }
+
+    console.log('freeSlots', freeSlots);
+    console.log('scheduleList', scheduleList);
     return freeSlots;
   }
 
@@ -127,7 +125,6 @@ function Compare(props) {
       assignedApplicants = user.assignedApplicants[0]
         ? JSON.parse(user.assignedApplicants)
         : [];
-      console.log('ChairBefore', assignedApplicants);
     } else {
       assignedApplicants = user.assignedApplicants
         ? JSON.parse(user.assignedApplicants[0])
@@ -141,26 +138,26 @@ function Compare(props) {
     };
     assignedApplicants.push(assignedApplicant);
 
-    try {
-      await API.graphql({
-        query: mutations.updateUser,
-        variables: {
-          input: {
-            id: user.id,
-            assignedApplicants: JSON.stringify(assignedApplicants),
-          },
-        },
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
-      })
-        .then(res => {
-          console.log('res', res);
-        })
-        .catch(err => {
-          console.log('err', err);
-        });
-    } catch (err) {
-      console.log({ err });
-    }
+    // try {
+    //   await API.graphql({
+    //     query: mutations.updateUser,
+    //     variables: {
+    //       input: {
+    //         id: user.id,
+    //         assignedApplicants: JSON.stringify(assignedApplicants),
+    //       },
+    //     },
+    //     authMode: 'AMAZON_COGNITO_USER_POOLS',
+    //   })
+    //     .then(res => {
+    //       console.log('res', res);
+    //     })
+    //     .catch(err => {
+    //       console.log('err', err);
+    //     });
+    // } catch (err) {
+    //   console.log({ err });
+    // }
   };
 
   const updateApplicantInterview = async (user, faculty, start, end) => {
@@ -177,28 +174,28 @@ function Compare(props) {
       },
     ];
 
-    try {
-      await API.graphql({
-        query: mutations.updateUser,
-        variables: {
-          input: {
-            id: user.id,
-            interview: JSON.stringify(interview),
-          },
-        },
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
-      })
-        .then(res => {
-          console.log('res', res);
-          success('Interview Scheduled');
-        })
-        .catch(err => {
-          console.log('err', err);
-          error('Error Scheduling Interview');
-        });
-    } catch (err) {
-      console.log({ err });
-    }
+    // try {
+    //   await API.graphql({
+    //     query: mutations.updateUser,
+    //     variables: {
+    //       input: {
+    //         id: user.id,
+    //         interview: JSON.stringify(interview),
+    //       },
+    //     },
+    //     authMode: 'AMAZON_COGNITO_USER_POOLS',
+    //   })
+    //     .then(res => {
+    //       console.log('res', res);
+    //       success('Interview Scheduled');
+    //     })
+    //     .catch(err => {
+    //       console.log('err', err);
+    //       error('Error Scheduling Interview');
+    //     });
+    // } catch (err) {
+    //   console.log({ err });
+    // }
   };
 
   const handleEventClick = e => {
