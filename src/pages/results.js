@@ -78,36 +78,41 @@ export default function Result() {
   });
 
   const onSubmit = async (values, { setSubmitting }) => {
-    console.log(values);
-    try {
-      await API.graphql({
-        query: mutations.updateUser,
-        variables: {
-          input: {
-            id: activeUser.id,
-            results: [values.accepting, values.choice],
+    if (
+      activeUser.interview &&
+      activeUser.interview[0] &&
+      JSON.parse(activeUser.interview).length > 0
+    ) {
+      try {
+        await API.graphql({
+          query: mutations.updateUser,
+          variables: {
+            input: {
+              id: activeUser.id,
+              results: [values.accepting, values.choice],
+            },
           },
-        },
-      })
-        .then(res => {
-          console.log(res);
-          success('Results submitted!');
         })
-        .catch(err => console.log(err));
-    } catch (err) {
-      console.log(err);
-      error('Error submitting results!');
-    }
+          .then(res => {
+            console.log(res);
+            success('Results submitted!');
+          })
+          .catch(err => console.log(err));
+      } catch (err) {
+        console.log(err);
+        error('Error submitting results!');
+      }
 
-    setSubmitting(false);
+      setSubmitting(false);
+    } else {
+      error('Please complete all the application process first!');
+    }
   };
 
   const initialValues = {
     accepting: activeUser && activeUser.results ? activeUser.results[0] : '',
     choice: activeUser && activeUser.results ? activeUser.results[1] : '',
   };
-
-  console.log(initialValues);
 
   return activeUser ? (
     <>

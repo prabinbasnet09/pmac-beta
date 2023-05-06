@@ -114,7 +114,9 @@ function Documents() {
                   <tr>
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       Faculty Recommendation Form 1
-                      {activeUser.evaluators ? (
+                      {activeUser.evaluators &&
+                      activeUser.evaluators[0] &&
+                      JSON.parse(activeUser.evaluators).length > 0 ? (
                         <span className='text-red font-semibold'>
                           {' '}
                           - {JSON.parse(activeUser.evaluators)[0].name}
@@ -133,7 +135,9 @@ function Documents() {
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       {/* <Link href='/applications/facultyRecForm'> */}
                       Faculty Recommendation Form 1{/* </Link> */}
-                      {activeUser.evaluators ? (
+                      {activeUser.evaluators &&
+                      activeUser.evaluators[0] &&
+                      JSON.parse(activeUser.evaluators).length > 0 ? (
                         <span className='text-red font-semibold'>
                           {' '}
                           - {JSON.parse(activeUser.evaluators)[0].name}
@@ -154,7 +158,9 @@ function Documents() {
                   <tr>
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       Faculty Recommendation Form 2
-                      {activeUser.evaluators ? (
+                      {activeUser.evaluators &&
+                      activeUser.evaluators[0] &&
+                      JSON.parse(activeUser.evaluators).length > 0 ? (
                         <span className='text-red font-semibold'>
                           {' '}
                           - {JSON.parse(activeUser.evaluators)[1].name}
@@ -173,7 +179,9 @@ function Documents() {
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       {/* <Link href='/applications/facultyRecForm'> */}
                       Faculty Recommendation Form 2{/* </Link> */}
-                      {activeUser.evaluators ? (
+                      {activeUser.evaluators &&
+                      activeUser.evaluators[0] &&
+                      JSON.parse(activeUser.evaluators).length > 0 ? (
                         <span className='text-red font-semibold'>
                           {' '}
                           - {JSON.parse(activeUser.evaluators)[1].name}
@@ -338,7 +346,9 @@ function Documents() {
                   <tr>
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       Faculty Recommendation Form 1
-                      {activeUser.evaluators ? (
+                      {activeUser.evaluators &&
+                      activeUser.evaluators[0] &&
+                      JSON.parse(activeUser.evaluators).length > 0 ? (
                         <span className='text-red font-semibold'>
                           {' '}
                           - {JSON.parse(activeUser.evaluators)[0].name}
@@ -357,7 +367,9 @@ function Documents() {
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       {/* <Link href='/applications/facultyRecForm'> */}
                       Faculty Recommendation Form 1{/* </Link> */}
-                      {activeUser.evaluators ? (
+                      {activeUser.evaluators &&
+                      activeUser.evaluators[0] &&
+                      JSON.parse(activeUser.evaluators).length > 0 ? (
                         <span className='text-red font-semibold'>
                           {' '}
                           - {JSON.parse(activeUser.evaluators)[0].name}
@@ -378,7 +390,9 @@ function Documents() {
                   <tr>
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       Faculty Recommendation Form 2
-                      {activeUser.evaluators ? (
+                      {activeUser.evaluators &&
+                      activeUser.evaluators[0] &&
+                      JSON.parse(activeUser.evaluators).length > 0 ? (
                         <span className='text-red font-semibold'>
                           {' '}
                           - {JSON.parse(activeUser.evaluators)[1].name}
@@ -397,7 +411,9 @@ function Documents() {
                     <td className='w-3/4 border border-black px-20 py-2 bg-white text-black '>
                       {/* <Link href='/applications/facultyRecForm'> */}
                       Faculty Recommendation Form 2{/* </Link> */}
-                      {activeUser.evaluators ? (
+                      {activeUser.evaluators &&
+                      activeUser.evaluators[0] &&
+                      JSON.parse(activeUser.evaluators).length > 0 ? (
                         <span className='text-red font-semibold'>
                           {' '}
                           - {JSON.parse(activeUser.evaluators)[1].name}
