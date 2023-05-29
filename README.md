@@ -37,7 +37,7 @@ There are <b>five users </b> with different level of access within the applicati
 
 ## Credentials to access Web Application
 
-    Access the application by visiting `https://pmac-beta.vercel.app/` in your web browser.
+Access the application by visiting `https://pmac-beta.vercel.app` in your web browser.
 
 The following credentials can be used to view and interact with the UI designed for each user besides Admin:
 
