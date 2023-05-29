@@ -21,7 +21,8 @@ export default function GuestSignIn() {
 
     const requestConfig = {
       headers: {
-        'x-api-key': 'PBDYZzW59J6ZeQH6qDFGE3kd8BE34BFRavTb6Sez',
+        // 'x-api-key': 'PBDYZzW59J6ZeQH6qDFGE3kd8BE34BFRavTb6Sez',
+        'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
       },
     };
     const requestBody = {
@@ -40,7 +41,7 @@ export default function GuestSignIn() {
         setTimeout(() => setSignInError(false), 3000);
       });
   };
-
+  console.log(process.env.NEXT_PUBLIC_API_KEY);
   return (
     <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
       <form className='space-y-4 md:space-y-6' onSubmit={e => handleSignIn(e)}>

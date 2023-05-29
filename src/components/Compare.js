@@ -136,6 +136,7 @@ function Compare(props) {
       start: start.toISOString(),
       end: end.toISOString(),
     };
+
     assignedApplicants.push(assignedApplicant);
 
     // try {

@@ -86,7 +86,7 @@ export default function Referrals() {
       'https://99ym30ffli.execute-api.us-east-1.amazonaws.com/prod/delete';
     const requestConfig = {
       headers: {
-        'x-api-key': 'PBDYZzW59J6ZeQH6qDFGE3kd8BE34BFRavTb6Sez',
+        'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
       },
     };
     const requestBody = {
