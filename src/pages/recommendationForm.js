@@ -118,7 +118,7 @@ export default function RecommendationForm() {
 
     const requestConfig = {
       headers: {
-        'x-api-key': 'PBDYZzW59J6ZeQH6qDFGE3kd8BE34BFRavTb6Sez',
+        'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
       },
     };
     const requestBody = {
