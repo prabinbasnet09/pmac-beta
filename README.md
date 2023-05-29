@@ -37,6 +37,8 @@ There are <b>five users </b> with different level of access within the applicati
 
 ## Credentials to access Web Application
 
+    Access the application by visiting `https://pmac-beta.vercel.app/` in your web browser.
+
 The following credentials can be used to view and interact with the UI designed for each user besides Admin:
 
 - **Chair Committee**:
@@ -65,7 +67,7 @@ To deploy the PMAC Application Management System locally, follow these steps:
 3. Configure the necessary environment variables, such as database credentials and API keys.
 4. Run the application: npm run dev or npm start
 
-5. Access the application by visiting `http://localhost:5000` in your web browser.
+5. Access the application by visiting `http://localhost:3000` in your web browser.
 
 For detailed deployment instructions and additional customization options, please refer to the [documentation](docs/deployment.md) provided.
 
